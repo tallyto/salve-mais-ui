@@ -1,4 +1,3 @@
-// app.module.ts
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -21,13 +20,16 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatMenuModule} from "@angular/material/menu";
 import { CartaoFormComponent } from './components/cartao-form/cartao-form.component';
 import {MatInputModule} from "@angular/material/input";
+import { CategoriaFormComponent } from './components/categoria-form/categoria-form.component';
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     MenuLateralComponent,
-    CartaoFormComponent
+    CartaoFormComponent,
+    CategoriaFormComponent
   ],
   imports: [
     BrowserModule,
@@ -47,9 +49,9 @@ import {MatInputModule} from "@angular/material/input";
     MatTableModule,
     MatSidenavModule,
     MatMenuModule,
-    RouterModule.forRoot([]),
     ReactiveFormsModule,
-    MatInputModule
+    MatInputModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

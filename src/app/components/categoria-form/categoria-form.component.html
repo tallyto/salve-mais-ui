@@ -1,0 +1,8 @@
+<form [formGroup]=categoriaForm (ngSubmit)="salvarCategoria()">
+  <mat-form-field appearance="fill">
+    <mat-label>Nome da Categoria</mat-label>
+    <input matInput formControlName="nome" placeholder="Ex: Alimentação">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">Salvar</button>
+</form>
