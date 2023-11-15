@@ -1,0 +1,80 @@
+<div>
+  <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+
+     <!-- Tabela Proventos -->
+     <div style="width: 48%;">
+      <h3>Proventos</h3>
+      <table mat-table [dataSource]="proventos">
+
+        <!-- Nome Column -->
+        <ng-container matColumnDef="nome">
+          <th mat-header-cell *matHeaderCellDef> Nome </th>
+          <td mat-cell *matCellDef="let provento"> {{ provento.descricao }} </td>
+        </ng-container>
+
+        <!-- Data Column -->
+        <ng-container matColumnDef="data">
+          <th mat-header-cell *matHeaderCellDef> Data </th>
+          <td mat-cell *matCellDef="let provento"> {{ provento.data | date }} </td>
+        </ng-container>
+
+        <!-- Valor Column -->
+        <ng-container matColumnDef="valor">
+          <th mat-header-cell *matHeaderCellDef> Valor </th>
+          <td mat-cell *matCellDef="let provento">
+            {{ provento.valor | currency:'BRL':'symbol':'1.2-2' }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsProventos"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsProventos;"></tr>
+      </table>
+    </div>
+
+    <!-- Tabela Contas Fixas -->
+    <div style="width: 48%;">
+      <h3>Contas Fixas</h3>
+      <table mat-table [dataSource]="contasFixas">
+
+        <!-- Nome Column -->
+        <ng-container matColumnDef="nome">
+          <th mat-header-cell *matHeaderCellDef> Nome </th>
+          <td mat-cell *matCellDef="let contaFixa"> {{ contaFixa.nome }} </td>
+        </ng-container>
+
+        <!-- Categoria Column -->
+        <ng-container matColumnDef="categoria">
+          <th mat-header-cell *matHeaderCellDef> Categoria </th>
+          <td mat-cell *matCellDef="let contaFixa">
+            {{ contaFixa.categoria ? contaFixa.categoria.nome : 'N/A' }}
+          </td>
+        </ng-container>
+
+        <!-- Vencimento Column -->
+        <ng-container matColumnDef="vencimento">
+          <th mat-header-cell *matHeaderCellDef> Vencimento </th>
+          <td mat-cell *matCellDef="let contaFixa"> {{ contaFixa.vencimento | date}} </td>
+        </ng-container>
+
+        <!-- Valor Column -->
+        <ng-container matColumnDef="valor">
+          <th mat-header-cell *matHeaderCellDef> Valor </th>
+          <td mat-cell *matCellDef="let contaFixa">
+            {{ contaFixa.valor | currency:'BRL':'symbol':'1.2-2' }}
+          </td>
+        </ng-container>
+
+        <!-- Pago Column -->
+        <ng-container matColumnDef="pago">
+          <th mat-header-cell *matHeaderCellDef> Pago </th>
+          <td mat-cell *matCellDef="let contaFixa"> {{ contaFixa.pago ? 'Sim' : 'Não' }} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsContasFixas"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsContasFixas;"></tr>
+      </table>
+    </div>
+
+
+  </div>
+</div>
