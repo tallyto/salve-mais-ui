@@ -9,7 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MenuLateralComponent } from './components/menu-lateral/menu-lateral.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIconModule} from "@angular/material/icon";
@@ -19,12 +19,15 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatMenuModule} from "@angular/material/menu";
+import { CartaoFormComponent } from './components/cartao-form/cartao-form.component';
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    MenuLateralComponent
+    MenuLateralComponent,
+    CartaoFormComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,9 @@ import {MatMenuModule} from "@angular/material/menu";
     MatTableModule,
     MatSidenavModule,
     MatMenuModule,
-    RouterModule.forRoot([])
+    RouterModule.forRoot([]),
+    ReactiveFormsModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
