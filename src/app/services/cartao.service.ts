@@ -18,4 +18,7 @@ export class CartaoService {
     return this.http.post<Cartao>(this.apiUrl, cartao)
   }
 
+  listarCartoes(): Observable<Cartao[]> {
+      return this.http.get<Cartao[]>(this.apiUrl)
+  }
 }

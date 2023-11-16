@@ -1,15 +1,18 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CartaoService} from "../../services/cartao.service";
+import {Cartao} from "../../models/cartao.model";
 
 @Component({
   selector: 'app-cartao-form',
   templateUrl: './cartao-form.component.html',
   styleUrls: ['./cartao-form.component.css']
 })
-export class CartaoFormComponent {
+export class CartaoFormComponent implements OnInit{
 
   public cartaoForm: FormGroup;
+  public displayedColumnsCartao: string[] = ['nome', 'vencimento'];
+  public cartoes: Cartao[] = [];
 
 
   constructor(
@@ -23,6 +26,10 @@ export class CartaoFormComponent {
     })
   }
 
+  ngOnInit() {
+    this.listarCartoes()
+  }
+
   salvarCartao() {
     this.cartoService.salvarCartao(this.cartaoForm.value).subscribe({
       next: value => {
@@ -33,6 +40,12 @@ export class CartaoFormComponent {
         console.log(error);
       }
     })
+  }
+
+  private listarCartoes(): void {
+    this.cartoService.listarCartoes().subscribe(
+          cartoes => this.cartoes = cartoes
+      );
   }
 
 
