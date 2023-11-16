@@ -12,7 +12,11 @@ export class ProventoService {
 
   constructor(private http: HttpClient) { }
 
-  listarProventos(): Observable<Provento[]> {
+  public listarProventos(): Observable<Provento[]> {
     return this.http.get<Provento[]>(this.apiUrl);
+  }
+
+  public criarProvento(provento: Provento): Observable<Provento>{
+    return this.http.post<Provento>(this.apiUrl, provento);
   }
 }

@@ -22,6 +22,9 @@ import { CartaoFormComponent } from './components/cartao-form/cartao-form.compon
 import {MatInputModule} from "@angular/material/input";
 import { CategoriaFormComponent } from './components/categoria-form/categoria-form.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { ProventoFormComponent } from './components/provento-form/provento-form.component';
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -29,7 +32,8 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     DashboardComponent,
     MenuLateralComponent,
     CartaoFormComponent,
-    CategoriaFormComponent
+    CategoriaFormComponent,
+    ProventoFormComponent
   ],
   imports: [
     BrowserModule,
@@ -51,9 +55,13 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     MatMenuModule,
     ReactiveFormsModule,
     MatInputModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

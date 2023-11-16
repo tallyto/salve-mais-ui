@@ -1,6 +1,6 @@
 export interface Provento {
-  id: number;
-  nome: string;
-  data: string;
+  id?: number;
+  descricao: string;
+  data: Date;
   valor: number;
 }
