@@ -1,18 +1,24 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CategoriaService} from "../../services/categoria.service";
 import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
+import {Categoria} from "../../models/categoria.model";
 
 @Component({
   selector: 'app-categoria-form',
   templateUrl: './categoria-form.component.html',
   styleUrls: ['./categoria-form.component.css']
 })
-export class CategoriaFormComponent {
+export class CategoriaFormComponent implements OnInit {
   public categoriaForm: FormGroup;
   private horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   private verticalPosition: MatSnackBarVerticalPosition = 'top';
+  public displayedColumnsCategoria: string[] = ['nome'];
+  public categorias: Categoria[] = [];
 
+  ngOnInit() {
+    this.listarCategorias()
+  }
 
   constructor(
     private formBuilder: FormBuilder,
@@ -37,6 +43,12 @@ export class CategoriaFormComponent {
     })
   }
 
+  public listarCategorias(): void {
+    this.categoriaService.listarCategorias().subscribe(
+      categorias => this.categorias = categorias
+    );
+  }
+
   openSnackBar(message: string) {
     this.snackBar.open(message, 'Ok', {
       horizontalPosition: this.horizontalPosition,
@@ -45,3 +57,5 @@ export class CategoriaFormComponent {
   }
 
 }
+
+
