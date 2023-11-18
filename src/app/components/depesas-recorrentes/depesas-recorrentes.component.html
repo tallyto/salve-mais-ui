@@ -1,0 +1,86 @@
+<form [formGroup]=gastosRecorrentes (ngSubmit)="salvarGastoRecorrente()">
+  <mat-form-field appearance="fill">
+    <mat-label>Descrição</mat-label>
+    <input matInput formControlName="descricao" placeholder="Ex: Tênis Adidas">
+  </mat-form-field>
+
+
+  <mat-form-field appearance="fill">
+    <mat-label>Valor</mat-label>
+    <input matInput formControlName="valor" placeholder="Ex: 125.42">
+  </mat-form-field>
+
+
+  <mat-form-field>
+    <mat-label>Categoria</mat-label>
+    <mat-select formControlName="categoriaId">
+      <mat-option [value]="categoria.id" *ngFor="let categoria of categorias" >{{categoria.nome}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Cartão</mat-label>
+    <mat-select formControlName="cartaoId">
+      <mat-option [value]="cartao.id" *ngFor="let cartao of cartoes" >{{cartao.nome}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Data da compra</mat-label>
+    <input matInput formControlName="data" [matDatepicker]="picker">
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">Salvar</button>
+</form>
+
+
+
+<!-- Tabela Despesas Fixas -->
+
+<h3>Gastos Recorrentes</h3>
+<table mat-table [dataSource]="listGastosRecorrentes">
+
+  <!-- Nome Column -->
+  <ng-container matColumnDef="descricao">
+    <th mat-header-cell *matHeaderCellDef> Descrição </th>
+    <td mat-cell *matCellDef="let gastoRecorrente"> {{ gastoRecorrente.descricao }} </td>
+  </ng-container>
+
+  <!-- Categoria Column -->
+  <ng-container matColumnDef="categoria">
+    <th mat-header-cell *matHeaderCellDef> Categoria </th>
+    <td mat-cell *matCellDef="let gastoRecorrente">
+      {{ gastoRecorrente.categoria ? gastoRecorrente.categoria.nome : 'N/A' }}
+    </td>
+  </ng-container>
+
+  <!-- Cartão Column -->
+  <ng-container matColumnDef="cartaoCredito">
+    <th mat-header-cell *matHeaderCellDef> Cartão </th>
+    <td mat-cell *matCellDef="let gastoRecorrente">
+      {{ gastoRecorrente.cartaoCredito ? gastoRecorrente.cartaoCredito.nome : 'N/A' }}
+    </td>
+  </ng-container>
+
+  <!-- Vencimento Column -->
+  <ng-container matColumnDef="data">
+    <th mat-header-cell *matHeaderCellDef> Comprado </th>
+    <td mat-cell *matCellDef="let gastoRecorrente"> {{ gastoRecorrente.data | date}} </td>
+  </ng-container>
+
+
+  <!-- Valor Column -->
+  <ng-container matColumnDef="valor">
+    <th mat-header-cell *matHeaderCellDef> Valor </th>
+    <td mat-cell *matCellDef="let gastoRecorrente">
+      {{ gastoRecorrente.valor | currency:'BRL':'symbol':'1.2-2' }}
+    </td>
+  </ng-container>
+
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumnsGastoRecorrente"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumnsGastoRecorrente;"></tr>
+</table>

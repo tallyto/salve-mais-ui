@@ -30,6 +30,7 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatRadioModule} from "@angular/material/radio";
+import { DepesasRecorrentesComponent } from './components/depesas-recorrentes/depesas-recorrentes.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import {MatRadioModule} from "@angular/material/radio";
     CartaoFormComponent,
     CategoriaFormComponent,
     ProventoFormComponent,
-    DespesasFixasComponent
+    DespesasFixasComponent,
+    DepesasRecorrentesComponent
   ],
   imports: [
     BrowserModule,
