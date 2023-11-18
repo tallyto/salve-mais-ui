@@ -15,4 +15,8 @@ export class FinancaService {
   listarFinancas(): Observable<Financa[]> {
     return this.http.get<Financa[]>(this.apiUrl);
   }
+
+  salvarFinanca(financa: Financa) : Observable<Financa> {
+    return this.http.post<Financa>(this.apiUrl, financa);
+  }
 }

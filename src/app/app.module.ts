@@ -25,6 +25,11 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { ProventoFormComponent } from './components/provento-form/provento-form.component';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
+import {DespesasFixasComponent} from "./components/despesas-fixas/despesas-fixas.component";
+import {MatGridListModule} from "@angular/material/grid-list";
+import {MatSelectModule} from "@angular/material/select";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatRadioModule} from "@angular/material/radio";
 
 @NgModule({
   declarations: [
@@ -33,7 +38,8 @@ import {MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
     MenuLateralComponent,
     CartaoFormComponent,
     CategoriaFormComponent,
-    ProventoFormComponent
+    ProventoFormComponent,
+    DespesasFixasComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +63,11 @@ import {MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
     MatInputModule,
     MatSnackBarModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatGridListModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatRadioModule,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
