@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Categoria} from "../models/categoria.model";
 import {Observable} from "rxjs";
@@ -18,7 +18,7 @@ export class CategoriaService {
     return this.http.get<Categoria[]>(this.apiUrl)
   }
 
-  salvarCategoria(categoria: Categoria ): Observable<Categoria> {
+  salvarCategoria(categoria: Categoria): Observable<Categoria> {
     return this.http.post<Categoria>(this.apiUrl, categoria)
   }
 }

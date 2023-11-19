@@ -13,7 +13,7 @@ import {Cartao} from "../../models/cartao.model";
   styleUrls: ['./depesas-recorrentes.component.css']
 })
 export class DepesasRecorrentesComponent implements OnInit {
-  displayedColumnsGastoRecorrente: string[] = ['descricao','categoria', 'cartaoCredito', 'data',  'valor'];
+  displayedColumnsGastoRecorrente: string[] = ['descricao', 'categoria', 'cartaoCredito', 'data', 'valor'];
   listGastosRecorrentes: GastoCartao[] = [];
   gastosRecorrentes: FormGroup;
   public categorias: Categoria[] = [];

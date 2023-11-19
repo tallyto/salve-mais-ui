@@ -1,74 +1,88 @@
-<form [formGroup]=despesaFixaForm (ngSubmit)="salvarDespesaFixa()">
-  <mat-form-field appearance="fill">
-    <mat-label>Nome</mat-label>
-    <input matInput formControlName="nome" placeholder="Ex: Gás, Internet">
-  </mat-form-field>
+<form (ngSubmit)="salvarDespesaFixa()" [formGroup]=despesaFixaForm>
+  <h3>Cadastrar Gastos Fixos</h3>
+  <div class="grid align-items-center">
+    <div class="col-4">
+      <mat-form-field appearance="fill" class="flex">
+        <mat-label>Nome</mat-label>
+        <input formControlName="nome" matInput placeholder="Ex: Gás, Internet">
+      </mat-form-field>
+    </div>
 
-  <mat-form-field>
-    <mat-label>Categoria</mat-label>
-    <mat-select formControlName="categoriaId">
-      <mat-option [value]="categoria.id" *ngFor="let categoria of categorias" >{{categoria.nome}}</mat-option>
-    </mat-select>
-  </mat-form-field>
+    <div class="col-4">
+      <mat-form-field class="flex">
+        <mat-label>Categoria</mat-label>
+        <mat-select formControlName="categoriaId">
+          <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">{{categoria.nome}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-  <mat-form-field>
-    <mat-label>Data de vencimento</mat-label>
-    <input matInput formControlName="vencimento" [matDatepicker]="picker">
-    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
+    <div class="col-4">
+      <mat-form-field class="flex">
+        <mat-label>Data de vencimento</mat-label>
+        <input [matDatepicker]="picker" formControlName="vencimento" matInput>
+        <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Valor</mat-label>
-    <input matInput formControlName="valor" placeholder="Ex: 125.42">
-  </mat-form-field>
+    <div class="col-3">
+      <mat-form-field appearance="fill" class="flex">
+        <mat-label>Valor</mat-label>
+        <input formControlName="valor" matInput placeholder="Ex: 125.42">
+      </mat-form-field>
+    </div>
 
-  <mat-checkbox formControlName="pago">Pago</mat-checkbox>
+    <div class="col-3">
+      <mat-checkbox formControlName="pago">Pago</mat-checkbox>
+    </div>
 
-  <button mat-raised-button color="primary" type="submit">Salvar</button>
+    <div class="col-12 pt-0">
+      <button [disabled]="despesaFixaForm.invalid" color="primary" mat-raised-button type="submit">Salvar</button>
+    </div>
+  </div>
 </form>
-
 
 
 <!-- Tabela Despesas Fixas -->
 
-  <h3>Contas Fixas</h3>
-  <table mat-table [dataSource]="contasFixas">
+<h3>Contas Fixas</h3>
+<table [dataSource]="contasFixas" mat-table>
 
-    <!-- Nome Column -->
-    <ng-container matColumnDef="nome">
-      <th mat-header-cell *matHeaderCellDef> Nome </th>
-      <td mat-cell *matCellDef="let contaFixa"> {{ contaFixa.nome }} </td>
-    </ng-container>
+  <!-- Nome Column -->
+  <ng-container matColumnDef="nome">
+    <th *matHeaderCellDef mat-header-cell> Nome</th>
+    <td *matCellDef="let contaFixa" mat-cell> {{ contaFixa.nome }} </td>
+  </ng-container>
 
-    <!-- Categoria Column -->
-    <ng-container matColumnDef="categoria">
-      <th mat-header-cell *matHeaderCellDef> Categoria </th>
-      <td mat-cell *matCellDef="let contaFixa">
-        {{ contaFixa.categoria ? contaFixa.categoria.nome : 'N/A' }}
-      </td>
-    </ng-container>
+  <!-- Categoria Column -->
+  <ng-container matColumnDef="categoria">
+    <th *matHeaderCellDef mat-header-cell> Categoria</th>
+    <td *matCellDef="let contaFixa" mat-cell>
+      {{ contaFixa.categoria ? contaFixa.categoria.nome : 'N/A' }}
+    </td>
+  </ng-container>
 
-    <!-- Vencimento Column -->
-    <ng-container matColumnDef="vencimento">
-      <th mat-header-cell *matHeaderCellDef> Vencimento </th>
-      <td mat-cell *matCellDef="let contaFixa"> {{ contaFixa.vencimento | date}} </td>
-    </ng-container>
+  <!-- Vencimento Column -->
+  <ng-container matColumnDef="vencimento">
+    <th *matHeaderCellDef mat-header-cell> Vencimento</th>
+    <td *matCellDef="let contaFixa" mat-cell> {{ contaFixa.vencimento | date}} </td>
+  </ng-container>
 
-    <!-- Valor Column -->
-    <ng-container matColumnDef="valor">
-      <th mat-header-cell *matHeaderCellDef> Valor </th>
-      <td mat-cell *matCellDef="let contaFixa">
-        {{ contaFixa.valor | currency:'BRL':'symbol':'1.2-2' }}
-      </td>
-    </ng-container>
+  <!-- Valor Column -->
+  <ng-container matColumnDef="valor">
+    <th *matHeaderCellDef mat-header-cell> Valor</th>
+    <td *matCellDef="let contaFixa" mat-cell>
+      {{ contaFixa.valor | currency:'BRL':'symbol':'1.2-2' }}
+    </td>
+  </ng-container>
 
-    <!-- Pago Column -->
-    <ng-container matColumnDef="pago">
-      <th mat-header-cell *matHeaderCellDef> Pago </th>
-      <td mat-cell *matCellDef="let contaFixa"> {{ contaFixa.pago ? 'Sim' : 'Não' }} </td>
-    </ng-container>
+  <!-- Pago Column -->
+  <ng-container matColumnDef="pago">
+    <th *matHeaderCellDef mat-header-cell> Pago</th>
+    <td *matCellDef="let contaFixa" mat-cell> {{ contaFixa.pago ? 'Sim' : 'Não' }} </td>
+  </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumnsContasFixas"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumnsContasFixas;"></tr>
-  </table>
+  <tr *matHeaderRowDef="displayedColumnsContasFixas" mat-header-row></tr>
+  <tr *matRowDef="let row; columns: displayedColumnsContasFixas;" mat-row></tr>
+</table>

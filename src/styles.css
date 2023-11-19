@@ -1,10 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
 
-.flex-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px; /* Define a largura máxima do container */
+  margin: 0 auto; /* Centraliza o container na página */
+  padding: 20px; /* Adiciona espaçamento interno ao conteúdo do container */
+  box-sizing: border-box; /* Garante que a largura e altura incluem padding e bordas */
 }

@@ -8,7 +8,7 @@ import {Cartao} from "../../models/cartao.model";
   templateUrl: './cartao-form.component.html',
   styleUrls: ['./cartao-form.component.css']
 })
-export class CartaoFormComponent implements OnInit{
+export class CartaoFormComponent implements OnInit {
 
   public cartaoForm: FormGroup;
   public displayedColumnsCartao: string[] = ['nome', 'vencimento'];
@@ -35,6 +35,7 @@ export class CartaoFormComponent implements OnInit{
       next: value => {
         console.log(value);
         this.cartaoForm.reset();
+        this.listarCartoes();
       },
       error: error => {
         console.log(error);
@@ -44,8 +45,8 @@ export class CartaoFormComponent implements OnInit{
 
   private listarCartoes(): void {
     this.cartoService.listarCartoes().subscribe(
-          cartoes => this.cartoes = cartoes
-      );
+      cartoes => this.cartoes = cartoes
+    );
   }
 
 

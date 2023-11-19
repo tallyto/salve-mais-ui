@@ -11,14 +11,10 @@ import {Categoria} from "../../models/categoria.model";
 })
 export class CategoriaFormComponent implements OnInit {
   public categoriaForm: FormGroup;
-  private horizontalPosition: MatSnackBarHorizontalPosition = 'right';
-  private verticalPosition: MatSnackBarVerticalPosition = 'top';
   public displayedColumnsCategoria: string[] = ['nome'];
   public categorias: Categoria[] = [];
-
-  ngOnInit() {
-    this.listarCategorias()
-  }
+  private horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  private verticalPosition: MatSnackBarVerticalPosition = 'top';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,11 +27,16 @@ export class CategoriaFormComponent implements OnInit {
     })
   }
 
+  ngOnInit() {
+    this.listarCategorias()
+  }
+
   salvarCategoria() {
     this.categoriaService.salvarCategoria(this.categoriaForm.value).subscribe({
       next: value => {
         this.openSnackBar('Categoria salva com sucesso!');
         this.categoriaForm.reset();
+        this.listarCategorias();
       },
       error: error => {
         console.log(error);

@@ -1,26 +1,34 @@
-<h3>Cadastrar Categoria</h3>
+<form (ngSubmit)="salvarCategoria()" [formGroup]=categoriaForm>
+  <h3>Cadastrar Categoria</h3>
 
-<form [formGroup]=categoriaForm (ngSubmit)="salvarCategoria()">
-  <mat-form-field appearance="fill">
-    <mat-label>Nome da Categoria</mat-label>
-    <input matInput formControlName="nome" placeholder="Ex: Alimentação">
-  </mat-form-field>
+  <div class="grid">
+    <div class="col-6">
+      <mat-form-field appearance="fill" class="flex">
+        <mat-label>Nome da Categoria</mat-label>
+        <input formControlName="nome" matInput placeholder="Ex: Alimentação">
+      </mat-form-field>
+    </div>
+    <div class="col-12 pt-0">
+      <button color="primary" mat-raised-button type="submit">Salvar</button>
+    </div>
 
-  <button mat-raised-button color="primary" type="submit">Salvar</button>
+  </div>
+
+
 </form>
 
 <!-- Tabela Categorias -->
-  <h3>Categorias</h3>
-  <table mat-table [dataSource]="categorias">
+<h3>Categorias</h3>
+<table [dataSource]="categorias" mat-table>
 
-    <!-- Categoria Column -->
-    <ng-container matColumnDef="nome">
-      <th mat-header-cell *matHeaderCellDef> Nome</th>
-      <td mat-cell *matCellDef="let categoria"> {{ categoria.nome }} </td>
-    </ng-container>
+  <!-- Categoria Column -->
+  <ng-container matColumnDef="nome">
+    <th *matHeaderCellDef mat-header-cell> Nome</th>
+    <td *matCellDef="let categoria" mat-cell> {{ categoria.nome }} </td>
+  </ng-container>
 
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumnsCategoria"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumnsCategoria;"></tr>
-  </table>
+  <tr *matHeaderRowDef="displayedColumnsCategoria" mat-header-row></tr>
+  <tr *matRowDef="let row; columns: displayedColumnsCategoria;" mat-row></tr>
+</table>
 

@@ -1,86 +1,100 @@
-<form [formGroup]=gastosRecorrentes (ngSubmit)="salvarGastoRecorrente()">
-  <mat-form-field appearance="fill">
-    <mat-label>Descrição</mat-label>
-    <input matInput formControlName="descricao" placeholder="Ex: Tênis Adidas">
-  </mat-form-field>
+<form (ngSubmit)="salvarGastoRecorrente()" [formGroup]=gastosRecorrentes>
+  <h3>Cadastrar Gastos Recorrentes</h3>
+  <div class="grid">
+
+    <div class="col-4">
+      <mat-form-field appearance="fill" class="flex">
+        <mat-label>Descrição</mat-label>
+        <input formControlName="descricao" matInput placeholder="Ex: Tênis Adidas">
+      </mat-form-field>
+    </div>
 
 
-  <mat-form-field appearance="fill">
-    <mat-label>Valor</mat-label>
-    <input matInput formControlName="valor" placeholder="Ex: 125.42">
-  </mat-form-field>
+    <div class="col-4">
+      <mat-form-field appearance="fill" class="flex">
+        <mat-label>Valor</mat-label>
+        <input formControlName="valor" matInput placeholder="Ex: 125.42">
+      </mat-form-field>
+    </div>
 
 
-  <mat-form-field>
-    <mat-label>Categoria</mat-label>
-    <mat-select formControlName="categoriaId">
-      <mat-option [value]="categoria.id" *ngFor="let categoria of categorias" >{{categoria.nome}}</mat-option>
-    </mat-select>
-  </mat-form-field>
+    <div class="col-4">
+      <mat-form-field class="flex">
+        <mat-label>Categoria</mat-label>
+        <mat-select formControlName="categoriaId">
+          <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">{{categoria.nome}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-  <mat-form-field>
-    <mat-label>Cartão</mat-label>
-    <mat-select formControlName="cartaoId">
-      <mat-option [value]="cartao.id" *ngFor="let cartao of cartoes" >{{cartao.nome}}</mat-option>
-    </mat-select>
-  </mat-form-field>
+    <div class="col-4">
+      <mat-form-field class="flex">
+        <mat-label>Cartão</mat-label>
+        <mat-select formControlName="cartaoId">
+          <mat-option *ngFor="let cartao of cartoes" [value]="cartao.id">{{cartao.nome}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-  <mat-form-field>
-    <mat-label>Data da compra</mat-label>
-    <input matInput formControlName="data" [matDatepicker]="picker">
-    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
+    <div class="col-4">
+      <mat-form-field class="flex">
+        <mat-label>Data da compra</mat-label>
+        <input [matDatepicker]="picker" formControlName="data" matInput>
+        <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
 
-  <button mat-raised-button color="primary" type="submit">Salvar</button>
+    <div class="col-12 pt-0">
+      <button [disabled]="gastosRecorrentes.invalid" color="primary" mat-raised-button type="submit">Salvar</button>
+    </div>
+  </div>
 </form>
 
 
-
-<!-- Tabela Despesas Fixas -->
+<!-- Tabela Despesas Recorrentes -->
 
 <h3>Gastos Recorrentes</h3>
-<table mat-table [dataSource]="listGastosRecorrentes">
+<table [dataSource]="listGastosRecorrentes" mat-table>
 
   <!-- Nome Column -->
   <ng-container matColumnDef="descricao">
-    <th mat-header-cell *matHeaderCellDef> Descrição </th>
-    <td mat-cell *matCellDef="let gastoRecorrente"> {{ gastoRecorrente.descricao }} </td>
+    <th *matHeaderCellDef mat-header-cell> Descrição</th>
+    <td *matCellDef="let gastoRecorrente" mat-cell> {{ gastoRecorrente.descricao }} </td>
   </ng-container>
 
   <!-- Categoria Column -->
   <ng-container matColumnDef="categoria">
-    <th mat-header-cell *matHeaderCellDef> Categoria </th>
-    <td mat-cell *matCellDef="let gastoRecorrente">
+    <th *matHeaderCellDef mat-header-cell> Categoria</th>
+    <td *matCellDef="let gastoRecorrente" mat-cell>
       {{ gastoRecorrente.categoria ? gastoRecorrente.categoria.nome : 'N/A' }}
     </td>
   </ng-container>
 
   <!-- Cartão Column -->
   <ng-container matColumnDef="cartaoCredito">
-    <th mat-header-cell *matHeaderCellDef> Cartão </th>
-    <td mat-cell *matCellDef="let gastoRecorrente">
+    <th *matHeaderCellDef mat-header-cell> Cartão</th>
+    <td *matCellDef="let gastoRecorrente" mat-cell>
       {{ gastoRecorrente.cartaoCredito ? gastoRecorrente.cartaoCredito.nome : 'N/A' }}
     </td>
   </ng-container>
 
   <!-- Vencimento Column -->
   <ng-container matColumnDef="data">
-    <th mat-header-cell *matHeaderCellDef> Comprado </th>
-    <td mat-cell *matCellDef="let gastoRecorrente"> {{ gastoRecorrente.data | date}} </td>
+    <th *matHeaderCellDef mat-header-cell> Comprado</th>
+    <td *matCellDef="let gastoRecorrente" mat-cell> {{ gastoRecorrente.data | date}} </td>
   </ng-container>
 
 
   <!-- Valor Column -->
   <ng-container matColumnDef="valor">
-    <th mat-header-cell *matHeaderCellDef> Valor </th>
-    <td mat-cell *matCellDef="let gastoRecorrente">
+    <th *matHeaderCellDef mat-header-cell> Valor</th>
+    <td *matCellDef="let gastoRecorrente" mat-cell>
       {{ gastoRecorrente.valor | currency:'BRL':'symbol':'1.2-2' }}
     </td>
   </ng-container>
 
 
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumnsGastoRecorrente"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumnsGastoRecorrente;"></tr>
+  <tr *matHeaderRowDef="displayedColumnsGastoRecorrente" mat-header-row></tr>
+  <tr *matRowDef="let row; columns: displayedColumnsGastoRecorrente;" mat-row></tr>
 </table>

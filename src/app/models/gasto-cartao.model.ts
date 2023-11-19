@@ -1,4 +1,4 @@
-export interface GastoCartao{
+export interface GastoCartao {
   id: number;
   descricao: string;
   valor: number;

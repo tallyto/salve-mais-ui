@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Cartao} from "../models/cartao.model";
 import {Observable} from "rxjs";
@@ -14,11 +14,11 @@ export class CartaoService {
 
   }
 
-  salvarCartao(cartao: Cartao ): Observable<Cartao> {
+  salvarCartao(cartao: Cartao): Observable<Cartao> {
     return this.http.post<Cartao>(this.apiUrl, cartao)
   }
 
   listarCartoes(): Observable<Cartao[]> {
-      return this.http.get<Cartao[]>(this.apiUrl)
+    return this.http.get<Cartao[]>(this.apiUrl)
   }
 }

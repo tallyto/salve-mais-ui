@@ -10,7 +10,7 @@ import {CategoriaService} from "../../services/categoria.service";
   templateUrl: './despesas-fixas.component.html',
   styleUrls: ['./despesas-fixas.component.css']
 })
-export class DespesasFixasComponent implements OnInit{
+export class DespesasFixasComponent implements OnInit {
   displayedColumnsContasFixas: string[] = ['nome', 'categoria', 'vencimento', 'valor', 'pago'];
   contasFixas: Financa[] = [];
   despesaFixaForm: FormGroup;
@@ -45,16 +45,16 @@ export class DespesasFixasComponent implements OnInit{
 
   carregarCategorias(): void {
     this.categoriaService.listarCategorias().subscribe(
-          categorias => this.categorias = categorias
-      );
+      categorias => this.categorias = categorias
+    );
   }
 
   salvarDespesaFixa() {
     this.financaService.salvarFinanca(this.despesaFixaForm.value).subscribe({
-     next: value => {
-       this.despesaFixaForm.reset()
-       this.carregarContasFixas()
-     }
+      next: value => {
+        this.despesaFixaForm.reset()
+        this.carregarContasFixas()
+      }
     })
   }
 }

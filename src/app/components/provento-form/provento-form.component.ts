@@ -9,13 +9,13 @@ import {Provento} from "../../models/provento.model";
   templateUrl: './provento-form.component.html',
   styleUrls: ['./provento-form.component.css']
 })
-export class ProventoFormComponent implements OnInit{
+export class ProventoFormComponent implements OnInit {
 
   public proventoForm: FormGroup;
-  private horizontalPosition: MatSnackBarHorizontalPosition = 'right';
-  private verticalPosition: MatSnackBarVerticalPosition = 'top';
   public displayedColumnsProventos: string[] = ['nome', 'data', 'valor'];
   public proventos: Provento[] = [];
+  private horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  private verticalPosition: MatSnackBarVerticalPosition = 'top';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,7 +25,7 @@ export class ProventoFormComponent implements OnInit{
     this.proventoForm = this.formBuilder.group({
       id: [null],
       descricao: ['', Validators.required],
-      valor: ['', [Validators.min(0),Validators.required]],
+      valor: ['', [Validators.min(0), Validators.required]],
       data: ['', Validators.required],
     })
   }
