@@ -83,6 +83,17 @@
       </mat-expansion-panel>
       <mat-expansion-panel [class.mat-elevation-z0]="true">
         <mat-expansion-panel-header>
+          Faturas
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a mat-list-item routerLink="/faturas">
+            <mat-icon>payment</mat-icon>
+            <span>Cadastrar</span>
+          </a>
+        </mat-nav-list>
+      </mat-expansion-panel>
+      <mat-expansion-panel [class.mat-elevation-z0]="true">
+        <mat-expansion-panel-header>
           Categorias
         </mat-expansion-panel-header>
         <mat-nav-list>
@@ -90,16 +101,6 @@
             <mat-icon>description</mat-icon>
             <span>Cadastrar</span>
           </a>
-        </mat-nav-list>
-      </mat-expansion-panel>
-      <mat-expansion-panel [class.mat-elevation-z0]="true">
-        <mat-expansion-panel-header>
-          Frameworks
-        </mat-expansion-panel-header>
-        <mat-nav-list>
-          <a mat-list-item routerLink="#">Spring</a>
-          <a mat-list-item routerLink="#">Hibernate</a>
-          <a mat-list-item routerLink="#">Struts</a>
         </mat-nav-list>
       </mat-expansion-panel>
     </mat-nav-list>

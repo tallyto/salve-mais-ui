@@ -1,0 +1,76 @@
+<!-- Tabela Faturas -->
+
+<h3>Faturas</h3>
+<table [dataSource]="faturas" mat-table multiTemplateDataRows class="mat-elevation-z8">
+
+  <!-- Categoria Column -->
+  <ng-container matColumnDef="dataVencimento">
+    <th *matHeaderCellDef mat-header-cell> Data de Vencimento</th>
+    <td *matCellDef="let fatura" mat-cell> {{ fatura.dataVencimento }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="dataPagamento">
+    <th *matHeaderCellDef mat-header-cell> Data de Pagamento</th>
+    <td *matCellDef="let fatura" mat-cell> {{ fatura.dataPagamento ? fatura.dataPagamento : 'N/A' }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="valorTotal">
+    <th *matHeaderCellDef mat-header-cell> Valor Total</th>
+    <td *matCellDef="let fatura" mat-cell>
+      {{ fatura.valorTotal | currency:'BRL':'symbol':'1.2-2'}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="pago">
+    <th *matHeaderCellDef mat-header-cell> Pago</th>
+    <td *matCellDef="let fatura" mat-cell> {{ fatura.pago }} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="cartaoCredito">
+    <th *matHeaderCellDef mat-header-cell> Pago</th>
+    <td *matCellDef="let fatura" mat-cell> {{ fatura.cartaoCredito ? fatura.cartaoCredito.nome : 'N/A'}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="expandedDetail">
+    <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumnsFatura.length">
+      <div [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+        <table *ngIf="element.compras && element.compras.length > 0">
+          <thead>
+          <tr>
+            <th>Descrição</th>
+            <th>Valor</th>
+            <th>Data</th>
+            <th>Categoria</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let compra of element.compras">
+            <td>{{compra.descricao}}</td>
+            <td>{{compra.valor | currency:'BRL':'symbol':'1.2-2'}}</td>
+            <td>{{compra.data | date}}</td>
+            <td>{{compra.categoria.nome}}</td>
+          </tr>
+          </tbody>
+        </table>
+        <div *ngIf="!element.compras || element.compras.length === 0">
+          Nenhuma compra disponível.
+        </div>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr *matHeaderRowDef="displayedColumnsFatura" mat-header-row></tr>
+  <tr
+    mat-row
+    *matRowDef="let element; columns: displayedColumnsFatura;"
+    class="element-row"
+    [class.example-expanded-row]="expandedElement === element"
+    (click)="expandedElement = element"
+  ></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: ['expandedDetail']"
+    class="detail-row"
+  ></tr>
+</table>
+

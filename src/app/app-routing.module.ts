@@ -6,6 +6,8 @@ import {CategoriaFormComponent} from "./components/categoria-form/categoria-form
 import {ProventoFormComponent} from "./components/provento-form/provento-form.component";
 import {DespesasFixasComponent} from "./components/despesas-fixas/despesas-fixas.component";
 import {DepesasRecorrentesComponent} from "./components/depesas-recorrentes/depesas-recorrentes.component";
+import {FaturaComponent} from "./components/fatura/fatura.component";
+
 
 const routes: Routes = [
   {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
@@ -15,6 +17,9 @@ const routes: Routes = [
   {path: 'provento-form', component: ProventoFormComponent},
   {path: 'despesas-fixas', component: DespesasFixasComponent},
   {path: 'despesas-recorrentes', component: DepesasRecorrentesComponent},
+  {path: 'faturas', component: FaturaComponent},
+  {path: '**', redirectTo: 'dashboard'}
+
 ];
 
 @NgModule({

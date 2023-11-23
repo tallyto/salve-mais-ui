@@ -31,6 +31,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatRadioModule} from "@angular/material/radio";
 import {DepesasRecorrentesComponent} from './components/depesas-recorrentes/depesas-recorrentes.component';
+import { FaturaComponent } from './components/fatura/fatura.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import {DepesasRecorrentesComponent} from './components/depesas-recorrentes/depe
     CategoriaFormComponent,
     ProventoFormComponent,
     DespesasFixasComponent,
-    DepesasRecorrentesComponent
+    DepesasRecorrentesComponent,
+    FaturaComponent,
   ],
   imports: [
     BrowserModule,
