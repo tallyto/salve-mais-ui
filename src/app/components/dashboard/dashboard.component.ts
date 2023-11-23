@@ -3,8 +3,8 @@ import {FinancaService} from '../../services/financa.service';
 import {Financa} from '../../models/financa.model';
 import {ProventoService} from 'src/app/services/provento.service';
 import {Provento} from 'src/app/models/provento.model';
-import {GastoCartao} from "../../models/gasto-cartao.model";
 import {GastoCartaoService} from "../../services/gasto-cartao.service";
+import {GastoCartao} from "../../models/gasto-cartao.model";
 
 @Component({
   selector: 'app-dashboard',

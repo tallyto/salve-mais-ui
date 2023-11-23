@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {GastoCartao} from "../models/gasto-cartao.model";
+import {GastoCartaoInput} from "../models/input/gasto-cartao.input";
 import {Observable} from "rxjs";
+import {GastoCartao} from "../models/gasto-cartao.model";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class GastoCartaoService {
     return this.http.get<GastoCartao[]>(this.apiUrl);
   }
 
-  public salvarCompra(compra: GastoCartao): Observable<GastoCartao> {
+  public salvarCompra(compra: GastoCartaoInput): Observable<GastoCartao> {
     return this.http.post<GastoCartao>(this.apiUrl, compra);
   }
 }

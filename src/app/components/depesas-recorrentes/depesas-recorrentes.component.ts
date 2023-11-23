@@ -3,9 +3,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Categoria} from "../../models/categoria.model";
 import {CategoriaService} from "../../services/categoria.service";
 import {GastoCartaoService} from "../../services/gasto-cartao.service";
-import {GastoCartao} from "../../models/gasto-cartao.model";
 import {CartaoService} from "../../services/cartao.service";
 import {Cartao} from "../../models/cartao.model";
+import {GastoCartao} from "../../models/gasto-cartao.model";
 
 @Component({
   selector: 'app-depesas-recorrentes',

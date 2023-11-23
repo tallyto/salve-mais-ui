@@ -1,5 +1,5 @@
 export interface Cartao {
-  id?: number;
+  id: number;
   nome: string;
   vencimento: string;
 }
