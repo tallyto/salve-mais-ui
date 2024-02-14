@@ -2,6 +2,7 @@
   <div class="col-6">
     <!-- Tabela Proventos -->
     <h3>Proventos</h3>
+    <div class="mat-elevation-z1">
     <table [dataSource]="proventos" mat-table>
 
       <!-- Nome Column -->
@@ -27,11 +28,13 @@
       <tr *matHeaderRowDef="displayedColumnsProventos" mat-header-row></tr>
       <tr *matRowDef="let row; columns: displayedColumnsProventos;" mat-row></tr>
     </table>
+    </div>
   </div>
 
   <div class="col-6">
     <!-- Tabela Contas Fixas -->
     <h3>Contas Fixas</h3>
+    <div class="mat-elevation-z1">
     <table [dataSource]="contasFixas" mat-table>
 
       <!-- Nome Column -->
@@ -71,12 +74,15 @@
       <tr *matHeaderRowDef="displayedColumnsContasFixas" mat-header-row></tr>
       <tr *matRowDef="let row; columns: displayedColumnsContasFixas;" mat-row></tr>
     </table>
+    </div>
   </div>
 
   <!-- Tabela Despesas Recorrentes -->
 
+  <div class="col-12">
   <h3>Gastos Recorrentes</h3>
-  <table [dataSource]="listGastosRecorrentes" mat-table>
+  <div class="mat-elevation-z1">
+  <table [dataSource]="dataSource" mat-table>
 
     <!-- Nome Column -->
     <ng-container matColumnDef="descricao">
@@ -119,5 +125,9 @@
     <tr *matHeaderRowDef="displayedColumnsGastoRecorrente" mat-header-row></tr>
     <tr *matRowDef="let row; columns: displayedColumnsGastoRecorrente;" mat-row></tr>
   </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]">
+  </mat-paginator>
+  </div>
+  </div>
 </div>
 

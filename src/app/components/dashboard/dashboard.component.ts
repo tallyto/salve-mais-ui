@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FinancaService} from '../../services/financa.service';
 import {Financa} from '../../models/financa.model';
 import {ProventoService} from 'src/app/services/provento.service';
 import {Provento} from 'src/app/models/provento.model';
 import {GastoCartaoService} from "../../services/gasto-cartao.service";
 import {GastoCartao} from "../../models/gasto-cartao.model";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatTableDataSource} from "@angular/material/table";
 
 @Component({
   selector: 'app-dashboard',
@@ -20,6 +22,11 @@ export class DashboardComponent implements OnInit {
   listGastosRecorrentes: GastoCartao[] = [];
   contasFixas: Financa[] = [];
   proventos: Provento[] = [];
+
+  dataSource = new MatTableDataSource<GastoCartao>([])
+
+  // @ts-expect-error
+  @ViewChild(MatPaginator) paginator: MatPaginator
 
   constructor(
     private financaService: FinancaService,
@@ -49,7 +56,15 @@ export class DashboardComponent implements OnInit {
 
   carregarGastoRecorrente(): void {
     this.despesaRecorrenteService.listCompras().subscribe(
-      gastoRecorrente => this.listGastosRecorrentes = gastoRecorrente
+      gastoRecorrente => {
+        this.listGastosRecorrentes = gastoRecorrente;
+        this.dataSource = new MatTableDataSource(this.listGastosRecorrentes);
+        this.dataSource.paginator = this.paginator;
+      },
+      error => {
+        console.error('Erro ao carregar gasto recorrente:', error);
+        // Lide com o erro conforme necessário
+      }
     );
   }
 }
