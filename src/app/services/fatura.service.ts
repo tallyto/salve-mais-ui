@@ -17,4 +17,8 @@ export class FaturaService {
   public listarFaturas(): Observable<Fatura[]> {
     return this.http.get<Fatura[]>(this.apiUrl)
   }
+
+  public criarFatura(cardId: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/${cardId}`, {});
+  }
 }

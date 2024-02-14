@@ -1,7 +1,27 @@
+<form (ngSubmit)="handlerFatura()" [formGroup]=cardForm>
+  <h3>Gerar fatura</h3>
+  <div class="grid">
+
+    <div class="col-4">
+      <mat-form-field class="flex">
+        <mat-label>Cartão</mat-label>
+        <mat-select formControlName="cardId">
+          <mat-option *ngFor="let cartao of cartoes" [value]="cartao.id">{{cartao.nome}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col-12 pt-0">
+      <button color="primary" mat-raised-button type="submit">Salvar</button>
+    </div>
+  </div>
+</form>
+
+
 <!-- Tabela Faturas -->
 
 <h3>Faturas</h3>
-<table [dataSource]="faturas" mat-table multiTemplateDataRows class="mat-elevation-z8">
+<table [dataSource]="faturas" mat-table multiTemplateDataRows >
 
   <!-- Categoria Column -->
   <ng-container matColumnDef="dataVencimento">
@@ -27,7 +47,7 @@
   </ng-container>
 
   <ng-container matColumnDef="cartaoCredito">
-    <th *matHeaderCellDef mat-header-cell> Pago</th>
+    <th *matHeaderCellDef mat-header-cell> Cartão Crédito</th>
     <td *matCellDef="let fatura" mat-cell> {{ fatura.cartaoCredito ? fatura.cartaoCredito.nome : 'N/A'}} </td>
   </ng-container>
 
