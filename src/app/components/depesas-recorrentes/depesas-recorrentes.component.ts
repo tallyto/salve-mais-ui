@@ -49,7 +49,7 @@ export class DepesasRecorrentesComponent implements OnInit {
 
 
   carregarGastoRecorrente(): void {
-    this.despesaRecorrenteService.listCompras().subscribe(
+    this.despesaRecorrenteService.listCompras(0, 10, 'id').subscribe(
       gastoRecorrente => this.listGastosRecorrentes = gastoRecorrente
     );
   }

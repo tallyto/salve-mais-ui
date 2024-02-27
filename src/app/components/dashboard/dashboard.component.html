@@ -3,31 +3,31 @@
     <!-- Tabela Proventos -->
     <h3>Proventos</h3>
     <div class="mat-elevation-z1">
-    <table [dataSource]="proventos" mat-table>
+      <table [dataSource]="proventos" mat-table>
 
-      <!-- Nome Column -->
-      <ng-container matColumnDef="nome">
-        <th *matHeaderCellDef mat-header-cell> Descrição</th>
-        <td *matCellDef="let provento" mat-cell> {{ provento.descricao }} </td>
-      </ng-container>
+        <!-- Nome Column -->
+        <ng-container matColumnDef="nome">
+          <th *matHeaderCellDef mat-header-cell> Descrição</th>
+          <td *matCellDef="let provento" mat-cell> {{ provento.descricao }}</td>
+        </ng-container>
 
-      <!-- Data Column -->
-      <ng-container matColumnDef="data">
-        <th *matHeaderCellDef mat-header-cell> Data</th>
-        <td *matCellDef="let provento" mat-cell> {{ provento.data | date }} </td>
-      </ng-container>
+        <!-- Data Column -->
+        <ng-container matColumnDef="data">
+          <th *matHeaderCellDef mat-header-cell> Data</th>
+          <td *matCellDef="let provento" mat-cell> {{ provento.data | date }}</td>
+        </ng-container>
 
-      <!-- Valor Column -->
-      <ng-container matColumnDef="valor">
-        <th *matHeaderCellDef mat-header-cell> Valor</th>
-        <td *matCellDef="let provento" mat-cell>
-          {{ provento.valor | currency:'BRL':'symbol':'1.2-2' }}
-        </td>
-      </ng-container>
+        <!-- Valor Column -->
+        <ng-container matColumnDef="valor">
+          <th *matHeaderCellDef mat-header-cell> Valor</th>
+          <td *matCellDef="let provento" mat-cell>
+            {{ provento.valor | currency:'BRL':'symbol':'1.2-2' }}
+          </td>
+        </ng-container>
 
-      <tr *matHeaderRowDef="displayedColumnsProventos" mat-header-row></tr>
-      <tr *matRowDef="let row; columns: displayedColumnsProventos;" mat-row></tr>
-    </table>
+        <tr *matHeaderRowDef="displayedColumnsProventos" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumnsProventos;" mat-row></tr>
+      </table>
     </div>
   </div>
 
@@ -35,99 +35,98 @@
     <!-- Tabela Contas Fixas -->
     <h3>Contas Fixas</h3>
     <div class="mat-elevation-z1">
-    <table [dataSource]="contasFixas" mat-table>
+      <table [dataSource]="contasFixas" mat-table>
 
-      <!-- Nome Column -->
-      <ng-container matColumnDef="nome">
-        <th *matHeaderCellDef mat-header-cell> Nome</th>
-        <td *matCellDef="let contaFixa" mat-cell> {{ contaFixa.nome }} </td>
-      </ng-container>
+        <!-- Nome Column -->
+        <ng-container matColumnDef="nome">
+          <th *matHeaderCellDef mat-header-cell> Nome</th>
+          <td *matCellDef="let contaFixa" mat-cell> {{ contaFixa.nome }}</td>
+        </ng-container>
 
-      <!-- Categoria Column -->
-      <ng-container matColumnDef="categoria">
-        <th *matHeaderCellDef mat-header-cell> Categoria</th>
-        <td *matCellDef="let contaFixa" mat-cell>
-          {{ contaFixa.categoria ? contaFixa.categoria.nome : 'N/A' }}
-        </td>
-      </ng-container>
+        <!-- Categoria Column -->
+        <ng-container matColumnDef="categoria">
+          <th *matHeaderCellDef mat-header-cell> Categoria</th>
+          <td *matCellDef="let contaFixa" mat-cell>
+            {{ contaFixa.categoria ? contaFixa.categoria.nome : 'N/A' }}
+          </td>
+        </ng-container>
 
-      <!-- Vencimento Column -->
-      <ng-container matColumnDef="vencimento">
-        <th *matHeaderCellDef mat-header-cell> Vencimento</th>
-        <td *matCellDef="let contaFixa" mat-cell> {{ contaFixa.vencimento | date}} </td>
-      </ng-container>
+        <!-- Vencimento Column -->
+        <ng-container matColumnDef="vencimento">
+          <th *matHeaderCellDef mat-header-cell> Vencimento</th>
+          <td *matCellDef="let contaFixa" mat-cell> {{ contaFixa.vencimento | date }}</td>
+        </ng-container>
 
-      <!-- Valor Column -->
-      <ng-container matColumnDef="valor">
-        <th *matHeaderCellDef mat-header-cell> Valor</th>
-        <td *matCellDef="let contaFixa" mat-cell>
-          {{ contaFixa.valor | currency:'BRL':'symbol':'1.2-2' }}
-        </td>
-      </ng-container>
+        <!-- Valor Column -->
+        <ng-container matColumnDef="valor">
+          <th *matHeaderCellDef mat-header-cell> Valor</th>
+          <td *matCellDef="let contaFixa" mat-cell>
+            {{ contaFixa.valor | currency:'BRL':'symbol':'1.2-2' }}
+          </td>
+        </ng-container>
 
-      <!-- Pago Column -->
-      <ng-container matColumnDef="pago">
-        <th *matHeaderCellDef mat-header-cell> Pago</th>
-        <td *matCellDef="let contaFixa" mat-cell> {{ contaFixa.pago ? 'Sim' : 'Não' }} </td>
-      </ng-container>
+        <!-- Pago Column -->
+        <ng-container matColumnDef="pago">
+          <th *matHeaderCellDef mat-header-cell> Pago</th>
+          <td *matCellDef="let contaFixa" mat-cell> {{ contaFixa.pago ? 'Sim' : 'Não' }}</td>
+        </ng-container>
 
-      <tr *matHeaderRowDef="displayedColumnsContasFixas" mat-header-row></tr>
-      <tr *matRowDef="let row; columns: displayedColumnsContasFixas;" mat-row></tr>
-    </table>
+        <tr *matHeaderRowDef="displayedColumnsContasFixas" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumnsContasFixas;" mat-row></tr>
+      </table>
     </div>
   </div>
 
   <!-- Tabela Despesas Recorrentes -->
 
   <div class="col-12">
-  <h3>Gastos Recorrentes</h3>
-  <div class="mat-elevation-z1">
-  <table [dataSource]="dataSource" mat-table>
+    <h3>Gastos Recorrentes</h3>
+    <div class="mat-elevation-z1">
+      <table mat-table [dataSource]="listGastosRecorrentes"
+             matSort matSortActive="categoria" matSortDisableClear matSortDirection="desc">
+        <!-- Nome Column -->
+        <ng-container matColumnDef="descricao">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header> Descrição</th>
+          <td *matCellDef="let gastoRecorrente" mat-cell> {{ gastoRecorrente.descricao }}</td>
+        </ng-container>
 
-    <!-- Nome Column -->
-    <ng-container matColumnDef="descricao">
-      <th *matHeaderCellDef mat-header-cell> Descrição</th>
-      <td *matCellDef="let gastoRecorrente" mat-cell> {{ gastoRecorrente.descricao }} </td>
-    </ng-container>
+        <!-- Categoria Column -->
+        <ng-container matColumnDef="categoria">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header> Categoria</th>
+          <td *matCellDef="let gastoRecorrente" mat-cell>
+            {{ gastoRecorrente.categoria ? gastoRecorrente.categoria.nome : 'N/A' }}
+          </td>
+        </ng-container>
 
-    <!-- Categoria Column -->
-    <ng-container matColumnDef="categoria">
-      <th *matHeaderCellDef mat-header-cell> Categoria</th>
-      <td *matCellDef="let gastoRecorrente" mat-cell>
-        {{ gastoRecorrente.categoria ? gastoRecorrente.categoria.nome : 'N/A' }}
-      </td>
-    </ng-container>
+        <!-- Cartão Column -->
+        <ng-container matColumnDef="cartaoCredito">
+          <th *matHeaderCellDef mat-header-cell> Cartão</th>
+          <td *matCellDef="let gastoRecorrente" mat-cell>
+            {{ gastoRecorrente.cartaoCredito ? gastoRecorrente.cartaoCredito.nome : 'N/A' }}
+          </td>
+        </ng-container>
 
-    <!-- Cartão Column -->
-    <ng-container matColumnDef="cartaoCredito">
-      <th *matHeaderCellDef mat-header-cell> Cartão</th>
-      <td *matCellDef="let gastoRecorrente" mat-cell>
-        {{ gastoRecorrente.cartaoCredito ? gastoRecorrente.cartaoCredito.nome : 'N/A' }}
-      </td>
-    </ng-container>
-
-    <!-- Vencimento Column -->
-    <ng-container matColumnDef="data">
-      <th *matHeaderCellDef mat-header-cell> Comprado</th>
-      <td *matCellDef="let gastoRecorrente" mat-cell> {{ gastoRecorrente.data | date}} </td>
-    </ng-container>
-
-
-    <!-- Valor Column -->
-    <ng-container matColumnDef="valor">
-      <th *matHeaderCellDef mat-header-cell> Valor</th>
-      <td *matCellDef="let gastoRecorrente" mat-cell>
-        {{ gastoRecorrente.valor | currency:'BRL':'symbol':'1.2-2' }}
-      </td>
-    </ng-container>
+        <!-- Vencimento Column -->
+        <ng-container matColumnDef="data">
+          <th *matHeaderCellDef mat-sort-header mat-header-cell> Comprado</th>
+          <td *matCellDef="let gastoRecorrente" mat-cell> {{ gastoRecorrente.data | date }}</td>
+        </ng-container>
 
 
-    <tr *matHeaderRowDef="displayedColumnsGastoRecorrente" mat-header-row></tr>
-    <tr *matRowDef="let row; columns: displayedColumnsGastoRecorrente;" mat-row></tr>
-  </table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]">
-  </mat-paginator>
-  </div>
+        <!-- Valor Column -->
+        <ng-container matColumnDef="valor">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header> Valor</th>
+          <td *matCellDef="let gastoRecorrente" mat-cell>
+            {{ gastoRecorrente.valor | currency:'BRL':'symbol':'1.2-2' }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsGastoRecorrente"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsGastoRecorrente;"></tr>
+      </table>
+    </div>
+
+    <mat-paginator [length]="resultsLength" [pageSizeOptions]="[5, 10, 20]" [pageSize]="10"></mat-paginator>
   </div>
 </div>
 

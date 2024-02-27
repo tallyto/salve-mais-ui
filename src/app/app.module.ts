@@ -33,6 +33,8 @@ import {MatRadioModule} from "@angular/material/radio";
 import {DepesasRecorrentesComponent} from './components/depesas-recorrentes/depesas-recorrentes.component';
 import {FaturaComponent} from './components/fatura/fatura.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatSortModule} from "@angular/material/sort";
 
 @NgModule({
   declarations: [
@@ -74,6 +76,8 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     MatCheckboxModule,
     MatRadioModule,
     MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatSortModule,
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'}
