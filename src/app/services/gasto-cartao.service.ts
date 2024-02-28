@@ -14,8 +14,14 @@ export class GastoCartaoService {
   constructor(private http: HttpClient) {
   }
 
-  public listCompras(): Observable<GastoCartao[]> {
-    return this.http.get<GastoCartao[]>(this.apiUrl);
+  public listCompras(page: number, size: number, sort: string): Observable<GastoCartao[]> {
+    return this.http.get<GastoCartao[]>(this.apiUrl, {
+      params: {
+        page,
+        size,
+        sort
+      }
+    });
   }
 
   public salvarCompra(compra: GastoCartaoInput): Observable<GastoCartao> {
