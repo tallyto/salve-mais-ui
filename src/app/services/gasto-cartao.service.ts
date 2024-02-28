@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {GastoCartaoInput} from "../models/input/gasto-cartao.input";
 import {Observable} from "rxjs";
@@ -11,6 +11,7 @@ export class GastoCartaoService {
 
   private apiUrl = 'http://localhost:8080/api/compras'; // substitua pela sua URL
 
+  gastaoCartaoSaved = new EventEmitter()
   constructor(private http: HttpClient) {
   }
 

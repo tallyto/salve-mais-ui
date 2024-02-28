@@ -1,0 +1,43 @@
+<h3>Contas Fixas</h3>
+<div class="mat-elevation-z1">
+  <table [dataSource]="contasFixas" matSortActive="id" mat-table matSort matSortDisableClear matSortDirection="desc">
+
+    <!-- Nome Column -->
+    <ng-container matColumnDef="nome">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header> Nome</th>
+      <td *matCellDef="let contaFixa" mat-cell> {{ contaFixa.nome }}</td>
+    </ng-container>
+
+    <!-- Categoria Column -->
+    <ng-container matColumnDef="categoria">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header> Categoria</th>
+      <td *matCellDef="let contaFixa" mat-cell>
+        {{ contaFixa.categoria ? contaFixa.categoria.nome : 'N/A' }}
+      </td>
+    </ng-container>
+
+    <!-- Vencimento Column -->
+    <ng-container matColumnDef="vencimento">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header> Vencimento</th>
+      <td *matCellDef="let contaFixa" mat-cell> {{ contaFixa.vencimento | date }}</td>
+    </ng-container>
+
+    <!-- Valor Column -->
+    <ng-container matColumnDef="valor">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header> Valor</th>
+      <td *matCellDef="let contaFixa" mat-cell>
+        {{ contaFixa.valor | currency:'BRL':'symbol':'1.2-2' }}
+      </td>
+    </ng-container>
+
+    <!-- Pago Column -->
+    <ng-container matColumnDef="pago">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header> Pago</th>
+      <td *matCellDef="let contaFixa" mat-cell> {{ contaFixa.pago ? 'Sim' : 'Não' }}</td>
+    </ng-container>
+
+    <tr *matHeaderRowDef="displayedColumnsContasFixas" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: displayedColumnsContasFixas;" mat-row></tr>
+  </table>
+  <mat-paginator [length]="resultsLength" [pageSizeOptions]="[5, 10, 20]" [pageSize]="10"></mat-paginator>
+</div>

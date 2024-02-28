@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {Financa} from "../../models/financa.model";
 import {FinancaService} from "../../services/financa.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Categoria} from "../../models/categoria.model";
@@ -11,8 +10,6 @@ import {CategoriaService} from "../../services/categoria.service";
   styleUrls: ['./despesas-fixas.component.css']
 })
 export class DespesasFixasComponent implements OnInit {
-  displayedColumnsContasFixas: string[] = ['nome', 'categoria', 'vencimento', 'valor', 'pago'];
-  contasFixas: Financa[] = [];
   despesaFixaForm: FormGroup;
   public categorias: Categoria[] = [];
 
@@ -33,14 +30,7 @@ export class DespesasFixasComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.carregarContasFixas()
     this.carregarCategorias()
-  }
-
-  carregarContasFixas(): void {
-    this.financaService.listarFinancas().subscribe(
-      contasFixas => this.contasFixas = contasFixas
-    );
   }
 
   carregarCategorias(): void {
@@ -51,9 +41,9 @@ export class DespesasFixasComponent implements OnInit {
 
   salvarDespesaFixa() {
     this.financaService.salvarFinanca(this.despesaFixaForm.value).subscribe({
-      next: value => {
+      next: () => {
         this.despesaFixaForm.reset()
-        this.carregarContasFixas()
+        this.financaService.savedFinanca.emit()
       }
     })
   }

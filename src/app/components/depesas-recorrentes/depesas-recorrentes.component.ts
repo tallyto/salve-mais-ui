@@ -5,7 +5,6 @@ import {CategoriaService} from "../../services/categoria.service";
 import {GastoCartaoService} from "../../services/gasto-cartao.service";
 import {CartaoService} from "../../services/cartao.service";
 import {Cartao} from "../../models/cartao.model";
-import {GastoCartao} from "../../models/gasto-cartao.model";
 
 @Component({
   selector: 'app-depesas-recorrentes',
@@ -13,8 +12,6 @@ import {GastoCartao} from "../../models/gasto-cartao.model";
   styleUrls: ['./depesas-recorrentes.component.css']
 })
 export class DepesasRecorrentesComponent implements OnInit {
-  displayedColumnsGastoRecorrente: string[] = ['descricao', 'categoria', 'cartaoCredito', 'data', 'valor'];
-  listGastosRecorrentes: GastoCartao[] = [];
   gastosRecorrentes: FormGroup;
   public categorias: Categoria[] = [];
   public cartoes: Cartao[] = [];
@@ -36,7 +33,6 @@ export class DepesasRecorrentesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.carregarGastoRecorrente()
     this.carregarCategorias()
     this.carregarCartoes()
   }
@@ -48,12 +44,6 @@ export class DepesasRecorrentesComponent implements OnInit {
   }
 
 
-  carregarGastoRecorrente(): void {
-    this.despesaRecorrenteService.listCompras(0, 10, 'id').subscribe(
-      gastoRecorrente => this.listGastosRecorrentes = gastoRecorrente
-    );
-  }
-
   carregarCategorias(): void {
     this.categoriaService.listarCategorias().subscribe(
       categorias => this.categorias = categorias
@@ -62,9 +52,9 @@ export class DepesasRecorrentesComponent implements OnInit {
 
   salvarGastoRecorrente() {
     this.despesaRecorrenteService.salvarCompra(this.gastosRecorrentes.value).subscribe({
-      next: value => {
+      next: () => {
         this.gastosRecorrentes.reset()
-        this.carregarGastoRecorrente()
+        this.despesaRecorrenteService.gastaoCartaoSaved.emit()
       }
     })
   }

@@ -35,6 +35,9 @@ import {FaturaComponent} from './components/fatura/fatura.component';
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatSortModule} from "@angular/material/sort";
+import { ListDespesasRecorrentesComponent } from './components/list-despesas-recorrentes/list-despesas-recorrentes.component';
+import { ListContasFixasComponent } from './components/list-contas-fixas/list-contas-fixas.component';
+import { ListProventosComponent } from './components/list-proventos/list-proventos.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +50,9 @@ import {MatSortModule} from "@angular/material/sort";
     DespesasFixasComponent,
     DepesasRecorrentesComponent,
     FaturaComponent,
+    ListDespesasRecorrentesComponent,
+    ListContasFixasComponent,
+    ListProventosComponent,
   ],
   imports: [
     BrowserModule,
