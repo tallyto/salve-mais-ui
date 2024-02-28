@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {Provento} from '../models/provento.model';
 import {Observable} from 'rxjs';
 
@@ -13,8 +13,16 @@ export class ProventoService {
   constructor(private http: HttpClient) {
   }
 
-  public listarProventos(): Observable<Provento[]> {
-    return this.http.get<Provento[]>(this.apiUrl);
+  proventoSaved = new EventEmitter<void>();
+
+  public listarProventos(page: number, size: number, sort: string): Observable<Provento[]> {
+    return this.http.get<Provento[]>(this.apiUrl, {
+      params: {
+        page,
+        size,
+        sort
+      }
+    });
   }
 
   public criarProvento(provento: Provento): Observable<Provento> {

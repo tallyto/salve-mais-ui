@@ -53,48 +53,5 @@
 
 
 <!-- Tabela Despesas Recorrentes -->
+<app-list-despesas-recorrentes></app-list-despesas-recorrentes>
 
-<h3>Gastos Recorrentes</h3>
-<table [dataSource]="listGastosRecorrentes" mat-table>
-
-  <!-- Nome Column -->
-  <ng-container matColumnDef="descricao">
-    <th *matHeaderCellDef mat-header-cell> Descrição</th>
-    <td *matCellDef="let gastoRecorrente" mat-cell> {{ gastoRecorrente.descricao }} </td>
-  </ng-container>
-
-  <!-- Categoria Column -->
-  <ng-container matColumnDef="categoria">
-    <th *matHeaderCellDef mat-header-cell> Categoria</th>
-    <td *matCellDef="let gastoRecorrente" mat-cell>
-      {{ gastoRecorrente.categoria ? gastoRecorrente.categoria.nome : 'N/A' }}
-    </td>
-  </ng-container>
-
-  <!-- Cartão Column -->
-  <ng-container matColumnDef="cartaoCredito">
-    <th *matHeaderCellDef mat-header-cell> Cartão</th>
-    <td *matCellDef="let gastoRecorrente" mat-cell>
-      {{ gastoRecorrente.cartaoCredito ? gastoRecorrente.cartaoCredito.nome : 'N/A' }}
-    </td>
-  </ng-container>
-
-  <!-- Vencimento Column -->
-  <ng-container matColumnDef="data">
-    <th *matHeaderCellDef mat-header-cell> Comprado</th>
-    <td *matCellDef="let gastoRecorrente" mat-cell> {{ gastoRecorrente.data | date}} </td>
-  </ng-container>
-
-
-  <!-- Valor Column -->
-  <ng-container matColumnDef="valor">
-    <th *matHeaderCellDef mat-header-cell> Valor</th>
-    <td *matCellDef="let gastoRecorrente" mat-cell>
-      {{ gastoRecorrente.valor | currency:'BRL':'symbol':'1.2-2' }}
-    </td>
-  </ng-container>
-
-
-  <tr *matHeaderRowDef="displayedColumnsGastoRecorrente" mat-header-row></tr>
-  <tr *matRowDef="let row; columns: displayedColumnsGastoRecorrente;" mat-row></tr>
-</table>

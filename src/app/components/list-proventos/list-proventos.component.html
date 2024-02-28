@@ -1,0 +1,31 @@
+<!-- Tabela Proventos -->
+<h3>Proventos</h3>
+<div class="mat-elevation-z1">
+  <table [dataSource]="proventos" mat-table
+         matSort matSortActive="id" matSortDisableClear matSortDirection="desc">
+
+    <!-- Nome Column -->
+    <ng-container matColumnDef="descricao">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header> Descrição</th>
+      <td *matCellDef="let provento" mat-cell> {{ provento.descricao }}</td>
+    </ng-container>
+
+    <!-- Data Column -->
+    <ng-container matColumnDef="data">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header> Data</th>
+      <td *matCellDef="let provento" mat-cell> {{ provento.data | date }}</td>
+    </ng-container>
+
+    <!-- Valor Column -->
+    <ng-container matColumnDef="valor">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header> Valor</th>
+      <td *matCellDef="let provento" mat-cell>
+        {{ provento.valor | currency:'BRL':'symbol':'1.2-2' }}
+      </td>
+    </ng-container>
+
+    <tr *matHeaderRowDef="displayedColumnsProventos" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: displayedColumnsProventos;" mat-row></tr>
+  </table>
+  <mat-paginator [length]="resultsLength" [pageSizeOptions]="[5, 10, 20]" [pageSize]="10"></mat-paginator>
+</div>

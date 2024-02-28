@@ -45,44 +45,4 @@
 
 
 <!-- Tabela Despesas Fixas -->
-
-<h3>Contas Fixas</h3>
-<table [dataSource]="contasFixas" mat-table>
-
-  <!-- Nome Column -->
-  <ng-container matColumnDef="nome">
-    <th *matHeaderCellDef mat-header-cell> Nome</th>
-    <td *matCellDef="let contaFixa" mat-cell> {{ contaFixa.nome }} </td>
-  </ng-container>
-
-  <!-- Categoria Column -->
-  <ng-container matColumnDef="categoria">
-    <th *matHeaderCellDef mat-header-cell> Categoria</th>
-    <td *matCellDef="let contaFixa" mat-cell>
-      {{ contaFixa.categoria ? contaFixa.categoria.nome : 'N/A' }}
-    </td>
-  </ng-container>
-
-  <!-- Vencimento Column -->
-  <ng-container matColumnDef="vencimento">
-    <th *matHeaderCellDef mat-header-cell> Vencimento</th>
-    <td *matCellDef="let contaFixa" mat-cell> {{ contaFixa.vencimento | date}} </td>
-  </ng-container>
-
-  <!-- Valor Column -->
-  <ng-container matColumnDef="valor">
-    <th *matHeaderCellDef mat-header-cell> Valor</th>
-    <td *matCellDef="let contaFixa" mat-cell>
-      {{ contaFixa.valor | currency:'BRL':'symbol':'1.2-2' }}
-    </td>
-  </ng-container>
-
-  <!-- Pago Column -->
-  <ng-container matColumnDef="pago">
-    <th *matHeaderCellDef mat-header-cell> Pago</th>
-    <td *matCellDef="let contaFixa" mat-cell> {{ contaFixa.pago ? 'Sim' : 'Não' }} </td>
-  </ng-container>
-
-  <tr *matHeaderRowDef="displayedColumnsContasFixas" mat-header-row></tr>
-  <tr *matRowDef="let row; columns: displayedColumnsContasFixas;" mat-row></tr>
-</table>
+<app-list-contas-fixas></app-list-contas-fixas>

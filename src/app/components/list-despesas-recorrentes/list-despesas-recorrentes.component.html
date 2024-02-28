@@ -1,0 +1,48 @@
+<h3>Gastos Recorrentes</h3>
+<div class="mat-elevation-z1">
+  <table mat-table [dataSource]="listGastosRecorrentes"
+         matSort matSortActive="categoria" matSortDisableClear matSortDirection="desc">
+    <!-- Nome Column -->
+    <ng-container matColumnDef="descricao">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header> Descrição</th>
+      <td *matCellDef="let gastoRecorrente" mat-cell> {{ gastoRecorrente.descricao }}</td>
+    </ng-container>
+
+    <!-- Categoria Column -->
+    <ng-container matColumnDef="categoria">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header> Categoria</th>
+      <td *matCellDef="let gastoRecorrente" mat-cell>
+        {{ gastoRecorrente.categoria ? gastoRecorrente.categoria.nome : 'N/A' }}
+      </td>
+    </ng-container>
+
+    <!-- Cartão Column -->
+    <ng-container matColumnDef="cartaoCredito">
+      <th *matHeaderCellDef mat-header-cell> Cartão</th>
+      <td *matCellDef="let gastoRecorrente" mat-cell>
+        {{ gastoRecorrente.cartaoCredito ? gastoRecorrente.cartaoCredito.nome : 'N/A' }}
+      </td>
+    </ng-container>
+
+    <!-- Vencimento Column -->
+    <ng-container matColumnDef="data">
+      <th *matHeaderCellDef mat-sort-header mat-header-cell> Comprado</th>
+      <td *matCellDef="let gastoRecorrente" mat-cell> {{ gastoRecorrente.data | date }}</td>
+    </ng-container>
+
+
+    <!-- Valor Column -->
+    <ng-container matColumnDef="valor">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header> Valor</th>
+      <td *matCellDef="let gastoRecorrente" mat-cell>
+        {{ gastoRecorrente.valor | currency:'BRL':'symbol':'1.2-2' }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsGastoRecorrente"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsGastoRecorrente;"></tr>
+  </table>
+  <mat-paginator [length]="resultsLength" [pageSizeOptions]="[5, 10, 20]" [pageSize]="10"></mat-paginator>
+
+</div>
+
