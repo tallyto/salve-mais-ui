@@ -38,6 +38,8 @@ import {MatSortModule} from "@angular/material/sort";
 import { ListDespesasRecorrentesComponent } from './components/list-despesas-recorrentes/list-despesas-recorrentes.component';
 import { ListContasFixasComponent } from './components/list-contas-fixas/list-contas-fixas.component';
 import { ListProventosComponent } from './components/list-proventos/list-proventos.component';
+import { AccountComponent } from './components/account/account.component';
+import { ListAccountsComponent } from './components/list-accounts/list-accounts.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +55,8 @@ import { ListProventosComponent } from './components/list-proventos/list-provent
     ListDespesasRecorrentesComponent,
     ListContasFixasComponent,
     ListProventosComponent,
+    AccountComponent,
+    ListAccountsComponent,
   ],
   imports: [
     BrowserModule,

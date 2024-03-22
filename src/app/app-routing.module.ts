@@ -7,6 +7,7 @@ import {ProventoFormComponent} from "./components/provento-form/provento-form.co
 import {DespesasFixasComponent} from "./components/despesas-fixas/despesas-fixas.component";
 import {DepesasRecorrentesComponent} from "./components/depesas-recorrentes/depesas-recorrentes.component";
 import {FaturaComponent} from "./components/fatura/fatura.component";
+import { AccountComponent } from './components/account/account.component';
 
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path: 'despesas-fixas', component: DespesasFixasComponent},
   {path: 'despesas-recorrentes', component: DepesasRecorrentesComponent},
   {path: 'faturas', component: FaturaComponent},
+  {path: 'account', component: AccountComponent},
   {path: '**', redirectTo: 'dashboard'}
 
 ];

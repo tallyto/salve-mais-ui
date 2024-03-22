@@ -1,0 +1,28 @@
+<!-- Tabela Account -->
+<h3>Contas</h3>
+<div class="mat-elevation-z1">
+  <table [dataSource]="accounts" mat-table
+         matSort matSortActive="id" matSortDisableClear matSortDirection="desc">
+
+
+
+    <!-- Valor Column -->
+    <ng-container matColumnDef="saldo">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header> Saldo</th>
+      <td *matCellDef="let account" mat-cell>
+        {{ account.saldo | currency:'BRL':'symbol':'1.2-2' }}
+      </td>
+    </ng-container>
+    <!-- Nome Column -->
+    <ng-container matColumnDef="titular">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header> Titular</th>
+      <td *matCellDef="let account" mat-cell> {{ account.titular }}</td>
+    </ng-container>
+
+
+
+    <tr *matHeaderRowDef="displayedColumnsProventos" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: displayedColumnsProventos;" mat-row></tr>
+  </table>
+  <mat-paginator [length]="resultsLength" [pageSizeOptions]="[5, 10, 20]" [pageSize]="10"></mat-paginator>
+</div>
