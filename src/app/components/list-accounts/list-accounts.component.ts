@@ -21,7 +21,11 @@ export class ListAccountsComponent implements AfterViewInit {
   constructor(
     private accountService: AccountService,
   ) {
-
+    this.accountService.savedAccount.subscribe({
+      next: () => {
+        this.refreshAccountList()
+      }
+    })
   }
 
   // @ts-expect-error
@@ -30,10 +34,10 @@ export class ListAccountsComponent implements AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
 
   ngAfterViewInit(): void {
-    this.refreshProventosList()
+    this.refreshAccountList()
   }
 
-  refreshProventosList() {
+  refreshAccountList() {
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 
     merge(this.sort.sortChange, this.paginator.page)
