@@ -9,6 +9,15 @@
     </div>
 
     <div class="col-4">
+      <mat-form-field class="flex">
+        <mat-label>Conta</mat-label>
+        <mat-select formControlName="contaId">
+          <mat-option *ngFor="let conta of accounts" [value]="conta.id">{{conta.titular}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col-4">
       <mat-form-field appearance="fill" class="flex">
         <mat-label>Valor</mat-label>
         <input formControlName="valor" matInput placeholder="Ex: 125">

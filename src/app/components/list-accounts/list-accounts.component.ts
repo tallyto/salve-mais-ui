@@ -1,9 +1,9 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {Provento} from "../../models/provento.model";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {catchError, map, merge, of as observableOf, startWith, switchMap} from "rxjs";
 import { AccountService } from 'src/app/services/account.service';
+import {Account} from "../../models/account.model";
 
 @Component({
   selector: 'app-list-accounts',
@@ -16,7 +16,7 @@ export class ListAccountsComponent implements AfterViewInit {
 
   displayedColumnsProventos: string[] = ['saldo', 'titular'];
 
-  accounts: Provento[] = [];
+  accounts: Account[] = [];
 
   constructor(
     private accountService: AccountService,
