@@ -14,7 +14,7 @@ export class ListProventosComponent implements AfterViewInit {
   resultsLength = 0;
   isLoadingResults = true;
 
-  displayedColumnsProventos: string[] = ['descricao', 'data', 'valor'];
+  displayedColumnsProventos: string[] = ['descricao', 'conta', 'data', 'valor'];
 
   proventos: Provento[] = [];
 

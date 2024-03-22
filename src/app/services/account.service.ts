@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import {EventEmitter, Injectable} from '@angular/core';
-import { Account } from '../models/account.model';
+import {Account, AccountPage} from '../models/account.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -19,8 +19,8 @@ export class AccountService {
     return this.http.post<Account>(this.apiUrl, account)
   }
 
-  listarAccounts(page: number, size: number, sort: string): Observable<Account[]> {
-    return this.http.get<Account[]>(this.apiUrl,  {
+  listarAccounts(page: number, size: number, sort: string): Observable<AccountPage> {
+    return this.http.get<AccountPage>(this.apiUrl,  {
       params: {
         page,
         size,

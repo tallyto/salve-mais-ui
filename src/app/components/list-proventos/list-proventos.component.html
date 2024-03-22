@@ -10,6 +10,12 @@
       <td *matCellDef="let provento" mat-cell> {{ provento.descricao }}</td>
     </ng-container>
 
+    <!-- Account Column -->
+    <ng-container matColumnDef="conta">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>Conta</th>
+      <td *matCellDef="let provento" mat-cell> {{ provento.conta.titular }}</td>
+    </ng-container>
+
     <!-- Data Column -->
     <ng-container matColumnDef="data">
       <th *matHeaderCellDef mat-header-cell mat-sort-header> Data</th>
