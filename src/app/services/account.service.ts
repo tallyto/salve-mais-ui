@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import { Account } from '../models/account.model';
 import { Observable } from 'rxjs';
 
@@ -10,6 +10,7 @@ export class AccountService {
 
   private apiUrl = 'http://localhost:8080/api/conta'
 
+  savedAccount = new EventEmitter<void>();
   constructor(private http: HttpClient) {
 
   }
