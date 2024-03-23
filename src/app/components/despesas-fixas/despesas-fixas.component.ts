@@ -3,6 +3,8 @@ import {FinancaService} from "../../services/financa.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Categoria} from "../../models/categoria.model";
 import {CategoriaService} from "../../services/categoria.service";
+import {Account} from "../../models/account.model";
+import {AccountService} from "../../services/account.service";
 
 @Component({
   selector: 'app-despesas-fixas',
@@ -12,16 +14,18 @@ import {CategoriaService} from "../../services/categoria.service";
 export class DespesasFixasComponent implements OnInit {
   despesaFixaForm: FormGroup;
   public categorias: Categoria[] = [];
-
+  public accounts: Account[] = []
   constructor(
     private financaService: FinancaService,
     private formBuilder: FormBuilder,
-    private categoriaService: CategoriaService
+    private categoriaService: CategoriaService,
+    private accountService: AccountService,
   ) {
     this.despesaFixaForm = this.formBuilder.group({
       id: [null],
       nome: ['', Validators.required],
       categoriaId: ['', Validators.required],
+      contaId: ['', Validators.required],
       vencimento: ['', Validators.required],
       valor: ['', [Validators.required, Validators.min(0)]],
       pago: [false, Validators.required]
@@ -31,6 +35,11 @@ export class DespesasFixasComponent implements OnInit {
 
   ngOnInit(): void {
     this.carregarCategorias()
+    this.accountService.listarAccounts(0,50, '').subscribe({
+      next: accountPage => {
+        this.accounts = accountPage.content
+      }
+    })
   }
 
   carregarCategorias(): void {

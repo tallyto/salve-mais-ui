@@ -19,6 +19,15 @@
 
     <div class="col-4">
       <mat-form-field class="flex">
+        <mat-label>Conta</mat-label>
+        <mat-select formControlName="contaId">
+          <mat-option *ngFor="let conta of accounts" [value]="conta.id">{{conta.titular}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col-4">
+      <mat-form-field class="flex">
         <mat-label>Data de vencimento</mat-label>
         <input [matDatepicker]="picker" formControlName="vencimento" matInput>
         <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>

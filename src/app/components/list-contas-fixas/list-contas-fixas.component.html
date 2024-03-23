@@ -16,6 +16,12 @@
       </td>
     </ng-container>
 
+    <!-- Account Column -->
+    <ng-container matColumnDef="conta">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>Conta</th>
+      <td *matCellDef="let contaFixa" mat-cell> {{ contaFixa.conta.titular }}</td>
+    </ng-container>
+
     <!-- Vencimento Column -->
     <ng-container matColumnDef="vencimento">
       <th *matHeaderCellDef mat-header-cell mat-sort-header> Vencimento</th>
