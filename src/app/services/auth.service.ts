@@ -1,0 +1,29 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+export interface UsuarioCadastroDTO {
+  nome: string;
+  email: string;
+  senha: string;
+}
+
+export interface LoginDTO {
+  email: string;
+  senha: string;
+}
+
+@Injectable({ providedIn: 'root' })
+export class AuthService {
+  private apiUrl = 'http://localhost:8080/usuarios'; // endpoint correto
+
+  constructor(private http: HttpClient) {}
+
+  register(data: UsuarioCadastroDTO): Observable<any> {
+    return this.http.post(this.apiUrl, data);
+  }
+
+  login(data: LoginDTO): Observable<any> {
+    return this.http.post('http://localhost:8080/login', data);
+  }
+}

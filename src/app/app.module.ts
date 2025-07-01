@@ -1,3 +1,5 @@
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './services/auth.interceptor';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -44,6 +46,8 @@ import { ListProventosComponent } from './components/list-proventos/list-provent
 import { MenuLateralComponent } from './components/menu-lateral/menu-lateral.component';
 import { ProventoFormComponent } from './components/provento-form/provento-form.component';
 import { SpendingTrendChartComponent } from './components/spending-trend-chart/spending-trend-chart.component';
+import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -95,10 +99,13 @@ import { SpendingTrendChartComponent } from './components/spending-trend-chart/s
     MatPaginatorModule,
     MatProgressSpinnerModule,
     MatSortModule,
-    NgChartsModule
+    NgChartsModule,
+    RegisterComponent, // Importa o componente standalone
+    LoginComponent,
   ],
   providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

@@ -8,20 +8,24 @@ import {DespesasFixasComponent} from "./components/despesas-fixas/despesas-fixas
 import {DepesasRecorrentesComponent} from "./components/depesas-recorrentes/depesas-recorrentes.component";
 import {FaturaComponent} from "./components/fatura/fatura.component";
 import { AccountComponent } from './components/account/account.component';
+import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './components/login/login.component';
+import { AuthGuard } from './services/auth.guard';
 
 
 const routes: Routes = [
   {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
-  {path: 'dashboard', component: DashboardComponent},
-  {path: 'card-form', component: CartaoFormComponent},
-  {path: 'categoria-form', component: CategoriaFormComponent},
-  {path: 'provento-form', component: ProventoFormComponent},
-  {path: 'despesas-fixas', component: DespesasFixasComponent},
-  {path: 'despesas-recorrentes', component: DepesasRecorrentesComponent},
-  {path: 'faturas', component: FaturaComponent},
-  {path: 'account', component: AccountComponent},
+  {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
+  {path: 'card-form', component: CartaoFormComponent, canActivate: [AuthGuard]},
+  {path: 'categoria-form', component: CategoriaFormComponent, canActivate: [AuthGuard]},
+  {path: 'provento-form', component: ProventoFormComponent, canActivate: [AuthGuard]},
+  {path: 'despesas-fixas', component: DespesasFixasComponent, canActivate: [AuthGuard]},
+  {path: 'despesas-recorrentes', component: DepesasRecorrentesComponent, canActivate: [AuthGuard]},
+  {path: 'faturas', component: FaturaComponent, canActivate: [AuthGuard]},
+  {path: 'account', component: AccountComponent, canActivate: [AuthGuard]},
+  {path: 'register', component: RegisterComponent},
+  {path: 'login', component: LoginComponent},
   {path: '**', redirectTo: 'dashboard'}
-
 ];
 
 @NgModule({

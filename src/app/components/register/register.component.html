@@ -1,0 +1,26 @@
+<div class="register-container">
+  <mat-card>
+    <h2>Cadastro</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="nome" required>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" required type="email">
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Senha</mat-label>
+        <input matInput formControlName="senha" required type="password">
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Confirmar Senha</mat-label>
+        <input matInput formControlName="confirmarSenha" required type="password">
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">Cadastrar</button>
+    </form>
+    <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
+    <mat-hint *ngIf="successMessage">{{ successMessage }}</mat-hint>
+  </mat-card>
+</div>
