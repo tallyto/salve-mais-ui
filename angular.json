@@ -62,10 +62,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "gestor-financeiro-ui:build:production"
+              "buildTarget": "gestor-financeiro-ui:build:production"
             },
             "development": {
-              "browserTarget": "gestor-financeiro-ui:build:development"
+              "buildTarget": "gestor-financeiro-ui:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -73,7 +73,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "gestor-financeiro-ui:build"
+            "buildTarget": "gestor-financeiro-ui:build"
           }
         },
         "test": {
