@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,8 @@ import { Router } from '@angular/router';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSnackBarModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -26,7 +28,7 @@ export class LoginComponent {
   loginForm: FormGroup;
   errorMessage: string = '';
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private snackBar: MatSnackBar) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       senha: ['', [Validators.required, Validators.minLength(6)]]
@@ -35,7 +37,11 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.invalid) {
-      this.errorMessage = 'Preencha todos os campos corretamente.';
+      this.snackBar.open('Preencha todos os campos corretamente.', 'Fechar', {
+        duration: 3000,
+        panelClass: 'snackbar-error',
+        verticalPosition: 'top'
+      });
       return;
     }
     const { email, senha } = this.loginForm.value;
@@ -43,14 +49,27 @@ export class LoginComponent {
       next: (res) => {
         if (res && res.token) {
           localStorage.setItem('token', res.token);
+          this.snackBar.open('Login realizado com sucesso!', 'Fechar', {
+            duration: 3000,
+            panelClass: 'snackbar-success',
+            verticalPosition: 'top'
+          });
           this.errorMessage = '';
           this.router.navigate(['/dashboard']);
         } else {
-          this.errorMessage = 'Resposta inválida do servidor.';
+          this.snackBar.open('Resposta inválida do servidor.', 'Fechar', {
+            duration: 3000,
+            panelClass: 'snackbar-error',
+            verticalPosition: 'top'
+          });
         }
       },
       error: (err) => {
-        this.errorMessage = err.error?.message || 'Usuário ou senha inválidos.';
+        this.snackBar.open(err.error?.message || 'Usuário ou senha inválidos.', 'Fechar', {
+          duration: 3000,
+          panelClass: 'snackbar-error',
+          verticalPosition: 'top'
+        });
       }
     });
   }

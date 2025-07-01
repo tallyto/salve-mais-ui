@@ -6,14 +6,14 @@
 - [x] Cadastro de usuário
 - [x] Guard de rotas (AuthGuard)
 - [x] Interceptor para envio automático do token
-- [ ] Logout (remoção do token e redirecionamento)
-- [ ] Expiração automática do token (logout automático)
+- [x] Logout (remoção do token e redirecionamento)
+- [x] Expiração automática do token (logout automático)
 - [ ] Recuperação de senha
 - [ ] Permissões e papéis de usuário (admin, comum)
 
 ## Experiência do Usuário
 
-- [ ] Feedback visual (snackbar/toast para sucesso/erro)
+- [x] Feedback visual (snackbar/toast para sucesso/erro)
 - [ ] Exibir nome do usuário logado
 - [ ] Tela de perfil do usuário (editar dados, trocar senha)
 - [ ] Lembrar-me (persistência do login)
