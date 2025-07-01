@@ -6,9 +6,9 @@ import {Financa} from '../models/financa.model';
 @Injectable({
   providedIn: 'root'
 })
-export class FinancaService {
+export class ContasFixasService {
 
-  private apiUrl = 'http://localhost:8080/api/contasfixas'; // substitua pela sua URL
+  private apiUrl = 'http://localhost:8080/api/contas/fixas'; // substitua pela sua URL
 
   savedFinanca = new EventEmitter<void>();
   constructor(private http: HttpClient) {
