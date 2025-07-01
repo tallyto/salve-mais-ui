@@ -1,45 +1,49 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatCardModule} from '@angular/material/card';
-import {MatTableModule} from '@angular/material/table';
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
-import {DashboardComponent} from './components/dashboard/dashboard.component';
-import {MenuLateralComponent} from './components/menu-lateral/menu-lateral.component';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {MatButtonModule} from "@angular/material/button";
-import {MatToolbarModule} from "@angular/material/toolbar";
-import {MatIconModule} from "@angular/material/icon";
-import {MatListModule} from "@angular/material/list";
-import {RouterModule} from "@angular/router";
-import {MatExpansionModule} from "@angular/material/expansion";
-import {MatTooltipModule} from "@angular/material/tooltip";
-import {MatSidenavModule} from "@angular/material/sidenav";
-import {MatMenuModule} from "@angular/material/menu";
-import {CartaoFormComponent} from './components/cartao-form/cartao-form.component';
-import {MatInputModule} from "@angular/material/input";
-import {CategoriaFormComponent} from './components/categoria-form/categoria-form.component';
-import {MatSnackBarModule} from "@angular/material/snack-bar";
-import {ProventoFormComponent} from './components/provento-form/provento-form.component';
-import {MatDatepickerModule} from "@angular/material/datepicker";
-import {MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
-import {DespesasFixasComponent} from "./components/despesas-fixas/despesas-fixas.component";
-import {MatGridListModule} from "@angular/material/grid-list";
-import {MatSelectModule} from "@angular/material/select";
-import {MatCheckboxModule} from "@angular/material/checkbox";
-import {MatRadioModule} from "@angular/material/radio";
-import {DepesasRecorrentesComponent} from './components/depesas-recorrentes/depesas-recorrentes.component';
-import {FaturaComponent} from './components/fatura/fatura.component';
-import {MatPaginatorModule} from "@angular/material/paginator";
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {MatSortModule} from "@angular/material/sort";
-import { ListDespesasRecorrentesComponent } from './components/list-despesas-recorrentes/list-despesas-recorrentes.component';
-import { ListContasFixasComponent } from './components/list-contas-fixas/list-contas-fixas.component';
-import { ListProventosComponent } from './components/list-proventos/list-proventos.component';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { MatButtonModule } from "@angular/material/button";
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MAT_DATE_LOCALE, MatNativeDateModule } from "@angular/material/core";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatExpansionModule } from "@angular/material/expansion";
+import { MatGridListModule } from "@angular/material/grid-list";
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
+import { MatListModule } from "@angular/material/list";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatPaginatorModule } from "@angular/material/paginator";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatRadioModule } from "@angular/material/radio";
+import { MatSelectModule } from "@angular/material/select";
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatSortModule } from "@angular/material/sort";
+import { MatTableModule } from '@angular/material/table';
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from "@angular/router";
+import { NgChartsModule } from 'ng2-charts';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
 import { AccountComponent } from './components/account/account.component';
+import { CartaoFormComponent } from './components/cartao-form/cartao-form.component';
+import { CategoriaFormComponent } from './components/categoria-form/categoria-form.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DepesasRecorrentesComponent } from './components/depesas-recorrentes/depesas-recorrentes.component';
+import { DespesasFixasComponent } from "./components/despesas-fixas/despesas-fixas.component";
+import { ExpensePieChartComponent } from './components/expense-pie-chart/expense-pie-chart.component';
+import { FaturaComponent } from './components/fatura/fatura.component';
+import { IncomeExpenseChartComponent } from './components/income-expense-chart/income-expense-chart.component';
 import { ListAccountsComponent } from './components/list-accounts/list-accounts.component';
+import { ListContasFixasComponent } from './components/list-contas-fixas/list-contas-fixas.component';
+import { ListDespesasRecorrentesComponent } from './components/list-despesas-recorrentes/list-despesas-recorrentes.component';
+import { ListProventosComponent } from './components/list-proventos/list-proventos.component';
+import { MenuLateralComponent } from './components/menu-lateral/menu-lateral.component';
+import { ProventoFormComponent } from './components/provento-form/provento-form.component';
+import { SpendingTrendChartComponent } from './components/spending-trend-chart/spending-trend-chart.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +61,9 @@ import { ListAccountsComponent } from './components/list-accounts/list-accounts.
     ListProventosComponent,
     AccountComponent,
     ListAccountsComponent,
+    SpendingTrendChartComponent,
+    IncomeExpenseChartComponent,
+    ExpensePieChartComponent
   ],
   imports: [
     BrowserModule,
@@ -88,9 +95,10 @@ import { ListAccountsComponent } from './components/list-accounts/list-accounts.
     MatPaginatorModule,
     MatProgressSpinnerModule,
     MatSortModule,
+    NgChartsModule
   ],
   providers: [
-    {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'}
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
   ],
   bootstrap: [AppComponent]
 })

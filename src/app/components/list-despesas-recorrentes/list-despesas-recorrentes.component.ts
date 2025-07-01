@@ -6,6 +6,7 @@ import {MatSort} from "@angular/material/sort";
 import {GastoCartaoService} from "../../services/gasto-cartao.service";
 
 @Component({
+  standalone: false,
   selector: 'app-list-despesas-recorrentes',
   templateUrl: './list-despesas-recorrentes.component.html',
   styleUrls: ['./list-despesas-recorrentes.component.css']

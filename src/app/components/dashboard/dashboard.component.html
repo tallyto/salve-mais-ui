@@ -1,17 +1,31 @@
 <div class="grid">
-  <div class="col-6">
-    <!-- Tabela Proventos -->
-    <app-list-proventos></app-list-proventos>
-  </div>
-
-  <div class="col-6">
-    <!-- Tabela Contas Fixas -->
-    <app-list-contas-fixas></app-list-contas-fixas>
-  </div>
-
-  <!-- Tabela Despesas Recorrentes -->
+  <!-- Charts Section -->
   <div class="col-12">
-    <app-list-despesas-recorrentes></app-list-despesas-recorrentes>
+    <div class="grid align-items-center">
+      <div class="col-4 d-flex justify-content-center align-items-center">
+        <app-expense-pie-chart></app-expense-pie-chart>
+      </div>
+      <div class="col-4 d-flex justify-content-center align-items-center">
+        <app-income-expense-chart></app-income-expense-chart>
+      </div>
+      <div class="col-4 d-flex justify-content-center align-items-center">
+        <app-spending-trend-chart></app-spending-trend-chart>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tables Section -->
+  <div class="grid">
+    <div class="col-6">
+      <app-list-proventos></app-list-proventos>
+    </div>
+
+    <div class="col-6">
+      <app-list-contas-fixas></app-list-contas-fixas>
+    </div>
+
+    <div class="col-12">
+      <app-list-despesas-recorrentes></app-list-despesas-recorrentes>
+    </div>
   </div>
 </div>
-
