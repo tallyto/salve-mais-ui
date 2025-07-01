@@ -1,27 +1,55 @@
-# GestorFinanceiroUi
+# Gestor Financeiro UI
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.3.
+![Angular](https://img.shields.io/badge/angular-%23DD0031.svg?style=flat&logo=angular&logoColor=white)
+![Angular Material](https://img.shields.io/badge/Angular%20Material-009688?style=flat&logo=angular&logoColor=white)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Node.js](https://img.shields.io/badge/node-%23339933.svg?style=flat&logo=node.js&logoColor=white)
 
-## Development server
+Aplicação web para gestão financeira pessoal, desenvolvida em Angular.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Funcionalidades
 
-## Code scaffolding
+- Dashboard com gráficos de despesas por categoria, receitas e despesas mensais
+- Listagem de proventos, contas fixas e despesas recorrentes
+- Visualização responsiva e moderna com Angular Material
+- Integração com API REST para dados dinâmicos
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Requisitos
 
-## Build
+- Node.js >= 18
+- Angular CLI >= 16
+- Angular Material
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Instalação
 
-## Running unit tests
+```bash
+npm install
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Executando o projeto
 
-## Running end-to-end tests
+```bash
+ng serve
+```
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Acesse: <http://localhost:4200/>
 
-## Further help
+## Scripts úteis
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- `ng build` — build de produção
+- `ng test` — testes unitários
+
+## Recomendações de extensões VSCode
+
+- Angular Language Service (`angular.ng-template`)
+- EditorConfig for VS Code
+- Prettier - Code formatter
+
+## Observações
+
+- Certifique-se de que a API backend está rodando e configurada para aceitar requisições deste frontend.
+- Os gráficos e tabelas são atualizados automaticamente conforme os dados da API.
+
+---
+
+Projeto gerado com [Angular CLI](https://github.com/angular/angular-cli).
