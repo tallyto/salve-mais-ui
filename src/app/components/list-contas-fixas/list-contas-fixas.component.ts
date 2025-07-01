@@ -1,9 +1,9 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {Financa} from "../../models/financa.model";
-import {FinancaService} from "../../services/financa.service";
-import {MatPaginator} from "@angular/material/paginator";
-import {MatSort} from "@angular/material/sort";
-import {catchError, map, merge, of as observableOf, startWith, switchMap} from "rxjs";
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Financa } from "../../models/financa.model";
+import { ContasFixasService } from "../../services/financa.service";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { catchError, map, merge, of as observableOf, startWith, switchMap } from "rxjs";
 
 @Component({
   selector: 'app-list-contas-fixas',
@@ -23,7 +23,7 @@ export class ListContasFixasComponent implements AfterViewInit {
   // @ts-expect-error
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private financaService: FinancaService) {
+  constructor(private financaService: ContasFixasService) {
     this.financaService.savedFinanca.subscribe(
       {
         next: () => {

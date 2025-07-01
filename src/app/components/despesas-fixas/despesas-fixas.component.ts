@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FinancaService} from "../../services/financa.service";
+import {ContasFixasService} from "../../services/financa.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Categoria} from "../../models/categoria.model";
 import {CategoriaService} from "../../services/categoria.service";
@@ -16,7 +16,7 @@ export class DespesasFixasComponent implements OnInit {
   public categorias: Categoria[] = [];
   public accounts: Account[] = []
   constructor(
-    private financaService: FinancaService,
+    private financaService: ContasFixasService,
     private formBuilder: FormBuilder,
     private categoriaService: CategoriaService,
     private accountService: AccountService,
