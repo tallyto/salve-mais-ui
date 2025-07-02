@@ -1,37 +1,41 @@
-# Roadmap de Features - Gestor Financeiro
+# Roadmap - Gestor Financeiro
 
 ## Autenticação e Segurança
 
-- [x] Login com JWT
 - [x] Cadastro de usuário
-- [x] Guard de rotas (AuthGuard)
-- [x] Interceptor para envio automático do token
-- [x] Logout (remoção do token e redirecionamento)
-- [x] Expiração automática do token (logout automático)
-- [ ] Recuperação de senha
-- [ ] Permissões e papéis de usuário (admin, comum)
+- [x] Login com JWT
+- [x] Guard de rotas no Angular
+- [x] Logout e expiração automática do token
+- [x] Feedback visual (snackbar) para login, erros e sucesso
+- [x] Recuperação de senha (envio de e-mail)
+- [x] Redefinição de senha (token, tela, backend, persistência)
+- [ ] Permissões/papéis de usuário
+- [ ] Lembrar-me (keep me logged in)
+- [ ] Refresh token
 
-## Experiência do Usuário
+## Usuário
 
-- [x] Feedback visual (snackbar/toast para sucesso/erro)
-- [ ] Exibir nome do usuário logado
-- [ ] Tela de perfil do usuário (editar dados, trocar senha)
-- [ ] Lembrar-me (persistência do login)
+- [ ] Perfil do usuário
+- [ ] Tela de boas-vindas
+
+## Visual
+
 - [ ] Tema escuro/claro
+- [ ] Melhorar feedback visual em outras telas
+- [ ] Exibir nome do usuário logado
 
-## Backend/API
+## Validação e Testes
 
-- [ ] Refresh Token (renovação automática do JWT)
-- [ ] Documentação da API (Swagger/OpenAPI)
+- [ ] Validação avançada de formulários
+- [ ] Testes automatizados (backend e frontend)
 
-## Usabilidade e Visual
+## Infraestrutura
 
-- [ ] Tela de boas-vindas/resumo financeiro
-- [ ] Validação de formulário avançada (mensagens específicas por campo)
-- [ ] Testes automatizados para autenticação
+- [x] Integração com Mailhog para e-mails
+- [x] Configuração de e-mail e segurança
+- [x] Documentação da API
+- [x] Roadmap e changelog organizados
 
 ---
 
-Marque as features implementadas com `[x]` e as pendentes com `[ ]`.
-
-Se quiser priorizar alguma, basta avisar!
+Última atualização: 01/07/2025
