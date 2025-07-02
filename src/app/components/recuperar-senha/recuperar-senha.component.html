@@ -1,0 +1,12 @@
+<div class="recuperar-container">
+  <mat-card>
+    <h2>Recuperar Senha</h2>
+    <form [formGroup]="recuperarForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" required type="email" placeholder="Digite seu e-mail">
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit" [disabled]="recuperarForm.invalid">Enviar instruções</button>
+    </form>
+  </mat-card>
+</div>

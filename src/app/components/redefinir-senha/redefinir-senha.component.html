@@ -1,0 +1,18 @@
+<h2>Redefinir Senha</h2>
+<form [formGroup]="redefinirForm" (ngSubmit)="redefinirSenha()">
+  <div>
+    <label>Nova Senha</label>
+    <input type="password" formControlName="novaSenha" required>
+    <div *ngIf="redefinirForm.get('novaSenha')?.invalid && redefinirForm.get('novaSenha')?.touched">
+      Senha deve ter pelo menos 6 caracteres.
+    </div>
+  </div>
+  <div>
+    <label>Confirmar Nova Senha</label>
+    <input type="password" formControlName="confirmarSenha" required>
+    <div *ngIf="redefinirForm.hasError('senhasDiferentes') && redefinirForm.get('confirmarSenha')?.touched">
+      As senhas não coincidem.
+    </div>
+  </div>
+  <button type="submit" [disabled]="redefinirForm.invalid || loading">Redefinir Senha</button>
+</form>

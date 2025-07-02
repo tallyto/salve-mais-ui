@@ -24,6 +24,14 @@ export class AuthService {
   }
 
   login(data: LoginDTO): Observable<any> {
-    return this.http.post('http://localhost:8080/login', data);
+    return this.http.post('http://localhost:8080/auth/login', data);
+  }
+
+  recuperarSenha(data: { email: string }): Observable<any> {
+    return this.http.post('http://localhost:8080/auth/recuperar-senha', data);
+  }
+
+  redefinirSenha(token: string, novaSenha: string) {
+    return this.http.post<any>(`http://localhost:8080/auth/redefinir-senha`, { token, novaSenha });
   }
 }

@@ -11,6 +11,8 @@ import { AccountComponent } from './components/account/account.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './services/auth.guard';
+import { RecuperarSenhaComponent } from './components/recuperar-senha/recuperar-senha.component';
+import { RedefinirSenhaComponent } from './components/redefinir-senha/redefinir-senha.component';
 
 
 const routes: Routes = [
@@ -25,6 +27,8 @@ const routes: Routes = [
   {path: 'account', component: AccountComponent, canActivate: [AuthGuard]},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'recuperar-senha', component: RecuperarSenhaComponent},
+  {path: 'redefinir-senha', component: RedefinirSenhaComponent},
   {path: '**', redirectTo: 'dashboard'}
 ];
 

@@ -1,6 +1,4 @@
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from './services/auth.interceptor';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
@@ -43,11 +41,13 @@ import { ListAccountsComponent } from './components/list-accounts/list-accounts.
 import { ListContasFixasComponent } from './components/list-contas-fixas/list-contas-fixas.component';
 import { ListDespesasRecorrentesComponent } from './components/list-despesas-recorrentes/list-despesas-recorrentes.component';
 import { ListProventosComponent } from './components/list-proventos/list-proventos.component';
+import { LoginComponent } from './components/login/login.component';
 import { MenuLateralComponent } from './components/menu-lateral/menu-lateral.component';
 import { ProventoFormComponent } from './components/provento-form/provento-form.component';
-import { SpendingTrendChartComponent } from './components/spending-trend-chart/spending-trend-chart.component';
+import { RedefinirSenhaComponent } from './components/redefinir-senha/redefinir-senha.component';
 import { RegisterComponent } from './components/register/register.component';
-import { LoginComponent } from './components/login/login.component';
+import { SpendingTrendChartComponent } from './components/spending-trend-chart/spending-trend-chart.component';
+import { AuthInterceptor } from './services/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -67,7 +67,8 @@ import { LoginComponent } from './components/login/login.component';
     ListAccountsComponent,
     SpendingTrendChartComponent,
     IncomeExpenseChartComponent,
-    ExpensePieChartComponent
+    ExpensePieChartComponent,
+    RedefinirSenhaComponent
   ],
   imports: [
     BrowserModule,
