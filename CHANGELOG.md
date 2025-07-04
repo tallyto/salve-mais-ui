@@ -8,6 +8,10 @@
 - Integração do front-end com o backend para autenticação
 - Estruturação inicial do projeto Angular
 
+## [1.3.1] - 2025-07-03
+### Alterado
+- Atualização do environment de produção para usar a URL da API https://api.myfinance.lyto.com.br
+
 ## [1.3.0] - 2025-07-03
 ### Adicionado
 - Configuração de environments para desenvolvimento e produção
