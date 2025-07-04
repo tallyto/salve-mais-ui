@@ -8,6 +8,10 @@
 - Integração do front-end com o backend para autenticação
 - Estruturação inicial do projeto Angular
 
+## [1.3.4] - 2025-07-04
+### Alterado
+- Adicionado HashLocationStrategy para rotas com hash (compatibilidade com ambientes de hospedagem estática)
+
 ## [1.3.3] - 2025-07-03
 ### Refatorado
 - AuthService agora utiliza environment.apiUrl em todos os endpoints, garantindo build correto para produção e desenvolvimento
