@@ -2,13 +2,14 @@ import {EventEmitter, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Financa} from '../models/financa.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContasFixasService {
 
-  private apiUrl = 'http://localhost:8080/api/contas/fixas'; // substitua pela sua URL
+  private apiUrl = environment.apiUrl + '/contas/fixas'; // substitua pela sua URL
 
   savedFinanca = new EventEmitter<void>();
   constructor(private http: HttpClient) {

@@ -3,13 +3,14 @@ import {HttpClient} from "@angular/common/http";
 import {GastoCartaoInput} from "../models/input/gasto-cartao.input";
 import {Observable} from "rxjs";
 import {GastoCartao} from "../models/gasto-cartao.model";
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GastoCartaoService {
 
-  private apiUrl = 'http://localhost:8080/api/compras'; // substitua pela sua URL
+  private apiUrl = environment.apiUrl + '/compras';
 
   gastaoCartaoSaved = new EventEmitter()
   constructor(private http: HttpClient) {

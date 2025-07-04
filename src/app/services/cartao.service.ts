@@ -2,13 +2,14 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Cartao} from "../models/cartao.model";
 import {Observable} from "rxjs";
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartaoService {
 
-  private apiUrl = 'http://localhost:8080/api/cartao-credito'
+  private apiUrl = environment.apiUrl + '/cartao-credito'
 
   constructor(private http: HttpClient) {
 
