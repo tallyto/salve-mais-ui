@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface UsuarioCadastroDTO {
   nome: string;
@@ -15,7 +16,7 @@ export interface LoginDTO {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/usuarios'; // endpoint correto
+  private apiUrl = environment.apiUrl + '/usuarios';
 
   constructor(private http: HttpClient) {}
 
@@ -24,14 +25,14 @@ export class AuthService {
   }
 
   login(data: LoginDTO): Observable<any> {
-    return this.http.post('http://localhost:8080/auth/login', data);
+    return this.http.post(environment.apiUrl + '/auth/login', data);
   }
 
   recuperarSenha(data: { email: string }): Observable<any> {
-    return this.http.post('http://localhost:8080/auth/recuperar-senha', data);
+    return this.http.post(environment.apiUrl + '/auth/recuperar-senha', data);
   }
 
   redefinirSenha(token: string, novaSenha: string) {
-    return this.http.post<any>(`http://localhost:8080/auth/redefinir-senha`, { token, novaSenha });
+    return this.http.post<any>(environment.apiUrl + '/auth/redefinir-senha', { token, novaSenha });
   }
 }
