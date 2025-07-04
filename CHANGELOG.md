@@ -8,6 +8,10 @@
 - Integração do front-end com o backend para autenticação
 - Estruturação inicial do projeto Angular
 
+## [1.3.2] - 2025-07-03
+### Alterado
+- Ajuste do limite de tamanho do bundle inicial para 2MB (warning) e 2.5MB (error) no build de produção
+
 ## [1.3.1] - 2025-07-03
 ### Alterado
 - Atualização do environment de produção para usar a URL da API https://api.myfinance.lyto.com.br
