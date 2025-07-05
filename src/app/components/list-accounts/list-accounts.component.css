@@ -1,6 +1,20 @@
+.account-list-container {
+  width: 100%;
+}
+
+.list-header {
+  padding: 8px 16px;
+}
+
+.table-container {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
 .edit-field {
   width: 120px;
   font-size: 14px;
+  margin: 0;
 }
 
 .edit-field .mat-form-field-wrapper {
@@ -10,7 +24,7 @@
 
 .action-buttons {
   display: flex;
-  gap: 4px;
+  gap: 8px;
   align-items: center;
 }
 
@@ -20,10 +34,15 @@
   height: 36px;
 }
 
-.mat-table {
-  width: 100%;
+::ng-deep .mat-paginator {
+  background: transparent !important;
 }
 
-.mat-cell, .mat-header-cell {
-  padding: 8px 16px;
+::ng-deep .mat-sort-header-arrow {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+/* Hover effect on rows */
+.mat-row:hover {
+  background-color: rgba(0, 0, 0, 0.02);
 }

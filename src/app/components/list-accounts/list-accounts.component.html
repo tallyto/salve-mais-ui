@@ -1,50 +1,63 @@
-<!-- Tabela Account -->
-<h3>Contas</h3>
-<div class="mat-elevation-z1">
-  <table [dataSource]="accounts" mat-table
-         matSort matSortActive="id" matSortDisableClear matSortDirection="desc">
+<div class="account-list-container">
+  <div class="list-header mb-3">
+    <h2 class="text-xl font-medium m-0">Suas Contas</h2>
+    <div class="text-color-secondary text-sm">Contas bancárias cadastradas</div>
+  </div>
+  
+  <div class="table-container">
+    <table [dataSource]="accounts" mat-table matSort matSortActive="id" matSortDisableClear matSortDirection="desc" class="w-full">
+      
+      <!-- Valor Column -->
+      <ng-container matColumnDef="saldo">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Saldo</th>
+        <td *matCellDef="let account" mat-cell class="p-3">
+          <div *ngIf="!isEditing(account)" class="text-primary font-medium">
+            {{ account.saldo | currency:'BRL':'symbol':'1.2-2' }}
+          </div>
+          <mat-form-field *ngIf="isEditing(account)" appearance="outline" class="edit-field">
+            <input matInput [(ngModel)]="tempSaldo" type="number" step="0.01">
+          </mat-form-field>
+        </td>
+      </ng-container>
 
-    <!-- Valor Column -->
-    <ng-container matColumnDef="saldo">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header> Saldo</th>
-      <td *matCellDef="let account" mat-cell>
-        <div *ngIf="!isEditing(account)">
-          {{ account.saldo | currency:'BRL':'symbol':'1.2-2' }}
-        </div>
-        <mat-form-field *ngIf="isEditing(account)" appearance="outline" class="edit-field">
-          <input matInput [(ngModel)]="tempSaldo" type="number" step="0.01">
-        </mat-form-field>
-      </td>
-    </ng-container>
+      <!-- Nome Column -->
+      <ng-container matColumnDef="titular">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Titular</th>
+        <td *matCellDef="let account" mat-cell class="p-3"> {{ account.titular }}</td>
+      </ng-container>
 
-    <!-- Nome Column -->
-    <ng-container matColumnDef="titular">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header> Titular</th>
-      <td *matCellDef="let account" mat-cell> {{ account.titular }}</td>
-    </ng-container>
+      <!-- Ações Column -->
+      <ng-container matColumnDef="acoes">
+        <th *matHeaderCellDef mat-header-cell class="p-3 text-right"> Ações</th>
+        <td *matCellDef="let account" mat-cell class="p-3 text-right">
+          <div *ngIf="!isEditing(account)" class="action-buttons justify-content-end">
+            <button mat-icon-button color="primary" (click)="startEdit(account)" matTooltip="Editar saldo">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" matTooltip="Excluir conta">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+          <div *ngIf="isEditing(account)" class="action-buttons justify-content-end">
+            <button mat-icon-button color="primary" (click)="saveEdit()" matTooltip="Salvar">
+              <mat-icon>check</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="cancelEdit()" matTooltip="Cancelar">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
 
-    <!-- Ações Column -->
-    <ng-container matColumnDef="acoes">
-      <th *matHeaderCellDef mat-header-cell> Ações</th>
-      <td *matCellDef="let account" mat-cell>
-        <div *ngIf="!isEditing(account)" class="action-buttons">
-          <button mat-icon-button color="primary" (click)="startEdit(account)" matTooltip="Editar saldo">
-            <mat-icon>edit</mat-icon>
-          </button>
-        </div>
-        <div *ngIf="isEditing(account)" class="action-buttons">
-          <button mat-icon-button color="primary" (click)="saveEdit()" matTooltip="Salvar">
-            <mat-icon>check</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" (click)="cancelEdit()" matTooltip="Cancelar">
-            <mat-icon>close</mat-icon>
-          </button>
-        </div>
-      </td>
-    </ng-container>
-
-    <tr *matHeaderRowDef="displayedColumnsProventos" mat-header-row></tr>
-    <tr *matRowDef="let row; columns: displayedColumnsProventos;" mat-row></tr>
-  </table>
-  <mat-paginator [length]="resultsLength" [pageSizeOptions]="[5, 10, 20]" [pageSize]="10"></mat-paginator>
+      <tr *matHeaderRowDef="displayedColumnsProventos" mat-header-row class="bg-gray-50"></tr>
+      <tr *matRowDef="let row; columns: displayedColumnsProventos;" mat-row class="border-bottom-1 surface-border"></tr>
+    </table>
+    
+    <mat-paginator [length]="resultsLength" [pageSizeOptions]="[5, 10, 20]" [pageSize]="10" class="border-top-0"></mat-paginator>
+    
+    <div *ngIf="accounts && accounts.length === 0" class="p-5 text-center text-color-secondary">
+      <mat-icon class="text-4xl mb-3 block">account_balance</mat-icon>
+      <span>Nenhuma conta cadastrada. Adicione uma conta utilizando o formulário acima.</span>
+    </div>
+  </div>
 </div>
