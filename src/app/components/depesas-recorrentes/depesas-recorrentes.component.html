@@ -1,57 +1,70 @@
-<form (ngSubmit)="salvarGastoRecorrente()" [formGroup]=gastosRecorrentes>
-  <h3>Cadastrar Gastos Recorrentes</h3>
-  <div class="grid">
-
-    <div class="col-4">
-      <mat-form-field appearance="fill" class="flex">
-        <mat-label>Descrição</mat-label>
-        <input formControlName="descricao" matInput placeholder="Ex: Tênis Adidas">
-      </mat-form-field>
+<div class="p-3 mx-auto">
+  <div class="p-card p-4 mb-4 shadow-1">
+    <div class="mb-4">
+      <h2 class="text-xl font-medium m-0 mb-1">{{ editingGasto ? 'Editar Gasto Recorrente' : 'Cadastrar Gasto Recorrente' }}</h2>
+      <div class="text-color-secondary text-sm">
+        {{ editingGasto ? 'Atualize os dados do gasto selecionado' : 'Registre seus gastos com cartão de crédito' }}
+      </div>
     </div>
 
+    <form (ngSubmit)="salvarGastoRecorrente()" [formGroup]="gastosRecorrentes">
+      <div class="grid">
+        <div class="col-12 md:col-6 mb-3">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Descrição</mat-label>
+            <input formControlName="descricao" matInput placeholder="Ex: Tênis Adidas, Netflix">
+          </mat-form-field>
+        </div>
 
-    <div class="col-4">
-      <mat-form-field appearance="fill" class="flex">
-        <mat-label>Valor</mat-label>
-        <input formControlName="valor" matInput placeholder="Ex: 125.42">
-      </mat-form-field>
-    </div>
+        <div class="col-12 md:col-6 mb-3">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Valor</mat-label>
+            <input formControlName="valor" matInput placeholder="Ex: 125.42" type="number" min="0">
+          </mat-form-field>
+        </div>
 
+        <div class="col-12 md:col-6 mb-3">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Categoria</mat-label>
+            <mat-select formControlName="categoriaId">
+              <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">{{categoria.nome}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
-    <div class="col-4">
-      <mat-form-field class="flex">
-        <mat-label>Categoria</mat-label>
-        <mat-select formControlName="categoriaId">
-          <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">{{categoria.nome}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+        <div class="col-12 md:col-6 mb-3">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Cartão</mat-label>
+            <mat-select formControlName="cartaoId">
+              <mat-option *ngFor="let cartao of cartoes" [value]="cartao.id">{{cartao.nome}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
-    <div class="col-4">
-      <mat-form-field class="flex">
-        <mat-label>Cartão</mat-label>
-        <mat-select formControlName="cartaoId">
-          <mat-option *ngFor="let cartao of cartoes" [value]="cartao.id">{{cartao.nome}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+        <div class="col-12 md:col-6 mb-3">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Data da compra</mat-label>
+            <input [matDatepicker]="picker" formControlName="data" matInput>
+            <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
 
-    <div class="col-4">
-      <mat-form-field class="flex">
-        <mat-label>Data da compra</mat-label>
-        <input [matDatepicker]="picker" formControlName="data" matInput>
-        <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-    </div>
-
-    <div class="col-12 pt-0">
-      <button [disabled]="gastosRecorrentes.invalid" color="primary" mat-raised-button type="submit">Salvar</button>
-    </div>
+      <div class="flex justify-content-end gap-2 mt-3">
+        <button mat-stroked-button type="button" (click)="limparFormulario()" class="text-color-secondary">
+          {{ editingGasto ? 'Cancelar edição' : 'Limpar' }}
+        </button>
+        <button mat-raised-button color="primary" [disabled]="gastosRecorrentes.invalid" type="submit">
+          {{ editingGasto ? 'Atualizar gasto' : 'Salvar gasto' }}
+        </button>
+      </div>
+    </form>
   </div>
-</form>
 
-
-<!-- Tabela Despesas Recorrentes -->
-<app-list-despesas-recorrentes></app-list-despesas-recorrentes>
+  <!-- Tabela Despesas Recorrentes -->
+  <div class="p-card shadow-1">
+    <app-list-despesas-recorrentes></app-list-despesas-recorrentes>
+  </div>
+</div>
 

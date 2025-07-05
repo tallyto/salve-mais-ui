@@ -12,7 +12,9 @@ export class GastoCartaoService {
 
   private apiUrl = environment.apiUrl + '/compras';
 
-  gastaoCartaoSaved = new EventEmitter()
+  gastaoCartaoSaved = new EventEmitter<void>();
+  editingGasto = new EventEmitter<GastoCartao>();
+
   constructor(private http: HttpClient) {
   }
 
@@ -27,6 +29,19 @@ export class GastoCartaoService {
   }
 
   public salvarCompra(compra: GastoCartaoInput): Observable<GastoCartao> {
+    if (compra.id) {
+      // Se tem ID, é uma atualização (PUT)
+      return this.http.put<GastoCartao>(`${this.apiUrl}/${compra.id}`, compra);
+    }
+    // Se não tem ID, é uma criação (POST)
     return this.http.post<GastoCartao>(this.apiUrl, compra);
+  }
+
+  public excluirCompra(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  public getCompraById(id: number): Observable<GastoCartao> {
+    return this.http.get<GastoCartao>(`${this.apiUrl}/${id}`);
   }
 }

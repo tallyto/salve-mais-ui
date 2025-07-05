@@ -4,6 +4,7 @@ import {GastoCartao} from "../../models/gasto-cartao.model";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {GastoCartaoService} from "../../services/gasto-cartao.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   standalone: false,
@@ -13,12 +14,15 @@ import {GastoCartaoService} from "../../services/gasto-cartao.service";
 })
 export class ListDespesasRecorrentesComponent implements AfterViewInit {
 
-  displayedColumnsGastoRecorrente: string[] = ['descricao', 'categoria', 'cartaoCredito', 'data', 'valor'];
+  displayedColumnsGastoRecorrente: string[] = ['descricao', 'categoria', 'cartaoCredito', 'data', 'valor', 'acoes'];
   listGastosRecorrentes: GastoCartao[] = [];
   resultsLength = 0;
   isLoadingResults = true;
 
-  constructor(private despesaRecorrenteService: GastoCartaoService) {
+  constructor(
+    private despesaRecorrenteService: GastoCartaoService,
+    private snackBar: MatSnackBar
+  ) {
     this.despesaRecorrenteService.gastaoCartaoSaved.subscribe({
       next: () => {
         this.refreshGastosRecorrentesList()
@@ -69,7 +73,32 @@ export class ListDespesasRecorrentesComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.refreshGastosRecorrentesList()
-
   }
 
+  editarGasto(gastoRecorrente: GastoCartao): void {
+    this.despesaRecorrenteService.editingGasto.emit(gastoRecorrente);
+  }
+
+  excluirGasto(gastoRecorrente: GastoCartao): void {
+    if (confirm(`Deseja realmente excluir o gasto "${gastoRecorrente.descricao}"?`)) {
+      this.despesaRecorrenteService.excluirCompra(gastoRecorrente.id).subscribe({
+        next: () => {
+          this.snackBar.open('Gasto excluído com sucesso!', 'Fechar', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+          });
+          this.refreshGastosRecorrentesList();
+        },
+        error: (error: any) => {
+          console.error('Erro ao excluir gasto:', error);
+          this.snackBar.open('Erro ao excluir gasto', 'Fechar', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+          });
+        }
+      });
+    }
+  }
 }

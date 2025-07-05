@@ -5,6 +5,8 @@ import {CategoriaService} from "../../services/categoria.service";
 import {GastoCartaoService} from "../../services/gasto-cartao.service";
 import {CartaoService} from "../../services/cartao.service";
 import {Cartao} from "../../models/cartao.model";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {GastoCartao} from "../../models/gasto-cartao.model";
 
 @Component({
   selector: 'app-depesas-recorrentes',
@@ -15,12 +17,14 @@ export class DepesasRecorrentesComponent implements OnInit {
   gastosRecorrentes: FormGroup;
   public categorias: Categoria[] = [];
   public cartoes: Cartao[] = [];
+  public editingGasto: GastoCartao | null = null;
 
   constructor(
     private despesaRecorrenteService: GastoCartaoService,
     private formBuilder: FormBuilder,
     private categoriaService: CategoriaService,
-    private cartaoService: CartaoService
+    private cartaoService: CartaoService,
+    private snackBar: MatSnackBar
   ) {
     this.gastosRecorrentes = this.formBuilder.group({
       id: [null],
@@ -33,8 +37,23 @@ export class DepesasRecorrentesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.carregarCategorias()
-    this.carregarCartoes()
+    this.carregarCategorias();
+    this.carregarCartoes();
+
+    // Subscribe to edit event
+    this.despesaRecorrenteService.editingGasto.subscribe((gasto: GastoCartao) => {
+      if (gasto) {
+        this.editingGasto = gasto;
+        this.gastosRecorrentes.patchValue({
+          id: gasto.id,
+          descricao: gasto.descricao,
+          valor: gasto.valor,
+          data: gasto.data,
+          categoriaId: gasto.categoria?.id,
+          cartaoId: gasto.cartaoCredito?.id
+        });
+      }
+    });
   }
 
   carregarCartoes(): void {
@@ -51,11 +70,46 @@ export class DepesasRecorrentesComponent implements OnInit {
   }
 
   salvarGastoRecorrente() {
-    this.despesaRecorrenteService.salvarCompra(this.gastosRecorrentes.value).subscribe({
+    if (this.gastosRecorrentes.invalid) {
+      return;
+    }
+
+    const gasto = this.gastosRecorrentes.value;
+    const isEditing = !!gasto.id;
+
+    this.despesaRecorrenteService.salvarCompra(gasto).subscribe({
       next: () => {
-        this.gastosRecorrentes.reset()
-        this.despesaRecorrenteService.gastaoCartaoSaved.emit()
+        this.limparFormulario();
+        this.editingGasto = null;
+        this.despesaRecorrenteService.gastaoCartaoSaved.emit();
+
+        const message = isEditing ? 'Gasto atualizado com sucesso!' : 'Gasto salvo com sucesso!';
+        this.snackBar.open(message, 'Fechar', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+        });
+      },
+      error: (error) => {
+        console.error('Erro ao salvar gasto recorrente:', error);
+        this.snackBar.open('Erro ao salvar gasto recorrente', 'Fechar', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+        });
       }
-    })
+    });
+  }
+
+  limparFormulario() {
+    this.gastosRecorrentes.reset({
+      id: null,
+      descricao: '',
+      valor: '',
+      data: '',
+      categoriaId: '',
+      cartaoId: '',
+    });
+    this.editingGasto = null;
   }
 }

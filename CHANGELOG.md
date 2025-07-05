@@ -18,6 +18,9 @@
 - Implementação de edição inline para despesas fixas
 - Aprimoramento do formulário de despesas fixas para tratar corretamente operações de edição
 - Adicionada comunicação entre componentes para edição de despesas fixas
+- Redesign do componente de despesas recorrentes para seguir padrão visual do sistema
+- Implementação de funcionalidades CRUD completas para despesas recorrentes
+- Adicionada comunicação entre componentes para edição de despesas recorrentes
 
 ## [1.3.5] - 2025-07-05
 
