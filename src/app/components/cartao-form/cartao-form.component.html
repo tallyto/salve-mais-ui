@@ -1,45 +1,104 @@
-<form (ngSubmit)="salvarCartao()" [formGroup]=cartaoForm>
-  <h3>Cadastrar Cartão</h3>
-  <div class="grid">
+<div class="p-3 mx-auto">
+  <div class="p-card p-4 mb-4 shadow-1">
+    <div class="mb-4">
+      <h2 class="text-xl font-medium m-0 mb-1">Cadastrar Cartão</h2>
+      <div class="text-color-secondary text-sm">Registre um novo cartão de crédito</div>
+    </div>
 
-    <mat-form-field appearance="fill" class="col-6">
-      <mat-label>Nome do Cartão</mat-label>
-      <input formControlName="nome" matInput placeholder="Ex: Mastercard Black Inter Gourmet">
-    </mat-form-field>
+    <form (ngSubmit)="salvarCartao()" [formGroup]="cartaoForm">
+      <div class="grid">
+        <div class="col-12 md:col-6 mb-3">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Nome do Cartão</mat-label>
+            <input formControlName="nome" matInput placeholder="Ex: Mastercard Black Inter Gourmet">
+          </mat-form-field>
+        </div>
 
-    <mat-form-field appearance="fill" class="col-3">
-      <mat-label>Data de Vencimento</mat-label>
-      <input formControlName="vencimento" matInput placeholder="Ex: 15">
-    </mat-form-field>
+        <div class="col-12 md:col-6 mb-3">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Data de Vencimento</mat-label>
+            <input [matDatepicker]="picker" formControlName="vencimento" matInput>
+            <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
 
-    <div class="col-12 pt-0">
-      <button [disabled]="cartaoForm.invalid" color="primary" mat-raised-button type="submit">Salvar</button>
+      <div class="flex justify-content-end gap-2 mt-3">
+        <button mat-stroked-button type="button" class="text-color-secondary">Cancelar</button>
+        <button mat-raised-button color="primary" [disabled]="cartaoForm.invalid" type="submit">
+          Salvar cartão
+        </button>
+      </div>
+    </form>
+  </div>  <!-- Tabela de Cartões -->
+  <div class="p-card shadow-1">
+    <div class="p-card-header p-3 border-bottom-1 border-300">
+      <h2 class="text-xl font-medium m-0">Seus Cartões</h2>
+      <div class="text-color-secondary text-sm">Cartões de crédito cadastrados</div>
+    </div>
 
+    <div class="p-3">
+      <table [dataSource]="cartoes" mat-table class="w-full">
+        <!-- Nome Column -->
+        <ng-container matColumnDef="nome">
+          <th *matHeaderCellDef mat-header-cell class="p-3">Nome</th>
+          <td *matCellDef="let cartao" mat-cell class="p-3">
+            <div *ngIf="!isEditing(cartao)" class="font-medium">
+              {{ cartao.nome }}
+            </div>
+            <mat-form-field *ngIf="isEditing(cartao)" appearance="outline" class="edit-field w-full">
+              <input matInput [(ngModel)]="tempNome">
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <!-- Vencimento Column -->
+        <ng-container matColumnDef="vencimento">
+          <th *matHeaderCellDef mat-header-cell class="p-3">Vencimento</th>
+          <td *matCellDef="let cartao" mat-cell class="p-3">
+            <div *ngIf="!isEditing(cartao)">
+              {{ cartao.vencimento | date:'dd/MM/yyyy' }}
+            </div>
+            <mat-form-field *ngIf="isEditing(cartao)" appearance="outline" class="edit-field w-full">
+              <input [matDatepicker]="editPicker" [(ngModel)]="tempVencimento" matInput>
+              <mat-datepicker-toggle [for]="editPicker" matIconSuffix></mat-datepicker-toggle>
+              <mat-datepicker #editPicker></mat-datepicker>
+            </mat-form-field>
+          </td>
+        </ng-container>
+
+        <!-- Ações Column -->
+        <ng-container matColumnDef="acoes">
+          <th *matHeaderCellDef mat-header-cell class="p-3 text-right">Ações</th>
+          <td *matCellDef="let cartao" mat-cell class="p-3 text-right">
+            <div *ngIf="!isEditing(cartao)" class="action-buttons flex justify-content-end gap-2">
+              <button mat-icon-button color="primary" (click)="startEdit(cartao)" matTooltip="Editar cartão">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="excluirCartao(cartao)" matTooltip="Excluir cartão">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+            <div *ngIf="isEditing(cartao)" class="action-buttons flex justify-content-end gap-2">
+              <button mat-icon-button color="primary" (click)="saveEdit()" matTooltip="Salvar">
+                <mat-icon>check</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="cancelEdit()" matTooltip="Cancelar">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="displayedColumnsCartao" mat-header-row class="bg-gray-50"></tr>
+        <tr *matRowDef="let row; columns: displayedColumnsCartao;" mat-row class="border-bottom-1 surface-border"></tr>
+      </table>
+
+      <div *ngIf="cartoes && cartoes.length === 0" class="p-5 text-center text-color-secondary">
+        <mat-icon class="text-4xl mb-3 block">credit_card</mat-icon>
+        <span>Nenhum cartão cadastrado. Adicione um cartão utilizando o formulário acima.</span>
+      </div>
     </div>
   </div>
-
-</form>
-
-
-<!-- Tabela Categorias -->
-<div>
-  <h3>Cartões</h3>
-  <table [dataSource]="cartoes" mat-table>
-
-    <!-- Nome Column -->
-    <ng-container matColumnDef="nome">
-      <th *matHeaderCellDef mat-header-cell> Nome</th>
-      <td *matCellDef="let catao" mat-cell> {{ catao.nome }} </td>
-    </ng-container>
-
-    <!-- Vencimento Column -->
-    <ng-container matColumnDef="vencimento">
-      <th *matHeaderCellDef mat-header-cell> Vencimento</th>
-      <td *matCellDef="let catao" mat-cell> {{ catao.vencimento }} </td>
-    </ng-container>
-
-
-    <tr *matHeaderRowDef="displayedColumnsCartao" mat-header-row></tr>
-    <tr *matRowDef="let row; columns: displayedColumnsCartao;" mat-row></tr>
-  </table>
 </div>

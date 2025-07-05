@@ -22,4 +22,8 @@ export class CartaoService {
   listarCartoes(): Observable<Cartao[]> {
     return this.http.get<Cartao[]>(this.apiUrl)
   }
+
+  excluirCartao(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }

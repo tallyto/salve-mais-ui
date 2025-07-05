@@ -9,6 +9,9 @@
 - Integração do front-end com o backend para autenticação
 - Estruturação inicial do projeto Angular
 - Implementada funcionalidade de edição de provento (API, serviço, formulário e listagem)
+- Redesign do componente de cartão de crédito para seguir padrão visual do sistema
+- Implementação de funcionalidades CRUD completas para cartões de crédito
+- Adição de seletor de data para vencimento de cartões
 
 ## [1.3.5] - 2025-07-05
 
@@ -19,23 +22,33 @@
 - Melhorias de usabilidade no formulário de cadastro de contas
 
 ## [1.3.4] - 2025-07-04
+
 ### Alterado
+
 - Adicionado HashLocationStrategy para rotas com hash (compatibilidade com ambientes de hospedagem estática)
 
 ## [1.3.3] - 2025-07-03
+
 ### Refatorado
+
 - AuthService agora utiliza environment.apiUrl em todos os endpoints, garantindo build correto para produção e desenvolvimento
 
 ## [1.3.2] - 2025-07-03
+
 ### Alterado
+
 - Ajuste do limite de tamanho do bundle inicial para 2MB (warning) e 2.5MB (error) no build de produção
 
 ## [1.3.1] - 2025-07-03
+
 ### Alterado
-- Atualização do environment de produção para usar a URL da API https://api.myfinance.lyto.com.br
+
+- Atualização do environment de produção para usar a URL da API `https://api.myfinance.lyto.com.br`
 
 ## [1.3.0] - 2025-07-03
+
 ### Adicionado
+
 - Configuração de environments para desenvolvimento e produção
 - Scripts npm para build e serve com ambientes distintos
 - Ajuste das URLs dos serviços para uso do environment
@@ -43,10 +56,13 @@
 - Ajuste do angular.json para fileReplacements
 
 ### Alterado
+
 - Versão do projeto para 1.3.0
 
 ## [1.2.0] - 2025-07-01
+
 ### Adicionado
+
 - Redefinição de senha completa (backend e frontend)
 - Persistência de tokens de redefinição no banco de dados
 - Migration para tabela de tokens
