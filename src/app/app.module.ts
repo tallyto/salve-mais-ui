@@ -49,6 +49,8 @@ import { RedefinirSenhaComponent } from './components/redefinir-senha/redefinir-
 import { RegisterComponent } from './components/register/register.component';
 import { SpendingTrendChartComponent } from './components/spending-trend-chart/spending-trend-chart.component';
 import { AuthInterceptor } from './services/auth.interceptor';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from './components/shared/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +71,8 @@ import { AuthInterceptor } from './services/auth.interceptor';
     SpendingTrendChartComponent,
     IncomeExpenseChartComponent,
     ExpensePieChartComponent,
-    RedefinirSenhaComponent
+    RedefinirSenhaComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -104,6 +107,7 @@ import { AuthInterceptor } from './services/auth.interceptor';
     NgChartsModule,
     RegisterComponent, // Importa o componente standalone
     LoginComponent,
+    MatDialogModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },

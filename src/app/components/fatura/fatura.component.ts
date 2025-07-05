@@ -7,6 +7,7 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
 import {Cartao} from "../../models/cartao.model";
 import {CartaoService} from "../../services/cartao.service";
 import {MatDialog} from "@angular/material/dialog";
+import {ConfirmDialogComponent} from "../shared/confirm-dialog/confirm-dialog.component";
 
 @Component({
   selector: 'app-fatura',
@@ -105,20 +106,32 @@ export class FaturaComponent implements OnInit {
   pagarFatura(fatura: Fatura, event: Event) {
     event.stopPropagation();
 
-    if (confirm(`Confirmar pagamento da fatura de ${fatura.cartaoCredito?.nome} no valor de ${fatura.valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}?`)) {
-      this.isLoading = true;
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: {
+        title: 'Confirmar Pagamento',
+        message: `Deseja confirmar o pagamento da fatura de <strong>${fatura.cartaoCredito?.nome}</strong> no valor de <strong>${fatura.valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong>?`,
+        confirmText: 'Confirmar Pagamento',
+        cancelText: 'Cancelar'
+      }
+    });
 
-      this.faturaService.pagarFatura(fatura.id).subscribe(
-        _ => {
-          this.listarFaturas();
-          this.openSnackBar('Fatura paga com sucesso');
-          this.isLoading = false;
-        },
-        error => {
-          this.openSnackBar('Erro ao pagar fatura');
-          this.isLoading = false;
-        }
-      );
-    }
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.isLoading = true;
+        
+        this.faturaService.pagarFatura(fatura.id).subscribe(
+          _ => {
+            this.listarFaturas();
+            this.openSnackBar('Fatura paga com sucesso');
+            this.isLoading = false;
+          },
+          error => {
+            this.openSnackBar('Erro ao pagar fatura');
+            this.isLoading = false;
+          }
+        );
+      }
+    });
   }
 }
