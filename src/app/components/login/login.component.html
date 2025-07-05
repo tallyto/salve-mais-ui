@@ -6,13 +6,19 @@
         <div class="col-6">
           <mat-form-field appearance="fill" class="flex">
             <mat-label>Email</mat-label>
-            <input matInput formControlName="email" required type="email" placeholder="Digite seu email">
+            <input matInput formControlName="email" required type="email" placeholder="Digite seu email" (blur)="onEmailBlur()">
           </mat-form-field>
         </div>
         <div class="col-6">
           <mat-form-field appearance="fill" class="flex">
             <mat-label>Senha</mat-label>
             <input matInput formControlName="senha" required type="password" placeholder="Digite sua senha">
+          </mat-form-field>
+        </div>
+        <div class="col-12" *ngIf="showDomainField">
+          <mat-form-field appearance="fill" class="flex">
+            <mat-label>Domínio</mat-label>
+            <input matInput formControlName="dominio" required placeholder="Informe o domínio da empresa">
           </mat-form-field>
         </div>
         <div class="col-12 pt-0">

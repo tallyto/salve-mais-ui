@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -24,8 +24,12 @@ export class AuthService {
     return this.http.post(this.apiUrl, data);
   }
 
-  login(data: LoginDTO): Observable<any> {
-    return this.http.post(environment.apiUrl + '/auth/login', data);
+  login(data: LoginDTO, tenant?: string): Observable<any> {
+    let headers = new HttpHeaders();
+    if (tenant) {
+      headers = headers.set('X-Private-Tenant', tenant);
+    }
+    return this.http.post(environment.apiUrl + '/auth/login', data, { headers });
   }
 
   recuperarSenha(data: { email: string }): Observable<any> {

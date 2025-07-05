@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { TenantService } from 'src/app/services/tenant.service';
 
 @Component({
   selector: 'app-login',
@@ -27,12 +28,33 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 export class LoginComponent {
   loginForm: FormGroup;
   errorMessage: string = '';
+  tenant: string = '';
+  showDomainField: boolean = false;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private snackBar: MatSnackBar) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private tenantService: TenantService
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      senha: ['', [Validators.required, Validators.minLength(6)]]
+      senha: ['', [Validators.required, Validators.minLength(6)]],
+      dominio: ['']
     });
+  }
+
+  onEmailBlur() {
+    const email: string = this.loginForm.get('email')?.value || '';
+    const domain = email.split('@')[1] || '';
+    const publicDomains = ['gmail.com', 'hotmail.com', 'outlook.com', 'yahoo.com'];
+    this.showDomainField = publicDomains.includes(domain);
+    if (!this.showDomainField) {
+      this.loginForm.patchValue({ dominio: domain });
+    } else {
+      this.loginForm.patchValue({ dominio: '' });
+    }
   }
 
   onSubmit() {
@@ -44,11 +66,13 @@ export class LoginComponent {
       });
       return;
     }
-    const { email, senha } = this.loginForm.value;
-    this.authService.login({ email, senha }).subscribe({
+    const { email, senha, dominio } = this.loginForm.value;
+    const tenant = dominio || (email.split('@')[1] || '');
+    this.authService.login({ email, senha }, tenant).subscribe({
       next: (res) => {
         if (res && res.token) {
           localStorage.setItem('token', res.token);
+          this.tenantService.setTenant(tenant);
           this.snackBar.open('Login realizado com sucesso!', 'Fechar', {
             duration: 3000,
             panelClass: 'snackbar-success',
