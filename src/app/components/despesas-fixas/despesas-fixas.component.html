@@ -1,57 +1,69 @@
-<form (ngSubmit)="salvarDespesaFixa()" [formGroup]=despesaFixaForm>
-  <h3>Cadastrar Gastos Fixos</h3>
-  <div class="grid align-items-center">
-    <div class="col-4">
-      <mat-form-field appearance="fill" class="flex">
-        <mat-label>Nome</mat-label>
-        <input formControlName="nome" matInput placeholder="Ex: Gás, Internet">
-      </mat-form-field>
+<div class="p-3 mx-auto">
+  <div class="p-card p-4 mb-4 shadow-1">
+    <div class="mb-4">
+      <h2 class="text-xl font-medium m-0 mb-1">Cadastrar Despesa Fixa</h2>
+      <div class="text-color-secondary text-sm">Registre uma nova despesa mensal fixa</div>
     </div>
 
-    <div class="col-4">
-      <mat-form-field class="flex">
-        <mat-label>Categoria</mat-label>
-        <mat-select formControlName="categoriaId">
-          <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">{{categoria.nome}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+    <form (ngSubmit)="salvarDespesaFixa()" [formGroup]="despesaFixaForm">
+      <div class="grid">
+        <div class="col-12 md:col-6 mb-3">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Nome</mat-label>
+            <input formControlName="nome" matInput placeholder="Ex: Gás, Internet">
+          </mat-form-field>
+        </div>
 
-    <div class="col-4">
-      <mat-form-field class="flex">
-        <mat-label>Conta</mat-label>
-        <mat-select formControlName="contaId">
-          <mat-option *ngFor="let conta of accounts" [value]="conta.id">{{conta.titular}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+        <div class="col-12 md:col-6 mb-3">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Categoria</mat-label>
+            <mat-select formControlName="categoriaId">
+              <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">{{categoria.nome}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
-    <div class="col-4">
-      <mat-form-field class="flex">
-        <mat-label>Data de vencimento</mat-label>
-        <input [matDatepicker]="picker" formControlName="vencimento" matInput>
-        <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-    </div>
+        <div class="col-12 md:col-6 mb-3">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Conta</mat-label>
+            <mat-select formControlName="contaId">
+              <mat-option *ngFor="let conta of accounts" [value]="conta.id">{{conta.titular}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
-    <div class="col-3">
-      <mat-form-field appearance="fill" class="flex">
-        <mat-label>Valor</mat-label>
-        <input formControlName="valor" matInput placeholder="Ex: 125.42">
-      </mat-form-field>
-    </div>
+        <div class="col-12 md:col-6 mb-3">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Data de vencimento</mat-label>
+            <input [matDatepicker]="picker" formControlName="vencimento" matInput>
+            <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
 
-    <div class="col-3">
-      <mat-checkbox formControlName="pago">Pago</mat-checkbox>
-    </div>
+        <div class="col-12 md:col-6 mb-3">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Valor</mat-label>
+            <input formControlName="valor" matInput placeholder="Ex: 125.42" type="number" min="0">
+          </mat-form-field>
+        </div>
 
-    <div class="col-12 pt-0">
-      <button [disabled]="despesaFixaForm.invalid" color="primary" mat-raised-button type="submit">Salvar</button>
-    </div>
+        <div class="col-12 md:col-6 mb-3 flex align-items-center">
+          <mat-checkbox formControlName="pago" color="primary" class="mt-2">Despesa já paga</mat-checkbox>
+        </div>
+      </div>
+
+      <div class="flex justify-content-end gap-2 mt-3">
+        <button mat-stroked-button type="button" class="text-color-secondary">Cancelar</button>
+        <button mat-raised-button color="primary" [disabled]="despesaFixaForm.invalid" type="submit">
+          Salvar despesa
+        </button>
+      </div>
+    </form>
   </div>
-</form>
 
-
-<!-- Tabela Despesas Fixas -->
-<app-list-contas-fixas></app-list-contas-fixas>
+  <!-- Tabela Despesas Fixas -->
+  <div class="p-card shadow-1">
+    <app-list-contas-fixas></app-list-contas-fixas>
+  </div>
+</div>

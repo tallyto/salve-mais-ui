@@ -12,6 +12,9 @@
 - Redesign do componente de cartão de crédito para seguir padrão visual do sistema
 - Implementação de funcionalidades CRUD completas para cartões de crédito
 - Adição de seletor de data para vencimento de cartões
+- Redesign do componente de despesas fixas para seguir padrão visual do sistema
+- Melhoria na visualização de status de pagamento com indicadores visuais coloridos
+- Adição de ações para edição e exclusão nas tabelas de despesas
 
 ## [1.3.5] - 2025-07-05
 

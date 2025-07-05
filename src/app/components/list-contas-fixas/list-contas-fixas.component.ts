@@ -11,7 +11,7 @@ import { catchError, map, merge, of as observableOf, startWith, switchMap } from
   styleUrls: ['./list-contas-fixas.component.css']
 })
 export class ListContasFixasComponent implements AfterViewInit {
-  displayedColumnsContasFixas: string[] = ['nome', 'categoria', 'conta', 'vencimento', 'valor', 'pago'];
+  displayedColumnsContasFixas: string[] = ['nome', 'categoria', 'conta', 'vencimento', 'valor', 'pago', 'acoes'];
   contasFixas: Financa[] = [];
 
 
