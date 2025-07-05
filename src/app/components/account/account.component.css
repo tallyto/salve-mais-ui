@@ -1,0 +1,8 @@
+/* Estilos específicos que complementam o PrimeFlex */
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: rgba(0, 0, 0, 0.12);
+}
+
+::ng-deep .mat-form-field-label {
+  color: rgba(0, 0, 0, 0.6);
+}

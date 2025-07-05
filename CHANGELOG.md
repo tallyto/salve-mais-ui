@@ -1,12 +1,21 @@
 # Changelog - Gestor Financeiro
 
 ## [Unreleased]
+
 - Adição do roadmap de features (`doc/roadmap.md`)
 - Implementação de autenticação JWT (login, cadastro, interceptor)
 - Proteção de rotas com AuthGuard
 - Criação das telas de login e cadastro
 - Integração do front-end com o backend para autenticação
 - Estruturação inicial do projeto Angular
+
+## [1.3.5] - 2025-07-05
+
+### Alterado
+
+- Redesign do componente de cadastro de contas para layout minimalista
+- Implementação de PrimeFlex para estilização e layout responsivo
+- Melhorias de usabilidade no formulário de cadastro de contas
 
 ## [1.3.4] - 2025-07-04
 ### Alterado

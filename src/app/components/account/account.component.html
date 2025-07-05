@@ -1,23 +1,37 @@
-<form (ngSubmit)="createAccount()" [formGroup]=accountForm>
-  <h3>Cadastrar Conta</h3>
-  <div class="grid">
-
-    <mat-form-field appearance="fill" class="col-6">
-      <mat-label>Nome do titular</mat-label>
-      <input autocomplete="off" formControlName="titular" matInput placeholder="Ex: Maria da Silva">
-    </mat-form-field>
-
-    <mat-form-field appearance="fill" class="col-3">
-      <mat-label>Saldo inicial</mat-label>
-      <input type="number" min="0" formControlName="saldo" matInput placeholder="Ex: R$ 150,20">
-    </mat-form-field>
-
-    <div class="col-12 pt-0">
-      <button [disabled]="accountForm.invalid" color="primary" mat-raised-button type="submit">Salvar</button>
-
+<div class="p-3 mx-auto" >
+  <div class="p-card p-4 mb-4 shadow-1">
+    <div class="mb-4">
+      <h2 class="text-xl font-medium m-0 mb-1">Adicionar Conta</h2>
+      <div class="text-color-secondary text-sm">Insira os dados da nova conta bancária</div>
     </div>
+
+    <form (ngSubmit)="createAccount()" [formGroup]="accountForm">
+      <div class="grid">
+        <div class="col-12 md:col-6 mb-3">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Nome do titular</mat-label>
+            <input autocomplete="off" formControlName="titular" matInput placeholder="Ex: Maria da Silva">
+          </mat-form-field>
+        </div>
+
+        <div class="col-12 md:col-6 mb-3">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Saldo inicial</mat-label>
+            <input type="number" min="0" formControlName="saldo" matInput placeholder="0,00">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="flex justify-content-end gap-2">
+        <button mat-stroked-button type="button" class="text-color-secondary">Cancelar</button>
+        <button mat-raised-button color="primary" [disabled]="accountForm.invalid" type="submit" class="min-w-min" >
+          Salvar conta
+        </button>
+      </div>
+    </form>
   </div>
 
-</form>
-
-<app-list-accounts></app-list-accounts>
+  <div class="p-card shadow-1">
+    <app-list-accounts></app-list-accounts>
+  </div>
+</div>
