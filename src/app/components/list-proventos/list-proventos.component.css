@@ -1,0 +1,42 @@
+.provento-list-container {
+  width: 100%;
+}
+
+.list-header {
+  padding: 8px 16px;
+}
+
+.table-container {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.action-buttons button {
+  min-width: 36px;
+  width: 36px;
+  height: 36px;
+}
+
+::ng-deep .mat-paginator {
+  background: transparent !important;
+}
+
+::ng-deep .mat-sort-header-arrow {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+/* Hover effect on rows */
+.mat-row:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Adicionar uma borda sutil na tabela */
+.table-container .mat-table {
+  border-collapse: collapse;
+}

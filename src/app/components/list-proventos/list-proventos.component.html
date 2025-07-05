@@ -1,37 +1,62 @@
-<!-- Tabela Proventos -->
-<h3>Proventos</h3>
-<div class="mat-elevation-z1">
-  <table [dataSource]="proventos" mat-table
-         matSort matSortActive="id" matSortDisableClear matSortDirection="desc">
+<div class="provento-list-container">
+  <div class="list-header mb-3">
+    <h2 class="text-xl font-medium m-0">Seus Proventos</h2>
+    <div class="text-color-secondary text-sm">Receitas e recebimentos registrados</div>
+  </div>
+  
+  <div class="table-container">
+    <table [dataSource]="proventos" mat-table matSort matSortActive="id" matSortDisableClear matSortDirection="desc" class="w-full">
+      
+      <!-- Nome Column -->
+      <ng-container matColumnDef="descricao">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Descrição</th>
+        <td *matCellDef="let provento" mat-cell class="p-3"> {{ provento.descricao }}</td>
+      </ng-container>
 
-    <!-- Nome Column -->
-    <ng-container matColumnDef="descricao">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header> Descrição</th>
-      <td *matCellDef="let provento" mat-cell> {{ provento.descricao }}</td>
-    </ng-container>
+      <!-- Account Column -->
+      <ng-container matColumnDef="conta">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3">Conta</th>
+        <td *matCellDef="let provento" mat-cell class="p-3"> {{ provento.conta.titular }}</td>
+      </ng-container>
 
-    <!-- Account Column -->
-    <ng-container matColumnDef="conta">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header>Conta</th>
-      <td *matCellDef="let provento" mat-cell> {{ provento.conta.titular }}</td>
-    </ng-container>
+      <!-- Data Column -->
+      <ng-container matColumnDef="data">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Data</th>
+        <td *matCellDef="let provento" mat-cell class="p-3"> {{ provento.data | date:'dd/MM/yyyy' }}</td>
+      </ng-container>
 
-    <!-- Data Column -->
-    <ng-container matColumnDef="data">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header> Data</th>
-      <td *matCellDef="let provento" mat-cell> {{ provento.data | date }}</td>
-    </ng-container>
+      <!-- Valor Column -->
+      <ng-container matColumnDef="valor">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3 text-right"> Valor</th>
+        <td *matCellDef="let provento" mat-cell class="p-3 text-right font-medium text-green-600"> 
+          {{ provento.valor | currency:'BRL':'symbol':'1.2-2' }}
+        </td>
+      </ng-container>
+      
+      <!-- Ações Column -->
+      <ng-container matColumnDef="acoes">
+        <th *matHeaderCellDef mat-header-cell class="p-3 text-right"> Ações</th>
+        <td *matCellDef="let provento" mat-cell class="p-3 text-right">
+          <div class="action-buttons justify-content-end">
+            <button mat-icon-button color="primary" matTooltip="Editar provento">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" matTooltip="Excluir provento">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
 
-    <!-- Valor Column -->
-    <ng-container matColumnDef="valor">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header> Valor</th>
-      <td *matCellDef="let provento" mat-cell>
-        {{ provento.valor | currency:'BRL':'symbol':'1.2-2' }}
-      </td>
-    </ng-container>
-
-    <tr *matHeaderRowDef="displayedColumnsProventos" mat-header-row></tr>
-    <tr *matRowDef="let row; columns: displayedColumnsProventos;" mat-row></tr>
-  </table>
-  <mat-paginator [length]="resultsLength" [pageSizeOptions]="[5, 10, 20]" [pageSize]="10"></mat-paginator>
+      <tr *matHeaderRowDef="displayedColumnsProventos" mat-header-row class="bg-gray-50"></tr>
+      <tr *matRowDef="let row; columns: displayedColumnsProventos;" mat-row class="border-bottom-1 surface-border"></tr>
+    </table>
+    
+    <mat-paginator [length]="resultsLength" [pageSizeOptions]="[5, 10, 20]" [pageSize]="10" class="border-top-0"></mat-paginator>
+    
+    <div *ngIf="proventos && proventos.length === 0" class="p-5 text-center text-color-secondary">
+      <mat-icon class="text-4xl mb-3 block">payments</mat-icon>
+      <span>Nenhum provento registrado. Adicione um provento utilizando o formulário acima.</span>
+    </div>
+  </div>
 </div>
