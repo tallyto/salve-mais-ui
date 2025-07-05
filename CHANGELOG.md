@@ -26,6 +26,8 @@
 - Adição de feedback visual para indicar status de pagamento de faturas
 - Melhoria na exibição das compras em faturas com detalhes expandíveis
 - Adicionados indicadores de carregamento para melhorar experiência do usuário
+- Substituição de diálogos confirm nativos por diálogos Angular Material para melhor experiência do usuário
+- Adicionado componente reutilizável ConfirmDialogComponent para confirmações no sistema
 
 ## [1.3.5] - 2025-07-05
 
