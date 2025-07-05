@@ -12,6 +12,8 @@ export class ContasFixasService {
   private apiUrl = environment.apiUrl + '/contas/fixas'; // substitua pela sua URL
 
   savedFinanca = new EventEmitter<void>();
+  editingFinanca = new EventEmitter<Financa>();
+  
   constructor(private http: HttpClient) {
   }
 
@@ -26,6 +28,19 @@ export class ContasFixasService {
   }
 
   salvarFinanca(financa: Financa): Observable<Financa> {
+    if (financa.id) {
+      // Se tem ID, é uma atualização (PUT)
+      return this.http.put<Financa>(`${this.apiUrl}/${financa.id}`, financa);
+    }
+    // Se não tem ID, é uma criação (POST)
     return this.http.post<Financa>(this.apiUrl, financa);
+  }
+
+  excluirFinanca(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  getFinancaById(id: number): Observable<Financa> {
+    return this.http.get<Financa>(`${this.apiUrl}/${id}`);
   }
 }

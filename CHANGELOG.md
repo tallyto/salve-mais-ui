@@ -15,6 +15,9 @@
 - Redesign do componente de despesas fixas para seguir padrão visual do sistema
 - Melhoria na visualização de status de pagamento com indicadores visuais coloridos
 - Adição de ações para edição e exclusão nas tabelas de despesas
+- Implementação de edição inline para despesas fixas
+- Aprimoramento do formulário de despesas fixas para tratar corretamente operações de edição
+- Adicionada comunicação entre componentes para edição de despesas fixas
 
 ## [1.3.5] - 2025-07-05
 
