@@ -1,0 +1,21 @@
+/* Estilos específicos para o formulário de proventos */
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: rgba(0, 0, 0, 0.12);
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: var(--primary-color);
+}
+
+::ng-deep .mat-form-field-label {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+::ng-deep .mat-datepicker-toggle {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+/* Estilo do botão de salvar */
+button[type="submit"] {
+  min-width: 140px;
+}
