@@ -6,6 +6,7 @@ import {FaturaService} from "../../services/fatura.service";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {Cartao} from "../../models/cartao.model";
 import {CartaoService} from "../../services/cartao.service";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-fatura',
@@ -25,16 +26,18 @@ export class FaturaComponent implements OnInit {
 
   public faturaForm: FormGroup;
   public cardForm: FormGroup;
-  public displayedColumnsFatura: string[] = ['dataVencimento', 'dataPagamento', 'valorTotal', 'pago', 'cartaoCredito'];
+  public displayedColumnsFatura: string[] = ['dataVencimento', 'dataPagamento', 'valorTotal', 'pago', 'cartaoCredito', 'acoes'];
   public faturas: Fatura[] = [];
   public expandedElement: Fatura | undefined;
   public cartoes: Cartao[] = [];
+  public isLoading = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private faturaService: FaturaService,
     private snackBar: MatSnackBar,
-    private cartaoService: CartaoService
+    private cartaoService: CartaoService,
+    private dialog: MatDialog
   ) {
     this.faturaForm = this.formBuilder.group({
       id: [null],
@@ -49,16 +52,24 @@ export class FaturaComponent implements OnInit {
     this.loadCards()
   }
 
-
   public listarFaturas(): void {
+    this.isLoading = true;
     this.faturaService.listarFaturas().subscribe(
-      faturas => this.faturas = faturas
+      faturas => {
+        this.faturas = faturas;
+        this.isLoading = false;
+      },
+      error => {
+        this.openSnackBar('Erro ao carregar faturas');
+        this.isLoading = false;
+      }
     );
   }
 
   public loadCards(): void {
     this.cartaoService.listarCartoes().subscribe(
-      value => this.cartoes = value
+      value => this.cartoes = value,
+      error => this.openSnackBar('Erro ao carregar cartões')
     )
   }
 
@@ -66,14 +77,48 @@ export class FaturaComponent implements OnInit {
     this.snackBar.open(message, 'Ok', {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
+      duration: 3000
     });
   }
 
   handlerFatura() {
+    if (this.cardForm.invalid) {
+      this.openSnackBar('Selecione um cartão');
+      return;
+    }
+
+    this.isLoading = true;
     this.faturaService.criarFatura(this.cardForm.get('cardId')?.value).subscribe(
       _ => {
-        this.listarFaturas()
+        this.listarFaturas();
+        this.openSnackBar('Fatura gerada com sucesso');
+        this.isLoading = false;
+        this.cardForm.reset();
+      },
+      error => {
+        this.openSnackBar('Erro ao gerar fatura');
+        this.isLoading = false;
       }
     )
+  }
+
+  pagarFatura(fatura: Fatura, event: Event) {
+    event.stopPropagation();
+
+    if (confirm(`Confirmar pagamento da fatura de ${fatura.cartaoCredito?.nome} no valor de ${fatura.valorTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}?`)) {
+      this.isLoading = true;
+
+      this.faturaService.pagarFatura(fatura.id).subscribe(
+        _ => {
+          this.listarFaturas();
+          this.openSnackBar('Fatura paga com sucesso');
+          this.isLoading = false;
+        },
+        error => {
+          this.openSnackBar('Erro ao pagar fatura');
+          this.isLoading = false;
+        }
+      );
+    }
   }
 }

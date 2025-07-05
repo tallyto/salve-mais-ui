@@ -21,6 +21,11 @@
 - Redesign do componente de despesas recorrentes para seguir padrão visual do sistema
 - Implementação de funcionalidades CRUD completas para despesas recorrentes
 - Adicionada comunicação entre componentes para edição de despesas recorrentes
+- Redesign do componente de faturas para seguir padrão visual do sistema
+- Implementação da funcionalidade de pagamento de faturas
+- Adição de feedback visual para indicar status de pagamento de faturas
+- Melhoria na exibição das compras em faturas com detalhes expandíveis
+- Adicionados indicadores de carregamento para melhorar experiência do usuário
 
 ## [1.3.5] - 2025-07-05
 

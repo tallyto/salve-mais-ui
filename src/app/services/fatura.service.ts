@@ -22,4 +22,8 @@ export class FaturaService {
   public criarFatura(cardId: number): Observable<any> {
     return this.http.post(`${this.apiUrl}/${cardId}`, {});
   }
+
+  public pagarFatura(faturaId: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/pagar/${faturaId}`, {});
+  }
 }

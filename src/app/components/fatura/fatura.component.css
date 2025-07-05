@@ -6,16 +6,47 @@ tr.detail-row {
   height: 0;
 }
 
-tr.element-row:not(.example-expanded-row):hover {
+tr.element-row:not(.expanded-row):hover {
   background: #f5f5f5;
 }
 
-tr.element-row:not(.example-expanded-row):active {
+tr.element-row:not(.expanded-row):active {
   background: #efefef;
 }
 
 .element-row td {
   border-bottom-width: 0;
+}
+
+.action-buttons button {
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.element-row:hover .action-buttons button {
+  opacity: 1;
+}
+
+.mat-column-acoes {
+  width: 120px;
+}
+
+.mat-column-pago {
+  width: 100px;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+/* Animação para o botão de carregamento */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-spinner {
+  animation: spin 1s linear infinite;
 }
 
 
