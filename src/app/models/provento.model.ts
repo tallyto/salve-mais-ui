@@ -3,4 +3,5 @@ export interface Provento {
   descricao: string;
   data: Date;
   valor: number;
+  conta?: any; // Adiciona campo opcional conta para facilitar edição
 }

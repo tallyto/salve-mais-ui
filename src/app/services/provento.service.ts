@@ -15,6 +15,7 @@ export class ProventoService {
   }
 
   proventoSaved = new EventEmitter<void>();
+  editingProvento = new EventEmitter<Provento>();
 
   public listarProventos(page: number, size: number, sort: string): Observable<Provento[]> {
     return this.http.get<Provento[]>(this.apiUrl, {
@@ -28,5 +29,9 @@ export class ProventoService {
 
   public criarProvento(provento: Provento): Observable<Provento> {
     return this.http.post<Provento>(this.apiUrl, provento);
+  }
+
+  public atualizarProvento(provento: Provento): Observable<Provento> {
+    return this.http.put<Provento>(`${this.apiUrl}/${provento.id}`, provento);
   }
 }

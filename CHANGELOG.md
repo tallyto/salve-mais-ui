@@ -8,6 +8,7 @@
 - Criação das telas de login e cadastro
 - Integração do front-end com o backend para autenticação
 - Estruturação inicial do projeto Angular
+- Implementada funcionalidade de edição de provento (API, serviço, formulário e listagem)
 
 ## [1.3.5] - 2025-07-05
 

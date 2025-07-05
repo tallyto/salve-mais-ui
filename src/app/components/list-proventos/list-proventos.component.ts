@@ -14,9 +14,10 @@ export class ListProventosComponent implements AfterViewInit {
   resultsLength = 0;
   isLoadingResults = true;
 
-  displayedColumnsProventos: string[] = ['descricao', 'conta', 'data', 'valor'];
+  displayedColumnsProventos: string[] = ['descricao', 'conta', 'data', 'valor', 'acoes'];
 
   proventos: Provento[] = [];
+  selectedProvento: Provento | null = null;
 
   constructor(
     private proventoService: ProventoService,
@@ -73,6 +74,11 @@ export class ListProventosComponent implements AfterViewInit {
         }),
       )
       .subscribe(data => (this.proventos = data));
+  }
+
+  onEditProvento(provento: Provento) {
+    this.selectedProvento = { ...provento };
+    this.proventoService.editingProvento.emit(this.selectedProvento);
   }
 
 }
