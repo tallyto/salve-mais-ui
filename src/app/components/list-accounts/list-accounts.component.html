@@ -4,22 +4,44 @@
   <table [dataSource]="accounts" mat-table
          matSort matSortActive="id" matSortDisableClear matSortDirection="desc">
 
-
-
     <!-- Valor Column -->
     <ng-container matColumnDef="saldo">
       <th *matHeaderCellDef mat-header-cell mat-sort-header> Saldo</th>
       <td *matCellDef="let account" mat-cell>
-        {{ account.saldo | currency:'BRL':'symbol':'1.2-2' }}
+        <div *ngIf="!isEditing(account)">
+          {{ account.saldo | currency:'BRL':'symbol':'1.2-2' }}
+        </div>
+        <mat-form-field *ngIf="isEditing(account)" appearance="outline" class="edit-field">
+          <input matInput [(ngModel)]="tempSaldo" type="number" step="0.01">
+        </mat-form-field>
       </td>
     </ng-container>
+
     <!-- Nome Column -->
     <ng-container matColumnDef="titular">
       <th *matHeaderCellDef mat-header-cell mat-sort-header> Titular</th>
       <td *matCellDef="let account" mat-cell> {{ account.titular }}</td>
     </ng-container>
 
-
+    <!-- Ações Column -->
+    <ng-container matColumnDef="acoes">
+      <th *matHeaderCellDef mat-header-cell> Ações</th>
+      <td *matCellDef="let account" mat-cell>
+        <div *ngIf="!isEditing(account)" class="action-buttons">
+          <button mat-icon-button color="primary" (click)="startEdit(account)" matTooltip="Editar saldo">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+        <div *ngIf="isEditing(account)" class="action-buttons">
+          <button mat-icon-button color="primary" (click)="saveEdit()" matTooltip="Salvar">
+            <mat-icon>check</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="cancelEdit()" matTooltip="Cancelar">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </td>
+    </ng-container>
 
     <tr *matHeaderRowDef="displayedColumnsProventos" mat-header-row></tr>
     <tr *matRowDef="let row; columns: displayedColumnsProventos;" mat-row></tr>

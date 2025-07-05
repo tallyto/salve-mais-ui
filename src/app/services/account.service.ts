@@ -20,6 +20,10 @@ export class AccountService {
     return this.http.post<Account>(this.apiUrl, account)
   }
 
+  atualizarAccount(account: Account): Observable<Account> {
+    return this.http.put<Account>(`${this.apiUrl}/${account.id}`, account)
+  }
+
   listarAccounts(page: number, size: number, sort: string): Observable<AccountPage> {
     return this.http.get<AccountPage>(this.apiUrl,  {
       params: {

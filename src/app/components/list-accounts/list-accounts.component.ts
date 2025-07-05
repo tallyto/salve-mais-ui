@@ -4,6 +4,7 @@ import {MatSort} from "@angular/material/sort";
 import {catchError, map, merge, of as observableOf, startWith, switchMap} from "rxjs";
 import { AccountService } from 'src/app/services/account.service';
 import {Account} from "../../models/account.model";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-list-accounts',
@@ -14,12 +15,15 @@ export class ListAccountsComponent implements AfterViewInit {
   resultsLength = 0;
   isLoadingResults = true;
 
-  displayedColumnsProventos: string[] = ['saldo', 'titular'];
+  displayedColumnsProventos: string[] = ['saldo', 'titular', 'acoes'];
 
   accounts: Account[] = [];
+  editingAccount: Account | null = null;
+  tempSaldo: number = 0;
 
   constructor(
     private accountService: AccountService,
+    private snackBar: MatSnackBar
   ) {
     this.accountService.savedAccount.subscribe({
       next: () => {
@@ -35,6 +39,42 @@ export class ListAccountsComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.refreshAccountList()
+  }
+
+  startEdit(account: Account) {
+    this.editingAccount = account;
+    this.tempSaldo = account.saldo;
+  }
+
+  cancelEdit() {
+    this.editingAccount = null;
+    this.tempSaldo = 0;
+  }
+
+  saveEdit() {
+    if (this.editingAccount) {
+      const updatedAccount = { ...this.editingAccount, saldo: this.tempSaldo };
+      this.accountService.atualizarAccount(updatedAccount).subscribe({
+        next: () => {
+          this.snackBar.open('Saldo atualizado com sucesso!', 'Fechar', {
+            duration: 3000,
+            panelClass: 'snackbar-success'
+          });
+          this.editingAccount = null;
+          this.refreshAccountList();
+        },
+        error: (err) => {
+          this.snackBar.open('Erro ao atualizar saldo: ' + (err.error?.message || 'Erro desconhecido'), 'Fechar', {
+            duration: 3000,
+            panelClass: 'snackbar-error'
+          });
+        }
+      });
+    }
+  }
+
+  isEditing(account: Account): boolean {
+    return this.editingAccount?.id === account.id;
   }
 
   refreshAccountList() {

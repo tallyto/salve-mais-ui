@@ -1,0 +1,29 @@
+.edit-field {
+  width: 120px;
+  font-size: 14px;
+}
+
+.edit-field .mat-form-field-wrapper {
+  margin: 0;
+  padding: 0;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.action-buttons button {
+  min-width: 36px;
+  width: 36px;
+  height: 36px;
+}
+
+.mat-table {
+  width: 100%;
+}
+
+.mat-cell, .mat-header-cell {
+  padding: 8px 16px;
+}
