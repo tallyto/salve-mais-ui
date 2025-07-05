@@ -13,7 +13,7 @@ export class ContasFixasService {
 
   savedFinanca = new EventEmitter<void>();
   editingFinanca = new EventEmitter<Financa>();
-  
+
   constructor(private http: HttpClient) {
   }
 

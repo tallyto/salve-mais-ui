@@ -18,7 +18,7 @@ export class DespesasFixasComponent implements OnInit {
   public categorias: Categoria[] = [];
   public accounts: Account[] = [];
   public editingDespesa: Financa | null = null;
-  
+
   constructor(
     private financaService: ContasFixasService,
     private formBuilder: FormBuilder,
@@ -72,10 +72,10 @@ export class DespesasFixasComponent implements OnInit {
     if (this.despesaFixaForm.invalid) {
       return;
     }
-    
+
     const despesa = this.despesaFixaForm.value;
     const isEditing = !!despesa.id;
-    
+
     this.financaService.salvarFinanca(despesa).subscribe({
       next: () => {
         this.despesaFixaForm.reset({
@@ -87,10 +87,10 @@ export class DespesasFixasComponent implements OnInit {
           valor: '',
           pago: false
         });
-        
+
         this.editingDespesa = null;
         this.financaService.savedFinanca.emit();
-        
+
         const message = isEditing ? 'Despesa atualizada com sucesso!' : 'Despesa salva com sucesso!';
         this.snackBar.open(message, 'Fechar', {
           duration: 3000,

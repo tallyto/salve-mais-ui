@@ -54,10 +54,10 @@
       <th *matHeaderCellDef mat-header-cell class="p-3 text-right"> Ações</th>
       <td *matCellDef="let contaFixa" mat-cell class="p-3 text-right">
         <div class="action-buttons flex justify-content-end gap-2">
-          <button mat-icon-button color="primary" matTooltip="Editar despesa">
+          <button mat-icon-button color="primary" matTooltip="Editar despesa" (click)="startEdit(contaFixa)">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button color="warn" matTooltip="Excluir despesa">
+          <button mat-icon-button color="warn" matTooltip="Excluir despesa" (click)="excluirDespesa(contaFixa)">
             <mat-icon>delete</mat-icon>
           </button>
         </div>

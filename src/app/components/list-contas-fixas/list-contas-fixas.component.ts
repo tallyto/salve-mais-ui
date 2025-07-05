@@ -65,7 +65,7 @@ export class ListContasFixasComponent implements AfterViewInit {
       valor: despesa.valor,
       pago: despesa.pago
     });
-    
+
     // Emitir evento para que o componente principal possa reagir
     this.financaService.editingFinanca.emit(despesa);
   }
