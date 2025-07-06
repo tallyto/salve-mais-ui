@@ -1,49 +1,116 @@
 # Roadmap - Gestor Financeiro
 
-## Autenticação e Segurança
+> **Roadmap Estratégico para Equipe de 2 Pessoas (2025-2026)**
 
-- [x] Cadastro de usuário
-- [x] Login com JWT
-- [x] Guard de rotas no Angular
-- [x] Logout e expiração automática do token
-- [x] Feedback visual (snackbar) para login, erros e sucesso
-- [x] Recuperação de senha (envio de e-mail)
-- [x] Redefinição de senha (token, tela, backend, persistência)
-- [x] Multi-tenancy (suporte a múltiplos locatários)
-- [x] Lembrar-me (keep me logged in)
-- [x] Cadastro de tenant com confirmação por e-mail
-- [x] Validação de domínios empresariais no cadastro
-- [ ] Permissões/papéis de usuário
-- [ ] Refresh token
+Este roadmap foi elaborado considerando uma equipe pequena de dois desenvolvedores, focando em entregas de alto valor com esforço gerenciável. As versões estão organizadas em ordem de prioridade e impacto para os usuários.
 
-## Usuário
+## Versão 1.6.0 - Metas Financeiras (Q3 2025)
 
-- [x] Tela de boas-vindas com dashboard
-- [ ] Perfil do usuário
-- [ ] Exibir nome do usuário logado
-- [ ] Configurações de preferências do usuário
+### Objetivos Principais
+- Implementar sistema de metas financeiras para usuários
+- Melhorar experiência de planejamento financeiro
 
-## Dashboard e Visualização
+### Funcionalidades
+- [ ] Criação e edição de metas financeiras com valores e prazos
+- [ ] Visualização do progresso das metas (% completo, tempo restante)
+- [ ] Dashboard com exibição de metas em andamento
+- [ ] Notificações de metas próximas de conclusão ou atrasadas
+- [ ] Recomendações para atingir metas baseadas no padrão de gastos
 
-- [x] Dashboard com gráficos nativos (pie, bar, line)
-- [x] Visualização de compras de cartão no dashboard
-- [x] Indicadores de saúde financeira com dicas personalizadas
-- [x] Resumo de contas bancárias no dashboard
-- [ ] Filtros avançados por período/categoria no dashboard
-- [ ] Exportação de relatórios em PDF/Excel
-- [ ] Visualizações personalizáveis pelo usuário
+### Melhorias Técnicas
+- [ ] Refatoração de componentes compartilhados para reduzir duplicação de código
+- [ ] Implementação de testes automatizados para os fluxos principais
+- [ ] Otimização de queries para melhorar performance
 
-## Visual e UX
+## Versão 1.7.0 - Importação de Dados (Q4 2025)
 
-- [x] Padronização visual e CSS consistente
-- [x] Responsividade para diferentes dispositivos
-- [x] Layout minimalista para cadastro de contas
-- [x] Fluxo de cadastro e confirmação de tenant com UX moderna
-- [ ] Tema escuro/claro
-- [ ] Melhorar feedback visual em todas as telas
-- [ ] Animações e transições para melhor experiência
+### Objetivos Principais
+- Facilitar a entrada de dados pelos usuários
+- Reduzir o esforço manual para manter o controle financeiro
 
-## API e Backend
+### Funcionalidades
+- [ ] Importação de extratos bancários via CSV/OFX
+- [ ] Categorização semi-automática de transações importadas
+- [ ] Detecção de transações duplicadas na importação
+- [ ] Assistente de importação guiado passo-a-passo
+
+### Melhorias Técnicas
+- [ ] Criação de um módulo separado para processamento de importação
+- [ ] API escalável para processamento assíncrono de arquivos grandes
+- [ ] Armazenamento seguro de arquivos temporários
+
+## Versão 1.8.0 - Experiência Mobile Otimizada (Q1 2026)
+
+### Objetivos Principais
+- Tornar o app completamente utilizável em dispositivos móveis
+- Oferecer experiência rica mesmo em conexões lentas
+
+### Funcionalidades
+- [ ] Layout adaptativo otimizado para smartphones e tablets
+- [ ] PWA (Progressive Web App) com recursos offline básicos
+- [ ] Melhorias de performance para conexões móveis
+- [ ] Interface simplificada para operações comuns em dispositivos móveis
+
+### Melhorias Técnicas
+- [ ] Implementação de estratégias de cache inteligente
+- [ ] Lazy loading de todos os módulos não essenciais
+- [ ] Otimização de assets para reduzir tamanho de download
+- [ ] Service workers para funcionalidades offline
+
+## Versão 1.9.0 - Segurança e Perfil de Usuário (Q2 2026)
+
+### Objetivos Principais
+- Aumentar a segurança para dados financeiros sensíveis
+- Melhorar a personalização por usuário
+
+### Funcionalidades
+- [ ] Autenticação de dois fatores (2FA)
+- [ ] Perfil de usuário completo com preferências
+- [ ] Configurações de privacidade e segurança
+- [ ] Auditoria básica de ações do usuário (histórico de login, etc)
+- [ ] Refresh token para manter sessões mais longas de forma segura
+
+### Melhorias Técnicas
+- [ ] Criptografia adicional para dados financeiros sensíveis
+- [ ] Revisão de segurança geral e correções
+- [ ] Implementação de logging e monitoramento avançado
+
+## Versão 2.0.0 - Análise Avançada e Relatórios (Q3-Q4 2026)
+
+### Objetivos Principais
+- Oferecer insights financeiros personalizados
+- Permitir planejamento financeiro a longo prazo
+
+### Funcionalidades
+- [ ] Previsões de gastos baseadas em histórico
+- [ ] Relatórios personalizáveis e exportáveis (PDF, Excel)
+- [ ] Dashboard analítico com tendências e padrões
+- [ ] Comparações com períodos anteriores
+- [ ] Alertas inteligentes para gastos anormais ou oportunidades de economia
+
+### Melhorias Técnicas
+- [ ] Implementação de algoritmos de análise de dados
+- [ ] Refatoração do backend para suportar análises complexas
+- [ ] Otimização do banco de dados para grandes volumes de dados históricos
+
+## Considerações para Implementação
+
+### Estratégia para Equipe Reduzida
+- **Foco em MVP**: Para cada versão, definir o mínimo viável que entrega valor
+- **Releases frequentes**: Ciclos de 2-3 meses para manter o momentum
+- **Automação**: Investir em CI/CD e testes para reduzir trabalho manual
+- **Refatoração constante**: Manter a qualidade do código para facilitar futuras adições
+
+### Priorização
+- Priorizar features com maior impacto para os usuários e menor esforço técnico
+- Balancear novas funcionalidades com melhorias técnicas para evitar débito técnico
+- Coletar feedback dos usuários para ajustar prioridades entre versões
+
+### Técnicas para Otimizar o Desenvolvimento
+- Componentização para reuso máximo de código
+- Documentação clara de APIs e arquitetura
+- Sprints curtos (1-2 semanas) com metas realistas
+- Revisão periódica do roadmap para ajustes conforme necessário
 
 - [x] Endpoints completos para dashboard
 - [x] Endpoints CRUD para todas as entidades principais
