@@ -1,126 +1,122 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" class="app-toolbar">
   <button (click)="sidenav.toggle()" mat-icon-button matTooltip="Menu">
     <mat-icon>menu</mat-icon>
   </button>
-  <span>Meu Gestor Financeiro</span>
+  <span class="app-title">Gestor Financeiro</span>
   <span class="toolbar-item-spacer"></span>
-  <button mat-icon-button matTooltip="Like">
-    <mat-icon>favorite</mat-icon>
-  </button>
-  <button mat-icon-button matTooltip="Share">
-    <mat-icon>share</mat-icon>
-  </button>
-  <button mat-icon-button matTooltip="Notifications">
-    <mat-icon>notifications</mat-icon>
-  </button>
-  <button [matMenuTriggerFor]="userAccountMenu" mat-icon-button matTooltip="My Account">
-    <mat-icon>account_circle</mat-icon>
-  </button>
-  <mat-menu #userAccountMenu [overlapTrigger]="false" yPosition="below">
-    <button mat-menu-item routerLink="#">
-      <mat-icon>person</mat-icon>
-      <span>My Account</span>
+
+  <div class="toolbar-actions">
+    <button mat-icon-button matTooltip="Notificações">
+      <mat-icon>notifications</mat-icon>
     </button>
-    <button mat-menu-item routerLink="#">
-      <mat-icon>settings</mat-icon>
-      <span>Settings</span>
+
+    <!-- Tenant selector será adicionado posteriormente -->
+
+    <button [matMenuTriggerFor]="userAccountMenu" mat-button class="user-profile-button">
+      <div class="user-profile">
+        <mat-icon class="user-avatar">account_circle</mat-icon>
+        <span class="username">{{ username }}</span>
+      </div>
     </button>
-    <button mat-menu-item routerLink="#">
-      <mat-icon>help</mat-icon>
-      <span>Help</span>
-    </button>
-    <mat-divider></mat-divider>
-    <button mat-menu-item (click)="logout()">
-      <mat-icon>exit_to_app</mat-icon>
-      Logout
-    </button>
-  </mat-menu>
+
+    <mat-menu #userAccountMenu [overlapTrigger]="false" yPosition="below" class="user-menu">
+      <div class="user-menu-header">
+        <mat-icon>account_circle</mat-icon>
+        <div class="user-info">
+          <p class="user-name">{{ username }}</p>
+          <p class="user-email">{{ userEmail }}</p>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <button mat-menu-item routerLink="#">
+        <mat-icon>person</mat-icon>
+        <span>Minha Conta</span>
+      </button>
+      <button mat-menu-item routerLink="#">
+        <mat-icon>settings</mat-icon>
+        <span>Configurações</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Sair</span>
+      </button>
+    </mat-menu>
+  </div>
 </mat-toolbar>
 
 <mat-sidenav-container class="app-container">
   <mat-sidenav #sidenav [class.mat-elevation-z4]="true" class="app-sidenav" mode="side">
-    <mat-nav-list>
-      <mat-list-item routerLink="/dashboard">
-        <mat-icon>dashboard</mat-icon>
-        <span>Dashboard</span>
-      </mat-list-item>
-      <mat-expansion-panel [class.mat-elevation-z0]="true">
-        <mat-expansion-panel-header>
-          Accounts
-        </mat-expansion-panel-header>
-        <mat-nav-list>
-          <a mat-list-item routerLink="/account">
-            <mat-icon>attach_money</mat-icon>
-            <span>Cadastrar</span>
-          </a>
-        </mat-nav-list>
-      </mat-expansion-panel>
-      <mat-expansion-panel [class.mat-elevation-z0]="true">
-        <mat-expansion-panel-header>
-          Proventos
-        </mat-expansion-panel-header>
-        <mat-nav-list>
-          <a mat-list-item routerLink="/provento-form">
-            <mat-icon>account_balance_wallet</mat-icon>
-            <span>Cadastrar</span>
-          </a>
-        </mat-nav-list>
-      </mat-expansion-panel>
-      <mat-expansion-panel [class.mat-elevation-z0]="true">
-        <mat-expansion-panel-header>
-          Cartões
-        </mat-expansion-panel-header>
-        <mat-nav-list>
-          <a mat-list-item routerLink="/card-form">
-            <mat-icon>payment</mat-icon>
-            <span>Cadastrar</span>
-          </a>
-        </mat-nav-list>
-      </mat-expansion-panel>
-      <mat-expansion-panel [class.mat-elevation-z0]="true">
-        <mat-expansion-panel-header>
-          Despesas
-        </mat-expansion-panel-header>
-        <mat-nav-list>
-          <a mat-list-item routerLink="/despesas-fixas">
-            <mat-icon>payment</mat-icon>
-            <span>Fixas</span>
-          </a>
-          <a mat-list-item routerLink="/despesas-recorrentes">
-            <mat-icon>payment</mat-icon>
-            <span>Recorrentes</span>
-          </a>
-        </mat-nav-list>
-      </mat-expansion-panel>
-      <mat-expansion-panel [class.mat-elevation-z0]="true">
-        <mat-expansion-panel-header>
-          Faturas
-        </mat-expansion-panel-header>
-        <mat-nav-list>
-          <a mat-list-item routerLink="/faturas">
-            <mat-icon>payment</mat-icon>
-            <span>Cadastrar</span>
-          </a>
-        </mat-nav-list>
-      </mat-expansion-panel>
-      <mat-expansion-panel [class.mat-elevation-z0]="true">
-        <mat-expansion-panel-header>
-          Categorias
-        </mat-expansion-panel-header>
-        <mat-nav-list>
-          <a mat-list-item routerLink="/categoria-form">
-            <mat-icon>description</mat-icon>
-            <span>Cadastrar</span>
-          </a>
-        </mat-nav-list>
-      </mat-expansion-panel>
-    </mat-nav-list>
+    <div class="sidenav-header">
+      <div class="logo-container">
+        <mat-icon class="logo-icon">account_balance</mat-icon>
+        <span class="logo-text">Gestor Financeiro</span>
+      </div>
+    </div>
+
+    <div class="sidenav-content">
+      <mat-nav-list>
+        <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link">
+          <mat-icon>dashboard</mat-icon>
+          <span>Dashboard</span>
+        </a>
+
+        <mat-divider></mat-divider>
+        <div class="nav-section-header">Contas e Rendimentos</div>
+
+        <a mat-list-item routerLink="/account" routerLinkActive="active-link">
+          <mat-icon>account_balance</mat-icon>
+          <span>Contas Bancárias</span>
+        </a>
+
+        <a mat-list-item routerLink="/provento-form" routerLinkActive="active-link">
+          <mat-icon>trending_up</mat-icon>
+          <span>Proventos</span>
+        </a>
+
+        <mat-divider></mat-divider>
+        <div class="nav-section-header">Despesas</div>
+
+        <a mat-list-item routerLink="/despesas-fixas" routerLinkActive="active-link">
+          <mat-icon>money_off</mat-icon>
+          <span>Despesas Fixas</span>
+        </a>
+
+        <a mat-list-item routerLink="/despesas-recorrentes" routerLinkActive="active-link">
+          <mat-icon>autorenew</mat-icon>
+          <span>Despesas Recorrentes</span>
+        </a>
+
+        <mat-divider></mat-divider>
+        <div class="nav-section-header">Cartões e Faturas</div>
+
+        <a mat-list-item routerLink="/card-form" routerLinkActive="active-link">
+          <mat-icon>credit_card</mat-icon>
+          <span>Cartões de Crédito</span>
+        </a>
+
+        <a mat-list-item routerLink="/faturas" routerLinkActive="active-link">
+          <mat-icon>receipt</mat-icon>
+          <span>Faturas</span>
+        </a>
+
+        <mat-divider></mat-divider>
+        <div class="nav-section-header">Configurações</div>
+
+        <a mat-list-item routerLink="/categoria-form" routerLinkActive="active-link">
+          <mat-icon>category</mat-icon>
+          <span>Categorias</span>
+        </a>
+      </mat-nav-list>
+    </div>
+
+    <div class="sidenav-footer">
+      <div class="app-version">v{{ appVersion }}</div>
+    </div>
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="container">
-      <router-outlet>
-
-      </router-outlet>
+      <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

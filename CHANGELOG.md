@@ -2,36 +2,20 @@
 
 ## [Unreleased]
 
-- Adição do roadmap de features (`doc/roadmap.md`)
-- Implementação de autenticação JWT (login, cadastro, interceptor)
-- Proteção de rotas com AuthGuard
-- Criação das telas de login e cadastro
-- Integração do front-end com o backend para autenticação
-- Estruturação inicial do projeto Angular
-- Implementada funcionalidade de edição de provento (API, serviço, formulário e listagem)
-- Redesign do componente de cartão de crédito para seguir padrão visual do sistema
-- Implementação de funcionalidades CRUD completas para cartões de crédito
-- Adição de seletor de data para vencimento de cartões
-- Redesign do componente de despesas fixas para seguir padrão visual do sistema
-- Melhoria na visualização de status de pagamento com indicadores visuais coloridos
-- Adição de ações para edição e exclusão nas tabelas de despesas
-- Implementação de edição inline para despesas fixas
-- Aprimoramento do formulário de despesas fixas para tratar corretamente operações de edição
-- Adicionada comunicação entre componentes para edição de despesas fixas
-- Redesign do componente de despesas recorrentes para seguir padrão visual do sistema
-- Implementação de funcionalidades CRUD completas para despesas recorrentes
-- Adicionada comunicação entre componentes para edição de despesas recorrentes
-- Redesign do componente de faturas para seguir padrão visual do sistema
-- Implementação da funcionalidade de pagamento de faturas
-- Adição de feedback visual para indicar status de pagamento de faturas
-- Melhoria na exibição das compras em faturas com detalhes expandíveis
-- Adicionados indicadores de carregamento para melhorar experiência do usuário
-- Substituição de diálogos confirm nativos por diálogos Angular Material para melhor experiência do usuário
-- Adicionado componente reutilizável ConfirmDialogComponent para confirmações no sistema
+- Redesign completo do menu lateral para melhor organização e usabilidade
+- Adição de categorias visuais no menu lateral para agrupar funcionalidades relacionadas
+- Melhoria no design da barra de navegação superior
+- Implementação de perfil de usuário com nome e email no menu
+- Adição de abertura automática do menu lateral em telas maiores
+- Melhorias visuais como sombras, cores e espaçamentos no menu
+- Substituição de painéis expansíveis por links diretos para melhor navegação
+- Implementação de indicador visual para o item de menu ativo
+- Adição de versão do aplicativo no rodapé do menu lateral
 - Redesign do componente de categoria para seguir padrão visual do sistema
 - Implementação de funcionalidades CRUD completas para categorias
 - Correção no serviço de categoria para usar métodos HTTP apropriados (PUT para atualização, POST para criação)
 - Adição de ações para edição e exclusão nas tabelas de categorias
+- Adição do roadmap de features (`doc/roadmap.md`)
 
 ## [1.3.5] - 2025-07-05
 

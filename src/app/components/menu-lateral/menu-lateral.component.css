@@ -1,19 +1,146 @@
+/* Estilos da barra de ferramentas */
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.app-title {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-left: 8px;
+}
+
 .toolbar-item-spacer {
   flex: 1 1 auto;
 }
 
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-profile-button {
+  border-radius: 24px;
+  padding: 0 12px;
+  min-width: auto;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-avatar {
+  margin-right: 0;
+}
+
+.username {
+  margin-right: 8px;
+  font-weight: 500;
+}
+
+.user-menu-header {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  gap: 12px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: 500;
+  margin: 0;
+}
+
+.user-email {
+  font-size: 0.8rem;
+  margin: 0;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+/* Estilos do menu lateral */
 .app-container {
-  height: 90%;
+  height: calc(100vh - 64px);
   margin: 0;
 }
 
 .app-sidenav {
-  width: 230px;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
 }
 
-.app-sidenav-content {
+.sidenav-header {
+  padding: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.logo-container {
   display: flex;
-  height: 100%;
   align-items: center;
-  justify-content: center;
+  gap: 10px;
+}
+
+.logo-icon {
+  color: #3f51b5;
+}
+
+.logo-text {
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.sidenav-content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.nav-section-header {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.54);
+  padding: 16px 16px 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.active-link {
+  background-color: rgba(63, 81, 181, 0.1);
+  color: #3f51b5;
+}
+
+.sidenav-footer {
+  padding: 16px;
+  text-align: center;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.app-version {
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+/* Estilos das opções do menu */
+mat-nav-list a {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 16px;
+  font-size: 14px;
+}
+
+mat-nav-list a mat-icon {
+  margin-right: 16px;
+}
+
+mat-divider {
+  margin: 8px 0;
 }
