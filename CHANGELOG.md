@@ -2,6 +2,25 @@
 
 ## [Unreleased]
 
+- Simplificado tratamento de erros no ListDespesasRecorrentesComponent para retornar um objeto mínimo em casos de falha
+- Corrigido erro de tipo no ListDespesasRecorrentesComponent onde 'data' poderia ser 'null'
+- Melhorado tratamento de erros na listagem de compras para retornar um objeto Page vazio em vez de null
+- Simplificado código de manipulação de respostas paginadas no componente de listagem
+- Removido código desnecessário e verificações redundantes no processamento de dados
+- Criado modelo genérico Page para manipulação de respostas paginadas da API
+- Atualizado GastoCartaoService para utilizar o modelo Page de GastoCartao
+- Ajustado tratamento de erros na listagem de compras para retornar uma estrutura Page vazia consistente
+- Padronizado o tipo de retorno dos métodos de listagem para Page
+- Corrigido tratamento de resposta paginada da API de compras no cartão
+- Removido código mockado da exibição de compras no cartão
+- Implementada exibição de compras do cartão usando apenas dados reais da API
+- Removida referência a compras recorrentes para simplificar a interface
+- Adicionado tratamento para situações onde não há compras disponíveis
+- Alterada mensagem quando não há compras no cartão para ser mais clara
+- Alterada seção de transações recentes para exibir exclusivamente compras de cartão de crédito
+- Atualizado título da seção para "Compras no Cartão" para refletir o conteúdo
+- Diferenciação visual entre transações normais e compras de cartão
+- Adicionados estilos específicos para visualização de cartões na interface
 - Resolvido problema de carregamento do CSS do dashboard restabelecendo o template principal
 - Removido uso de estilos inline no template do dashboard
 - Reorganizado CSS do componente dashboard para melhor manutenção

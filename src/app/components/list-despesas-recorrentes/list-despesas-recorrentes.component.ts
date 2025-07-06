@@ -54,8 +54,7 @@ export class ListDespesasRecorrentesComponent implements AfterViewInit {
           // Flip flag to show that loading has finished.
           this.isLoadingResults = false;
 
-          // @ts-expect-error
-          if (data.content === null) {
+          if (data?.content === null) {
             return [];
           }
 

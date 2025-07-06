@@ -4,6 +4,7 @@ import {GastoCartaoInput} from "../models/input/gasto-cartao.input";
 import {Observable} from "rxjs";
 import {GastoCartao} from "../models/gasto-cartao.model";
 import { environment } from '../../environments/environment';
+import { Page } from '../models/page.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,18 @@ export class GastoCartaoService {
   constructor(private http: HttpClient) {
   }
 
-  public listCompras(page: number, size: number, sort: string): Observable<GastoCartao[]> {
-    return this.http.get<GastoCartao[]>(this.apiUrl, {
+  public listCompras(page: number, size: number, sort: string): Observable<Page<GastoCartao>> {
+    return this.http.get<Page<GastoCartao>>(this.apiUrl, {
+      params: {
+        page,
+        size,
+        sort
+      }
+    });
+  }
+
+  public listComprasRecorrentes(page: number, size: number, sort: string): Observable<Page<GastoCartao>> {
+    return this.http.get<Page<GastoCartao>>(`${this.apiUrl}/recorrentes`, {
       params: {
         page,
         size,

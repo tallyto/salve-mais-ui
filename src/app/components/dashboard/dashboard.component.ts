@@ -4,15 +4,23 @@ import { ProventoService } from '../../services/provento.service';
 import { DashboardService, DashboardSummary, CategoryExpense, MonthlyExpense } from '../../services/dashboard.service';
 import { Account } from '../../models/account.model';
 import { Provento } from '../../models/provento.model';
-import { forkJoin } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+import { GastoCartaoService } from '../../services/gasto-cartao.service';
+import { GastoCartao } from '../../models/gasto-cartao.model';
+import { catchError } from 'rxjs/operators';
+import { Page } from '../../models/page.model';
 
 interface Transaction {
   descricao: string;
-  data: Date;
+  data: Date | string;
   valor: number;
-  tipo: 'RECEITA' | 'DESPESA';
+  tipo: 'RECEITA' | 'DESPESA' | 'CARTAO';
   categoria?: {
+    id: number;
+    nome: string;
+  };
+  cartao?: {
     id: number;
     nome: string;
   };
@@ -37,6 +45,9 @@ export class DashboardComponent implements OnInit {
   summaryData: DashboardSummary | null = null;
   categoryData: CategoryExpense[] = [];
   monthlyTrendData: MonthlyExpense[] = [];
+
+  // Dados para compras de cartão
+  comprasCartao: GastoCartao[] = [];
 
   // Dados para transações recentes
   recentTransactions: Transaction[] = [];
@@ -150,7 +161,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private accountService: AccountService,
     private proventoService: ProventoService,
-    private dashboardService: DashboardService
+    private dashboardService: DashboardService,
+    private gastoCartaoService: GastoCartaoService
   ) {}
 
   ngOnInit(): void {
@@ -164,12 +176,14 @@ export class DashboardComponent implements OnInit {
     forkJoin({
       summary: this.dashboardService.getSummary(),
       categories: this.dashboardService.getExpensesByCategory(),
-      monthlyTrend: this.dashboardService.getMonthlyTrend(6)
+      monthlyTrend: this.dashboardService.getMonthlyTrend(6),
+      comprasCartao: this.gastoCartaoService.listCompras(0, 5, 'data,desc').pipe()
     }).subscribe({
       next: (results) => {
         this.summaryData = results.summary;
         this.categoryData = results.categories;
         this.monthlyTrendData = results.monthlyTrend;
+        this.comprasCartao = results.comprasCartao.content;
 
         // Definindo os valores para exibição
         this.totalSaldo = this.summaryData.saldoTotal;
@@ -186,7 +200,7 @@ export class DashboardComponent implements OnInit {
             this.prepareBarChartData();
             this.prepareLineChartData();
 
-            // Simular transações recentes para demonstração
+            // Preparar transações recentes incluindo compras de cartão
             this.prepareRecentTransactions();
 
             this.isLoading = false;
@@ -316,46 +330,28 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  // Método para criar transações recentes simuladas
+  // Método para preparar as compras de cartão recentes
   prepareRecentTransactions(): void {
-    // Em um ambiente real, isso viria de uma API
-    this.recentTransactions = [
-      {
-        descricao: 'Salário',
-        data: new Date(2023, 10, 5),
-        valor: 5000,
-        tipo: 'RECEITA',
-        categoria: { id: 1, nome: 'Salário' }
-      },
-      {
-        descricao: 'Aluguel',
-        data: new Date(2023, 10, 10),
-        valor: 1200,
-        tipo: 'DESPESA',
-        categoria: { id: 2, nome: 'Moradia' }
-      },
-      {
-        descricao: 'Supermercado',
-        data: new Date(2023, 10, 15),
-        valor: 450,
-        tipo: 'DESPESA',
-        categoria: { id: 3, nome: 'Alimentação' }
-      },
-      {
-        descricao: 'Internet',
-        data: new Date(2023, 10, 20),
-        valor: 120,
-        tipo: 'DESPESA',
-        categoria: { id: 4, nome: 'Serviços' }
-      },
-      {
-        descricao: 'Bônus',
-        data: new Date(2023, 10, 25),
-        valor: 1000,
-        tipo: 'RECEITA',
-        categoria: { id: 1, nome: 'Salário' }
-      }
-    ];
+    // Limpar array atual
+    this.recentTransactions = [];
+
+    // Adicionar apenas compras de cartão ao array de transações recentes
+    if (this.comprasCartao && this.comprasCartao.length > 0) {
+      this.comprasCartao.forEach(compra => {
+        this.recentTransactions.push({
+          descricao: compra.descricao,
+          data: compra.data,
+          valor: compra.valor,
+          tipo: 'CARTAO',
+          categoria: compra.categoria,
+          cartao: compra.cartaoCredito
+        });
+      });
+    }
+
+    // Ordenar por data (mais recentes primeiro)
+    this.recentTransactions = this.recentTransactions
+      .sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime());
   }
 
   // Métodos para indicadores de saúde financeira

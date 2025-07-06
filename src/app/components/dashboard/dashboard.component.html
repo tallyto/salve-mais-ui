@@ -130,15 +130,15 @@
     </div>
   </div>
 
-  <!-- Recent Transactions -->
+  <!-- Card Purchases -->
   <div class="section-header mb-3">
-    <h2>Transações</h2>
+    <h2>Compras no Cartão</h2>
   </div>
   <div class="col-12 mt-3 p-2">
     <div class="data-card">
       <div class="card-header d-flex justify-content-between align-items-center">
-        <h2 class="section-title m-0">Transações Recentes</h2>
-        <span class="text-color-secondary">Últimas 5 transações</span>
+        <h2 class="section-title m-0">Últimas Compras</h2>
+        <span class="text-color-secondary">Últimos 5 lançamentos</span>
       </div>
       <div class="card-content">
         <table class="transaction-table w-full">
@@ -147,6 +147,7 @@
               <th>Descrição</th>
               <th>Data</th>
               <th>Categoria</th>
+              <th>Cartão</th>
               <th class="text-right">Valor</th>
             </tr>
           </thead>
@@ -154,9 +155,8 @@
             <tr *ngFor="let transaction of recentTransactions">
               <td>
                 <div class="transaction-description">
-                  <span class="transaction-icon" [ngClass]="{'positive-bg': transaction.tipo === 'RECEITA', 'negative-bg': transaction.tipo === 'DESPESA'}">
-                    <mat-icon *ngIf="transaction.tipo === 'RECEITA'">arrow_upward</mat-icon>
-                    <mat-icon *ngIf="transaction.tipo === 'DESPESA'">arrow_downward</mat-icon>
+                  <span class="transaction-icon card-bg">
+                    <mat-icon>credit_card</mat-icon>
                   </span>
                   {{ transaction.descricao }}
                 </div>
@@ -167,13 +167,19 @@
                   {{ transaction.categoria?.nome || 'Não categorizada' }}
                 </span>
               </td>
-              <td [ngClass]="{'positive': transaction.tipo === 'RECEITA', 'negative': transaction.tipo === 'DESPESA'}" class="text-right">
+              <td>
+                <span class="card-tag" *ngIf="transaction.cartao">
+                  {{ transaction.cartao.nome }}
+                </span>
+                <span *ngIf="!transaction.cartao">-</span>
+              </td>
+              <td class="text-right negative">
                 {{ transaction.valor | currency:'BRL':'symbol':'1.2-2' }}
               </td>
             </tr>
             <tr *ngIf="recentTransactions.length === 0">
-              <td colspan="4" class="text-center p-4 text-color-secondary">
-                Nenhuma transação recente encontrada
+              <td colspan="5" class="text-center p-4 text-color-secondary">
+                Nenhuma compra no cartão encontrada.
               </td>
             </tr>
           </tbody>
