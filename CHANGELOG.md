@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.5.0] - 2025-07-06
+
 ### Adicionado
 
 - Implementação da funcionalidade "Lembrar-me" na tela de login
@@ -29,6 +31,7 @@
 - Feedback visual durante o processamento de formulários
 - Fluxo de cadastro e confirmação de tenant com UX aprimorada
 - Regras visuais de validação para domínio de tenant
+- Validação de domínios empresariais simplificada e mais robusta
 
 ## [1.4.0] - 2025-07-06
 
