@@ -1,33 +1,56 @@
 <div class="login-container">
-  <mat-card>
-    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
-      <h3>Login</h3>
-      <div class="grid align-items-center">
-        <div class="col-6">
-          <mat-form-field appearance="fill" class="flex">
-            <mat-label>Email</mat-label>
-            <input matInput formControlName="email" required type="email" placeholder="Digite seu email" (blur)="onEmailBlur()">
-          </mat-form-field>
+  <mat-card class="login-card">
+    <div class="login-header">
+      <div class="logo-container">
+        <img src="assets/images/logo.svg" alt="Gestor Financeiro" class="logo">
+      </div>
+      <h2>Gestor Financeiro</h2>
+    </div>
+    <div class="login-content">
+      <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="login-form">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" required type="email" placeholder="Digite seu email" (blur)="onEmailBlur()">
+          <mat-icon matPrefix>email</mat-icon>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('required')">Email é obrigatório</mat-error>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('email')">Formato de email inválido</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Senha</mat-label>
+          <input matInput formControlName="senha" required [type]="hidePassword ? 'password' : 'text'" placeholder="Digite sua senha">
+          <mat-icon matPrefix>lock</mat-icon>
+          <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" type="button">
+            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          <mat-error *ngIf="loginForm.get('senha')?.hasError('required')">Senha é obrigatória</mat-error>
+          <mat-error *ngIf="loginForm.get('senha')?.hasError('minlength')">A senha deve ter no mínimo 6 caracteres</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline" class="form-field" *ngIf="showDomainField">
+          <mat-label>Domínio</mat-label>
+          <input matInput formControlName="dominio" required placeholder="Informe o domínio da empresa">
+          <mat-icon matPrefix>business</mat-icon>
+          <mat-error *ngIf="loginForm.get('dominio')?.hasError('required') && showDomainField">Domínio é obrigatório</mat-error>
+        </mat-form-field>
+        
+        <div class="actions-row">
+          <mat-checkbox formControlName="lembrarMe" class="remember-me">Lembrar-me</mat-checkbox>
+          <a routerLink="/recuperar-senha" class="forgot-password">Esqueceu a senha?</a>
         </div>
-        <div class="col-6">
-          <mat-form-field appearance="fill" class="flex">
-            <mat-label>Senha</mat-label>
-            <input matInput formControlName="senha" required type="password" placeholder="Digite sua senha">
-          </mat-form-field>
-        </div>
-        <div class="col-12" *ngIf="showDomainField">
-          <mat-form-field appearance="fill" class="flex">
-            <mat-label>Domínio</mat-label>
-            <input matInput formControlName="dominio" required placeholder="Informe o domínio da empresa">
-          </mat-form-field>
-        </div>
-        <div class="col-12 pt-0">
-          <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">Entrar</button>
-        </div>
-        <div class="col-12 pt-0">
+        
+        <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid" class="submit-button">
+          <mat-icon>login</mat-icon> Entrar
+        </button>
+        
+        <div class="error-container">
           <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
         </div>
-      </div>
-    </form>
+        
+        <div class="register-link">
+          Não tem uma conta? <a routerLink="/register">Criar conta</a>
+        </div>
+      </form>
+    </div>
   </mat-card>
 </div>
