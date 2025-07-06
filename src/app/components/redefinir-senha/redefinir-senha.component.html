@@ -1,18 +1,62 @@
-<h2>Redefinir Senha</h2>
-<form [formGroup]="redefinirForm" (ngSubmit)="redefinirSenha()">
-  <div>
-    <label>Nova Senha</label>
-    <input type="password" formControlName="novaSenha" required>
-    <div *ngIf="redefinirForm.get('novaSenha')?.invalid && redefinirForm.get('novaSenha')?.touched">
-      Senha deve ter pelo menos 6 caracteres.
+<div class="redefinir-container">
+  <mat-card class="redefinir-card">
+    <div class="redefinir-header">
+      <div class="logo-container">
+        <img src="assets/images/logo.svg" alt="Gestor Financeiro" class="logo">
+      </div>
+      <h2>Redefinir Senha</h2>
     </div>
-  </div>
-  <div>
-    <label>Confirmar Nova Senha</label>
-    <input type="password" formControlName="confirmarSenha" required>
-    <div *ngIf="redefinirForm.hasError('senhasDiferentes') && redefinirForm.get('confirmarSenha')?.touched">
-      As senhas não coincidem.
+    <div class="redefinir-content">
+      <p class="info-text">
+        Digite sua nova senha para concluir o processo de redefinição.
+      </p>
+      <form [formGroup]="redefinirForm" (ngSubmit)="redefinirSenha()" class="redefinir-form">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Nova Senha</mat-label>
+          <input matInput formControlName="novaSenha"
+                 [type]="hidePassword ? 'password' : 'text'"
+                 required placeholder="Digite sua nova senha">
+          <mat-icon matPrefix>lock</mat-icon>
+          <button mat-icon-button matSuffix type="button"
+                  (click)="hidePassword = !hidePassword"
+                  [attr.aria-label]="'Mostrar senha'"
+                  [attr.aria-pressed]="!hidePassword">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="redefinirForm.get('novaSenha')?.hasError('required')">Senha é obrigatória</mat-error>
+          <mat-error *ngIf="redefinirForm.get('novaSenha')?.hasError('minlength')">Senha deve ter pelo menos 6 caracteres</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Confirmar Nova Senha</mat-label>
+          <input matInput formControlName="confirmarSenha"
+                 [type]="hideConfirmPassword ? 'password' : 'text'"
+                 required placeholder="Confirme sua nova senha">
+          <mat-icon matPrefix>lock_outline</mat-icon>
+          <button mat-icon-button matSuffix type="button"
+                  (click)="hideConfirmPassword = !hideConfirmPassword"
+                  [attr.aria-label]="'Mostrar senha'"
+                  [attr.aria-pressed]="!hideConfirmPassword">
+            <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="redefinirForm.get('confirmarSenha')?.hasError('required')">Confirmação de senha é obrigatória</mat-error>
+          <mat-error *ngIf="redefinirForm.hasError('senhasDiferentes') && redefinirForm.get('confirmarSenha')?.touched">
+            As senhas não coincidem
+          </mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit"
+                [disabled]="redefinirForm.invalid || loading"
+                class="submit-button">
+          <mat-icon *ngIf="!loading">check_circle</mat-icon>
+          <mat-spinner *ngIf="loading" diameter="24" color="accent"></mat-spinner>
+          {{ loading ? 'Processando...' : 'Redefinir Senha' }}
+        </button>
+
+        <a routerLink="/login" class="back-to-login">
+          <mat-icon>arrow_back</mat-icon> Voltar para o login
+        </a>
+      </form>
     </div>
-  </div>
-  <button type="submit" [disabled]="redefinirForm.invalid || loading">Redefinir Senha</button>
-</form>
+  </mat-card>
+</div>

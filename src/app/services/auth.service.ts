@@ -43,4 +43,10 @@ export class AuthService {
   redefinirSenha(token: string, novaSenha: string) {
     return this.http.post<any>(environment.apiUrl + '/auth/redefinir-senha', { token, novaSenha });
   }
+
+  verificarToken(token: string): Observable<any> {
+    return this.http.get<any>(environment.apiUrl + '/auth/verificar-token', {
+      params: { token }
+    });
+  }
 }

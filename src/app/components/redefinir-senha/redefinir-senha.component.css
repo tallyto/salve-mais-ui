@@ -1,20 +1,96 @@
-form {
-  max-width: 350px;
-  margin: 32px auto;
+.redefinir-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 16px;
+}
+
+.redefinir-card {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  padding: 0;
+}
+
+.redefinir-header {
+  background: linear-gradient(135deg, #3f51b5 0%, #9c27b0 100%);
+  color: white;
+  padding: 24px;
+  text-align: center;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+}
+
+.redefinir-header h2 {
+  margin: 0;
+  font-weight: 500;
+}
+
+.redefinir-content {
+  padding: 24px;
+}
+
+.redefinir-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
 }
-input {
+
+.form-field {
   width: 100%;
-  padding: 8px;
-  margin-top: 4px;
+  margin-bottom: 24px;
 }
-button {
+
+.info-text {
+  margin: 16px 0;
+  color: #555;
+  font-size: 14px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.submit-button {
+  width: 100%;
+  height: 44px;
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.back-to-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 16px;
-  padding: 8px 0;
+  text-decoration: none;
+  color: #3f51b5;
+  font-size: 14px;
 }
-div[ngIf] {
-  color: #d32f2f;
-  font-size: 0.9em;
+
+.back-to-login:hover {
+  text-decoration: underline;
+}
+
+.back-to-login mat-icon {
+  font-size: 16px;
+  height: 16px;
+  width: 16px;
+  margin-right: 4px;
+}
+
+@media (max-width: 599px) {
+  .redefinir-card {
+    max-width: 100%;
+  }
 }
