@@ -1,6 +1,10 @@
 <div class="dashboard-container">
   <h1 class="page-title">Dashboard Financeiro</h1>
 
+  <div class="dashboard-date text-color-secondary mb-4">
+    <mat-icon>today</mat-icon> {{ today | date:'dd/MM/yyyy' }} - Visão geral da sua situação financeira
+  </div>
+
   <!-- Loading Indicator -->
   <div *ngIf="isLoading" class="loading-overlay">
     <mat-spinner diameter="50"></mat-spinner>
@@ -15,6 +19,14 @@
         </div>
         <div class="summary-label">Saldo Total</div>
         <div class="summary-value positive">{{ totalSaldo | currency:'BRL':'symbol':'1.2-2' }}</div>
+        <div class="text-color-secondary" *ngIf="summaryData && summaryData.saldoMesAnterior !== undefined">
+          <small>
+            <mat-icon *ngIf="totalSaldo > summaryData.saldoMesAnterior">trending_up</mat-icon>
+            <mat-icon *ngIf="totalSaldo < summaryData.saldoMesAnterior">trending_down</mat-icon>
+            <mat-icon *ngIf="totalSaldo === summaryData.saldoMesAnterior">trending_flat</mat-icon>
+            {{ (totalSaldo / summaryData.saldoMesAnterior - 1) * 100 | number:'1.1-1' }}% vs mês anterior
+          </small>
+        </div>
       </div>
     </div>
 
@@ -25,6 +37,11 @@
         </div>
         <div class="summary-label">Receitas do Mês</div>
         <div class="summary-value positive">{{ totalReceitas | currency:'BRL':'symbol':'1.2-2' }}</div>
+        <div class="text-color-secondary" *ngIf="monthlyTrendData && monthlyTrendData.length > 1">
+          <small>
+            {{ totalReceitas / totalDespesas | number:'1.1-1' }}x das despesas
+          </small>
+        </div>
       </div>
     </div>
 
@@ -35,6 +52,11 @@
         </div>
         <div class="summary-label">Despesas do Mês</div>
         <div class="summary-value negative">{{ totalDespesas | currency:'BRL':'symbol':'1.2-2' }}</div>
+        <div class="text-color-secondary" *ngIf="summaryData">
+          <small>
+            {{ (totalDespesas / totalReceitas) * 100 | number:'1.1-1' }}% da receita
+          </small>
+        </div>
       </div>
     </div>
 
@@ -45,6 +67,11 @@
         </div>
         <div class="summary-label">Contas Bancárias</div>
         <div class="summary-value">{{ accounts.length }}</div>
+        <div class="text-color-secondary">
+          <small>
+            {{ accounts.length > 0 ? (totalSaldo / accounts.length | currency:'BRL':'symbol':'1.0-0') + ' média' : 'Nenhuma conta' }}
+          </small>
+        </div>
       </div>
     </div>
   </div>
@@ -125,9 +152,21 @@
           </thead>
           <tbody>
             <tr *ngFor="let transaction of recentTransactions">
-              <td>{{ transaction.descricao }}</td>
+              <td>
+                <div class="transaction-description">
+                  <span class="transaction-icon" [ngClass]="{'positive-bg': transaction.tipo === 'RECEITA', 'negative-bg': transaction.tipo === 'DESPESA'}">
+                    <mat-icon *ngIf="transaction.tipo === 'RECEITA'">arrow_upward</mat-icon>
+                    <mat-icon *ngIf="transaction.tipo === 'DESPESA'">arrow_downward</mat-icon>
+                  </span>
+                  {{ transaction.descricao }}
+                </div>
+              </td>
               <td>{{ transaction.data | date:'dd/MM/yyyy' }}</td>
-              <td>{{ transaction.categoria?.nome || 'Não categorizada' }}</td>
+              <td>
+                <span class="category-tag">
+                  {{ transaction.categoria?.nome || 'Não categorizada' }}
+                </span>
+              </td>
               <td [ngClass]="{'positive': transaction.tipo === 'RECEITA', 'negative': transaction.tipo === 'DESPESA'}" class="text-right">
                 {{ transaction.valor | currency:'BRL':'symbol':'1.2-2' }}
               </td>
@@ -154,6 +193,26 @@
           <h2 class="section-title m-0">Saúde Financeira</h2>
         </div>
         <div class="card-content">
+          <div class="health-summary mb-3">
+            <div class="health-status" [ngClass]="getBalanceHealthClass()">
+              <div class="health-icon">
+                <mat-icon *ngIf="getBalanceRatio() >= 75">sentiment_very_satisfied</mat-icon>
+                <mat-icon *ngIf="getBalanceRatio() >= 50 && getBalanceRatio() < 75">sentiment_satisfied</mat-icon>
+                <mat-icon *ngIf="getBalanceRatio() >= 25 && getBalanceRatio() < 50">sentiment_dissatisfied</mat-icon>
+                <mat-icon *ngIf="getBalanceRatio() < 25">sentiment_very_dissatisfied</mat-icon>
+              </div>
+              <div class="health-value">{{ getBalanceRatio() }}%</div>
+            </div>
+            <div class="health-text">
+              <h3>
+                <span *ngIf="getBalanceRatio() >= 75">Excelente</span>
+                <span *ngIf="getBalanceRatio() >= 50 && getBalanceRatio() < 75">Boa</span>
+                <span *ngIf="getBalanceRatio() >= 25 && getBalanceRatio() < 50">Regular</span>
+                <span *ngIf="getBalanceRatio() < 25">Preocupante</span>
+              </h3>
+              <p>Proporção entre saldo e despesas mensais</p>
+            </div>
+          </div>
           <div class="progress-container mb-3">
             <div class="progress-label">
               <span>Saldo vs Despesas</span>
@@ -183,11 +242,16 @@
           <div *ngFor="let account of accounts" class="account-item">
             <div class="account-info">
               <div class="account-name">{{ account.titular }}</div>
-              <div class="account-balance">{{ account.saldo | currency:'BRL':'symbol':'1.2-2' }}</div>
+              <div class="account-balance" [ngClass]="{'positive': account.saldo > 0, 'negative': account.saldo < 0}">{{ account.saldo | currency:'BRL':'symbol':'1.2-2' }}</div>
             </div>
           </div>
           <div *ngIf="accounts.length === 0" class="text-center p-4 text-color-secondary">
             Nenhuma conta cadastrada
+          </div>
+          <div *ngIf="accounts.length > 0" class="account-add-button">
+            <button mat-button color="primary" [routerLink]="['/account']">
+              <mat-icon>add_circle_outline</mat-icon> Gerenciar contas
+            </button>
           </div>
         </div>
       </div>

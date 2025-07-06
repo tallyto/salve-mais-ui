@@ -5,7 +5,7 @@
 
 <div class="p-3">
   <table [dataSource]="accounts" mat-table matSort matSortActive="id" matSortDisableClear matSortDirection="desc" class="w-full">
-    
+
     <!-- Valor Column -->
     <ng-container matColumnDef="saldo">
       <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Saldo</th>
@@ -51,9 +51,9 @@
     <tr *matHeaderRowDef="displayedColumnsProventos" mat-header-row class="bg-gray-50"></tr>
     <tr *matRowDef="let row; columns: displayedColumnsProventos;" mat-row class="border-bottom-1 surface-border"></tr>
   </table>
-  
+
   <mat-paginator [length]="resultsLength" [pageSizeOptions]="[5, 10, 20]" [pageSize]="10" class="border-top-0"></mat-paginator>
-  
+
   <div *ngIf="accounts.length === 0" class="p-5 text-center text-color-secondary">
     <mat-icon class="text-4xl mb-3 block">account_balance</mat-icon>
     <span>Nenhuma conta cadastrada. Adicione uma conta utilizando o formulário acima.</span>

@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+- Resolvido problema de carregamento do CSS do dashboard restabelecendo o template principal
+- Removido uso de estilos inline no template do dashboard
+- Reorganizado CSS do componente dashboard para melhor manutenção
+- Adicionados estilos específicos para os componentes de saúde financeira e resumo de contas
+- Melhorada responsividade do dashboard com ajustes CSS para telas menores
 - Refatoração do componente dashboard para implementar visualizações internas sem dependências de componentes externos
 - Implementação de gráficos nativos (pie, bar, line) diretamente no componente dashboard
 - Adição de tabela de transações recentes no dashboard

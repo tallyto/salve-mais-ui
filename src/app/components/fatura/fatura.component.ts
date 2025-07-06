@@ -119,7 +119,7 @@ export class FaturaComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.isLoading = true;
-        
+
         this.faturaService.pagarFatura(fatura.id).subscribe(
           _ => {
             this.listarFaturas();
