@@ -17,7 +17,7 @@
         <div class="summary-value positive">{{ totalSaldo | currency:'BRL':'symbol':'1.2-2' }}</div>
       </div>
     </div>
-    
+
     <div class="col-12 md:col-6 lg:col-3 mb-3">
       <div class="summary-card">
         <div class="card-icon">
@@ -27,7 +27,7 @@
         <div class="summary-value positive">{{ totalReceitas | currency:'BRL':'symbol':'1.2-2' }}</div>
       </div>
     </div>
-    
+
     <div class="col-12 md:col-6 lg:col-3 mb-3">
       <div class="summary-card">
         <div class="card-icon">
@@ -37,7 +37,7 @@
         <div class="summary-value negative">{{ totalDespesas | currency:'BRL':'symbol':'1.2-2' }}</div>
       </div>
     </div>
-    
+
     <div class="col-12 md:col-6 lg:col-3 mb-3">
       <div class="summary-card">
         <div class="card-icon">
@@ -50,37 +50,147 @@
   </div>
 
   <!-- Charts Section -->
-  <div class="data-card mb-4">
-    <div class="card-header">
-      <h2 class="section-title m-0">Análise Financeira</h2>
+  <div class="section-header mb-3">
+    <h2>Análise Financeira</h2>
+  </div>
+  <div class="grid mt-4 mb-4">
+    <!-- Expenses by Category Chart -->
+    <div class="col-12 lg:col-4 p-2 mb-3">
+      <div class="data-card h-full">
+        <div class="card-header">
+          <h2 class="section-title m-0">Despesas por Categoria</h2>
+        </div>
+        <div class="card-content chart-container">
+          <canvas baseChart
+            [data]="pieChartData"
+            [options]="pieChartOptions"
+            [type]="'pie'">
+          </canvas>
+        </div>
+      </div>
     </div>
-    <div class="card-content">
-      <div class="grid align-items-center">
-        <div class="col-12 lg:col-4 d-flex justify-content-center align-items-center mb-3">
-          <app-expense-pie-chart></app-expense-pie-chart>
+
+    <!-- Income vs Expenses Chart -->
+    <div class="col-12 lg:col-4 p-2 mb-3">
+      <div class="data-card h-full">
+        <div class="card-header">
+          <h2 class="section-title m-0">Receitas vs Despesas</h2>
         </div>
-        <div class="col-12 lg:col-4 d-flex justify-content-center align-items-center mb-3">
-          <app-income-expense-chart></app-income-expense-chart>
+        <div class="card-content chart-container">
+          <canvas baseChart
+            [data]="barChartData"
+            [options]="barChartOptions"
+            [type]="'bar'">
+          </canvas>
         </div>
-        <div class="col-12 lg:col-4 d-flex justify-content-center align-items-center mb-3">
-          <app-spending-trend-chart></app-spending-trend-chart>
+      </div>
+    </div>
+
+    <!-- Monthly Trend Chart -->
+    <div class="col-12 lg:col-4 p-2 mb-3">
+      <div class="data-card h-full">
+        <div class="card-header">
+          <h2 class="section-title m-0">Tendência Mensal</h2>
+        </div>
+        <div class="card-content chart-container">
+          <canvas baseChart
+            [data]="lineChartData"
+            [options]="lineChartOptions"
+            [type]="'line'">
+          </canvas>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Financial Data Section -->
-  <div class="grid">
-    <div class="col-12 lg:col-6 mb-3">
-      <app-list-proventos></app-list-proventos>
+  <!-- Recent Transactions -->
+  <div class="section-header mb-3">
+    <h2>Transações</h2>
+  </div>
+  <div class="col-12 mt-3 p-2">
+    <div class="data-card">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <h2 class="section-title m-0">Transações Recentes</h2>
+        <span class="text-color-secondary">Últimas 5 transações</span>
+      </div>
+      <div class="card-content">
+        <table class="transaction-table w-full">
+          <thead>
+            <tr>
+              <th>Descrição</th>
+              <th>Data</th>
+              <th>Categoria</th>
+              <th class="text-right">Valor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let transaction of recentTransactions">
+              <td>{{ transaction.descricao }}</td>
+              <td>{{ transaction.data | date:'dd/MM/yyyy' }}</td>
+              <td>{{ transaction.categoria?.nome || 'Não categorizada' }}</td>
+              <td [ngClass]="{'positive': transaction.tipo === 'RECEITA', 'negative': transaction.tipo === 'DESPESA'}" class="text-right">
+                {{ transaction.valor | currency:'BRL':'symbol':'1.2-2' }}
+              </td>
+            </tr>
+            <tr *ngIf="recentTransactions.length === 0">
+              <td colspan="4" class="text-center p-4 text-color-secondary">
+                Nenhuma transação recente encontrada
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Financial Health Indicators -->
+  <div class="section-header mb-3">
+    <h2>Saúde Financeira e Contas</h2>
+  </div>
+  <div class="grid mt-3">
+    <div class="col-12 lg:col-6 p-2 mb-3">
+      <div class="data-card h-full">
+        <div class="card-header">
+          <h2 class="section-title m-0">Saúde Financeira</h2>
+        </div>
+        <div class="card-content">
+          <div class="progress-container mb-3">
+            <div class="progress-label">
+              <span>Saldo vs Despesas</span>
+              <span>{{ getBalanceRatio() }}%</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" [style.width]="getBalanceRatio() + '%'" [ngClass]="getBalanceHealthClass()"></div>
+            </div>
+          </div>
+          <div class="financial-tip">
+            <mat-icon>lightbulb</mat-icon>
+            <div>
+              <p class="tip-title">Dica Financeira</p>
+              <p class="tip-text">{{ getFinancialTip() }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="col-12 lg:col-6 mb-3">
-      <app-list-contas-fixas></app-list-contas-fixas>
-    </div>
-
-    <div class="col-12 mb-3">
-      <app-list-despesas-recorrentes></app-list-despesas-recorrentes>
+    <div class="col-12 lg:col-6 p-2 mb-3">
+      <div class="data-card h-full">
+        <div class="card-header">
+          <h2 class="section-title m-0">Resumo de Contas</h2>
+        </div>
+        <div class="card-content">
+          <div *ngFor="let account of accounts" class="account-item">
+            <div class="account-info">
+              <div class="account-name">{{ account.titular }}</div>
+              <div class="account-balance">{{ account.saldo | currency:'BRL':'symbol':'1.2-2' }}</div>
+            </div>
+          </div>
+          <div *ngIf="accounts.length === 0" class="text-center p-4 text-color-secondary">
+            Nenhuma conta cadastrada
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

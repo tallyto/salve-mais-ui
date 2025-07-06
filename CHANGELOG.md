@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+- Refatoração do componente dashboard para implementar visualizações internas sem dependências de componentes externos
+- Implementação de gráficos nativos (pie, bar, line) diretamente no componente dashboard
+- Adição de tabela de transações recentes no dashboard
+- Implementação de indicadores de saúde financeira no dashboard
+- Criação de métodos para calcular ratio de saldo/despesas e exibir dicas financeiras personalizadas
+- Redesign do layout do dashboard para melhor organização e clareza visual
+- Implementação de Progress Bar para visualização da saúde financeira
+- Adição de dicas financeiras personalizadas baseadas no estado das finanças
+- Implementação de resumo de contas diretamente no dashboard
+- Padronização completa do CSS para garantir responsividade e consistência visual
+- Melhorias na UX para uma experiência mais fluida ao navegar pelo dashboard
 - Implementação de integração com endpoints específicos de dashboard no backend
 - Criação do DashboardService para comunicação com a API
 - Adição do indicador de despesas mensais no dashboard
