@@ -34,4 +34,8 @@ export class ProventoService {
   public atualizarProvento(provento: Provento): Observable<Provento> {
     return this.http.put<Provento>(`${this.apiUrl}/${provento.id}`, provento);
   }
+
+  public excluirProvento(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }

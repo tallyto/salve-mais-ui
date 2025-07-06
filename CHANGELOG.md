@@ -4,6 +4,8 @@
 
 - Redesign do componente de listagem de contas para seguir padrão visual do sistema
 - Implementação de funcionalidade de exclusão de contas bancárias
+- Redesign do componente de listagem de proventos para seguir padrão visual do sistema
+- Implementação de funcionalidade de exclusão de proventos
 - Melhoria na apresentação visual das contas bancárias
 - Padronização do layout das tabelas em todo o sistema
 - Redesign completo do menu lateral para melhor organização e usabilidade

@@ -1,14 +1,9 @@
-.provento-list-container {
+.w-full {
   width: 100%;
 }
 
-.list-header {
-  padding: 8px 16px;
-}
-
-.table-container {
-  border-radius: 8px;
-  overflow: hidden;
+.p-card-header {
+  background-color: #fff;
 }
 
 .action-buttons {
@@ -17,10 +12,45 @@
   align-items: center;
 }
 
-.action-buttons button {
-  min-width: 36px;
-  width: 36px;
-  height: 36px;
+.text-color-secondary {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.text-xl {
+  font-size: 1.25rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.text-green-600 {
+  color: #16a34a;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.bg-gray-50 {
+  background-color: #fafafa;
+}
+
+.border-bottom-1 {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+.border-300 {
+  border-color: #dee2e6;
+}
+
+.surface-border {
+  border-color: #dee2e6;
 }
 
 ::ng-deep .mat-paginator {
@@ -36,7 +66,19 @@
   background-color: rgba(0, 0, 0, 0.02);
 }
 
-/* Adicionar uma borda sutil na tabela */
-.table-container .mat-table {
-  border-collapse: collapse;
+.provento-list-container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.list-header {
+  padding: 1.5rem 1.5rem 1rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.table-container {
+  overflow-x: auto;
 }

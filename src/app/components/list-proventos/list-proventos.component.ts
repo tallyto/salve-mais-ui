@@ -81,4 +81,22 @@ export class ListProventosComponent implements AfterViewInit {
     this.proventoService.editingProvento.emit(this.selectedProvento);
   }
 
+  excluirProvento(provento: Provento) {
+    if (confirm(`Tem certeza que deseja excluir o provento "${provento.descricao}"?`)) {
+      if (provento.id) {
+        this.proventoService.excluirProvento(provento.id).subscribe({
+          next: () => {
+            alert('Provento excluído com sucesso!');
+            this.refreshProventosList();
+          },
+          error: (err: any) => {
+            console.error('Erro ao excluir provento:', err);
+            alert('Erro ao excluir provento: ' + (err.error?.message || 'Erro desconhecido'));
+          }
+        });
+      } else {
+        alert('Não é possível excluir um provento sem ID');
+      }
+    }
+  }
 }
