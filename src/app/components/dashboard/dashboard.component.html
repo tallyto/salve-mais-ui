@@ -1,30 +1,85 @@
-<div class="grid">
-  <!-- Charts Section -->
-  <div class="col-12">
-    <div class="grid align-items-center">
-      <div class="col-4 d-flex justify-content-center align-items-center">
-        <app-expense-pie-chart></app-expense-pie-chart>
+<div class="dashboard-container">
+  <h1 class="page-title">Dashboard Financeiro</h1>
+
+  <!-- Loading Indicator -->
+  <div *ngIf="isLoading" class="loading-overlay">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+
+  <!-- Financial Summary -->
+  <div class="grid mb-4">
+    <div class="col-12 md:col-6 lg:col-3 mb-3">
+      <div class="summary-card">
+        <div class="card-icon">
+          <mat-icon>account_balance_wallet</mat-icon>
+        </div>
+        <div class="summary-label">Saldo Total</div>
+        <div class="summary-value positive">{{ totalSaldo | currency:'BRL':'symbol':'1.2-2' }}</div>
       </div>
-      <div class="col-4 d-flex justify-content-center align-items-center">
-        <app-income-expense-chart></app-income-expense-chart>
+    </div>
+    
+    <div class="col-12 md:col-6 lg:col-3 mb-3">
+      <div class="summary-card">
+        <div class="card-icon">
+          <mat-icon>trending_up</mat-icon>
+        </div>
+        <div class="summary-label">Receitas do Mês</div>
+        <div class="summary-value positive">{{ totalReceitas | currency:'BRL':'symbol':'1.2-2' }}</div>
       </div>
-      <div class="col-4 d-flex justify-content-center align-items-center">
-        <app-spending-trend-chart></app-spending-trend-chart>
+    </div>
+    
+    <div class="col-12 md:col-6 lg:col-3 mb-3">
+      <div class="summary-card">
+        <div class="card-icon">
+          <mat-icon>account_balance</mat-icon>
+        </div>
+        <div class="summary-label">Contas Bancárias</div>
+        <div class="summary-value">{{ accounts.length }}</div>
+      </div>
+    </div>
+    
+    <div class="col-12 md:col-6 lg:col-3 mb-3">
+      <div class="summary-card">
+        <div class="card-icon">
+          <mat-icon>date_range</mat-icon>
+        </div>
+        <div class="summary-label">Data</div>
+        <div class="summary-value">{{ today | date:'dd/MM/yyyy' }}</div>
       </div>
     </div>
   </div>
 
-  <!-- Tables Section -->
+  <!-- Charts Section -->
+  <div class="data-card mb-4">
+    <div class="card-header">
+      <h2 class="section-title m-0">Análise Financeira</h2>
+    </div>
+    <div class="card-content">
+      <div class="grid align-items-center">
+        <div class="col-12 lg:col-4 d-flex justify-content-center align-items-center mb-3">
+          <app-expense-pie-chart></app-expense-pie-chart>
+        </div>
+        <div class="col-12 lg:col-4 d-flex justify-content-center align-items-center mb-3">
+          <app-income-expense-chart></app-income-expense-chart>
+        </div>
+        <div class="col-12 lg:col-4 d-flex justify-content-center align-items-center mb-3">
+          <app-spending-trend-chart></app-spending-trend-chart>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Financial Data Section -->
   <div class="grid">
-    <div class="col-6">
+    <div class="col-12 lg:col-6 mb-3">
       <app-list-proventos></app-list-proventos>
     </div>
 
-    <div class="col-6">
+    <div class="col-12 lg:col-6 mb-3">
       <app-list-contas-fixas></app-list-contas-fixas>
     </div>
 
-    <div class="col-12">
+    <div class="col-12 mb-3">
       <app-list-despesas-recorrentes></app-list-despesas-recorrentes>
     </div>
   </div>
