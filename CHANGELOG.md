@@ -6,14 +6,19 @@
 
 - Implementação da funcionalidade "Lembrar-me" na tela de login
 - Link para recuperação de senha na tela de login
+- Indicador de carregamento na tela de recuperação de senha
+- Suporte a multi-tenancy na tela de recuperação de senha
 
 ### Melhorado
 
 - Interface da tela de login com design moderno e responsivo
+- Interface da tela de recuperação de senha com design consistente
 - Adicionado ícones para melhorar usabilidade nos formulários
 - Implementação de validação visual para campos de formulário
 - Alternância de visibilidade da senha
 - Adicionado logo do Gestor Financeiro
+- Mensagens informativas na tela de recuperação de senha
+- Navegação melhorada entre telas de autenticação
 
 ## [1.4.0] - 2025-07-06
 

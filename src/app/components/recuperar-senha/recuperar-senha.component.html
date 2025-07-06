@@ -1,12 +1,41 @@
 <div class="recuperar-container">
-  <mat-card>
-    <h2>Recuperar Senha</h2>
-    <form [formGroup]="recuperarForm" (ngSubmit)="onSubmit()">
-      <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Email</mat-label>
-        <input matInput formControlName="email" required type="email" placeholder="Digite seu e-mail">
-      </mat-form-field>
-      <button mat-raised-button color="primary" type="submit" [disabled]="recuperarForm.invalid">Enviar instruções</button>
-    </form>
+  <mat-card class="recuperar-card">
+    <div class="recuperar-header">
+      <div class="logo-container">
+        <img src="assets/images/logo.svg" alt="Gestor Financeiro" class="logo">
+      </div>
+      <h2>Recuperar Senha</h2>
+    </div>
+    <div class="recuperar-content">
+      <p class="info-text">
+        Digite seu e-mail abaixo e enviaremos instruções para redefinir sua senha.
+      </p>
+      <form [formGroup]="recuperarForm" (ngSubmit)="onSubmit()" class="recuperar-form">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" required type="email" placeholder="Digite seu e-mail" (blur)="onEmailBlur()">
+          <mat-icon matPrefix>email</mat-icon>
+          <mat-error *ngIf="recuperarForm.get('email')?.hasError('required')">Email é obrigatório</mat-error>
+          <mat-error *ngIf="recuperarForm.get('email')?.hasError('email')">Formato de email inválido</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field appearance="outline" class="form-field" *ngIf="showDomainField">
+          <mat-label>Domínio</mat-label>
+          <input matInput formControlName="dominio" required placeholder="Informe o domínio da empresa">
+          <mat-icon matPrefix>business</mat-icon>
+          <mat-error *ngIf="recuperarForm.get('dominio')?.hasError('required') && showDomainField">Domínio é obrigatório</mat-error>
+        </mat-form-field>
+        
+        <button mat-raised-button color="primary" type="submit" [disabled]="recuperarForm.invalid || isSubmitting" class="submit-button">
+          <mat-icon *ngIf="!isSubmitting">send</mat-icon>
+          <mat-spinner *ngIf="isSubmitting" diameter="24" color="accent"></mat-spinner>
+          {{ isSubmitting ? 'Enviando...' : 'Enviar instruções' }}
+        </button>
+        
+        <a routerLink="/login" class="back-to-login">
+          <mat-icon>arrow_back</mat-icon> Voltar para o login
+        </a>
+      </form>
+    </div>
   </mat-card>
 </div>

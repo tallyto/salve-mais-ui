@@ -32,8 +32,12 @@ export class AuthService {
     return this.http.post(environment.apiUrl + '/auth/login', data, { headers });
   }
 
-  recuperarSenha(data: { email: string }): Observable<any> {
-    return this.http.post(environment.apiUrl + '/auth/recuperar-senha', data);
+  recuperarSenha(data: { email: string }, tenant?: string): Observable<any> {
+    let headers = new HttpHeaders();
+    if (tenant) {
+      headers = headers.set('X-Private-Tenant', tenant);
+    }
+    return this.http.post(environment.apiUrl + '/auth/recuperar-senha', data, { headers });
   }
 
   redefinirSenha(token: string, novaSenha: string) {
