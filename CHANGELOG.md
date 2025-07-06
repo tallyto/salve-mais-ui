@@ -9,6 +9,8 @@
 - Sidebar (menu lateral) com scroll apenas no conteúdo quando necessário
 - Preservação da estilização da área do usuário na sidebar
 - Comportamento responsivo da sidebar, alternando entre modos side/over conforme tamanho da tela
+- Otimização de estilos CSS para melhorar o desempenho e reduzir o tamanho dos arquivos
+- Aumento dos limites orçamentários de CSS para componentes maiores
 
 ## [1.5.0] - 2025-07-06
 
