@@ -2,73 +2,33 @@
 
 ## [Unreleased]
 
-- Simplificado tratamento de erros no ListDespesasRecorrentesComponent para retornar um objeto mínimo em casos de falha
-- Corrigido erro de tipo no ListDespesasRecorrentesComponent onde 'data' poderia ser 'null'
-- Melhorado tratamento de erros na listagem de compras para retornar um objeto Page vazio em vez de null
-- Simplificado código de manipulação de respostas paginadas no componente de listagem
-- Removido código desnecessário e verificações redundantes no processamento de dados
+## [1.4.0] - 2025-07-06
+
+### Adicionado
+
+- Implementação de exibição de compras de cartão no dashboard
 - Criado modelo genérico Page para manipulação de respostas paginadas da API
-- Atualizado GastoCartaoService para utilizar o modelo Page de GastoCartao
-- Ajustado tratamento de erros na listagem de compras para retornar uma estrutura Page vazia consistente
-- Padronizado o tipo de retorno dos métodos de listagem para Page
-- Corrigido tratamento de resposta paginada da API de compras no cartão
-- Removido código mockado da exibição de compras no cartão
-- Implementada exibição de compras do cartão usando apenas dados reais da API
-- Removida referência a compras recorrentes para simplificar a interface
-- Adicionado tratamento para situações onde não há compras disponíveis
-- Alterada mensagem quando não há compras no cartão para ser mais clara
-- Alterada seção de transações recentes para exibir exclusivamente compras de cartão de crédito
-- Atualizado título da seção para "Compras no Cartão" para refletir o conteúdo
-- Diferenciação visual entre transações normais e compras de cartão
-- Adicionados estilos específicos para visualização de cartões na interface
-- Resolvido problema de carregamento do CSS do dashboard restabelecendo o template principal
-- Removido uso de estilos inline no template do dashboard
-- Reorganizado CSS do componente dashboard para melhor manutenção
-- Adicionados estilos específicos para os componentes de saúde financeira e resumo de contas
-- Melhorada responsividade do dashboard com ajustes CSS para telas menores
-- Refatoração do componente dashboard para implementar visualizações internas sem dependências de componentes externos
-- Implementação de gráficos nativos (pie, bar, line) diretamente no componente dashboard
-- Adição de tabela de transações recentes no dashboard
-- Implementação de indicadores de saúde financeira no dashboard
-- Criação de métodos para calcular ratio de saldo/despesas e exibir dicas financeiras personalizadas
-- Redesign do layout do dashboard para melhor organização e clareza visual
-- Implementação de Progress Bar para visualização da saúde financeira
-- Adição de dicas financeiras personalizadas baseadas no estado das finanças
-- Implementação de resumo de contas diretamente no dashboard
-- Padronização completa do CSS para garantir responsividade e consistência visual
-- Melhorias na UX para uma experiência mais fluida ao navegar pelo dashboard
-- Implementação de integração com endpoints específicos de dashboard no backend
-- Criação do DashboardService para comunicação com a API
-- Adição do indicador de despesas mensais no dashboard
+- Implementação de indicadores de saúde financeira com dicas personalizadas
+- Adição de resumo de contas bancárias diretamente no dashboard
+
+### Melhorado
+
+- Refatoração completa do dashboard com gráficos e visualizações integradas
+- Implementação de gráficos nativos (pie, bar, line) para análise financeira
+- Padronização visual e aprimoramento do CSS em todo o dashboard
+- Melhorada responsividade para visualização em diferentes dispositivos
+- Reorganizado CSS para melhor manutenção e consistência
+
+### Corrigido
+
+- Corrigido erro de tipo no ListDespesasRecorrentesComponent onde 'data' poderia ser 'null'
+- Melhorado tratamento de erros em listagens para retornar objetos Page vazios
 - Tratamento de fallback para quando a API do dashboard não está disponível
-- Redesign completo do dashboard com cards de resumo financeiro
-- Adição de indicadores de saldo total, receitas do mês e número de contas
-- Melhorias na organização visual dos gráficos financeiros no dashboard
-- Implementação de layout responsivo para melhor visualização em dispositivos móveis
-- Redesign do componente de listagem de contas para seguir padrão visual do sistema
-- Implementação de funcionalidade de exclusão de contas bancárias
-- Redesign do componente de listagem de proventos para seguir padrão visual do sistema
-- Implementação de funcionalidade de exclusão de proventos
-- Melhoria na apresentação visual das contas bancárias
-- Padronização do layout das tabelas em todo o sistema
-- Redesign completo do menu lateral para melhor organização e usabilidade
-- Adição de categorias visuais no menu lateral para agrupar funcionalidades relacionadas
-- Melhoria no design da barra de navegação superior
-- Implementação de perfil de usuário com nome e email no menu
-- Adição de abertura automática do menu lateral em telas maiores
-- Melhorias visuais como sombras, cores e espaçamentos no menu
-- Substituição de painéis expansíveis por links diretos para melhor navegação
-- Implementação de indicador visual para o item de menu ativo
-- Adição de versão do aplicativo no rodapé do menu lateral
-- Redesign do componente de categoria para seguir padrão visual do sistema
-- Implementação de funcionalidades CRUD completas para categorias
-- Correção no serviço de categoria para usar métodos HTTP apropriados (PUT para atualização, POST para criação)
-- Adição de ações para edição e exclusão nas tabelas de categorias
-- Adição do roadmap de features (`doc/roadmap.md`)
+- Resolvido problema de carregamento do CSS do dashboard
 
 ## [1.3.5] - 2025-07-05
 
-### Alterado
+### Melhorado
 
 - Redesign do componente de cadastro de contas para layout minimalista
 - Implementação de PrimeFlex para estilização e layout responsivo
@@ -76,25 +36,25 @@
 
 ## [1.3.4] - 2025-07-04
 
-### Alterado
+### Melhorado
 
 - Adicionado HashLocationStrategy para rotas com hash (compatibilidade com ambientes de hospedagem estática)
 
 ## [1.3.3] - 2025-07-03
 
-### Refatorado
+### Melhorado
 
 - AuthService agora utiliza environment.apiUrl em todos os endpoints, garantindo build correto para produção e desenvolvimento
 
 ## [1.3.2] - 2025-07-03
 
-### Alterado
+### Melhorado
 
 - Ajuste do limite de tamanho do bundle inicial para 2MB (warning) e 2.5MB (error) no build de produção
 
 ## [1.3.1] - 2025-07-03
 
-### Alterado
+### Melhorado
 
 - Atualização do environment de produção para usar a URL da API `https://api.myfinance.lyto.com.br`
 
@@ -108,7 +68,7 @@
 - Atualização do README com badges e instruções
 - Ajuste do angular.json para fileReplacements
 
-### Alterado
+### Melhorado
 
 - Versão do projeto para 1.3.0
 
@@ -122,14 +82,19 @@
 - Feedback visual na redefinição de senha
 
 ### Corrigido
+
 - Erro de transação ao remover token
 
 ## [1.1.0] - 2025-06-30
+
 ### Adicionado
+
 - Recuperação de senha (envio de e-mail)
 - Integração com Mailhog
 
 ## [1.0.0] - 2025-06-28
+
 ### Adicionado
+
 - Cadastro, login, JWT, guard, logout, feedback visual
 - Roadmap e changelog iniciais
