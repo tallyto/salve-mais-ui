@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Melhorado
+
+- Layout das telas de autenticação (login, registro, recuperação de senha) sem scroll indesejado
+- Background das telas de autenticação agora cobre toda a tela corretamente
+- Sidebar (menu lateral) com scroll apenas no conteúdo quando necessário
+- Preservação da estilização da área do usuário na sidebar
+- Comportamento responsivo da sidebar, alternando entre modos side/over conforme tamanho da tela
+
 ## [1.5.0] - 2025-07-06
 
 ### Adicionado

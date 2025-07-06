@@ -2,11 +2,16 @@
 
 html, body {
   height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevenir qualquer scroll na página principal */
 }
 
 body {
-  margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  position: fixed; /* Fixa o body para evitar scroll */
+  width: 100%;
+  height: 100%;
 }
 
 .container {
@@ -15,4 +20,10 @@ body {
   margin: 0 auto; /* Centraliza o container na página */
   padding: 20px; /* Adiciona espaçamento interno ao conteúdo do container */
   box-sizing: border-box; /* Garante que a largura e altura incluem padding e bordas */
+}
+
+/* Permitir scroll apenas em containers específicos */
+.scrollable-content {
+  overflow-y: auto;
+  height: 100%;
 }

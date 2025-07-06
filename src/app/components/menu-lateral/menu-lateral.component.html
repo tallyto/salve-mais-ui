@@ -1,52 +1,65 @@
-<mat-toolbar color="primary" class="app-toolbar">
-  <button (click)="sidenav.toggle()" mat-icon-button matTooltip="Menu">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <span class="app-title">Gestor Financeiro</span>
-  <span class="toolbar-item-spacer"></span>
-
-  <div class="toolbar-actions">
-    <button mat-icon-button matTooltip="Notificações">
-      <mat-icon>notifications</mat-icon>
+<!-- Toolbar para usuários autenticados -->
+<ng-container *ngIf="isAuthenticated">
+  <mat-toolbar color="primary" class="app-toolbar">
+    <button (click)="toggleSidenav()" mat-icon-button matTooltip="Menu">
+      <mat-icon>menu</mat-icon>
     </button>
+    <span class="app-title">Gestor Financeiro</span>
+    <span class="toolbar-item-spacer"></span>
 
-    <!-- Tenant selector será adicionado posteriormente -->
+    <div class="toolbar-actions">
+      <button mat-icon-button matTooltip="Notificações">
+        <mat-icon>notifications</mat-icon>
+      </button>
 
-    <button [matMenuTriggerFor]="userAccountMenu" mat-button class="user-profile-button">
-      <div class="user-profile">
-        <mat-icon class="user-avatar">account_circle</mat-icon>
-        <span class="username">{{ username }}</span>
-      </div>
-    </button>
+      <!-- Tenant selector será adicionado posteriormente -->
 
-    <mat-menu #userAccountMenu [overlapTrigger]="false" yPosition="below" class="user-menu">
-      <div class="user-menu-header">
-        <mat-icon>account_circle</mat-icon>
-        <div class="user-info">
-          <p class="user-name">{{ username }}</p>
-          <p class="user-email">{{ userEmail }}</p>
+      <button [matMenuTriggerFor]="userAccountMenu" mat-button class="user-profile-button">
+        <div class="user-profile">
+          <mat-icon class="user-avatar">account_circle</mat-icon>
+          <span class="username">{{ username }}</span>
         </div>
-      </div>
-      <mat-divider></mat-divider>
-      <button mat-menu-item routerLink="#">
-        <mat-icon>person</mat-icon>
-        <span>Minha Conta</span>
       </button>
-      <button mat-menu-item routerLink="#">
-        <mat-icon>settings</mat-icon>
-        <span>Configurações</span>
-      </button>
-      <mat-divider></mat-divider>
-      <button mat-menu-item (click)="logout()">
-        <mat-icon>exit_to_app</mat-icon>
-        <span>Sair</span>
-      </button>
-    </mat-menu>
-  </div>
-</mat-toolbar>
 
+      <mat-menu #userAccountMenu [overlapTrigger]="false" yPosition="below" class="user-menu">
+        <div class="user-menu-header">
+          <mat-icon>account_circle</mat-icon>
+          <div class="user-info">
+            <p class="user-name">{{ username }}</p>
+            <p class="user-email">{{ userEmail }}</p>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <button mat-menu-item routerLink="#">
+          <mat-icon>person</mat-icon>
+          <span>Minha Conta</span>
+        </button>
+        <button mat-menu-item routerLink="#">
+          <mat-icon>settings</mat-icon>
+          <span>Configurações</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Sair</span>
+        </button>
+      </mat-menu>
+    </div>
+  </mat-toolbar>
+</ng-container>
+
+<!-- Toolbar simples para usuários não autenticados (sem barra de navegação) -->
+<ng-container *ngIf="!isAuthenticated">
+  <mat-toolbar color="primary" class="app-toolbar">
+    <span class="app-title">Gestor Financeiro</span>
+    <span class="toolbar-item-spacer"></span>
+  </mat-toolbar>
+</ng-container>
+
+<!-- Container principal -->
 <mat-sidenav-container class="app-container">
-  <mat-sidenav #sidenav [class.mat-elevation-z4]="true" class="app-sidenav" mode="side">
+  <!-- Menu lateral (apenas para usuários autenticados) -->
+  <mat-sidenav #sidenav *ngIf="isAuthenticated" [class.mat-elevation-z4]="true" class="app-sidenav" mode="side">
     <div class="sidenav-header">
       <div class="logo-container">
         <mat-icon class="logo-icon">account_balance</mat-icon>
@@ -114,6 +127,7 @@
       <div class="app-version">v{{ appVersion }}</div>
     </div>
   </mat-sidenav>
+
   <mat-sidenav-content>
     <div class="container">
       <router-outlet></router-outlet>
