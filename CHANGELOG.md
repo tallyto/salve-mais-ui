@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+- Redesign completo do dashboard com cards de resumo financeiro
+- Adição de indicadores de saldo total, receitas do mês e número de contas
+- Melhorias na organização visual dos gráficos financeiros no dashboard
+- Implementação de layout responsivo para melhor visualização em dispositivos móveis
 - Redesign do componente de listagem de contas para seguir padrão visual do sistema
 - Implementação de funcionalidade de exclusão de contas bancárias
 - Redesign do componente de listagem de proventos para seguir padrão visual do sistema
