@@ -1,14 +1,5 @@
-.account-list-container {
+.w-full {
   width: 100%;
-}
-
-.list-header {
-  padding: 8px 16px;
-}
-
-.table-container {
-  border-radius: 8px;
-  overflow: hidden;
 }
 
 .edit-field {
@@ -22,16 +13,47 @@
   padding: 0;
 }
 
+.p-card-header {
+  background-color: #fff;
+}
+
 .action-buttons {
   display: flex;
   gap: 8px;
   align-items: center;
 }
 
-.action-buttons button {
-  min-width: 36px;
-  width: 36px;
-  height: 36px;
+.text-color-secondary {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.text-xl {
+  font-size: 1.25rem;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.bg-gray-50 {
+  background-color: #fafafa;
+}
+
+.surface-border {
+  border-color: #dee2e6;
+}
+
+.border-bottom-1 {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+.border-300 {
+  border-color: #dee2e6;
 }
 
 ::ng-deep .mat-paginator {

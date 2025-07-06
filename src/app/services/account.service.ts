@@ -33,4 +33,8 @@ export class AccountService {
       }
     })
   }
+
+  excluirAccount(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }

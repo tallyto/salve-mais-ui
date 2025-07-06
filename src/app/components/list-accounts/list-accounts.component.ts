@@ -63,7 +63,7 @@ export class ListAccountsComponent implements AfterViewInit {
           this.editingAccount = null;
           this.refreshAccountList();
         },
-        error: (err) => {
+        error: (err: any) => {
           this.snackBar.open('Erro ao atualizar saldo: ' + (err.error?.message || 'Erro desconhecido'), 'Fechar', {
             duration: 3000,
             panelClass: 'snackbar-error'
@@ -75,6 +75,26 @@ export class ListAccountsComponent implements AfterViewInit {
 
   isEditing(account: Account): boolean {
     return this.editingAccount?.id === account.id;
+  }
+
+  excluirConta(account: Account) {
+    if (confirm(`Tem certeza que deseja excluir a conta ${account.titular}?`)) {
+      this.accountService.excluirAccount(account.id).subscribe({
+        next: () => {
+          this.snackBar.open('Conta excluída com sucesso!', 'Fechar', {
+            duration: 3000,
+            panelClass: 'snackbar-success'
+          });
+          this.refreshAccountList();
+        },
+        error: (err: any) => {
+          this.snackBar.open('Erro ao excluir conta: ' + (err.error?.message || 'Erro desconhecido'), 'Fechar', {
+            duration: 3000,
+            panelClass: 'snackbar-error'
+          });
+        }
+      });
+    }
   }
 
   refreshAccountList() {
