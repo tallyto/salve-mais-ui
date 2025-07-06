@@ -2,6 +2,19 @@
 
 ## [Unreleased]
 
+### Adicionado
+
+- Implementação da funcionalidade "Lembrar-me" na tela de login
+- Link para recuperação de senha na tela de login
+
+### Melhorado
+
+- Interface da tela de login com design moderno e responsivo
+- Adicionado ícones para melhorar usabilidade nos formulários
+- Implementação de validação visual para campos de formulário
+- Alternância de visibilidade da senha
+- Adicionado logo do Gestor Financeiro
+
 ## [1.4.0] - 2025-07-06
 
 ### Adicionado
