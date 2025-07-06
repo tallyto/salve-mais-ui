@@ -79,22 +79,35 @@ export class LoginComponent {
     if (emailDomain) {
       // Verificar se o domínio é público
       const publicDomains = ['gmail.com', 'hotmail.com', 'outlook.com', 'yahoo.com', 'icloud.com'];
-      this.showDomainField = publicDomains.some(domain => emailDomain.toLowerCase().includes(domain));
+      const isPublicDomain = publicDomains.some(domain => emailDomain.toLowerCase().includes(domain));
+      this.showDomainField = isPublicDomain;
 
       // Se não for um domínio público, usamos o domínio do email como tenant
-      if (!this.showDomainField) {
+      if (!isPublicDomain) {
         this.loginForm.patchValue({ dominio: emailDomain });
+        // Priorizar sempre o domínio do email corporativo sobre o tenant salvo
+        this.tenantService.setTenant(emailDomain);
       } else {
-        // Limpar o campo de domínio e torná-lo obrigatório se for um domínio público
-        this.loginForm.patchValue({ dominio: '' });
-        this.loginForm.get('dominio')?.setValidators([Validators.required]);
+        // Se for domínio público, verificamos se já existe um tenant salvo
+        const savedTenant = this.tenantService.getTenant();
+        if (savedTenant && !this.loginForm.get('dominio')?.value) {
+          // Usar o tenant salvo como valor padrão, mas permitir que o usuário altere
+          this.loginForm.patchValue({ dominio: savedTenant });
+          this.showDomainField = true; // Sempre mostrar para domínios públicos
+        } else {
+          // Limpar o campo de domínio e torná-lo obrigatório se for um domínio público
+          if (!this.loginForm.get('dominio')?.value) {
+            this.loginForm.patchValue({ dominio: '' });
+          }
+          this.loginForm.get('dominio')?.setValidators([Validators.required]);
+        }
       }
     } else {
       // Se não houver domínio no email, verificar se existe um tenant salvo
       const savedTenant = this.tenantService.getTenant();
       if (savedTenant) {
         this.loginForm.patchValue({ dominio: savedTenant });
-        this.showDomainField = false;
+        this.showDomainField = true; // Permitir alteração mesmo com tenant salvo
       } else {
         // Se não houver tenant salvo, mostrar o campo de domínio
         this.showDomainField = true;
@@ -116,13 +129,21 @@ export class LoginComponent {
     }
 
     const { email, senha, dominio, lembrarMe } = this.loginForm.value;
-
-    // Garantir que temos um domínio válido
-    let tenant = dominio || '';
-
-    // Se o campo de domínio não estiver preenchido, tentar extrair do email
-    if (!tenant && email) {
-      tenant = email.split('@')[1] || '';
+    const emailDomain = email.split('@')[1] || '';
+    
+    // Verificar se o email tem um domínio corporativo (não público)
+    const publicDomains = ['gmail.com', 'hotmail.com', 'outlook.com', 'yahoo.com', 'icloud.com'];
+    const isPublicDomain = emailDomain ? publicDomains.some(domain => emailDomain.toLowerCase().includes(domain)) : true;
+    
+    // Determinar qual tenant usar
+    let tenant: string;
+    
+    if (!isPublicDomain && emailDomain) {
+      // Se for um email corporativo, sempre usar o domínio do email como tenant
+      tenant = emailDomain;
+    } else {
+      // Se for email público, usar o domínio fornecido pelo usuário
+      tenant = dominio || '';
     }
 
     // Se ainda não temos um tenant, verificar se existe um salvo no localStorage
