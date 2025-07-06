@@ -27,23 +27,23 @@
 
           <mat-form-field appearance="outline" class="form-field">
             <mat-label>Domínio</mat-label>
-            <input matInput formControlName="domain" required placeholder="Digite o subdomínio desejado" autocomplete="off">
+            <input matInput formControlName="domain" required placeholder="exemplo.com.br" autocomplete="off">
             <mat-icon matPrefix>dns</mat-icon>
-            <mat-hint>Seu tenant será acessado por: [domínio].gestorfinanceiro.com</mat-hint>
+            <mat-hint>Digite o domínio completo da sua empresa (ex: minhaempresa.com.br)</mat-hint>
             <mat-error *ngIf="registerForm.get('domain')?.hasError('required') && registerForm.get('domain')?.touched">
               Domínio é obrigatório
             </mat-error>
             <mat-error *ngIf="registerForm.get('domain')?.hasError('pattern') && registerForm.get('domain')?.touched">
-              Domínio deve conter apenas letras minúsculas, números e hífens
+              Formato de domínio inválido (ex: minhaempresa.com.br)
             </mat-error>
             <mat-error *ngIf="registerForm.get('domain')?.hasError('minlength') && registerForm.get('domain')?.touched">
-              Domínio deve ter pelo menos 3 caracteres
+              Domínio deve ter pelo menos 4 caracteres
             </mat-error>
             <mat-error *ngIf="registerForm.get('domain')?.hasError('dominioIndisponivel') && registerForm.get('domain')?.touched">
               Este domínio já está em uso
             </mat-error>
             <mat-error *ngIf="registerForm.get('domain')?.hasError('dominioPublico') && registerForm.get('domain')?.touched">
-              Não é permitido usar domínios públicos (como gmail, yahoo, etc)
+              Não é permitido usar domínios de provedores de email ou serviços gratuitos
             </mat-error>
           </mat-form-field>
 
@@ -51,13 +51,13 @@
             <h4>Regras para um domínio válido:</h4>
             <ul>
               <li [class.rule-valid]="!registerForm.get('domain')?.hasError('minlength') && registerForm.get('domain')?.value">
-                Mínimo de 3 caracteres
+                Mínimo de 4 caracteres
               </li>
               <li [class.rule-valid]="!registerForm.get('domain')?.hasError('pattern') && registerForm.get('domain')?.value">
-                Apenas letras minúsculas, números e hífens
+                Formato de domínio válido (ex: minhaempresa.com.br)
               </li>
               <li [class.rule-valid]="!registerForm.get('domain')?.hasError('dominioPublico') && registerForm.get('domain')?.value">
-                Não pode ser um domínio público ou palavra reservada
+                Não pode ser um provedor de email ou serviço gratuito
               </li>
               <li [class.rule-valid]="!registerForm.get('domain')?.hasError('dominioIndisponivel') && registerForm.get('domain')?.value">
                 Deve estar disponível (não cadastrado por outro usuário)

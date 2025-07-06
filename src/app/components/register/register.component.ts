@@ -36,28 +36,10 @@ export class RegisterComponent implements OnInit {
   token: string | null = null;
   confirmacaoSucesso = false;
 
-  // Lista de domínios públicos comuns que não devem ser usados como tenant
-  private dominiosPublicos = [
-    // Provedores de email
-    'gmail', 'yahoo', 'hotmail', 'outlook', 'icloud', 'aol', 'mail', 'protonmail', 'zoho',
-    'yandex', 'gmx', 'tutanota', 'fastmail', 'mail.com', 'inbox', 'live', 'me', 'msn',
-    'email', 'webmail', 'mailbox', 'posteo', 'hushmail', 'rediffmail', 'mymail', 'mailinator',
-
-    // Palavras reservadas
-    'test', 'example', 'demo', 'admin', 'root', 'system', 'public', 'private', 'internal',
-    'development', 'staging', 'production', 'beta', 'alpha', 'sandbox', 'local', 'localhost',
-
-    // Domínios do sistema
-    'app', 'api', 'web', 'www', 'site', 'portal', 'intranet', 'extranet', 'server', 'cloud',
-    'dev', 'prod', 'test', 'auth', 'login', 'signin', 'signup', 'register', 'dashboard',
-
-    // Termos financeiros
-    'bank', 'finance', 'money', 'accounting', 'payment', 'billing', 'invoice', 'account',
-    'credit', 'debit', 'card', 'tax', 'financial', 'gestor', 'financeiro', 'gestorfinanceiro',
-
-    // Empresas conhecidas
-    'apple', 'google', 'microsoft', 'amazon', 'facebook', 'meta', 'netflix', 'twitter',
-    'instagram', 'linkedin', 'github', 'gitlab', 'bitbucket'
+  // Lista de domínios de provedores de email comuns
+  private emailProviders = [
+    'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'icloud.com', 'aol.com',
+    'protonmail.com', 'zoho.com', 'yandex.com', 'mail.com', 'live.com', 'msn.com'
   ];
 
   constructor(
@@ -70,7 +52,8 @@ export class RegisterComponent implements OnInit {
       name: ['', [Validators.required]],
       domain: ['', [
         Validators.required,
-        Validators.pattern(/^[a-z0-9]([a-z0-9-]+\.)+[a-z]{2,}$/),
+        // Padrão para domínio válido: letra/número + podem conter hífen + pelo menos um ponto + TLD válido
+        Validators.pattern(/^[a-z0-9]([a-z0-9-]+)?(\.[a-z0-9]([a-z0-9-]+)?)+\.[a-z]{2,}$/),
         Validators.minLength(4),
         Validators.maxLength(50),
         this.dominioPublicoValidator()
@@ -133,9 +116,9 @@ export class RegisterComponent implements OnInit {
         this.loading = false;
 
         // Salvar o domínio no localStorage para uso posterior no login
-        if (response && response.domain) {
-          console.log('Salvando domínio no localStorage:', response.domain);
-          this.tenantService.setTenant(response.domain);
+        if (response && response.dominio) {
+          console.log('Salvando domínio no localStorage:', response.dominio);
+          this.tenantService.setTenant(response.dominio);
         }
 
         // Redirect after 3 seconds
@@ -188,28 +171,31 @@ export class RegisterComponent implements OnInit {
         return null;
       }
 
-      // Extrair a parte principal do domínio (sem a extensão)
-      // Por exemplo, de "empresa.com.br" extraímos "empresa"
-      const partePrincipal = dominio.split('.')[0].toLowerCase();
-
-      // Verifica se a parte principal está na lista de domínios públicos
-      if (this.dominiosPublicos.includes(partePrincipal)) {
+      // Verificar se o domínio completo está na lista de provedores de email
+      // Por exemplo: "gmail.com", "hotmail.com", etc.
+      if (this.emailProviders.some(provider => dominio.toLowerCase() === provider)) {
         return { dominioPublico: true };
       }
 
-      // Verifica se o domínio contém partes que são domínios públicos
-      // Exemplo: "meu-gmail.com.br" contém "gmail"
-      const partesDominio = partePrincipal.split('-');
-      const dominioEhPublico = partesDominio.some((parte: string) =>
-        this.dominiosPublicos.includes(parte)
-      );
+      // Verificar se o domínio termina com algum provedor de email
+      // Por exemplo: "algo.gmail.com", "meu.outlook.com", etc.
+      if (this.emailProviders.some(provider => dominio.toLowerCase().endsWith('.' + provider))) {
+        return { dominioPublico: true };
+      }
 
-      // Verificar também se é um domínio de email conhecido
-      const dominiosEmailConhecidos = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'icloud.com', 'aol.com'];
-      const dominioCompleto = dominio.toLowerCase();
-      const ehDominioEmail = dominiosEmailConhecidos.some(d => dominioCompleto === d || dominioCompleto.endsWith('.' + d));
+      // Verificar se o domínio contém palavras-chave comuns de serviços gratuitos
+      const freeServiceKeywords = ['free', 'temp', 'demo', 'test', 'mail', 'webmail'];
+      if (freeServiceKeywords.some(keyword => dominio.toLowerCase().includes(keyword))) {
+        return { dominioPublico: true };
+      }
 
-      return (dominioEhPublico || ehDominioEmail) ? { dominioPublico: true } : null;
+      // Verificar se é um domínio de segundo nível sem TLD (top-level domain)
+      // Um domínio empresarial válido deve ter pelo menos um ponto
+      if (!dominio.includes('.')) {
+        return { dominioPublico: true };
+      }
+
+      return null;
     };
   }
 }
