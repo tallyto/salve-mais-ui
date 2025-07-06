@@ -15,7 +15,7 @@
           <mat-error *ngIf="loginForm.get('email')?.hasError('required')">Email é obrigatório</mat-error>
           <mat-error *ngIf="loginForm.get('email')?.hasError('email')">Formato de email inválido</mat-error>
         </mat-form-field>
-        
+
         <mat-form-field appearance="outline" class="form-field">
           <mat-label>Senha</mat-label>
           <input matInput formControlName="senha" required [type]="hidePassword ? 'password' : 'text'" placeholder="Digite sua senha">
@@ -26,27 +26,28 @@
           <mat-error *ngIf="loginForm.get('senha')?.hasError('required')">Senha é obrigatória</mat-error>
           <mat-error *ngIf="loginForm.get('senha')?.hasError('minlength')">A senha deve ter no mínimo 6 caracteres</mat-error>
         </mat-form-field>
-        
+
         <mat-form-field appearance="outline" class="form-field" *ngIf="showDomainField">
           <mat-label>Domínio</mat-label>
-          <input matInput formControlName="dominio" required placeholder="Informe o domínio da empresa">
+          <input matInput formControlName="dominio" required placeholder="Informe o domínio da empresa (ex: minhaempresa.com.br)">
           <mat-icon matPrefix>business</mat-icon>
+          <mat-hint>Exemplo: minhaempresa.com.br</mat-hint>
           <mat-error *ngIf="loginForm.get('dominio')?.hasError('required') && showDomainField">Domínio é obrigatório</mat-error>
         </mat-form-field>
-        
+
         <div class="actions-row">
           <mat-checkbox formControlName="lembrarMe" class="remember-me">Lembrar-me</mat-checkbox>
           <a routerLink="/recuperar-senha" class="forgot-password">Esqueceu a senha?</a>
         </div>
-        
+
         <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid" class="submit-button">
           <mat-icon>login</mat-icon> Entrar
         </button>
-        
+
         <div class="error-container">
           <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
         </div>
-        
+
         <div class="register-link">
           Não tem uma conta? <a routerLink="/register">Criar conta</a>
         </div>

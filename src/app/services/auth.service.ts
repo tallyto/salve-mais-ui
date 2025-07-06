@@ -20,8 +20,12 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  register(data: UsuarioCadastroDTO): Observable<any> {
-    return this.http.post(this.apiUrl, data);
+  register(data: UsuarioCadastroDTO, tenant?: string): Observable<any> {
+    let headers = new HttpHeaders();
+    if (tenant) {
+      headers = headers.set('X-Private-Tenant', tenant);
+    }
+    return this.http.post(this.apiUrl, data, { headers });
   }
 
   login(data: LoginDTO, tenant?: string): Observable<any> {

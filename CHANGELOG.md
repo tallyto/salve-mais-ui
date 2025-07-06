@@ -10,6 +10,10 @@
 - Suporte a multi-tenancy na tela de recuperação de senha
 - Modernização da tela de redefinição de senha com design consistente
 - Verificação de validade do token na tela de redefinição de senha
+- Cadastro de tenant com confirmação por e-mail
+- Validação de domínios empresariais no formulário de cadastro de tenant
+- Envio automático do domínio no header durante login (X-Private-Tenant)
+- Persistência do domínio no localStorage para uso futuro
 
 ### Melhorado
 
@@ -23,6 +27,8 @@
 - Mensagens informativas nas telas de autenticação
 - Navegação melhorada entre telas de autenticação
 - Feedback visual durante o processamento de formulários
+- Fluxo de cadastro e confirmação de tenant com UX aprimorada
+- Regras visuais de validação para domínio de tenant
 
 ## [1.4.0] - 2025-07-06
 

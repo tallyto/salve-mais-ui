@@ -1,0 +1,104 @@
+<div class="criar-usuario-container">
+  <mat-card class="criar-usuario-card">
+    <div class="criar-usuario-header">
+      <div class="logo-container">
+        <img src="assets/images/logo.svg" alt="Gestor Financeiro" class="logo">
+      </div>
+      <h2>Criar Usuário</h2>
+    </div>
+
+    <div class="criar-usuario-content">
+      <p class="info-text">
+        Seu tenant foi confirmado com sucesso! Agora você precisa criar seu primeiro usuário administrador.
+      </p>
+
+      <div class="tenant-info" *ngIf="tenantDominio">
+        <mat-icon>domain</mat-icon>
+        <span>Tenant: <strong>{{ tenantDominio }}</strong></span>
+      </div>
+
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="criar-usuario-form">
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Nome Completo</mat-label>
+          <input matInput formControlName="nome" required placeholder="Digite seu nome completo">
+          <mat-icon matPrefix>person</mat-icon>
+          <mat-error *ngIf="userForm.get('nome')?.hasError('required') && userForm.get('nome')?.touched">
+            Nome é obrigatório
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" required type="email" placeholder="Digite seu email">
+          <mat-icon matPrefix>email</mat-icon>
+          <mat-error *ngIf="userForm.get('email')?.hasError('required') && userForm.get('email')?.touched">
+            Email é obrigatório
+          </mat-error>
+          <mat-error *ngIf="userForm.get('email')?.hasError('email') && userForm.get('email')?.touched">
+            Formato de email inválido
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Senha</mat-label>
+          <input matInput formControlName="senha"
+                 [type]="hidePassword ? 'password' : 'text'"
+                 required placeholder="Digite sua senha">
+          <mat-icon matPrefix>lock</mat-icon>
+          <button mat-icon-button matSuffix type="button"
+                  (click)="hidePassword = !hidePassword"
+                  [attr.aria-label]="'Mostrar senha'"
+                  [attr.aria-pressed]="!hidePassword">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="userForm.get('senha')?.hasError('required') && userForm.get('senha')?.touched">
+            Senha é obrigatória
+          </mat-error>
+          <mat-error *ngIf="userForm.get('senha')?.hasError('minlength') && userForm.get('senha')?.touched">
+            Senha deve ter pelo menos 6 caracteres
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Confirmar Senha</mat-label>
+          <input matInput formControlName="confirmarSenha"
+                 [type]="hideConfirmPassword ? 'password' : 'text'"
+                 required placeholder="Confirme sua senha">
+          <mat-icon matPrefix>lock_outline</mat-icon>
+          <button mat-icon-button matSuffix type="button"
+                  (click)="hideConfirmPassword = !hideConfirmPassword"
+                  [attr.aria-label]="'Mostrar senha'"
+                  [attr.aria-pressed]="!hideConfirmPassword">
+            <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="userForm.get('confirmarSenha')?.hasError('required') && userForm.get('confirmarSenha')?.touched">
+            Confirmação de senha é obrigatória
+          </mat-error>
+          <mat-error *ngIf="userForm.hasError('senhasDiferentes') && userForm.get('confirmarSenha')?.touched">
+            As senhas não coincidem
+          </mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit"
+                [disabled]="userForm.invalid || loading"
+                class="submit-button">
+          <mat-icon *ngIf="!loading">person_add</mat-icon>
+          <mat-spinner *ngIf="loading" diameter="24" color="accent"></mat-spinner>
+          {{ loading ? 'Processando...' : 'Criar Usuário' }}
+        </button>
+      </form>
+
+      <!-- Mensagens de erro/sucesso -->
+      <div class="message-container" *ngIf="errorMessage || successMessage">
+        <div class="error-message" *ngIf="errorMessage">
+          <mat-icon>error</mat-icon>
+          <span>{{ errorMessage }}</span>
+        </div>
+        <div class="success-message" *ngIf="successMessage">
+          <mat-icon>check_circle</mat-icon>
+          <span>{{ successMessage }}</span>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>

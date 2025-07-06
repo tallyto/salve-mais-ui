@@ -18,20 +18,20 @@
           <mat-error *ngIf="recuperarForm.get('email')?.hasError('required')">Email é obrigatório</mat-error>
           <mat-error *ngIf="recuperarForm.get('email')?.hasError('email')">Formato de email inválido</mat-error>
         </mat-form-field>
-        
+
         <mat-form-field appearance="outline" class="form-field" *ngIf="showDomainField">
           <mat-label>Domínio</mat-label>
           <input matInput formControlName="dominio" required placeholder="Informe o domínio da empresa">
           <mat-icon matPrefix>business</mat-icon>
           <mat-error *ngIf="recuperarForm.get('dominio')?.hasError('required') && showDomainField">Domínio é obrigatório</mat-error>
         </mat-form-field>
-        
+
         <button mat-raised-button color="primary" type="submit" [disabled]="recuperarForm.invalid || isSubmitting" class="submit-button">
           <mat-icon *ngIf="!isSubmitting">send</mat-icon>
           <mat-spinner *ngIf="isSubmitting" diameter="24" color="accent"></mat-spinner>
           {{ isSubmitting ? 'Enviando...' : 'Enviar instruções' }}
         </button>
-        
+
         <a routerLink="/login" class="back-to-login">
           <mat-icon>arrow_back</mat-icon> Voltar para o login
         </a>

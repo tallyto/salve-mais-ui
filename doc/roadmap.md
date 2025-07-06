@@ -11,6 +11,8 @@
 - [x] Redefinição de senha (token, tela, backend, persistência)
 - [x] Multi-tenancy (suporte a múltiplos locatários)
 - [x] Lembrar-me (keep me logged in)
+- [x] Cadastro de tenant com confirmação por e-mail
+- [x] Validação de domínios empresariais no cadastro
 - [ ] Permissões/papéis de usuário
 - [ ] Refresh token
 
@@ -36,6 +38,7 @@
 - [x] Padronização visual e CSS consistente
 - [x] Responsividade para diferentes dispositivos
 - [x] Layout minimalista para cadastro de contas
+- [x] Fluxo de cadastro e confirmação de tenant com UX moderna
 - [ ] Tema escuro/claro
 - [ ] Melhorar feedback visual em todas as telas
 - [ ] Animações e transições para melhor experiência
@@ -45,6 +48,8 @@
 - [x] Endpoints completos para dashboard
 - [x] Endpoints CRUD para todas as entidades principais
 - [x] Documentação da API (Swagger/OpenAPI)
+- [x] Serviço de cadastro e confirmação de tenant
+- [x] Configuração CORS para suportar multi-tenancy
 - [ ] Caching para melhorar performance
 - [ ] Otimização de consultas ao banco de dados
 - [ ] Monitoramento e logging avançados

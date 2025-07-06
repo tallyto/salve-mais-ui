@@ -73,14 +73,36 @@ export class LoginComponent {
 
   onEmailBlur() {
     const email: string = this.loginForm.get('email')?.value || '';
-    const domain = email.split('@')[1] || '';
-    const publicDomains = ['gmail.com', 'hotmail.com', 'outlook.com', 'yahoo.com'];
-    this.showDomainField = publicDomains.includes(domain);
-    if (!this.showDomainField) {
-      this.loginForm.patchValue({ dominio: domain });
+    const emailDomain = email.split('@')[1] || '';
+
+    // Verificar se o email contém um domínio
+    if (emailDomain) {
+      // Verificar se o domínio é público
+      const publicDomains = ['gmail.com', 'hotmail.com', 'outlook.com', 'yahoo.com', 'icloud.com'];
+      this.showDomainField = publicDomains.some(domain => emailDomain.toLowerCase().includes(domain));
+
+      // Se não for um domínio público, usamos o domínio do email como tenant
+      if (!this.showDomainField) {
+        this.loginForm.patchValue({ dominio: emailDomain });
+      } else {
+        // Limpar o campo de domínio e torná-lo obrigatório se for um domínio público
+        this.loginForm.patchValue({ dominio: '' });
+        this.loginForm.get('dominio')?.setValidators([Validators.required]);
+      }
     } else {
-      this.loginForm.patchValue({ dominio: '' });
+      // Se não houver domínio no email, verificar se existe um tenant salvo
+      const savedTenant = this.tenantService.getTenant();
+      if (savedTenant) {
+        this.loginForm.patchValue({ dominio: savedTenant });
+        this.showDomainField = false;
+      } else {
+        // Se não houver tenant salvo, mostrar o campo de domínio
+        this.showDomainField = true;
+        this.loginForm.get('dominio')?.setValidators([Validators.required]);
+      }
     }
+
+    this.loginForm.get('dominio')?.updateValueAndValidity();
   }
 
   onSubmit() {
@@ -94,7 +116,29 @@ export class LoginComponent {
     }
 
     const { email, senha, dominio, lembrarMe } = this.loginForm.value;
-    const tenant = dominio || (email.split('@')[1] || '');
+
+    // Garantir que temos um domínio válido
+    let tenant = dominio || '';
+
+    // Se o campo de domínio não estiver preenchido, tentar extrair do email
+    if (!tenant && email) {
+      tenant = email.split('@')[1] || '';
+    }
+
+    // Se ainda não temos um tenant, verificar se existe um salvo no localStorage
+    if (!tenant) {
+      tenant = this.tenantService.getTenant() || '';
+    }
+
+    // Se não temos um tenant, mostrar erro
+    if (!tenant) {
+      this.snackBar.open('É necessário informar um domínio válido.', 'Fechar', {
+        duration: 3000,
+        panelClass: 'snackbar-error',
+        verticalPosition: 'top'
+      });
+      return;
+    }
 
     // Salvar email se "lembrarMe" estiver marcado
     if (lembrarMe) {
@@ -107,7 +151,10 @@ export class LoginComponent {
       next: (res) => {
         if (res && res.token) {
           localStorage.setItem('token', res.token);
+
+          // Salvar o tenant para uso futuro
           this.tenantService.setTenant(tenant);
+
           this.snackBar.open('Login realizado com sucesso!', 'Fechar', {
             duration: 3000,
             panelClass: 'snackbar-success',

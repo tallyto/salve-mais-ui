@@ -37,8 +37,8 @@ export class RecuperarSenhaComponent {
   showDomainField: boolean = false;
 
   constructor(
-    private fb: FormBuilder, 
-    private authService: AuthService, 
+    private fb: FormBuilder,
+    private authService: AuthService,
     private snackBar: MatSnackBar,
     private tenantService: TenantService
   ) {
@@ -62,17 +62,17 @@ export class RecuperarSenhaComponent {
 
   onSubmit() {
     if (this.recuperarForm.invalid) {
-      this.snackBar.open('Preencha todos os campos corretamente.', 'Fechar', { 
-        duration: 3000, 
-        verticalPosition: 'top', 
-        panelClass: 'snackbar-error' 
+      this.snackBar.open('Preencha todos os campos corretamente.', 'Fechar', {
+        duration: 3000,
+        verticalPosition: 'top',
+        panelClass: 'snackbar-error'
       });
       return;
     }
-    
+
     const { email, dominio } = this.recuperarForm.value;
     const tenant = dominio || (email.split('@')[1] || '');
-    
+
     this.isSubmitting = true;
     this.authService.recuperarSenha({ email }, tenant)
       .pipe(
@@ -80,20 +80,20 @@ export class RecuperarSenhaComponent {
       )
       .subscribe({
         next: () => {
-          this.snackBar.open('Se o e-mail existir, as instruções foram enviadas.', 'Fechar', { 
-            duration: 4000, 
-            verticalPosition: 'top', 
-            panelClass: 'snackbar-success' 
+          this.snackBar.open('Se o e-mail existir, as instruções foram enviadas.', 'Fechar', {
+            duration: 4000,
+            verticalPosition: 'top',
+            panelClass: 'snackbar-success'
           });
           // Limpar o formulário após envio bem-sucedido
           this.recuperarForm.reset();
           this.showDomainField = false;
         },
         error: (err) => {
-          this.snackBar.open(err.error?.message || 'Erro ao solicitar recuperação de senha.', 'Fechar', { 
-            duration: 4000, 
-            verticalPosition: 'top', 
-            panelClass: 'snackbar-error' 
+          this.snackBar.open(err.error?.message || 'Erro ao solicitar recuperação de senha.', 'Fechar', {
+            duration: 4000,
+            verticalPosition: 'top',
+            panelClass: 'snackbar-error'
           });
         }
       });
