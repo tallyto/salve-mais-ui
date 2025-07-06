@@ -8,17 +8,21 @@
 - Link para recuperação de senha na tela de login
 - Indicador de carregamento na tela de recuperação de senha
 - Suporte a multi-tenancy na tela de recuperação de senha
+- Modernização da tela de redefinição de senha com design consistente
+- Verificação de validade do token na tela de redefinição de senha
 
 ### Melhorado
 
 - Interface da tela de login com design moderno e responsivo
 - Interface da tela de recuperação de senha com design consistente
+- Interface da tela de redefinição de senha com material design
 - Adicionado ícones para melhorar usabilidade nos formulários
 - Implementação de validação visual para campos de formulário
-- Alternância de visibilidade da senha
-- Adicionado logo do Gestor Financeiro
-- Mensagens informativas na tela de recuperação de senha
+- Alternância de visibilidade da senha em todos os formulários
+- Adicionado logo do Gestor Financeiro em todas as telas de autenticação
+- Mensagens informativas nas telas de autenticação
 - Navegação melhorada entre telas de autenticação
+- Feedback visual durante o processamento de formulários
 
 ## [1.4.0] - 2025-07-06
 
