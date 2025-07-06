@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+- Implementação de integração com endpoints específicos de dashboard no backend
+- Criação do DashboardService para comunicação com a API
+- Adição do indicador de despesas mensais no dashboard
+- Tratamento de fallback para quando a API do dashboard não está disponível
 - Redesign completo do dashboard com cards de resumo financeiro
 - Adição de indicadores de saldo total, receitas do mês e número de contas
 - Melhorias na organização visual dos gráficos financeiros no dashboard

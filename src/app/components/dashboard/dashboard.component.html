@@ -31,20 +31,20 @@
     <div class="col-12 md:col-6 lg:col-3 mb-3">
       <div class="summary-card">
         <div class="card-icon">
-          <mat-icon>account_balance</mat-icon>
+          <mat-icon>trending_down</mat-icon>
         </div>
-        <div class="summary-label">Contas Bancárias</div>
-        <div class="summary-value">{{ accounts.length }}</div>
+        <div class="summary-label">Despesas do Mês</div>
+        <div class="summary-value negative">{{ totalDespesas | currency:'BRL':'symbol':'1.2-2' }}</div>
       </div>
     </div>
     
     <div class="col-12 md:col-6 lg:col-3 mb-3">
       <div class="summary-card">
         <div class="card-icon">
-          <mat-icon>date_range</mat-icon>
+          <mat-icon>account_balance</mat-icon>
         </div>
-        <div class="summary-label">Data</div>
-        <div class="summary-value">{{ today | date:'dd/MM/yyyy' }}</div>
+        <div class="summary-label">Contas Bancárias</div>
+        <div class="summary-value">{{ accounts.length }}</div>
       </div>
     </div>
   </div>
