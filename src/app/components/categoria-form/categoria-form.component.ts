@@ -11,8 +11,9 @@ import {Categoria} from "../../models/categoria.model";
 })
 export class CategoriaFormComponent implements OnInit {
   public categoriaForm: FormGroup;
-  public displayedColumnsCategoria: string[] = ['nome'];
+  public displayedColumnsCategoria: string[] = ['nome', 'acoes'];
   public categorias: Categoria[] = [];
+  public editingCategoria: Categoria | null = null;
   private horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   private verticalPosition: MatSnackBarVerticalPosition = 'top';
 
@@ -32,14 +33,23 @@ export class CategoriaFormComponent implements OnInit {
   }
 
   salvarCategoria() {
-    this.categoriaService.salvarCategoria(this.categoriaForm.value).subscribe({
+    if (this.categoriaForm.invalid) {
+      return;
+    }
+
+    const categoria = this.categoriaForm.value;
+    const isEditing = !!categoria.id;
+
+    this.categoriaService.salvarCategoria(categoria).subscribe({
       next: value => {
-        this.openSnackBar('Categoria salva com sucesso!');
-        this.categoriaForm.reset();
+        const message = isEditing ? 'Categoria atualizada com sucesso!' : 'Categoria salva com sucesso!';
+        this.openSnackBar(message);
+        this.limparFormulario();
         this.listarCategorias();
       },
-      error: error => {
+      error: (error: any) => {
         console.log(error);
+        this.openSnackBar('Erro ao salvar categoria');
       }
     })
   }
@@ -51,12 +61,47 @@ export class CategoriaFormComponent implements OnInit {
   }
 
   openSnackBar(message: string) {
-    this.snackBar.open(message, 'Ok', {
+    this.snackBar.open(message, 'Fechar', {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
+      duration: 3000
     });
   }
 
+  editarCategoria(categoria: Categoria): void {
+    this.editingCategoria = categoria;
+    this.categoriaForm.patchValue({
+      id: categoria.id,
+      nome: categoria.nome
+    });
+  }
+
+  cancelarEdicao(): void {
+    this.limparFormulario();
+  }
+
+  limparFormulario(): void {
+    this.categoriaForm.reset({
+      id: null,
+      nome: ''
+    });
+    this.editingCategoria = null;
+  }
+
+  excluirCategoria(categoria: Categoria): void {
+    if (confirm(`Tem certeza que deseja excluir a categoria "${categoria.nome}"?`)) {
+      this.categoriaService.excluirCategoria(categoria.id).subscribe({
+        next: () => {
+          this.openSnackBar('Categoria excluída com sucesso!');
+          this.listarCategorias();
+        },
+        error: (error: any) => {
+          console.log(error);
+          this.openSnackBar('Erro ao excluir categoria');
+        }
+      });
+    }
+  }
 }
 
 

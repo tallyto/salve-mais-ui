@@ -28,6 +28,10 @@
 - Adicionados indicadores de carregamento para melhorar experiência do usuário
 - Substituição de diálogos confirm nativos por diálogos Angular Material para melhor experiência do usuário
 - Adicionado componente reutilizável ConfirmDialogComponent para confirmações no sistema
+- Redesign do componente de categoria para seguir padrão visual do sistema
+- Implementação de funcionalidades CRUD completas para categorias
+- Correção no serviço de categoria para usar métodos HTTP apropriados (PUT para atualização, POST para criação)
+- Adição de ações para edição e exclusão nas tabelas de categorias
 
 ## [1.3.5] - 2025-07-05
 

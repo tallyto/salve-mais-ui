@@ -20,6 +20,13 @@ export class CategoriaService {
   }
 
   salvarCategoria(categoria: Categoria): Observable<Categoria> {
-    return this.http.post<Categoria>(this.apiUrl, categoria)
+    if (categoria.id) {
+      return this.http.put<Categoria>(`${this.apiUrl}/${categoria.id}`, categoria);
+    }
+    return this.http.post<Categoria>(this.apiUrl, categoria);
+  }
+
+  excluirCategoria(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
