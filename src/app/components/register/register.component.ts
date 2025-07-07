@@ -90,6 +90,10 @@ export class RegisterComponent implements OnInit {
     };
   }
 
+  backToLogin() {
+    this.router.navigate(['/login']);
+  }
+
   verificarToken() {
     if (!this.token) return;
 
