@@ -86,7 +86,7 @@
             {{ loading ? 'Processando...' : 'Cadastrar Tenant' }}
           </button>
 
-          <a routerLink="/login" class="back-to-login">
+          <a (click)="backToLogin()" class="back-to-login">
             <mat-icon>arrow_back</mat-icon> Voltar para o login
           </a>
         </form>
@@ -116,7 +116,7 @@
             <p class="redirect-text">Você será redirecionado em alguns segundos...</p>
           </div>
 
-          <a routerLink="/login" class="back-to-login" *ngIf="!confirmacaoSucesso">
+          <a (click)="backToLogin()" class="back-to-login" *ngIf="!confirmacaoSucesso">
             <mat-icon>arrow_back</mat-icon> Voltar para o login
           </a>
         </div>
