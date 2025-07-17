@@ -69,10 +69,15 @@ export class FaturaFormComponent implements OnInit {
     if (this.faturaForm.valid) {
       this.loading = true;
       
+      const dataVencimento = this.faturaForm.value.dataVencimento;
+      const dataFormatada = dataVencimento instanceof Date 
+        ? dataVencimento.toISOString().split('T')[0] 
+        : dataVencimento;
+      
       const faturaData: FaturaManualDTO = {
         cartaoCreditoId: this.faturaForm.value.cartaoCreditoId,
         valorTotal: this.faturaForm.value.valorTotal,
-        dataVencimento: this.faturaForm.value.dataVencimento
+        dataVencimento: dataFormatada
       };
 
       this.faturaService.criarFaturaManual(faturaData).subscribe({
