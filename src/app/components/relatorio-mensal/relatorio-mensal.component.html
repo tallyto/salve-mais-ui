@@ -1,0 +1,329 @@
+<div class="relatorio-mensal-container">
+  <div class="header">
+    <h2>Relatório Mensal</h2>
+    
+    <!-- Formulário de seleção de mês/ano -->
+    <form [formGroup]="relatorioForm" (ngSubmit)="gerarRelatorio()" class="filtro-form">
+      <mat-form-field appearance="outline">
+        <mat-label>Ano</mat-label>
+        <mat-select formControlName="ano">
+          <mat-option *ngFor="let ano of anos" [value]="ano">
+            {{ano}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Mês</mat-label>
+        <mat-select formControlName="mes">
+          <mat-option *ngFor="let mes of meses" [value]="mes.value">
+            {{mes.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit" [disabled]="isLoading">
+        <mat-icon>search</mat-icon>
+        Gerar Relatório
+      </button>
+
+      <button mat-raised-button color="accent" type="button" (click)="gerarRelatorioAtual()" [disabled]="isLoading">
+        <mat-icon>today</mat-icon>
+        Mês Atual
+      </button>
+    </form>
+  </div>
+
+  <!-- Indicador de carregamento -->
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-spinner></mat-spinner>
+    <p>Gerando relatório...</p>
+  </div>
+
+  <!-- Conteúdo do relatório -->
+  <div *ngIf="!isLoading && relatorioData" class="relatorio-content">
+    
+    <!-- Cabeçalho do relatório -->
+    <mat-card class="relatorio-header">
+      <mat-card-header>
+        <mat-card-title>{{relatorioData.mesReferencia}}</mat-card-title>
+        <mat-card-subtitle>Data de referência: {{formatarData(relatorioData.dataReferencia)}}</mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+
+    <!-- Resumo Financeiro -->
+    <mat-card class="resumo-card">
+      <mat-card-header>
+        <mat-card-title>Resumo Financeiro</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="resumo-grid">
+          <div class="resumo-item receitas">
+            <mat-icon>trending_up</mat-icon>
+            <div class="valor-info">
+              <span class="label">Total Proventos</span>
+              <span class="valor">{{formatarMoeda(relatorioData.resumoFinanceiro.totalProventos)}}</span>
+            </div>
+          </div>
+
+          <div class="resumo-item despesas">
+            <mat-icon>trending_down</mat-icon>
+            <div class="valor-info">
+              <span class="label">Total Gastos Fixos</span>
+              <span class="valor">{{formatarMoeda(relatorioData.resumoFinanceiro.totalGastosFixos)}}</span>
+            </div>
+          </div>
+
+          <div class="resumo-item cartoes">
+            <mat-icon>credit_card</mat-icon>
+            <div class="valor-info">
+              <span class="label">Total Cartões</span>
+              <span class="valor">{{formatarMoeda(relatorioData.resumoFinanceiro.totalCartoes)}}</span>
+            </div>
+          </div>
+
+          <div class="resumo-item outras">
+            <mat-icon>receipt</mat-icon>
+            <div class="valor-info">
+              <span class="label">Outras Despesas</span>
+              <span class="valor">{{formatarMoeda(relatorioData.resumoFinanceiro.totalOutrasDespesas)}}</span>
+            </div>
+          </div>
+
+          <div class="resumo-item saldo" [class.negativo]="relatorioData.saldoFinal < 0">
+            <mat-icon>account_balance</mat-icon>
+            <div class="valor-info">
+              <span class="label">Saldo Final</span>
+              <span class="valor">{{formatarMoeda(relatorioData.saldoFinal)}}</span>
+            </div>
+          </div>
+
+          <div class="resumo-item dividas" *ngIf="relatorioData.totalDividas > 0">
+            <mat-icon>warning</mat-icon>
+            <div class="valor-info">
+              <span class="label">Total Dívidas</span>
+              <span class="valor">{{formatarMoeda(relatorioData.totalDividas)}}</span>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Seções detalhadas -->
+    <div class="secoes-detalhes">
+      
+      <!-- Proventos -->
+      <mat-card *ngIf="relatorioData.proventos.length > 0">
+        <mat-card-header>
+          <mat-card-title>Proventos ({{relatorioData.proventos.length}})</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="table-container">
+            <table mat-table [dataSource]="relatorioData.proventos" class="mat-elevation-z2">
+              <ng-container matColumnDef="descricao">
+                <th mat-header-cell *matHeaderCellDef>Descrição</th>
+                <td mat-cell *matCellDef="let element">{{element.descricao}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="valor">
+                <th mat-header-cell *matHeaderCellDef>Valor</th>
+                <td mat-cell *matCellDef="let element">{{formatarMoeda(element.valor)}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="data">
+                <th mat-header-cell *matHeaderCellDef>Data</th>
+                <td mat-cell *matCellDef="let element">{{formatarData(element.data)}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="conta">
+                <th mat-header-cell *matHeaderCellDef>Conta</th>
+                <td mat-cell *matCellDef="let element">{{element.contaTitular}}</td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="['descricao', 'valor', 'data', 'conta']"></tr>
+              <tr mat-row *matRowDef="let row; columns: ['descricao', 'valor', 'data', 'conta']"></tr>
+            </table>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Gastos Fixos -->
+      <mat-card *ngIf="relatorioData.gastosFixos.length > 0">
+        <mat-card-header>
+          <mat-card-title>Gastos Fixos ({{relatorioData.gastosFixos.length}})</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="table-container">
+            <table mat-table [dataSource]="relatorioData.gastosFixos" class="mat-elevation-z2">
+              <ng-container matColumnDef="nome">
+                <th mat-header-cell *matHeaderCellDef>Nome</th>
+                <td mat-cell *matCellDef="let element">{{element.nome}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="valor">
+                <th mat-header-cell *matHeaderCellDef>Valor</th>
+                <td mat-cell *matCellDef="let element">{{formatarMoeda(element.valor)}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="vencimento">
+                <th mat-header-cell *matHeaderCellDef>Vencimento</th>
+                <td mat-cell *matCellDef="let element">{{formatarData(element.vencimento)}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="categoria">
+                <th mat-header-cell *matHeaderCellDef>Categoria</th>
+                <td mat-cell *matCellDef="let element">{{element.categoria}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let element">
+                  <span class="status-badge" [ngClass]="getStatusClass(element.pago)">
+                    {{getStatusText(element.pago)}}
+                  </span>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="['nome', 'valor', 'vencimento', 'categoria', 'status']"></tr>
+              <tr mat-row *matRowDef="let row; columns: ['nome', 'valor', 'vencimento', 'categoria', 'status']"></tr>
+            </table>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Cartões -->
+      <mat-card *ngIf="relatorioData.cartoes.length > 0">
+        <mat-card-header>
+          <mat-card-title>Cartões ({{relatorioData.cartoes.length}})</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-accordion>
+            <mat-expansion-panel *ngFor="let cartao of relatorioData.cartoes" class="cartao-panel">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{cartao.nomeCartao}}
+                </mat-panel-title>
+                <mat-panel-description>
+                  {{formatarMoeda(cartao.valorTotal)}} • Vencimento: {{formatarData(cartao.dataVencimento)}}
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              
+              <div class="compras-container">
+                <table mat-table [dataSource]="cartao.compras" class="mat-elevation-z1">
+                  <ng-container matColumnDef="descricao">
+                    <th mat-header-cell *matHeaderCellDef>Descrição</th>
+                    <td mat-cell *matCellDef="let compra">{{compra.descricao}}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="valor">
+                    <th mat-header-cell *matHeaderCellDef>Valor</th>
+                    <td mat-cell *matCellDef="let compra">{{formatarMoeda(compra.valor)}}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="data">
+                    <th mat-header-cell *matHeaderCellDef>Data</th>
+                    <td mat-cell *matCellDef="let compra">{{formatarData(compra.data)}}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="categoria">
+                    <th mat-header-cell *matHeaderCellDef>Categoria</th>
+                    <td mat-cell *matCellDef="let compra">{{compra.categoria}}</td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="['descricao', 'valor', 'data', 'categoria']"></tr>
+                  <tr mat-row *matRowDef="let row; columns: ['descricao', 'valor', 'data', 'categoria']"></tr>
+                </table>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Outras Despesas -->
+      <mat-card *ngIf="relatorioData.outrasDespesas.length > 0">
+        <mat-card-header>
+          <mat-card-title>Outras Despesas ({{relatorioData.outrasDespesas.length}})</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="table-container">
+            <table mat-table [dataSource]="relatorioData.outrasDespesas" class="mat-elevation-z2">
+              <ng-container matColumnDef="descricao">
+                <th mat-header-cell *matHeaderCellDef>Descrição</th>
+                <td mat-cell *matCellDef="let element">{{element.descricao}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="valor">
+                <th mat-header-cell *matHeaderCellDef>Valor</th>
+                <td mat-cell *matCellDef="let element">{{formatarMoeda(element.valor)}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="data">
+                <th mat-header-cell *matHeaderCellDef>Data</th>
+                <td mat-cell *matCellDef="let element">{{formatarData(element.data)}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="categoria">
+                <th mat-header-cell *matHeaderCellDef>Categoria</th>
+                <td mat-cell *matCellDef="let element">{{element.categoria}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="tipo">
+                <th mat-header-cell *matHeaderCellDef>Tipo</th>
+                <td mat-cell *matCellDef="let element">{{element.tipo}}</td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="['descricao', 'valor', 'data', 'categoria', 'tipo']"></tr>
+              <tr mat-row *matRowDef="let row; columns: ['descricao', 'valor', 'data', 'categoria', 'tipo']"></tr>
+            </table>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Seção de Contas Vencidas -->
+  <mat-card class="contas-vencidas-card">
+    <mat-card-header>
+      <mat-card-title>Contas Vencidas</mat-card-title>
+      <mat-card-subtitle>Contas fixas não pagas até hoje</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div *ngIf="isLoadingContas" class="loading-container">
+        <mat-spinner diameter="30"></mat-spinner>
+        <p>Carregando contas vencidas...</p>
+      </div>
+
+      <div *ngIf="!isLoadingContas && contasVencidas.length === 0" class="empty-state">
+        <mat-icon>check_circle</mat-icon>
+        <p>Nenhuma conta vencida encontrada!</p>
+      </div>
+
+      <div *ngIf="!isLoadingContas && contasVencidas.length > 0" class="table-container">
+        <table mat-table [dataSource]="contasVencidas" class="mat-elevation-z2">
+          <ng-container matColumnDef="nome">
+            <th mat-header-cell *matHeaderCellDef>Nome</th>
+            <td mat-cell *matCellDef="let element">{{element.nome}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="valor">
+            <th mat-header-cell *matHeaderCellDef>Valor</th>
+            <td mat-cell *matCellDef="let element">{{formatarMoeda(element.valor)}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="vencimento">
+            <th mat-header-cell *matHeaderCellDef>Vencimento</th>
+            <td mat-cell *matCellDef="let element">{{formatarData(element.vencimento)}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="categoria">
+            <th mat-header-cell *matHeaderCellDef>Categoria</th>
+            <td mat-cell *matCellDef="let element">{{element.categoria}}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="['nome', 'valor', 'vencimento', 'categoria']"></tr>
+          <tr mat-row *matRowDef="let row; columns: ['nome', 'valor', 'vencimento', 'categoria']"></tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

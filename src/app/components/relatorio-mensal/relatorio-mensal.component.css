@@ -1,0 +1,327 @@
+.relatorio-mensal-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.header h2 {
+  margin: 0;
+  color: #333;
+}
+
+.filtro-form {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filtro-form mat-form-field {
+  width: 120px;
+}
+
+.filtro-form button {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  text-align: center;
+}
+
+.loading-container p {
+  margin-top: 15px;
+  color: #666;
+}
+
+.relatorio-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.relatorio-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-align: center;
+}
+
+.relatorio-header mat-card-title {
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.relatorio-header mat-card-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.resumo-card {
+  background: #f8f9fa;
+  border-left: 4px solid #007bff;
+}
+
+.resumo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.resumo-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.resumo-item:hover {
+  transform: translateY(-2px);
+}
+
+.resumo-item mat-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.resumo-item.receitas mat-icon {
+  color: #28a745;
+}
+
+.resumo-item.despesas mat-icon {
+  color: #dc3545;
+}
+
+.resumo-item.cartoes mat-icon {
+  color: #ffc107;
+}
+
+.resumo-item.outras mat-icon {
+  color: #6c757d;
+}
+
+.resumo-item.saldo mat-icon {
+  color: #17a2b8;
+}
+
+.resumo-item.saldo.negativo mat-icon {
+  color: #dc3545;
+}
+
+.resumo-item.dividas mat-icon {
+  color: #fd7e14;
+}
+
+.valor-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.valor-info .label {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.valor-info .valor {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+}
+
+.resumo-item.saldo.negativo .valor {
+  color: #dc3545;
+}
+
+.secoes-detalhes {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.secoes-detalhes mat-card {
+  overflow: hidden;
+}
+
+.secoes-detalhes mat-card-header {
+  background: #f8f9fa;
+  padding: 15px 20px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.secoes-detalhes mat-card-title {
+  color: #495057;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.table-container table {
+  width: 100%;
+  min-width: 600px;
+}
+
+.table-container th {
+  background: #f8f9fa;
+  font-weight: 600;
+  color: #495057;
+}
+
+.table-container td {
+  padding: 12px 8px;
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.status-pago {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-vencido {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.cartao-panel {
+  margin-bottom: 10px;
+}
+
+.cartao-panel mat-panel-title {
+  font-weight: 600;
+  color: #495057;
+}
+
+.cartao-panel mat-panel-description {
+  color: #6c757d;
+}
+
+.compras-container {
+  margin-top: 15px;
+}
+
+.compras-container table {
+  width: 100%;
+}
+
+.contas-vencidas-card {
+  margin-top: 30px;
+  border-left: 4px solid #dc3545;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: #28a745;
+}
+
+.empty-state mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 15px;
+}
+
+.empty-state p {
+  font-size: 16px;
+  margin: 0;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .relatorio-mensal-container {
+    padding: 15px;
+  }
+  
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .filtro-form {
+    justify-content: center;
+  }
+  
+  .filtro-form mat-form-field {
+    width: 100px;
+  }
+  
+  .resumo-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .table-container {
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .filtro-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .filtro-form mat-form-field {
+    width: 100%;
+  }
+  
+  .filtro-form button {
+    width: 100%;
+  }
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.relatorio-content {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Cores personalizadas para snackbar */
+::ng-deep .error-snackbar {
+  background-color: #f44336 !important;
+  color: white !important;
+}
+
+::ng-deep .success-snackbar {
+  background-color: #4caf50 !important;
+  color: white !important;
+}

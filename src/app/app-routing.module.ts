@@ -14,6 +14,7 @@ import { AuthGuard } from './services/auth.guard';
 import { RecuperarSenhaComponent } from './components/recuperar-senha/recuperar-senha.component';
 import { RedefinirSenhaComponent } from './components/redefinir-senha/redefinir-senha.component';
 import { CriarUsuarioComponent } from './components/criar-usuario/criar-usuario.component';
+import { RelatorioMensalComponent } from './components/relatorio-mensal/relatorio-mensal.component';
 
 
 const routes: Routes = [
@@ -31,6 +32,7 @@ const routes: Routes = [
   {path: 'recuperar-senha', component: RecuperarSenhaComponent},
   {path: 'redefinir-senha', component: RedefinirSenhaComponent},
   {path: 'criar-usuario', component: CriarUsuarioComponent},
+  {path: 'relatorio-mensal', component: RelatorioMensalComponent, canActivate: [AuthGuard]},
   {path: '**', redirectTo: 'dashboard'}
 ];
 

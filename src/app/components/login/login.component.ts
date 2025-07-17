@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { TenantService } from 'src/app/services/tenant.service';
+import { TenantService } from '../../services/tenant.service';
 
 @Component({
   selector: 'app-login',
