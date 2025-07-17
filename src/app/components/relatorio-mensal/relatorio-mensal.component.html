@@ -1,7 +1,7 @@
 <div class="relatorio-mensal-container">
   <div class="header">
     <h2>Relatório Mensal</h2>
-    
+
     <!-- Formulário de seleção de mês/ano -->
     <form [formGroup]="relatorioForm" (ngSubmit)="gerarRelatorio()" class="filtro-form">
       <mat-form-field appearance="outline">
@@ -42,7 +42,7 @@
 
   <!-- Conteúdo do relatório -->
   <div *ngIf="!isLoading && relatorioData" class="relatorio-content">
-    
+
     <!-- Cabeçalho do relatório -->
     <mat-card class="relatorio-header">
       <mat-card-header>
@@ -111,7 +111,7 @@
 
     <!-- Seções detalhadas -->
     <div class="secoes-detalhes">
-      
+
       <!-- Proventos -->
       <mat-card *ngIf="relatorioData.proventos.length > 0">
         <mat-card-header>
@@ -207,7 +207,7 @@
                   {{formatarMoeda(cartao.valorTotal)}} • Vencimento: {{formatarData(cartao.dataVencimento)}}
                 </mat-panel-description>
               </mat-expansion-panel-header>
-              
+
               <div class="compras-container">
                 <table mat-table [dataSource]="cartao.compras" class="mat-elevation-z1">
                   <ng-container matColumnDef="descricao">

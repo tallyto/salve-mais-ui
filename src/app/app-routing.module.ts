@@ -15,6 +15,7 @@ import { RecuperarSenhaComponent } from './components/recuperar-senha/recuperar-
 import { RedefinirSenhaComponent } from './components/redefinir-senha/redefinir-senha.component';
 import { CriarUsuarioComponent } from './components/criar-usuario/criar-usuario.component';
 import { RelatorioMensalComponent } from './components/relatorio-mensal/relatorio-mensal.component';
+import { FaturaFormComponent } from './components/fatura-form/fatura-form.component';
 
 
 const routes: Routes = [
@@ -26,6 +27,7 @@ const routes: Routes = [
   {path: 'despesas-fixas', component: DespesasFixasComponent, canActivate: [AuthGuard]},
   {path: 'despesas-recorrentes', component: DepesasRecorrentesComponent, canActivate: [AuthGuard]},
   {path: 'faturas', component: FaturaComponent, canActivate: [AuthGuard]},
+  {path: 'faturas-manual', component: FaturaFormComponent, canActivate: [AuthGuard]},
   {path: 'account', component: AccountComponent, canActivate: [AuthGuard]},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},

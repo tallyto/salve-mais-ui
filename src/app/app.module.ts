@@ -52,6 +52,7 @@ import { AuthInterceptor } from './services/auth.interceptor';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from './components/shared/confirm-dialog/confirm-dialog.component';
 import { RelatorioMensalComponent } from './components/relatorio-mensal/relatorio-mensal.component';
+import { FaturaFormComponent } from './components/fatura-form/fatura-form.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { RelatorioMensalComponent } from './components/relatorio-mensal/relatori
     ExpensePieChartComponent,
     RedefinirSenhaComponent,
     ConfirmDialogComponent,
-    RelatorioMensalComponent
+    RelatorioMensalComponent,
+    FaturaFormComponent
   ],
   imports: [
     BrowserModule,

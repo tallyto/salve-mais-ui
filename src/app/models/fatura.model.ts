@@ -10,3 +10,26 @@ export interface Fatura {
   cartaoCredito: Cartao
   compras: GastoCartao[];
 }
+
+export interface FaturaManualDTO {
+  cartaoCreditoId: number;
+  valorTotal: number;
+  dataVencimento: string; // yyyy-MM-dd
+}
+
+export interface FaturaResponseDTO {
+  id: number;
+  cartaoCreditoId: number;
+  nomeCartao: string;
+  valorTotal: number;
+  dataVencimento: string;
+  pago: boolean;
+  totalCompras: number;
+}
+
+export interface CartaoCredito {
+  id: number;
+  nome: string;
+  limite: number;
+  vencimento: string;
+}
