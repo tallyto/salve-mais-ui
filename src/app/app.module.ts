@@ -52,6 +52,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from './components/shared/confirm-dialog/confirm-dialog.component';
 import { RelatorioMensalComponent } from './components/relatorio-mensal/relatorio-mensal.component';
 import { FaturaFormComponent } from './components/fatura-form/fatura-form.component';
+import { LimiteAlertasWidgetComponent } from './components/shared/limite-alertas-widget.component';
+import { CartaoLimitesComponent } from './components/cartao-limites/cartao-limites.component';
 
 @NgModule({
   declarations: [
@@ -109,7 +111,9 @@ import { FaturaFormComponent } from './components/fatura-form/fatura-form.compon
     NgChartsModule,
     RegisterComponent, // Importa o componente standalone
     LoginComponent,
-    MatDialogModule
+    MatDialogModule,
+    LimiteAlertasWidgetComponent, // Importa o widget standalone
+    CartaoLimitesComponent // Importa o componente standalone
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },

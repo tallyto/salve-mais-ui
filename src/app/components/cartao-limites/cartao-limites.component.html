@@ -1,0 +1,153 @@
+<div class="cartao-limites-container">
+  <h2>Gestão de Limites dos Cartões</h2>
+
+  <!-- Seção de Alertas -->
+  <div class="alertas-section" *ngIf="alertas.length > 0">
+    <mat-card class="alertas-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon class="warning-icon">warning</mat-icon>
+          Cartões em Alerta
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="alertas-grid">
+          <mat-chip-set>
+            <mat-chip *ngFor="let alerta of alertas" [class]="getStatusClass(alerta)">
+              <mat-icon>{{ getStatusIcon(alerta) }}</mat-icon>
+              {{ alerta.nomeCartao }} - {{ formatarPercentual(alerta.percentualUtilizado) }}
+            </mat-chip>
+          </mat-chip-set>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Formulário de Configuração -->
+  <mat-card class="config-card">
+    <mat-card-header>
+      <mat-card-title>Configurar Limite do Cartão</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="limiteForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <mat-form-field class="full-width">
+            <mat-label>Cartão</mat-label>
+            <mat-select formControlName="cartaoId" required>
+              <mat-option *ngFor="let cartao of cartoes" [value]="cartao.id">
+                {{ cartao.nome }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="form-row">
+          <mat-form-field class="half-width">
+            <mat-label>Limite Total</mat-label>
+            <input matInput type="number" formControlName="limiteTotal" placeholder="0.00" step="0.01" min="0">
+            <span matTextPrefix>R$ </span>
+          </mat-form-field>
+
+          <mat-form-field class="half-width">
+            <mat-label>Alerta em (%)</mat-label>
+            <input matInput type="number" formControlName="limiteAlertaPercentual" min="1" max="100">
+            <span matTextSuffix>%</span>
+          </mat-form-field>
+        </div>
+
+        <div class="form-actions">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!limiteForm.valid || loading">
+            <mat-icon *ngIf="loading">refresh</mat-icon>
+            {{ loading ? 'Configurando...' : 'Configurar Limite' }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Tabela de Status dos Limites -->
+  <mat-card class="status-card">
+    <mat-card-header>
+      <mat-card-title>Status dos Limites</mat-card-title>
+      <mat-card-subtitle>Acompanhe a utilização dos limites em tempo real</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="table-container">
+        <table mat-table [dataSource]="statusLimites" class="limite-table">
+          <!-- Coluna Nome do Cartão -->
+          <ng-container matColumnDef="nomeCartao">
+            <th mat-header-cell *matHeaderCellDef>Cartão</th>
+            <td mat-cell *matCellDef="let status">{{ status.nomeCartao }}</td>
+          </ng-container>
+
+          <!-- Coluna Limite Total -->
+          <ng-container matColumnDef="limiteTotal">
+            <th mat-header-cell *matHeaderCellDef>Limite Total</th>
+            <td mat-cell *matCellDef="let status">{{ formatarMoeda(status.limiteTotal) }}</td>
+          </ng-container>
+
+          <!-- Coluna Valor Utilizado -->
+          <ng-container matColumnDef="valorUtilizado">
+            <th mat-header-cell *matHeaderCellDef>Utilizado</th>
+            <td mat-cell *matCellDef="let status">{{ formatarMoeda(status.valorUtilizado) }}</td>
+          </ng-container>
+
+          <!-- Coluna Limite Disponível -->
+          <ng-container matColumnDef="limiteDisponivel">
+            <th mat-header-cell *matHeaderCellDef>Disponível</th>
+            <td mat-cell *matCellDef="let status">
+              <span [class]="status.limiteDisponivel < 0 ? 'negative-value' : 'positive-value'">
+                {{ formatarMoeda(status.limiteDisponivel) }}
+              </span>
+            </td>
+          </ng-container>
+
+          <!-- Coluna Percentual Utilizado -->
+          <ng-container matColumnDef="percentualUtilizado">
+            <th mat-header-cell *matHeaderCellDef>% Utilizado</th>
+            <td mat-cell *matCellDef="let status">
+              <div class="progress-container">
+                <mat-progress-bar 
+                  [value]="status.percentualUtilizado" 
+                  [color]="getProgressBarColor(status)"
+                  mode="determinate">
+                </mat-progress-bar>
+                <span class="progress-text">{{ formatarPercentual(status.percentualUtilizado) }}</span>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Coluna Status -->
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let status">
+              <div class="status-indicator" [class]="getStatusClass(status)">
+                <mat-icon>{{ getStatusIcon(status) }}</mat-icon>
+                <span>{{ getStatusText(status) }}</span>
+              </div>
+            </td>
+          </ng-container>
+
+          <!-- Coluna Ações -->
+          <ng-container matColumnDef="acoes">
+            <th mat-header-cell *matHeaderCellDef>Ações</th>
+            <td mat-cell *matCellDef="let status">
+              <button mat-icon-button color="warn" (click)="removerLimite(status.cartaoId)" 
+                      matTooltip="Remover limite">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <div *ngIf="statusLimites.length === 0" class="no-data">
+          <mat-icon>credit_card_off</mat-icon>
+          <p>Nenhum cartão com limite configurado</p>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -77,6 +77,36 @@ export class DepesasRecorrentesComponent implements OnInit {
     const gasto = this.gastosRecorrentes.value;
     const isEditing = !!gasto.id;
 
+    // Verificar limite do cartão antes de salvar (apenas para novos gastos)
+    if (!isEditing && gasto.cartaoCredito?.id && gasto.valor > 0) {
+      this.cartaoService.verificarCompra(gasto.cartaoCredito.id, gasto.valor).subscribe({
+        next: (resultado) => {
+          if (!resultado.podeRealizar) {
+            this.snackBar.open(
+              `Compra excede o limite disponível do cartão (Disponível: ${this.formatarMoeda(resultado.limiteDisponivel)})`,
+              'Fechar',
+              {
+                duration: 5000,
+                horizontalPosition: 'right',
+                verticalPosition: 'top',
+                panelClass: ['warning-snackbar']
+              }
+            );
+            return;
+          }
+          this.salvarCompraConfirmado(gasto, isEditing);
+        },
+        error: () => {
+          // Se não conseguir verificar o limite, prossegue com a compra
+          this.salvarCompraConfirmado(gasto, isEditing);
+        }
+      });
+    } else {
+      this.salvarCompraConfirmado(gasto, isEditing);
+    }
+  }
+
+  private salvarCompraConfirmado(gasto: any, isEditing: boolean) {
     this.despesaRecorrenteService.salvarCompra(gasto).subscribe({
       next: () => {
         this.limparFormulario();
@@ -92,7 +122,14 @@ export class DepesasRecorrentesComponent implements OnInit {
       },
       error: (error) => {
         console.error('Erro ao salvar gasto recorrente:', error);
-        this.snackBar.open('Erro ao salvar gasto recorrente', 'Fechar', {
+        let errorMessage = 'Erro ao salvar gasto recorrente';
+        
+        // Verificar se é erro de limite excedido
+        if (error.error?.message?.includes('limite')) {
+          errorMessage = 'Compra excede o limite disponível do cartão';
+        }
+        
+        this.snackBar.open(errorMessage, 'Fechar', {
           duration: 3000,
           horizontalPosition: 'right',
           verticalPosition: 'top',
@@ -111,5 +148,12 @@ export class DepesasRecorrentesComponent implements OnInit {
       cartaoId: '',
     });
     this.editingGasto = null;
+  }
+
+  private formatarMoeda(valor: number): string {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    }).format(valor);
   }
 }
