@@ -37,8 +37,8 @@ import { CartaoLimiteStatusDTO } from '../../models/cartao.model';
             </div>
             <div class="limite-info">
               <div class="progress-container">
-                <mat-progress-bar 
-                  [value]="alerta.percentualUtilizado" 
+                <mat-progress-bar
+                  [value]="alerta.percentualUtilizado"
                   [color]="getProgressBarColor(alerta)"
                   mode="determinate">
                 </mat-progress-bar>
@@ -52,7 +52,7 @@ import { CartaoLimiteStatusDTO } from '../../models/cartao.model';
             </div>
           </div>
         </div>
-        
+
         <ng-template #noAlertas>
           <div class="no-alertas">
             <mat-icon class="success-icon">check_circle</mat-icon>
@@ -195,11 +195,11 @@ import { CartaoLimiteStatusDTO } from '../../models/cartao.model';
       .limite-widget {
         min-height: 250px;
       }
-      
+
       .alerta-item {
         padding: 8px;
       }
-      
+
       .no-alertas {
         padding: 20px 10px;
       }

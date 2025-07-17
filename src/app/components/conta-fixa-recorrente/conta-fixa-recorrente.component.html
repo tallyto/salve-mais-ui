@@ -1,0 +1,209 @@
+<div class="container">
+  <div class="header">
+    <button mat-icon-button (click)="voltarParaListagem()" class="back-button">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h2>Criar Contas Fixas Recorrentes</h2>
+  </div>
+
+  <div class="content">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon class="title-icon">event_repeat</mat-icon>
+          Nova Conta Fixa Recorrente
+        </mat-card-title>
+        <mat-card-subtitle>
+          Crie múltiplas contas fixas automaticamente com base em um padrão de recorrência
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <form [formGroup]="contaRecorrenteForm" (ngSubmit)="criarContasRecorrentes()">
+          
+          <!-- Informações Básicas -->
+          <div class="form-section">
+            <h3 class="section-title">
+              <mat-icon>info</mat-icon>
+              Informações Básicas
+            </h3>
+            
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Nome da Conta</mat-label>
+                <input matInput formControlName="nome" placeholder="Ex: Aluguel, Financiamento, etc.">
+                <mat-error *ngIf="nome?.hasError('required')">Nome é obrigatório</mat-error>
+                <mat-error *ngIf="nome?.hasError('minlength')">Nome deve ter pelo menos 3 caracteres</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Categoria</mat-label>
+                <mat-select formControlName="categoriaId">
+                  <mat-option value="">Selecione uma categoria</mat-option>
+                  <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">
+                    {{ categoria.nome }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="categoriaId?.hasError('required')">Categoria é obrigatória</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Conta</mat-label>
+                <mat-select formControlName="contaId">
+                  <mat-option value="">Selecione uma conta</mat-option>
+                  <mat-option *ngFor="let conta of contas" [value]="conta.id">
+                    {{ conta.titular }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="contaId?.hasError('required')">Conta é obrigatória</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <!-- Configurações de Recorrência -->
+          <div class="form-section">
+            <h3 class="section-title">
+              <mat-icon>schedule</mat-icon>
+              Configurações de Recorrência
+            </h3>
+            
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Data de Início</mat-label>
+                <input matInput type="date" formControlName="dataInicio">
+                <mat-hint>Data da primeira parcela</mat-hint>
+                <mat-error *ngIf="dataInicio?.hasError('required')">Data de início é obrigatória</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Tipo de Recorrência</mat-label>
+                <mat-select formControlName="tipoRecorrencia">
+                  <mat-option *ngFor="let tipo of tiposRecorrencia" [value]="tipo.valor">
+                    {{ tipo.descricao }}
+                  </mat-option>
+                </mat-select>
+                <mat-error *ngIf="tipoRecorrencia?.hasError('required')">Tipo de recorrência é obrigatório</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Valor por Parcela</mat-label>
+                <input matInput type="number" step="0.01" min="0.01" formControlName="valor" placeholder="0.00">
+                <span matTextPrefix>R$ </span>
+                <mat-error *ngIf="valor?.hasError('required')">Valor é obrigatório</mat-error>
+                <mat-error *ngIf="valor?.hasError('min')">Valor deve ser maior que zero</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Número de Parcelas</mat-label>
+                <input matInput type="number" min="1" max="120" formControlName="numeroParcelas">
+                <mat-hint>Máximo 120 parcelas</mat-hint>
+                <mat-error *ngIf="numeroParcelas?.hasError('required')">Número de parcelas é obrigatório</mat-error>
+                <mat-error *ngIf="numeroParcelas?.hasError('min')">Deve ter pelo menos 1 parcela</mat-error>
+                <mat-error *ngIf="numeroParcelas?.hasError('max')">Máximo 120 parcelas</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Observações (Opcional)</mat-label>
+                <textarea matInput formControlName="observacoes" rows="3" 
+                          placeholder="Informações adicionais sobre esta conta recorrente..."></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <!-- Resumo -->
+          <div class="form-section" *ngIf="contaRecorrenteForm.get('dataInicio')?.value && 
+                                            contaRecorrenteForm.get('numeroParcelas')?.value && 
+                                            contaRecorrenteForm.get('valor')?.value">
+            <h3 class="section-title">
+              <mat-icon>summarize</mat-icon>
+              Resumo da Configuração
+            </h3>
+
+            <div class="summary-card">
+              <div class="summary-item">
+                <span class="summary-label">Valor Total:</span>
+                <span class="summary-value highlight">{{ calcularValorTotal() | currency:'BRL':'symbol':'1.2-2' }}</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">Primeira Parcela:</span>
+                <span class="summary-value">{{ contaRecorrenteForm.get('dataInicio')?.value | date:'dd/MM/yyyy' }}</span>
+              </div>
+              <div class="summary-item" *ngIf="calcularDataFinal()">
+                <span class="summary-label">Última Parcela:</span>
+                <span class="summary-value">{{ calcularDataFinal() }}</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">Total de Parcelas:</span>
+                <span class="summary-value">{{ contaRecorrenteForm.get('numeroParcelas')?.value }}</span>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </mat-card-content>
+
+      <mat-card-actions align="end">
+        <button mat-button type="button" (click)="voltarParaListagem()" [disabled]="loading">
+          Cancelar
+        </button>
+        <button mat-raised-button color="primary" type="submit" 
+                (click)="criarContasRecorrentes()" 
+                [disabled]="contaRecorrenteForm.invalid || loading">
+          <mat-icon *ngIf="!loading">save</mat-icon>
+          <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
+          {{ loading ? 'Criando...' : 'Criar Contas Recorrentes' }}
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+    <!-- Card de Ajuda -->
+    <mat-card class="help-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon class="help-icon">help_outline</mat-icon>
+          Como funciona?
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="help-content">
+          <div class="help-item">
+            <mat-icon class="help-step-icon">looks_one</mat-icon>
+            <div class="help-text">
+              <strong>Configure os dados básicos</strong>
+              <p>Nome, categoria e conta para as despesas</p>
+            </div>
+          </div>
+          <div class="help-item">
+            <mat-icon class="help-step-icon">looks_two</mat-icon>
+            <div class="help-text">
+              <strong>Defina a recorrência</strong>
+              <p>Data de início, valor e frequência dos pagamentos</p>
+            </div>
+          </div>
+          <div class="help-item">
+            <mat-icon class="help-step-icon">looks_3</mat-icon>
+            <div class="help-text">
+              <strong>Parcelas criadas automaticamente</strong>
+              <p>Sistema cria todas as parcelas com numeração sequencial</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="help-examples">
+          <h4>Exemplos de uso:</h4>
+          <ul>
+            <li><strong>Aluguel:</strong> R$ 1.200 mensais por 12 meses</li>
+            <li><strong>Financiamento:</strong> R$ 890 mensais por 48 meses</li>
+            <li><strong>Seguro:</strong> R$ 1.500 anuais por 5 anos</li>
+          </ul>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

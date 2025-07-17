@@ -2,6 +2,7 @@ import {EventEmitter, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Financa} from '../models/financa.model';
+import {ContaFixa, ContaFixaRecorrente} from '../models/conta-fixa.model';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -42,5 +43,12 @@ export class ContasFixasService {
 
   getFinancaById(id: number): Observable<Financa> {
     return this.http.get<Financa>(`${this.apiUrl}/${id}`);
+  }
+
+  /**
+   * Cria múltiplas contas fixas recorrentes
+   */
+  criarContasFixasRecorrentes(contaRecorrente: ContaFixaRecorrente): Observable<ContaFixa[]> {
+    return this.http.post<ContaFixa[]>(`${this.apiUrl}/recorrente`, contaRecorrente);
   }
 }

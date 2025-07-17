@@ -123,12 +123,12 @@ export class DepesasRecorrentesComponent implements OnInit {
       error: (error) => {
         console.error('Erro ao salvar gasto recorrente:', error);
         let errorMessage = 'Erro ao salvar gasto recorrente';
-        
+
         // Verificar se é erro de limite excedido
         if (error.error?.message?.includes('limite')) {
           errorMessage = 'Compra excede o limite disponível do cartão';
         }
-        
+
         this.snackBar.open(errorMessage, 'Fechar', {
           duration: 3000,
           horizontalPosition: 'right',

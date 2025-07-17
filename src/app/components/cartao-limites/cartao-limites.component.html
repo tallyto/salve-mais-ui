@@ -107,8 +107,8 @@
             <th mat-header-cell *matHeaderCellDef>% Utilizado</th>
             <td mat-cell *matCellDef="let status">
               <div class="progress-container">
-                <mat-progress-bar 
-                  [value]="status.percentualUtilizado" 
+                <mat-progress-bar
+                  [value]="status.percentualUtilizado"
                   [color]="getProgressBarColor(status)"
                   mode="determinate">
                 </mat-progress-bar>
@@ -132,7 +132,7 @@
           <ng-container matColumnDef="acoes">
             <th mat-header-cell *matHeaderCellDef>Ações</th>
             <td mat-cell *matCellDef="let status">
-              <button mat-icon-button color="warn" (click)="removerLimite(status.cartaoId)" 
+              <button mat-icon-button color="warn" (click)="removerLimite(status.cartaoId)"
                       matTooltip="Remover limite">
                 <mat-icon>delete</mat-icon>
               </button>

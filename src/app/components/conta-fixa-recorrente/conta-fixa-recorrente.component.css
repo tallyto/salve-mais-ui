@@ -1,0 +1,284 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+  gap: 16px;
+}
+
+.header h2 {
+  margin: 0;
+  color: #333;
+  font-weight: 500;
+}
+
+.back-button {
+  color: #666;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+}
+
+/* Formulário Principal */
+mat-card {
+  margin-bottom: 24px;
+}
+
+.title-icon {
+  margin-right: 8px;
+  color: #1976d2;
+}
+
+.form-section {
+  margin-bottom: 32px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  color: #666;
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.section-title mat-icon {
+  margin-right: 8px;
+  font-size: 20px;
+  color: #1976d2;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  align-items: flex-start;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.half-width {
+  flex: 1;
+}
+
+/* Resumo */
+.summary-card {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 16px;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 8px 0;
+}
+
+.summary-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-top: 1px solid #dee2e6;
+  padding-top: 12px;
+  margin-top: 12px;
+}
+
+.summary-label {
+  color: #666;
+  font-weight: 500;
+}
+
+.summary-value {
+  font-weight: 600;
+  color: #333;
+}
+
+.summary-value.highlight {
+  color: #1976d2;
+  font-size: 18px;
+}
+
+/* Card de Ajuda */
+.help-card {
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+}
+
+.help-icon {
+  color: #ff9800;
+}
+
+.help-content {
+  margin-bottom: 24px;
+}
+
+.help-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  gap: 12px;
+}
+
+.help-step-icon {
+  color: #1976d2;
+  font-size: 24px;
+  margin-top: 4px;
+}
+
+.help-text {
+  flex: 1;
+}
+
+.help-text strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #333;
+}
+
+.help-text p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.help-examples h4 {
+  color: #333;
+  margin-bottom: 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.help-examples ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.help-examples li {
+  margin-bottom: 8px;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.help-examples strong {
+  color: #1976d2;
+}
+
+/* Botões */
+mat-card-actions {
+  padding: 16px 24px;
+  border-top: 1px solid #e0e0e0;
+  margin-top: 0;
+}
+
+mat-card-actions button {
+  margin-left: 8px;
+}
+
+mat-card-actions button:first-child {
+  margin-left: 0;
+}
+
+/* Estados do formulário */
+mat-form-field {
+  margin-bottom: 8px;
+}
+
+mat-form-field.ng-invalid.ng-touched {
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Loading state */
+mat-spinner {
+  margin-right: 8px;
+}
+
+/* Responsividade */
+@media (max-width: 968px) {
+  .content {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .help-card {
+    position: relative;
+    top: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 16px;
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .half-width {
+    width: 100%;
+  }
+  
+  .header h2 {
+    font-size: 20px;
+  }
+  
+  .summary-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 12px;
+  }
+  
+  .header {
+    margin-bottom: 16px;
+  }
+  
+  .section-title {
+    font-size: 14px;
+  }
+  
+  mat-card-content {
+    padding: 16px;
+  }
+  
+  mat-card-actions {
+    padding: 12px 16px;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  mat-card-actions button {
+    width: 100%;
+    margin: 0;
+  }
+}

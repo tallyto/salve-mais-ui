@@ -54,6 +54,7 @@ import { RelatorioMensalComponent } from './components/relatorio-mensal/relatori
 import { FaturaFormComponent } from './components/fatura-form/fatura-form.component';
 import { LimiteAlertasWidgetComponent } from './components/shared/limite-alertas-widget.component';
 import { CartaoLimitesComponent } from './components/cartao-limites/cartao-limites.component';
+import { ContaFixaRecorrenteComponent } from './components/conta-fixa-recorrente/conta-fixa-recorrente.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { CartaoLimitesComponent } from './components/cartao-limites/cartao-limit
     RedefinirSenhaComponent,
     ConfirmDialogComponent,
     RelatorioMensalComponent,
-    FaturaFormComponent
+    FaturaFormComponent,
+    ContaFixaRecorrenteComponent
   ],
   imports: [
     BrowserModule,
