@@ -82,14 +82,6 @@
             </div>
           </div>
 
-          <div class="resumo-item outras">
-            <mat-icon>receipt</mat-icon>
-            <div class="valor-info">
-              <span class="label">Outras Despesas</span>
-              <span class="valor">{{formatarMoeda(relatorioData.resumoFinanceiro.totalOutrasDespesas)}}</span>
-            </div>
-          </div>
-
           <div class="resumo-item saldo" [class.negativo]="relatorioData.saldoFinal < 0">
             <mat-icon>account_balance</mat-icon>
             <div class="valor-info">
@@ -239,45 +231,7 @@
         </mat-card-content>
       </mat-card>
 
-      <!-- Outras Despesas -->
-      <mat-card *ngIf="relatorioData.outrasDespesas.length > 0">
-        <mat-card-header>
-          <mat-card-title>Outras Despesas ({{relatorioData.outrasDespesas.length}})</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="table-container">
-            <table mat-table [dataSource]="relatorioData.outrasDespesas" class="mat-elevation-z2">
-              <ng-container matColumnDef="descricao">
-                <th mat-header-cell *matHeaderCellDef>Descrição</th>
-                <td mat-cell *matCellDef="let element">{{element.descricao}}</td>
-              </ng-container>
-
-              <ng-container matColumnDef="valor">
-                <th mat-header-cell *matHeaderCellDef>Valor</th>
-                <td mat-cell *matCellDef="let element">{{formatarMoeda(element.valor)}}</td>
-              </ng-container>
-
-              <ng-container matColumnDef="data">
-                <th mat-header-cell *matHeaderCellDef>Data</th>
-                <td mat-cell *matCellDef="let element">{{formatarData(element.data)}}</td>
-              </ng-container>
-
-              <ng-container matColumnDef="categoria">
-                <th mat-header-cell *matHeaderCellDef>Categoria</th>
-                <td mat-cell *matCellDef="let element">{{element.categoria}}</td>
-              </ng-container>
-
-              <ng-container matColumnDef="tipo">
-                <th mat-header-cell *matHeaderCellDef>Tipo</th>
-                <td mat-cell *matCellDef="let element">{{element.tipo}}</td>
-              </ng-container>
-
-              <tr mat-header-row *matHeaderRowDef="['descricao', 'valor', 'data', 'categoria', 'tipo']"></tr>
-              <tr mat-row *matRowDef="let row; columns: ['descricao', 'valor', 'data', 'categoria', 'tipo']"></tr>
-            </table>
-          </div>
-        </mat-card-content>
-      </mat-card>
+      <!-- Contas Vencidas -->
     </div>
   </div>
 
