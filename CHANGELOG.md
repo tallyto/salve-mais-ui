@@ -2,6 +2,43 @@
 
 ## [Unreleased]
 
+### Adicionado
+
+- Sistema completo de gerenciamento de faturas manuais:
+  - Componente `FaturaFormComponent` para criação e listagem de faturas
+  - Formulário reativo com validação para criação de faturas manuais
+  - Tabela com visualização de faturas cadastradas
+  - Integração com `FaturaService` para operações CRUD
+  - Interface para especificar cartão, valor e data de vencimento
+  - Badges de status (Pago/Pendente) com design aprimorado
+  - Formatação de moeda e data nas listagens
+
+### Melhorado
+
+- Sistema de relatórios mensais completamente reestruturado:
+  - Removida seção "Outras Despesas" para simplificar visualização
+  - Interface mais limpa e focada nos dados essenciais
+  - Badges de status com melhor contraste e legibilidade
+  - Badge "Pendente" agora usa esquema de cores amarelo/marrom para melhor UX
+- Remoção do componente antigo de fatura (`FaturaComponent`):
+  - Simplificado para usar apenas `FaturaFormComponent`
+  - Rota `/faturas` agora direciona para funcionalidade completa
+  - Menu lateral limpo sem duplicação de opções
+  - Redução significativa de código e melhoria na manutenibilidade
+
+### Corrigido
+
+- Layout do formulário de faturas manuais:
+  - Removido prefixo "R$" que quebrava o layout
+  - Implementado `mat-datepicker` para melhor UX na seleção de datas
+  - Validação de formulário aprimorada com mensagens de erro claras
+- Arquitetura de componentes simplificada:
+  - Removidas dependências não utilizadas
+  - Limpeza de imports desnecessários no `app.module.ts`
+  - Remoção de rotas duplicadas no sistema de roteamento
+
+## [1.5.0] - 2025-07-06
+
 ### Melhorado
 
 - Layout das telas de autenticação (login, registro, recuperação de senha) sem scroll indesejado
