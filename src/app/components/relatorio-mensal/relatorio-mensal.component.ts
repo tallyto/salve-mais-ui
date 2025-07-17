@@ -140,14 +140,14 @@ export class RelatorioMensalComponent implements OnInit {
    * Retorna a classe CSS baseada no status de pagamento
    */
   getStatusClass(pago: boolean): string {
-    return pago ? 'status-pago' : 'status-vencido';
+    return pago ? 'status-pago' : 'status-pendente';
   }
 
   /**
    * Retorna o texto do status
    */
   getStatusText(pago: boolean): string {
-    return pago ? 'Pago' : 'Vencido';
+    return pago ? 'Pago' : 'Pendente';
   }
 
   /**

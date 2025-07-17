@@ -13,7 +13,7 @@
       <mat-card-title>Criar Fatura Manual</mat-card-title>
       <mat-card-subtitle>Cadastre uma fatura especificando cartão, valor e data de vencimento</mat-card-subtitle>
     </mat-card-header>
-    
+
     <mat-card-content>
       <form [formGroup]="faturaForm" (ngSubmit)="onSubmit()">
         <div class="form-row">
@@ -55,7 +55,7 @@
           <button mat-button type="button" (click)="toggleFormulario()">
             Cancelar
           </button>
-          <button mat-raised-button color="primary" type="submit" 
+          <button mat-raised-button color="primary" type="submit"
                   [disabled]="faturaForm.invalid || loading">
             <mat-icon *ngIf="loading">hourglass_empty</mat-icon>
             {{ loading ? 'Criando...' : 'Criar Fatura' }}
@@ -70,7 +70,7 @@
     <mat-card-header>
       <mat-card-title>Faturas Cadastradas</mat-card-title>
     </mat-card-header>
-    
+
     <mat-card-content>
       <div *ngIf="loading" class="loading-container">
         <mat-spinner diameter="50"></mat-spinner>
@@ -84,7 +84,7 @@
 
       <div *ngIf="!loading && faturas.length > 0" class="table-container">
         <table mat-table [dataSource]="faturas" class="faturas-table">
-          
+
           <!-- Coluna Nome do Cartão -->
           <ng-container matColumnDef="nomeCartao">
             <th mat-header-cell *matHeaderCellDef>Cartão</th>
@@ -128,15 +128,15 @@
             <th mat-header-cell *matHeaderCellDef>Ações</th>
             <td mat-cell *matCellDef="let fatura">
               <div class="acoes-container">
-                <button mat-icon-button 
-                        *ngIf="!fatura.pago" 
+                <button mat-icon-button
+                        *ngIf="!fatura.pago"
                         (click)="marcarComoPaga(fatura.id)"
                         matTooltip="Marcar como pago"
                         color="primary">
                   <mat-icon>payment</mat-icon>
                 </button>
-                
-                <button mat-icon-button 
+
+                <button mat-icon-button
                         (click)="excluirFatura(fatura.id)"
                         matTooltip="Excluir fatura"
                         color="warn">
@@ -159,7 +159,7 @@
       <mat-card-title>Gerar Fatura Automática</mat-card-title>
       <mat-card-subtitle>Gere faturas automaticamente baseadas nas compras dos cartões</mat-card-subtitle>
     </mat-card-header>
-    
+
     <mat-card-content>
       <div class="cartoes-automaticos">
         <div *ngFor="let cartao of cartoes" class="cartao-item">
@@ -167,8 +167,8 @@
             <h4>{{ cartao.nome }}</h4>
             <p>Vencimento: {{ formatarData(cartao.vencimento) }}</p>
           </div>
-          <button mat-raised-button 
-                  color="accent" 
+          <button mat-raised-button
+                  color="accent"
                   (click)="gerarFaturaAutomatica(cartao.id)">
             <mat-icon>auto_fix_high</mat-icon>
             Gerar Fatura
