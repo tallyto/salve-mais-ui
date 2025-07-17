@@ -4,7 +4,38 @@
 
 Este roadmap foi elaborado considerando uma equipe pequena de dois desenvolvedores, focando em entregas de alto valor com esforço gerenciável. As versões estão organizadas em ordem de prioridade e impacto para os usuários.
 
-## Versão 1.6.0 - Metas Financeiras (Q3 2025)
+## ✅ Versão 1.6.0 - Sistema de Limites e Contas Recorrentes (Q3 2025) - **CONCLUÍDO**
+
+### Objetivos Principais ✅
+- ✅ Implementar sistema de limites para cartões de crédito
+- ✅ Implementar sistema de contas fixas recorrentes
+- ✅ Melhorar controle de gastos e planejamento financeiro
+
+### Funcionalidades Implementadas ✅
+- ✅ **Sistema de Limites de Cartão**
+  - ✅ Configuração de limite total e percentual de alerta por cartão
+  - ✅ Monitoramento em tempo real do uso vs limite disponível
+  - ✅ Widget de alertas no dashboard com atualização automática
+  - ✅ Validação preventiva em compras que excedem limite
+  - ✅ Interface responsiva com indicadores visuais (cores, ícones, barras)
+
+- ✅ **Sistema de Contas Fixas Recorrentes**
+  - ✅ Criação automática de múltiplas contas fixas com recorrência
+  - ✅ Suporte a 5 tipos: Mensal, Bimensal, Trimestral, Semestral, Anual
+  - ✅ Interface moderna com formulário reativo e validações
+  - ✅ Cálculos automáticos de datas e valores totais
+  - ✅ Card de ajuda com instruções e exemplos práticos
+  - ✅ Acesso rápido via toolbar e menu lateral
+
+### Melhorias Técnicas Implementadas ✅
+- ✅ Novos DTOs para limites (CartaoLimiteDTO, CartaoLimiteStatusDTO)
+- ✅ Expansão do CartaoCreditoService com métodos de limite
+- ✅ Novos endpoints REST para gerenciamento de limites
+- ✅ Componentes standalone Angular para melhor modularização
+- ✅ Validações robustas no frontend e backend
+- ✅ Documentação completa das funcionalidades
+
+## Versão 1.7.0 - Metas Financeiras (Q4 2025)
 
 ### Objetivos Principais
 - Implementar sistema de metas financeiras para usuários
