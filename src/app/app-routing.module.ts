@@ -6,7 +6,6 @@ import {CategoriaFormComponent} from "./components/categoria-form/categoria-form
 import {ProventoFormComponent} from "./components/provento-form/provento-form.component";
 import {DespesasFixasComponent} from "./components/despesas-fixas/despesas-fixas.component";
 import {DepesasRecorrentesComponent} from "./components/depesas-recorrentes/depesas-recorrentes.component";
-import {FaturaComponent} from "./components/fatura/fatura.component";
 import { AccountComponent } from './components/account/account.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
@@ -26,8 +25,7 @@ const routes: Routes = [
   {path: 'provento-form', component: ProventoFormComponent, canActivate: [AuthGuard]},
   {path: 'despesas-fixas', component: DespesasFixasComponent, canActivate: [AuthGuard]},
   {path: 'despesas-recorrentes', component: DepesasRecorrentesComponent, canActivate: [AuthGuard]},
-  {path: 'faturas', component: FaturaComponent, canActivate: [AuthGuard]},
-  {path: 'faturas-manual', component: FaturaFormComponent, canActivate: [AuthGuard]},
+  {path: 'faturas', component: FaturaFormComponent, canActivate: [AuthGuard]},
   {path: 'account', component: AccountComponent, canActivate: [AuthGuard]},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
