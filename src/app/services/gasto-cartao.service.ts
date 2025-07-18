@@ -19,14 +19,22 @@ export class GastoCartaoService {
   constructor(private http: HttpClient) {
   }
 
-  public listCompras(page: number, size: number, sort: string): Observable<Page<GastoCartao>> {
-    return this.http.get<Page<GastoCartao>>(this.apiUrl, {
-      params: {
-        page,
-        size,
-        sort
-      }
-    });
+  public listCompras(page: number, size: number, sort: string, mes?: number, ano?: number): Observable<Page<GastoCartao>> {
+    let params: any = {
+      page,
+      size,
+      sort
+    };
+
+    if (mes !== undefined) {
+      params.mes = mes;
+    }
+
+    if (ano !== undefined) {
+      params.ano = ano;
+    }
+
+    return this.http.get<Page<GastoCartao>>(this.apiUrl, { params });
   }
 
   public listComprasRecorrentes(page: number, size: number, sort: string): Observable<Page<GastoCartao>> {

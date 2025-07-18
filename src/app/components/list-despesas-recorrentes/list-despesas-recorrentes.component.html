@@ -4,6 +4,34 @@
     <div class="text-color-secondary text-sm">Despesas com cartão de crédito</div>
   </div>
 
+  <!-- Filtros de Mês e Ano -->
+  <div class="p-3 border-bottom-1 border-300 bg-gray-50">
+    <div class="flex gap-3 align-items-center flex-wrap">
+      <mat-form-field appearance="outline" class="flex-1 max-w-12rem">
+        <mat-label>Mês</mat-label>
+        <mat-select [(value)]="selectedMonth" (selectionChange)="onFilterChange()">
+          <mat-option *ngFor="let month of months" [value]="month.value">
+            {{ month.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="flex-1 max-w-10rem">
+        <mat-label>Ano</mat-label>
+        <mat-select [(value)]="selectedYear" (selectionChange)="onFilterChange()">
+          <mat-option *ngFor="let year of years" [value]="year">
+            {{ year }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-stroked-button color="primary" (click)="resetFilters()">
+        <mat-icon>refresh</mat-icon>
+        Mês Atual
+      </button>
+    </div>
+  </div>
+
   <div class="p-3">
     <table [dataSource]="listGastosRecorrentes" matSortActive="data" mat-table matSort matSortDisableClear matSortDirection="desc" class="w-full">
 
@@ -68,7 +96,7 @@
 
     <div *ngIf="listGastosRecorrentes.length === 0" class="p-5 text-center text-color-secondary">
       <mat-icon class="text-4xl mb-3 block">credit_card</mat-icon>
-      <span>Nenhum gasto recorrente cadastrado. Adicione um gasto utilizando o formulário acima.</span>
+      <span>Nenhum gasto recorrente encontrado para {{ getSelectedPeriodText() }}. Selecione outro período ou adicione um novo gasto.</span>
     </div>
   </div>
 </div>
