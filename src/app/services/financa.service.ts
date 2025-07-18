@@ -18,14 +18,22 @@ export class ContasFixasService {
   constructor(private http: HttpClient) {
   }
 
-  listarFinancas(page: number, size: number, sort: string): Observable<Financa[]> {
-    return this.http.get<Financa[]>(this.apiUrl, {
-      params: {
-        page,
-        size,
-        sort
-      }
-    });
+  listarFinancas(page: number, size: number, sort: string, mes?: number, ano?: number): Observable<Financa[]> {
+    let params: any = {
+      page,
+      size,
+      sort
+    };
+
+    if (mes !== undefined) {
+      params.mes = mes;
+    }
+
+    if (ano !== undefined) {
+      params.ano = ano;
+    }
+
+    return this.http.get<Financa[]>(this.apiUrl, { params });
   }
 
   salvarFinanca(financa: Financa): Observable<Financa> {

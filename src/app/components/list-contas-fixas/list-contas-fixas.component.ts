@@ -7,6 +7,11 @@ import { catchError, map, merge, of as observableOf, startWith, switchMap } from
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+interface MonthOption {
+  value: number;
+  label: string;
+}
+
 @Component({
   selector: 'app-list-contas-fixas',
   templateUrl: './list-contas-fixas.component.html',
@@ -20,6 +25,25 @@ export class ListContasFixasComponent implements AfterViewInit {
 
   resultsLength = 0;
   isLoadingResults = true;
+
+  // Filtros de mês e ano
+  selectedMonth: number;
+  selectedYear: number;
+  months: MonthOption[] = [
+    { value: 1, label: 'Janeiro' },
+    { value: 2, label: 'Fevereiro' },
+    { value: 3, label: 'Março' },
+    { value: 4, label: 'Abril' },
+    { value: 5, label: 'Maio' },
+    { value: 6, label: 'Junho' },
+    { value: 7, label: 'Julho' },
+    { value: 8, label: 'Agosto' },
+    { value: 9, label: 'Setembro' },
+    { value: 10, label: 'Outubro' },
+    { value: 11, label: 'Novembro' },
+    { value: 12, label: 'Dezembro' }
+  ];
+  years: number[] = [];
 
   // @ts-expect-error
   @ViewChild(MatPaginator) paginator: MatPaginator
@@ -47,7 +71,15 @@ export class ListContasFixasComponent implements AfterViewInit {
           this.refreshContasFixasList()
         }
       }
-    )
+    );
+
+    // Inicializar filtros com mês e ano atuais
+    const currentDate = new Date();
+    this.selectedMonth = currentDate.getMonth() + 1; // getMonth() retorna 0-11
+    this.selectedYear = currentDate.getFullYear();
+
+    // Gerar lista de anos (últimos 3 anos até próximos 2 anos)
+    this.generateYears();
   }
 
   ngAfterViewInit(): void {
@@ -130,6 +162,33 @@ export class ListContasFixasComponent implements AfterViewInit {
     return this.editingDespesa !== null && this.editingDespesa.id === despesa.id;
   }
 
+  onFilterChange(): void {
+    this.paginator.pageIndex = 0; // Reset para primeira página
+    this.refreshContasFixasList();
+  }
+
+  resetFilters(): void {
+    const currentDate = new Date();
+    this.selectedMonth = currentDate.getMonth() + 1;
+    this.selectedYear = currentDate.getFullYear();
+    this.onFilterChange();
+  }
+
+  getSelectedPeriodText(): string {
+    const monthName = this.months.find(m => m.value === this.selectedMonth)?.label || '';
+    return `${monthName} de ${this.selectedYear}`;
+  }
+
+  private generateYears(): void {
+    const currentYear = new Date().getFullYear();
+    this.years = [];
+
+    // Gerar anos dos últimos 3 anos até os próximos 2 anos
+    for (let year = currentYear - 3; year <= currentYear + 2; year++) {
+      this.years.push(year);
+    }
+  }
+
   private refreshContasFixasList() {
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 
@@ -143,6 +202,8 @@ export class ListContasFixasComponent implements AfterViewInit {
             this.paginator.pageIndex,
             this.paginator.pageSize,
             sort,
+            this.selectedMonth,
+            this.selectedYear
           ).pipe(catchError(() => observableOf(null)));
         }),
         map(data => {
