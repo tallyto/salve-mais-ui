@@ -12,14 +12,6 @@
         <mat-icon>notifications</mat-icon>
       </button>
 
-      <!-- Botão de acesso rápido para Conta Fixa Recorrente -->
-      <button mat-icon-button 
-              routerLink="/conta-fixa-recorrente" 
-              matTooltip="Criar Conta Fixa Recorrente"
-              class="quick-action-button">
-        <mat-icon>event_repeat</mat-icon>
-      </button>
-
       <!-- Tenant selector será adicionado posteriormente -->
 
       <button [matMenuTriggerFor]="userAccountMenu" mat-button class="user-profile-button">
@@ -103,10 +95,7 @@
           <span>Despesas Fixas</span>
         </a>
 
-        <a mat-list-item routerLink="/conta-fixa-recorrente" routerLinkActive="active-link">
-          <mat-icon>event_repeat</mat-icon>
-          <span>Criar Recorrente</span>
-        </a>
+
 
         <a mat-list-item routerLink="/despesas-recorrentes" routerLinkActive="active-link">
           <mat-icon>autorenew</mat-icon>
