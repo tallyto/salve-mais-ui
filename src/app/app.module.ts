@@ -58,8 +58,10 @@ import { LimiteAlertasWidgetComponent } from './components/shared/limite-alertas
 import { CartaoLimitesComponent } from './components/cartao-limites/cartao-limites.component';
 import { ContaFixaRecorrenteComponent } from './components/conta-fixa-recorrente/conta-fixa-recorrente.component';
 import { PagamentoFaturaModalComponent } from './components/pagamento-fatura-modal/pagamento-fatura-modal.component';
+
 import { NotificacoesComponent } from './components/notificacoes/notificacoes.component';
 import { NotificacoesWidgetComponent } from './components/notificacoes-widget/notificacoes-widget.component';
+import { MinhaContaComponent } from './components/minha-conta/minha-conta.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +88,8 @@ import { NotificacoesWidgetComponent } from './components/notificacoes-widget/no
     PagamentoFaturaModalComponent,
     NotificacoesComponent,
     NotificacoesWidgetComponent,
-    ContaFixaRecorrenteComponent
+    ContaFixaRecorrenteComponent,
+    MinhaContaComponent
   ],
   imports: [
     BrowserModule,

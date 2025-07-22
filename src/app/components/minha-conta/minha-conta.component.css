@@ -1,0 +1,40 @@
+form.form-edicao {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.w-100 {
+  width: 100%;
+}
+.minha-conta-container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 16px;
+}
+
+mat-card {
+  padding: 16px;
+}
+
+mat-card-title {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+mat-card-subtitle {
+  color: #666;
+}
+
+mat-card-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}

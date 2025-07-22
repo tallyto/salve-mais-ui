@@ -1,0 +1,50 @@
+<div class="minha-conta-container">
+  <h2>Minha Conta</h2>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>{{ usuario.nome }}</mat-card-title>
+      <mat-card-subtitle>{{ usuario.email }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p><strong>Criado em:</strong> {{ usuario.criadoEm | date:'dd/MM/yyyy HH:mm' }}</p>
+      <p><strong>Último acesso:</strong> {{ usuario.ultimoAcesso ? (usuario.ultimoAcesso | date:'dd/MM/yyyy HH:mm') : '-' }}</p>
+
+      <!-- Formulário de edição de nome -->
+      <form *ngIf="editandoNome" [formGroup]="nomeForm" (ngSubmit)="salvarNome()" class="form-edicao">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Nome</mat-label>
+          <input matInput formControlName="nome" required>
+          <mat-error *ngIf="nomeForm.get('nome')?.hasError('required')">Nome obrigatório</mat-error>
+          <mat-error *ngIf="nomeForm.get('nome')?.hasError('minlength')">Mínimo 3 caracteres</mat-error>
+        </mat-form-field>
+        <div class="form-actions">
+          <button mat-flat-button color="primary" type="submit" [disabled]="nomeForm.invalid">Salvar</button>
+          <button mat-button type="button" (click)="cancelarEdicaoNome()">Cancelar</button>
+        </div>
+      </form>
+
+      <!-- Formulário de alteração de senha -->
+      <form *ngIf="editandoSenha" [formGroup]="senhaForm" (ngSubmit)="salvarSenha()" class="form-edicao">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Senha atual</mat-label>
+          <input matInput type="password" formControlName="senhaAtual" required>
+          <mat-error *ngIf="senhaForm.get('senhaAtual')?.hasError('required')">Obrigatório</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Nova senha</mat-label>
+          <input matInput type="password" formControlName="novaSenha" required>
+          <mat-error *ngIf="senhaForm.get('novaSenha')?.hasError('required')">Obrigatório</mat-error>
+          <mat-error *ngIf="senhaForm.get('novaSenha')?.hasError('minlength')">Mínimo 6 caracteres</mat-error>
+        </mat-form-field>
+        <div class="form-actions">
+          <button mat-flat-button color="primary" type="submit" [disabled]="senhaForm.invalid">Salvar</button>
+          <button mat-button type="button" (click)="cancelarEdicaoSenha()">Cancelar</button>
+        </div>
+      </form>
+    </mat-card-content>
+    <mat-card-actions *ngIf="!editandoNome && !editandoSenha">
+      <button mat-raised-button color="primary" (click)="editarDados()">Editar Dados</button>
+      <button mat-stroked-button color="accent" (click)="alterarSenha()">Alterar Senha</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
