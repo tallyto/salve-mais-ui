@@ -23,7 +23,10 @@ export interface FaturaResponseDTO {
   nomeCartao: string;
   valorTotal: number;
   dataVencimento: string;
+  dataPagamento: string | null;
   pago: boolean;
+  contaPagamentoId: number | null;
+  nomeContaPagamento: string | null;
   totalCompras: number;
 }
 

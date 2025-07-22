@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 import { FaturaService } from '../../services/fatura.service';
 import { CartaoService } from '../../services/cartao.service';
 import { FaturaManualDTO, FaturaResponseDTO } from '../../models/fatura.model';
 import { Cartao } from '../../models/cartao.model';
+import { PagamentoFaturaModalComponent } from '../pagamento-fatura-modal/pagamento-fatura-modal.component';
 
 @Component({
   selector: 'app-fatura-form',
@@ -18,13 +20,14 @@ export class FaturaFormComponent implements OnInit {
   loading = false;
   mostrarFormulario = false;
 
-  displayedColumns: string[] = ['nomeCartao', 'valorTotal', 'dataVencimento', 'pago', 'totalCompras', 'acoes'];
+  displayedColumns: string[] = ['nomeCartao', 'valorTotal', 'dataVencimento', 'dataPagamento', 'contaPagamento', 'pago', 'totalCompras', 'acoes'];
 
   constructor(
     private fb: FormBuilder,
     private faturaService: FaturaService,
     private cartaoService: CartaoService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {
     this.faturaForm = this.fb.group({
       cartaoCreditoId: ['', Validators.required],
@@ -97,7 +100,27 @@ export class FaturaFormComponent implements OnInit {
     }
   }
 
-  marcarComoPaga(id: number): void {
+  marcarComoPaga(fatura: FaturaResponseDTO): void {
+    const dialogRef = this.dialog.open(PagamentoFaturaModalComponent, {
+      width: '800px',
+      minWidth: '600px',
+      maxWidth: '90vw',
+      height: 'auto',
+      minHeight: '500px',
+      maxHeight: '90vh',
+      data: { fatura: fatura },
+      disableClose: true,
+      panelClass: 'custom-modal-panel'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.carregarFaturas();
+      }
+    });
+  }
+
+  marcarComoPageSimples(id: number): void {
     this.faturaService.marcarComoPaga(id).subscribe({
       next: () => {
         this.snackBar.open('Fatura marcada como paga!', 'Fechar', { duration: 3000 });

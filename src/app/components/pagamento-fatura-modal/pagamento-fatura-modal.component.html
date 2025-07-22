@@ -1,0 +1,80 @@
+<div class="modal-container">
+  <div class="modal-header">
+    <h2 mat-dialog-title>Pagar Fatura</h2>
+    <button mat-icon-button mat-dialog-close class="close-button">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <mat-dialog-content class="modal-content">
+    <!-- Informações da Fatura -->
+    <div class="fatura-info">
+      <h3>Detalhes da Fatura</h3>
+      <div class="info-row">
+        <span class="label">Cartão:</span>
+        <span class="value">{{ data.fatura.nomeCartao }}</span>
+      </div>
+      <div class="info-row">
+        <span class="label">Valor:</span>
+        <span class="value valor-destaque">{{ formatarMoeda(data.fatura.valorTotal) }}</span>
+      </div>
+      <div class="info-row">
+        <span class="label">Vencimento:</span>
+        <span class="value">{{ data.fatura.dataVencimento | date: 'dd/MM/yyyy' }}</span>
+      </div>
+    </div>
+
+    <!-- Formulário de Pagamento -->
+    <form [formGroup]="pagamentoForm" (ngSubmit)="onSubmit()" class="pagamento-form">
+      <h3>Selecionar Conta para Pagamento</h3>
+
+      <div *ngIf="loading" class="loading-container">
+        <mat-spinner diameter="30"></mat-spinner>
+        <span>Carregando contas...</span>
+      </div>
+
+      <div *ngIf="!loading && contas.length === 0" class="empty-state">
+        <mat-icon>account_balance</mat-icon>
+        <p>Nenhuma conta disponível</p>
+      </div>
+
+      <mat-form-field *ngIf="!loading && contas.length > 0" appearance="outline" class="conta-field">
+        <mat-label>Conta para Débito</mat-label>
+        <mat-select formControlName="contaId">
+          <mat-option *ngFor="let conta of contas" [value]="conta.id"
+                      [disabled]="!temSaldoSuficiente(conta)">
+            <div class="conta-option">
+              <div class="conta-titular">{{ conta.titular }}</div>
+              <div class="conta-saldo" [class.saldo-insuficiente]="!temSaldoSuficiente(conta)">
+                Saldo: {{ formatarMoeda(conta.saldo) }}
+                <mat-icon *ngIf="!temSaldoSuficiente(conta)" class="warning-icon">warning</mat-icon>
+              </div>
+            </div>
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="pagamentoForm.get('contaId')?.hasError('required')">
+          Selecione uma conta
+        </mat-error>
+      </mat-form-field>
+
+      <!-- Aviso de Saldo Insuficiente -->
+      <div *ngIf="contas.length > 0 && !temAlgumaContaComSaldo()"
+           class="alerta-saldo">
+        <mat-icon>warning</mat-icon>
+        <span>Nenhuma conta possui saldo suficiente para pagar esta fatura.</span>
+      </div>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions class="modal-actions">
+    <button mat-button type="button" (click)="onCancel()" [disabled]="loading">
+      Cancelar
+    </button>
+    <button mat-raised-button color="primary"
+            [disabled]="pagamentoForm.invalid || loading || !temAlgumaContaComSaldo()"
+            (click)="onSubmit()">
+      <mat-icon *ngIf="loading">hourglass_empty</mat-icon>
+      {{ loading ? 'Processando...' : 'Confirmar Pagamento' }}
+    </button>
+  </mat-dialog-actions>
+</div>

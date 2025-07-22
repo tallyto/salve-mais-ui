@@ -39,6 +39,18 @@ export class FaturaService {
     return this.http.patch<void>(`${this.apiUrl}/${id}/pagar`, {});
   }
 
+  public pagarFaturaComConta(faturaId: number, contaId: number): Observable<void> {
+    return this.http.patch<void>(`${this.apiUrl}/${faturaId}/pagar/${contaId}`, {});
+  }
+
+  public listarFaturasPendentes(): Observable<FaturaResponseDTO[]> {
+    return this.http.get<FaturaResponseDTO[]>(`${this.apiUrl}/pendentes`);
+  }
+
+  public listarFaturasPorConta(contaId: number): Observable<FaturaResponseDTO[]> {
+    return this.http.get<FaturaResponseDTO[]>(`${this.apiUrl}/conta/${contaId}`);
+  }
+
   public excluirFatura(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }

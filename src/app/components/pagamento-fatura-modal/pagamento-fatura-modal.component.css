@@ -1,0 +1,226 @@
+.modal-container {
+  width: 100%;
+  max-width: 800px;
+  min-height: 500px;
+  min-width: 600px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0 20px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.modal-header h2 {
+  margin: 0;
+  color: #333;
+  font-size: 24px;
+}
+
+.close-button {
+  color: #666;
+}
+
+.modal-content {
+  padding: 30px 0;
+  min-height: 350px;
+  overflow: visible;
+}
+
+.fatura-info {
+  background-color: #f8f9fa;
+  padding: 24px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.fatura-info h3 {
+  margin: 0 0 12px 0;
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  font-size: 15px;
+}
+
+.info-row .label {
+  font-weight: 500;
+  color: #666;
+}
+
+.info-row .value {
+  color: #333;
+}
+
+.valor-destaque {
+  font-weight: 600;
+  color: #1976d2;
+  font-size: 20px;
+}
+
+.pagamento-form h3 {
+  margin: 0 0 24px 0;
+  color: #333;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  gap: 12px;
+}
+
+.loading-container span {
+  color: #666;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: #666;
+}
+
+.empty-state mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+.conta-field {
+  width: 100%;
+}
+
+.conta-option {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 0;
+}
+
+.conta-titular {
+  font-weight: 500;
+  color: #333;
+}
+
+.conta-saldo {
+  font-size: 12px;
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.saldo-insuficiente {
+  color: #f44336;
+}
+
+.warning-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: #ff9800;
+}
+
+.alerta-saldo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  background-color: #fff3e0;
+  border: 1px solid #ffcc02;
+  border-radius: 4px;
+  color: #f57c00;
+  margin-top: 20px;
+}
+
+.alerta-saldo mat-icon {
+  color: #ff9800;
+}
+
+.modal-actions {
+  padding: 20px 0 0 0;
+  border-top: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.modal-actions button {
+  min-width: 140px;
+  padding: 8px 16px;
+}
+
+/* Responsividade */
+@media (max-width: 800px) {
+  .modal-container {
+    max-width: 95vw;
+    min-width: auto;
+    min-height: 400px;
+    padding: 16px;
+  }
+
+  .modal-header h2 {
+    font-size: 20px;
+  }
+
+  .modal-content {
+    padding: 20px 0;
+    min-height: 300px;
+  }
+
+  .fatura-info {
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+
+  .info-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 8px 0;
+    font-size: 14px;
+  }
+
+  .valor-destaque {
+    font-size: 18px;
+  }
+
+  .pagamento-form h3 {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+
+  .modal-actions {
+    flex-direction: column-reverse;
+    padding: 16px 0 0 0;
+  }
+
+  .modal-actions button {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .alerta-saldo {
+    padding: 12px;
+    margin-top: 16px;
+  }
+}

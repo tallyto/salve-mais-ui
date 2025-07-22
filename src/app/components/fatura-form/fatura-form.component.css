@@ -142,6 +142,41 @@
 .acoes-container {
   display: flex;
   gap: 8px;
+  align-items: center;
+}
+
+.acoes-container button {
+  min-width: 40px;
+}
+
+.fatura-paga-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #4caf50;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.fatura-paga-label mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.text-muted {
+  color: #999;
+  font-style: italic;
+}
+
+/* Estilos para o modal customizado */
+::ng-deep .custom-modal-panel .mat-mdc-dialog-container {
+  padding: 0 !important;
+}
+
+::ng-deep .custom-modal-panel .mat-mdc-dialog-surface {
+  border-radius: 8px !important;
+  overflow: hidden !important;
 }
 
 .automatica-card {

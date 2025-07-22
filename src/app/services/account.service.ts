@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import {EventEmitter, Injectable} from '@angular/core';
 import {Account, AccountPage} from '../models/account.model';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -32,6 +33,14 @@ export class AccountService {
         sort
       }
     })
+  }
+
+  listarTodasContas(): Observable<Account[]> {
+    // Usa a mesma endpoint paginada mas com um tamanho grande para pegar todas
+    return this.http.get<AccountPage>(`${this.apiUrl}?page=0&size=1000&sort=titular`)
+      .pipe(
+        map((response: AccountPage) => response.content || [])
+      );
   }
 
   excluirAccount(id: number): Observable<void> {

@@ -56,6 +56,7 @@ import { FaturaFormComponent } from './components/fatura-form/fatura-form.compon
 import { LimiteAlertasWidgetComponent } from './components/shared/limite-alertas-widget.component';
 import { CartaoLimitesComponent } from './components/cartao-limites/cartao-limites.component';
 import { ContaFixaRecorrenteComponent } from './components/conta-fixa-recorrente/conta-fixa-recorrente.component';
+import { PagamentoFaturaModalComponent } from './components/pagamento-fatura-modal/pagamento-fatura-modal.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { ContaFixaRecorrenteComponent } from './components/conta-fixa-recorrente
     ConfirmDialogComponent,
     RelatorioMensalComponent,
     FaturaFormComponent,
+    PagamentoFaturaModalComponent,
     ContaFixaRecorrenteComponent
   ],
   imports: [
