@@ -163,7 +163,7 @@ export class DashboardComponent implements OnInit {
     private proventoService: ProventoService,
     private dashboardService: DashboardService,
     private gastoCartaoService: GastoCartaoService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadDashboardData();
@@ -241,6 +241,10 @@ export class DashboardComponent implements OnInit {
   calculateTotals(): void {
     this.totalSaldo = this.accounts.reduce((sum, account) => sum + account.saldo, 0);
     this.totalReceitas = this.proventos.reduce((sum, provento) => sum + provento.valor, 0);
+  }
+
+  formatarPercentual(valor: number): string {
+    return valor.toFixed(1).replace('.', ',') + '%';
   }
 
   // Prepara dados para o gráfico de pizza (Despesas por Categoria)

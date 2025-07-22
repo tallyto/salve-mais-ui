@@ -217,7 +217,7 @@
                 <mat-icon *ngIf="getBalanceRatio() >= 25 && getBalanceRatio() < 50">sentiment_dissatisfied</mat-icon>
                 <mat-icon *ngIf="getBalanceRatio() < 25">sentiment_very_dissatisfied</mat-icon>
               </div>
-              <div class="health-value">{{ getBalanceRatio() }}%</div>
+              <div class="health-value">{{ formatarPercentual(getBalanceRatio()) }}</div>
             </div>
             <div class="health-text">
               <h3>
@@ -232,7 +232,7 @@
           <div class="progress-container mb-3">
             <div class="progress-label">
               <span>Saldo vs Despesas</span>
-              <span>{{ getBalanceRatio() }}%</span>
+              <span>{{ formatarPercentual(getBalanceRatio()) }}</span>
             </div>
             <div class="progress-bar">
               <div class="progress-fill" [style.width]="getBalanceRatio() + '%'" [ngClass]="getBalanceHealthClass()"></div>
