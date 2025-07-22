@@ -13,6 +13,15 @@
 - Ajuste de build para permitir importação de arquivos JSON (resolveJsonModule e esModuleInterop)
 
 ---
+
+## [1.7.1] - 2025-07-22
+
+### Alterado
+
+- Refatoração: verificação local da validade do token JWT no login (sem chamada ao backend)
+- Função `isTokenExpired` movida para `utils/jwt.util.ts` para reutilização
+
+---
 ## [Unreleased]
 
 
