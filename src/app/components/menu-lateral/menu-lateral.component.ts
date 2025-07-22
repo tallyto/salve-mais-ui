@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild, OnDestroy, AfterViewInit, HostListener} fr
 import {MatSidenav} from '@angular/material/sidenav';
 import {Router, NavigationEnd} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
+import {UsuarioService} from '../../services/usuario.service';
 import {Subscription, filter} from 'rxjs';
 
 @Component({
@@ -20,7 +21,7 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private routerSubscription: Subscription | null = null;
 
-  constructor(private router: Router, private authService: AuthService) {
+  constructor(private router: Router, private authService: AuthService, private usuarioService: UsuarioService) {
     this.checkScreenSize();
   }
 
@@ -91,16 +92,26 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private updateUserInfo(): void {
-    const userInfo = localStorage.getItem('userInfo');
-    if (userInfo) {
-      try {
-        const parsedInfo = JSON.parse(userInfo);
-        if (parsedInfo.name) this.username = parsedInfo.name;
-        if (parsedInfo.email) this.userEmail = parsedInfo.email;
-      } catch (e) {
-        console.error('Erro ao processar informações do usuário', e);
+    // Busca do backend o nome e email reais do usuário autenticado
+    this.usuarioService.getUsuarioLogado().subscribe({
+      next: (user) => {
+        this.username = user.nome;
+        this.userEmail = user.email;
+      },
+      error: () => {
+        // fallback para localStorage se falhar
+        const userInfo = localStorage.getItem('userInfo');
+        if (userInfo) {
+          try {
+            const parsedInfo = JSON.parse(userInfo);
+            if (parsedInfo.name) this.username = parsedInfo.name;
+            if (parsedInfo.email) this.userEmail = parsedInfo.email;
+          } catch (e) {
+            console.error('Erro ao processar informações do usuário', e);
+          }
+        }
       }
-    }
+    });
   }
 
   toggleSidenav(): void {
