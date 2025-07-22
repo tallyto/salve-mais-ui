@@ -1,3 +1,4 @@
+import { isTokenExpired } from '../../utils/jwt.util';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -54,6 +55,16 @@ export class LoginComponent {
 
     // Recuperar credenciais salvas se existirem
     this.restoreCredentials();
+  }
+
+  ngOnInit(): void {
+    // Se já existe token válido, redireciona para o dashboard
+    const token = localStorage.getItem('token');
+    if (token && !isTokenExpired(token)) {
+      this.router.navigate(['/dashboard']);
+    } else if (token && isTokenExpired(token)) {
+      localStorage.removeItem('token');
+    }
   }
 
   restoreCredentials() {
@@ -130,14 +141,14 @@ export class LoginComponent {
 
     const { email, senha, dominio, lembrarMe } = this.loginForm.value;
     const emailDomain = email.split('@')[1] || '';
-    
+
     // Verificar se o email tem um domínio corporativo (não público)
     const publicDomains = ['gmail.com', 'hotmail.com', 'outlook.com', 'yahoo.com', 'icloud.com'];
     const isPublicDomain = emailDomain ? publicDomains.some(domain => emailDomain.toLowerCase().includes(domain)) : true;
-    
+
     // Determinar qual tenant usar
     let tenant: string;
-    
+
     if (!isPublicDomain && emailDomain) {
       // Se for um email corporativo, sempre usar o domínio do email como tenant
       tenant = emailDomain;
