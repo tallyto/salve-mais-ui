@@ -1,0 +1,70 @@
+<mat-card *ngIf="!loading" class="notificacoes-widget"
+          [class.tem-notificacoes]="resumo?.temNotificacoes"
+          (click)="navegarParaNotificacoes()">
+  <mat-card-header>
+    <mat-icon mat-card-avatar [class.alert]="resumo?.temNotificacoes">
+      {{ resumo?.temNotificacoes ? 'notifications_active' : 'notifications_none' }}
+    </mat-icon>
+    <mat-card-title>Notificações</mat-card-title>
+    <mat-card-subtitle *ngIf="resumo?.temNotificacoes; else nenhumaNotificacao">
+      {{ resumo?.totalNotificacoes }} pendente(s)
+    </mat-card-subtitle>
+    <ng-template #nenhumaNotificacao>
+      <mat-card-subtitle>Tudo em dia!</mat-card-subtitle>
+    </ng-template>
+  </mat-card-header>
+
+  <mat-card-content *ngIf="resumo?.temNotificacoes">
+    <div class="resumo-stats">
+      <div class="stat-item criticas" *ngIf="resumo && resumo.notificacoesCriticas > 0">
+        <mat-icon>warning</mat-icon>
+        <div class="stat-info">
+          <span class="stat-number">{{ resumo.notificacoesCriticas }}</span>
+          <span class="stat-label">Críticas</span>
+        </div>
+      </div>
+
+      <div class="stat-item altas" *ngIf="resumo && resumo.notificacoesAltas > 0">
+        <mat-icon>priority_high</mat-icon>
+        <div class="stat-info">
+          <span class="stat-number">{{ resumo.notificacoesAltas }}</span>
+          <span class="stat-label">Alta Prioridade</span>
+        </div>
+      </div>
+
+      <div class="stat-item atrasadas" *ngIf="resumo && (resumo.contasAtrasadas > 0 || resumo.faturasAtrasadas > 0)">
+        <mat-icon>schedule</mat-icon>
+        <div class="stat-info">
+          <span class="stat-number">{{ (resumo.contasAtrasadas || 0) + (resumo.faturasAtrasadas || 0) }}</span>
+          <span class="stat-label">Em Atraso</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="detalhes-resumo">
+      <div *ngIf="resumo && resumo.contasAtrasadas > 0" class="detalhe-item">
+        <mat-icon>account_balance_wallet</mat-icon>
+        <span>{{ resumo.contasAtrasadas }} conta(s) atrasada(s)</span>
+      </div>
+      <div *ngIf="resumo && resumo.faturasAtrasadas > 0" class="detalhe-item">
+        <mat-icon>credit_card</mat-icon>
+        <span>{{ resumo.faturasAtrasadas }} fatura(s) atrasada(s)</span>
+      </div>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions *ngIf="resumo?.temNotificacoes" align="end">
+    <button mat-button color="primary">
+      Ver Todas
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card><!-- Loading state -->
+<mat-card *ngIf="loading" class="notificacoes-widget loading">
+  <mat-card-content>
+    <div class="loading-content">
+      <mat-spinner diameter="30"></mat-spinner>
+      <span>Carregando...</span>
+    </div>
+  </mat-card-content>
+</mat-card>

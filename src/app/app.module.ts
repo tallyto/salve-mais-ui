@@ -24,6 +24,7 @@ import { MatSortModule } from "@angular/material/sort";
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatChipsModule } from '@angular/material/chips';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from "@angular/router";
@@ -57,6 +58,8 @@ import { LimiteAlertasWidgetComponent } from './components/shared/limite-alertas
 import { CartaoLimitesComponent } from './components/cartao-limites/cartao-limites.component';
 import { ContaFixaRecorrenteComponent } from './components/conta-fixa-recorrente/conta-fixa-recorrente.component';
 import { PagamentoFaturaModalComponent } from './components/pagamento-fatura-modal/pagamento-fatura-modal.component';
+import { NotificacoesComponent } from './components/notificacoes/notificacoes.component';
+import { NotificacoesWidgetComponent } from './components/notificacoes-widget/notificacoes-widget.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +84,8 @@ import { PagamentoFaturaModalComponent } from './components/pagamento-fatura-mod
     RelatorioMensalComponent,
     FaturaFormComponent,
     PagamentoFaturaModalComponent,
+    NotificacoesComponent,
+    NotificacoesWidgetComponent,
     ContaFixaRecorrenteComponent
   ],
   imports: [
@@ -118,6 +123,7 @@ import { PagamentoFaturaModalComponent } from './components/pagamento-fatura-mod
     RegisterComponent, // Importa o componente standalone
     LoginComponent,
     MatDialogModule,
+    MatChipsModule,
     LimiteAlertasWidgetComponent, // Importa o widget standalone
     CartaoLimitesComponent // Importa o componente standalone
   ],

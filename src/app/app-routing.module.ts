@@ -17,6 +17,7 @@ import { RelatorioMensalComponent } from './components/relatorio-mensal/relatori
 import { FaturaFormComponent } from './components/fatura-form/fatura-form.component';
 import { CartaoLimitesComponent } from './components/cartao-limites/cartao-limites.component';
 import { ContaFixaRecorrenteComponent } from './components/conta-fixa-recorrente/conta-fixa-recorrente.component';
+import { NotificacoesComponent } from './components/notificacoes/notificacoes.component';
 
 
 const routes: Routes = [
@@ -30,6 +31,7 @@ const routes: Routes = [
   {path: 'despesas-recorrentes', component: DepesasRecorrentesComponent, canActivate: [AuthGuard]},
   {path: 'faturas', component: FaturaFormComponent, canActivate: [AuthGuard]},
   {path: 'cartao-limites', component: CartaoLimitesComponent, canActivate: [AuthGuard]},
+  {path: 'notificacoes', component: NotificacoesComponent, canActivate: [AuthGuard]},
   {path: 'account', component: AccountComponent, canActivate: [AuthGuard]},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},

@@ -1,0 +1,107 @@
+<div class="notificacoes-container">
+  <div class="header">
+    <h2>Notificações</h2>
+    <button mat-icon-button (click)="carregarNotificacoes()" matTooltip="Atualizar notificações">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
+
+  <!-- Filtros -->
+  <mat-card class="filtros-card">
+    <mat-card-header>
+      <mat-card-title>Filtros</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-chip-set aria-label="Filtros de notificação">
+        <mat-chip-option
+          *ngFor="let filtro of filtros"
+          [selected]="filtroAtual === filtro.valor"
+          (click)="aplicarFiltro(filtro.valor)">
+          {{ filtro.label }}
+        </mat-chip-option>
+      </mat-chip-set>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p>Carregando notificações...</p>
+  </div>
+
+  <!-- Lista de Notificações -->
+  <div *ngIf="!loading" class="notificacoes-lista">
+    <!-- Estado vazio -->
+    <div *ngIf="filtrarNotificacoes().length === 0" class="empty-state">
+      <mat-icon>notifications_none</mat-icon>
+      <h3>Nenhuma notificação</h3>
+      <p *ngIf="filtroAtual === 'TODAS'">Você não possui notificações pendentes!</p>
+      <p *ngIf="filtroAtual !== 'TODAS'">Nenhuma notificação do tipo selecionado.</p>
+    </div>
+
+    <!-- Notificações -->
+    <mat-card *ngFor="let notificacao of filtrarNotificacoes()"
+              class="notificacao-card"
+              [class]="'prioridade-' + notificacao.prioridade.toLowerCase()"
+              (click)="navegarParaEntidade(notificacao)">
+
+      <div class="notificacao-content">
+        <!-- Ícone e Prioridade -->
+        <div class="notificacao-icon">
+          <mat-icon [style.color]="getCorPrioridade(notificacao.prioridade)">
+            {{ getIconeTipo(notificacao.tipo) }}
+          </mat-icon>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <div class="notificacao-info">
+          <div class="notificacao-header">
+            <h4>{{ notificacao.titulo }}</h4>
+            <mat-chip class="prioridade-chip"
+                     [style.background-color]="getCorPrioridade(notificacao.prioridade)"
+                     [style.color]="'white'">
+              {{ getPrioridadeLabel(notificacao.prioridade) }}
+            </mat-chip>
+          </div>
+
+          <p class="notificacao-mensagem">{{ notificacao.mensagem }}</p>
+
+          <div class="notificacao-footer">
+            <span class="tempo-info">
+              {{ formatarDias(notificacao.diasDiferenca, notificacao.tipo) }}
+            </span>
+            <span class="tipo-entidade">{{ notificacao.tipoEntidade }}</span>
+          </div>
+        </div>
+
+        <!-- Seta para navegação -->
+        <div class="notificacao-arrow">
+          <mat-icon>chevron_right</mat-icon>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- Resumo Estatísticas -->
+  <mat-card *ngIf="!loading && notificacoes.length > 0" class="estatisticas-card">
+    <mat-card-header>
+      <mat-card-title>Resumo</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="estatisticas-grid">
+        <div class="stat-item">
+          <div class="stat-number">{{ notificacoes.length }}</div>
+          <div class="stat-label">Total</div>
+        </div>
+        <div class="stat-item alta">
+          <div class="stat-number">{{ getNotificacoesPrioridade() }}</div>
+          <div class="stat-label">Prioridade Alta/Crítica</div>
+        </div>
+        <div class="stat-item atrasadas">
+          <div class="stat-number">{{ getNotificacoesAtrasadas() }}</div>
+          <div class="stat-label">Em Atraso</div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
