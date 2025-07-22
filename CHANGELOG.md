@@ -1,7 +1,32 @@
 # Changelog - Gestor Financeiro
 
+
+## [1.7.0] - 2025-07-22
+
+### Adicionado
+
+- Exibição dinâmica da versão do app no menu lateral, obtida diretamente do package.json
+- Suporte à importação de JSON no Angular (ajustes em tsconfig.json)
+
+### Corrigido
+
+- Ajuste de build para permitir importação de arquivos JSON (resolveJsonModule e esModuleInterop)
+
+---
 ## [Unreleased]
 
+
+## [1.6.1] - 2025-07-17
+
+### Alterado
+
+- Atualiza package.json para versão 1.6.1
+- Marca versão 1.6.0 como concluída no roadmap
+- Adiciona detalhes das funcionalidades implementadas no roadmap
+- Reorganiza roadmap para próximas versões
+- Documenta sistema de limites e contas recorrentes
+
+---
 ## [1.6.0] - 2025-07-17
 
 ### Adicionado

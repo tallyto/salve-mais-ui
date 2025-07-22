@@ -1,4 +1,5 @@
 import {Component, OnInit, ViewChild, OnDestroy, AfterViewInit, HostListener} from '@angular/core';
+import packageJson from '../../../../package.json';
 import {MatSidenav} from '@angular/material/sidenav';
 import {Router, NavigationEnd} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
@@ -15,7 +16,7 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
 
   public username: string = 'Usuário';
   public userEmail: string = 'usuario@email.com';
-  public appVersion: string = '1.3.5';
+  public appVersion: string = packageJson.version;
   public isAuthenticated: boolean = false;
   public isLargeScreen: boolean = false;
 
