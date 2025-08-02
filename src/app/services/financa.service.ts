@@ -1,9 +1,10 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, tap} from 'rxjs';
 import {Financa} from '../models/financa.model';
 import {ContaFixa, ContaFixaRecorrente} from '../models/conta-fixa.model';
 import { environment } from '../../environments/environment';
+import { NotificationEventService } from './notification-event.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,10 @@ export class ContasFixasService {
   savedFinanca = new EventEmitter<void>();
   editingFinanca = new EventEmitter<Financa>();
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private notificationEventService: NotificationEventService
+  ) {
   }
 
   listarFinancas(page: number, size: number, sort: string, mes?: number, ano?: number): Observable<Financa[]> {
@@ -39,14 +43,29 @@ export class ContasFixasService {
   salvarFinanca(financa: Financa): Observable<Financa> {
     if (financa.id) {
       // Se tem ID, é uma atualização (PUT)
-      return this.http.put<Financa>(`${this.apiUrl}/${financa.id}`, financa);
+      return this.http.put<Financa>(`${this.apiUrl}/${financa.id}`, financa).pipe(
+        tap(() => {
+          // Notificar atualização das notificações após salvar/atualizar
+          this.notificationEventService.notifyAfterContaOperation();
+        })
+      );
     }
     // Se não tem ID, é uma criação (POST)
-    return this.http.post<Financa>(this.apiUrl, financa);
+    return this.http.post<Financa>(this.apiUrl, financa).pipe(
+      tap(() => {
+        // Notificar atualização das notificações após criar
+        this.notificationEventService.notifyAfterContaOperation();
+      })
+    );
   }
 
   excluirFinanca(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
+      tap(() => {
+        // Notificar atualização das notificações após excluir
+        this.notificationEventService.notifyAfterContaOperation();
+      })
+    );
   }
 
   getFinancaById(id: number): Observable<Financa> {
@@ -57,6 +76,11 @@ export class ContasFixasService {
    * Cria múltiplas contas fixas recorrentes
    */
   criarContasFixasRecorrentes(contaRecorrente: ContaFixaRecorrente): Observable<ContaFixa[]> {
-    return this.http.post<ContaFixa[]>(`${this.apiUrl}/recorrente`, contaRecorrente);
+    return this.http.post<ContaFixa[]>(`${this.apiUrl}/recorrente`, contaRecorrente).pipe(
+      tap(() => {
+        // Notificar atualização das notificações após criar contas recorrentes
+        this.notificationEventService.notifyAfterContaOperation();
+      })
+    );
   }
 }

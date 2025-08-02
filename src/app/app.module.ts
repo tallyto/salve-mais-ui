@@ -3,6 +3,7 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
+import { MatBadgeModule } from "@angular/material/badge";
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MAT_DATE_LOCALE, MatNativeDateModule } from "@angular/material/core";
@@ -96,6 +97,7 @@ import { MinhaContaComponent } from './components/minha-conta/minha-conta.compon
     BrowserAnimationsModule,
     FormsModule,
     MatButtonModule,
+    MatBadgeModule,
     MatToolbarModule,
     MatIconModule,
     MatListModule,

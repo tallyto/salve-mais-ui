@@ -93,26 +93,6 @@
   flex-direction: column;
 }
 
-.sidenav-header {
-  padding: 16px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.logo-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.logo-icon {
-  color: #3f51b5;
-}
-
-.logo-text {
-  font-weight: 500;
-  font-size: 1.1rem;
-}
-
 .sidenav-content {
   flex: 1;
   overflow-y: auto;
@@ -158,4 +138,23 @@ mat-nav-list a mat-icon {
 
 mat-divider {
   margin: 8px 0;
+}
+
+/* Estilos para badges de notificação */
+.notification-badge {
+  background-color: #f44336;
+  color: white;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* Customização do badge do Material Angular */
+::ng-deep .mat-badge-content {
+  font-size: 10px;
+  font-weight: 600;
+}
+
+/* Ajuste para o badge na toolbar */
+.toolbar-actions .mat-icon-button {
+  position: relative;
 }

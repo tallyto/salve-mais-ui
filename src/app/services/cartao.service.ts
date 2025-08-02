@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Cartao, CartaoLimiteDTO, CartaoLimiteStatusDTO} from "../models/cartao.model";
-import {Observable} from "rxjs";
+import {Observable, tap} from "rxjs";
 import { environment } from '../../environments/environment';
+import { NotificationEventService } from './notification-event.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +12,20 @@ export class CartaoService {
 
   private apiUrl = environment.apiUrl + '/cartao-credito'
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private notificationEventService: NotificationEventService
+  ) {
 
   }
 
   salvarCartao(cartao: Cartao): Observable<Cartao> {
-    return this.http.post<Cartao>(this.apiUrl, cartao)
+    return this.http.post<Cartao>(this.apiUrl, cartao).pipe(
+      tap(() => {
+        // Notificar atualização das notificações após salvar cartão
+        this.notificationEventService.notifyAfterCartaoOperation();
+      })
+    );
   }
 
   listarCartoes(): Observable<Cartao[]> {
@@ -24,7 +33,12 @@ export class CartaoService {
   }
 
   excluirCartao(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
+      tap(() => {
+        // Notificar atualização das notificações após excluir cartão
+        this.notificationEventService.notifyAfterCartaoOperation();
+      })
+    );
   }
 
   // ===== MÉTODOS PARA SISTEMA DE LIMITES =====

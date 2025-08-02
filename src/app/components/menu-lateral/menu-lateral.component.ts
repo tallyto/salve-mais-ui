@@ -1,10 +1,11 @@
-import {Component, OnInit, ViewChild, OnDestroy, AfterViewInit, HostListener} from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subscription, filter } from 'rxjs';
 import packageJson from '../../../../package.json';
-import {MatSidenav} from '@angular/material/sidenav';
-import {Router, NavigationEnd} from '@angular/router';
-import {AuthService} from '../../services/auth.service';
-import {UsuarioService} from '../../services/usuario.service';
-import {Subscription, filter} from 'rxjs';
+import { NotificacaoService, ResumoNotificacoes } from '../../services/notificacao.service';
+import { NotificationEventService } from '../../services/notification-event.service';
+import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
   selector: 'app-menu-lateral',
@@ -19,10 +20,17 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
   public appVersion: string = packageJson.version;
   public isAuthenticated: boolean = false;
   public isLargeScreen: boolean = false;
+  public resumoNotificacoes: ResumoNotificacoes | null = null;
 
   private routerSubscription: Subscription | null = null;
+  private notificacaoEventSubscription: Subscription | null = null;
 
-  constructor(private router: Router, private authService: AuthService, private usuarioService: UsuarioService) {
+  constructor(
+    private router: Router,
+    private usuarioService: UsuarioService,
+    private notificacaoService: NotificacaoService,
+    private notificationEventService: NotificationEventService
+  ) {
     this.checkScreenSize();
   }
 
@@ -39,6 +47,9 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
 
     // Tentar obter informações do usuário do localStorage (se disponível)
     this.updateUserInfo();
+
+    // Carregar notificações apenas no login inicial
+    this.setupNotificationUpdates();
   }
 
   ngAfterViewInit(): void {
@@ -56,6 +67,11 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.routerSubscription) {
       this.routerSubscription.unsubscribe();
       this.routerSubscription = null;
+    }
+
+    if (this.notificacaoEventSubscription) {
+      this.notificacaoEventSubscription.unsubscribe();
+      this.notificacaoEventSubscription = null;
     }
   }
 
@@ -84,11 +100,19 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private checkAuthentication(): void {
     const token = localStorage.getItem('token');
+    const wasAuthenticated = this.isAuthenticated;
     this.isAuthenticated = !!token;
 
     // Se o usuário estiver autenticado, atualizar as informações do usuário
     if (this.isAuthenticated) {
       this.updateUserInfo();
+      // Se não estava autenticado antes, carregar notificações
+      if (!wasAuthenticated) {
+        this.loadNotifications();
+      }
+    } else {
+      // Se não estiver autenticado, limpar notificações
+      this.resumoNotificacoes = null;
     }
   }
 
@@ -125,6 +149,72 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
     localStorage.removeItem('token');
     localStorage.removeItem('userInfo');
     this.isAuthenticated = false;
+    this.resumoNotificacoes = null;
     this.router.navigate(['/login']);
+  }
+
+  /**
+   * Configura o carregamento inicial das notificações e escuta eventos de atualização
+   */
+  private setupNotificationUpdates(): void {
+    // Carregar notificações imediatamente se autenticado
+    if (this.isAuthenticated) {
+      this.loadNotifications();
+    }
+
+    // Escutar eventos de atualização de notificações
+    this.notificacaoEventSubscription = this.notificationEventService.notificationUpdate$
+      .subscribe(() => {
+        if (this.isAuthenticated) {
+          this.loadNotifications();
+        }
+      });
+  }
+
+  /**
+   * Método público para forçar atualização das notificações
+   * Pode ser chamado por outros componentes quando necessário
+   */
+  public refreshNotifications(): void {
+    if (this.isAuthenticated) {
+      this.loadNotifications();
+    }
+  }
+
+  /**
+   * Carrega o resumo das notificações
+   */
+  private loadNotifications(): void {
+    this.notificacaoService.obterResumoNotificacoes().subscribe({
+      next: (resumo) => {
+        this.resumoNotificacoes = resumo;
+      },
+      error: () => {
+        // Em caso de erro, limpar o resumo
+        this.resumoNotificacoes = null;
+      }
+    });
+  }
+
+  /**
+   * Retorna o texto para exibir no badge de notificações
+   */
+  getNotificationBadgeText(): string {
+    if (!this.resumoNotificacoes || !this.resumoNotificacoes.temNotificacoes) {
+      return '';
+    }
+
+    if (this.resumoNotificacoes.totalNotificacoes > 99) {
+      return '99+';
+    }
+
+    return this.resumoNotificacoes.totalNotificacoes.toString();
+  }
+
+  /**
+   * Verifica se deve exibir o badge de notificações
+   */
+  shouldShowNotificationBadge(): boolean {
+    return !!(this.resumoNotificacoes && this.resumoNotificacoes.temNotificacoes);
   }
 }
