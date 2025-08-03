@@ -10,6 +10,18 @@ export interface DashboardSummary {
   totalContas: number;
   totalCategorias: number;
   saldoMesAnterior: number;
+  receitasMesAnterior?: number;
+  despesasMesAnterior?: number;
+}
+
+export interface VariationData {
+  metric: string;
+  currentValue: number;
+  previousValue: number;
+  variation: number;
+  variationPercent: number;
+  trend: 'up' | 'down' | 'neutral';
+  icon: string;
 }
 
 export interface CategoryExpense {
@@ -42,9 +54,25 @@ export class DashboardService {
     return this.http.get<CategoryExpense[]>(`${this.apiUrl}/expenses-by-category`);
   }
 
-  getMonthlyTrend(months: number = 6): Observable<MonthlyExpense[]> {
-    return this.http.get<MonthlyExpense[]>(`${this.apiUrl}/monthly-trend`, {
-      params: { months: months.toString() }
-    });
+  getMonthlyTrendByYear(year: number): Observable<MonthlyExpense[]> {
+    return this.http.get<MonthlyExpense[]>(`${this.apiUrl}/monthly-trend/year/${year}`);
+  }
+
+  getVariationData(): Observable<VariationData[]> {
+    // Este endpoint deve retornar dados de variação comparando o mês atual com o anterior
+    // Exemplo de resposta esperada:
+    // [
+    //   {
+    //     "metric": "Saldo Total",
+    //     "currentValue": 15000.00,
+    //     "previousValue": 14000.00,
+    //     "variation": 1000.00,
+    //     "variationPercent": 7.14,
+    //     "trend": "up",
+    //     "icon": "account_balance_wallet"
+    //   }
+    // ]
+    return this.http.get<VariationData[]>(`${this.apiUrl}/variations`);
   }
 }
+

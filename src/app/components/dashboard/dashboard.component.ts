@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../../services/account.service';
 import { ProventoService } from '../../services/provento.service';
-import { DashboardService, DashboardSummary, CategoryExpense, MonthlyExpense } from '../../services/dashboard.service';
+import { DashboardService, DashboardSummary, CategoryExpense, MonthlyExpense, VariationData } from '../../services/dashboard.service';
 import { Account } from '../../models/account.model';
 import { Provento } from '../../models/provento.model';
 import { forkJoin, of } from 'rxjs';
@@ -45,6 +45,7 @@ export class DashboardComponent implements OnInit {
   summaryData: DashboardSummary | null = null;
   categoryData: CategoryExpense[] = [];
   monthlyTrendData: MonthlyExpense[] = [];
+  variationData: VariationData[] = [];
 
   // Dados para compras de cartão
   comprasCartao: GastoCartao[] = [];
@@ -176,14 +177,16 @@ export class DashboardComponent implements OnInit {
     forkJoin({
       summary: this.dashboardService.getSummary(),
       categories: this.dashboardService.getExpensesByCategory(),
-      monthlyTrend: this.dashboardService.getMonthlyTrend(6),
-      comprasCartao: this.gastoCartaoService.listCompras(0, 5, 'data,desc').pipe()
+      monthlyTrend: this.dashboardService.getMonthlyTrendByYear(new Date().getFullYear()),
+      comprasCartao: this.gastoCartaoService.listCompras(0, 5, 'data,desc').pipe(),
+      variations: this.dashboardService.getVariationData().pipe(catchError(() => of([])))
     }).subscribe({
       next: (results) => {
         this.summaryData = results.summary;
         this.categoryData = results.categories;
         this.monthlyTrendData = results.monthlyTrend;
         this.comprasCartao = results.comprasCartao.content;
+        this.variationData = results.variations || this.generateMockVariationData();
 
         // Definindo os valores para exibição
         this.totalSaldo = this.summaryData.saldoTotal;
@@ -394,6 +397,87 @@ export class DashboardComponent implements OnInit {
       return 'Atenção às suas despesas. Tente reduzir gastos não essenciais para aumentar seu saldo.';
     } else {
       return 'Sua situação financeira requer atenção imediata. Considere cortar despesas e aumentar sua renda.';
+    }
+  }
+
+  // Gera dados mock de variação se não houver dados da API
+  generateMockVariationData(): VariationData[] {
+    if (!this.summaryData) return [];
+
+    const variations: VariationData[] = [];
+
+    // Saldo Total
+    const saldoVariation = this.summaryData.saldoTotal - (this.summaryData.saldoMesAnterior || 0);
+    const saldoPercent = this.summaryData.saldoMesAnterior ? (saldoVariation / this.summaryData.saldoMesAnterior) * 100 : 0;
+    variations.push({
+      metric: 'Saldo Total',
+      currentValue: this.summaryData.saldoTotal,
+      previousValue: this.summaryData.saldoMesAnterior || 0,
+      variation: saldoVariation,
+      variationPercent: saldoPercent,
+      trend: saldoVariation > 0 ? 'up' : saldoVariation < 0 ? 'down' : 'neutral',
+      icon: 'account_balance_wallet'
+    });
+
+    // Receitas do Mês
+    const receitasPrev = this.summaryData.receitasMesAnterior || this.summaryData.receitasMes * 0.9;
+    const receitasVariation = this.summaryData.receitasMes - receitasPrev;
+    const receitasPercent = receitasPrev ? (receitasVariation / receitasPrev) * 100 : 0;
+    variations.push({
+      metric: 'Receitas',
+      currentValue: this.summaryData.receitasMes,
+      previousValue: receitasPrev,
+      variation: receitasVariation,
+      variationPercent: receitasPercent,
+      trend: receitasVariation > 0 ? 'up' : receitasVariation < 0 ? 'down' : 'neutral',
+      icon: 'trending_up'
+    });
+
+    // Despesas do Mês
+    const despesasPrev = this.summaryData.despesasMesAnterior || this.summaryData.despesasMes * 1.1;
+    const despesasVariation = this.summaryData.despesasMes - despesasPrev;
+    const despesasPercent = despesasPrev ? (despesasVariation / despesasPrev) * 100 : 0;
+    variations.push({
+      metric: 'Despesas',
+      currentValue: this.summaryData.despesasMes,
+      previousValue: despesasPrev,
+      variation: despesasVariation,
+      variationPercent: despesasPercent,
+      trend: despesasVariation < 0 ? 'up' : despesasVariation > 0 ? 'down' : 'neutral', // Inversed because less expense is good
+      icon: 'trending_down'
+    });
+
+    // Resultado Mensal (Receitas - Despesas)
+    const resultadoAtual = this.summaryData.receitasMes - this.summaryData.despesasMes;
+    const resultadoPrev = receitasPrev - despesasPrev;
+    const resultadoVariation = resultadoAtual - resultadoPrev;
+    const resultadoPercent = resultadoPrev !== 0 ? (resultadoVariation / Math.abs(resultadoPrev)) * 100 : 0;
+    variations.push({
+      metric: 'Resultado Mensal',
+      currentValue: resultadoAtual,
+      previousValue: resultadoPrev,
+      variation: resultadoVariation,
+      variationPercent: resultadoPercent,
+      trend: resultadoVariation > 0 ? 'up' : resultadoVariation < 0 ? 'down' : 'neutral',
+      icon: 'assessment'
+    });
+
+    return variations;
+  }
+
+  getVariationTrendClass(trend: string): string {
+    switch (trend) {
+      case 'up': return 'trend-positive';
+      case 'down': return 'trend-negative';
+      default: return 'trend-neutral';
+    }
+  }
+
+  getVariationIcon(trend: string): string {
+    switch (trend) {
+      case 'up': return 'keyboard_arrow_up';
+      case 'down': return 'keyboard_arrow_down';
+      default: return 'remove';
     }
   }
 }

@@ -140,6 +140,74 @@
     </div>
   </div>
 
+  <!-- Variation Table Section -->
+  <div class="section-header mb-3">
+    <h2>Variação Mensal</h2>
+  </div>
+  <div class="col-12 mt-3 p-2 mb-4">
+    <div class="data-card">
+      <div class="card-header">
+        <h2 class="section-title m-0">Comparativo com o Mês Anterior</h2>
+      </div>
+      <div class="card-content">
+        <div class="variation-table-container">
+          <table class="variation-table w-full">
+            <thead>
+              <tr>
+                <th class="text-left">Métrica</th>
+                <th class="text-right">Mês Atual</th>
+                <th class="text-right">Mês Anterior</th>
+                <th class="text-right">Variação</th>
+                <th class="text-center">Tendência</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let variation of variationData" class="variation-row">
+                <td class="metric-cell">
+                  <div class="metric-info">
+                    <mat-icon class="metric-icon">{{ variation.icon }}</mat-icon>
+                    <span class="metric-name">{{ variation.metric }}</span>
+                  </div>
+                </td>
+                <td class="text-right">
+                  <span class="current-value">
+                    {{ variation.currentValue | currency:'BRL':'symbol':'1.2-2' }}
+                  </span>
+                </td>
+                <td class="text-right">
+                  <span class="previous-value">
+                    {{ variation.previousValue | currency:'BRL':'symbol':'1.2-2' }}
+                  </span>
+                </td>
+                <td class="text-right">
+                  <div class="variation-info">
+                    <div class="variation-amount" [ngClass]="getVariationTrendClass(variation.trend)">
+                      {{ variation.variation | currency:'BRL':'symbol':'1.2-2' }}
+                    </div>
+                    <div class="variation-percent" [ngClass]="getVariationTrendClass(variation.trend)">
+                      {{ variation.variationPercent | number:'1.1-1' }}%
+                    </div>
+                  </div>
+                </td>
+                <td class="text-center">
+                  <div class="trend-indicator" [ngClass]="getVariationTrendClass(variation.trend)">
+                    <mat-icon>{{ getVariationIcon(variation.trend) }}</mat-icon>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="variationData.length === 0">
+                <td colspan="5" class="text-center p-4 text-color-secondary">
+                  <mat-icon>info</mat-icon>
+                  <span class="ml-2">Dados de variação não disponíveis</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Card Purchases -->
   <div class="section-header mb-3">
     <h2>Compras no Cartão</h2>
