@@ -1,5 +1,19 @@
 # Changelog - Salve Mais
 
+## [1.8.0] - 2025-08-05
+
+### Alterado
+
+- Rebrand completo da aplicação: nome alterado de "Gestor Financeiro" para "Salve Mais"
+- Implementação de títulos dinâmicos nas páginas baseados na rota atual
+- Atualização do título da página para refletir o contexto de cada seção
+
+### Adicionado
+
+- Sistema automático de atualização de título da página baseado na navegação
+- Títulos específicos para cada rota (ex: "Dashboard - Salve Mais", "Login - Salve Mais")
+
+---
 
 ## [1.7.0] - 2025-07-22
 
