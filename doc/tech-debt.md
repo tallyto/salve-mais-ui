@@ -1,6 +1,6 @@
-# Débitos Técnicos - Gestor Financeiro UI
+# Débitos Técnicos - Salve Mais UI
 
-Este documento lista os débitos técnicos identificados no frontend do projeto Gestor Financeiro. Estes são itens que podem ser trabalhados quando o backlog de funcionalidades não estiver pronto ou durante períodos de menor carga de desenvolvimento.
+Este documento lista os débitos técnicos identificados no frontend do projeto Salve Mais. Estes são itens que podem ser trabalhados quando o backlog de funcionalidades não estiver pronto ou durante períodos de menor carga de desenvolvimento.
 
 ## Testes
 

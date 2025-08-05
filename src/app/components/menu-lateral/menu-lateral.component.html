@@ -4,12 +4,12 @@
     <button (click)="toggleSidenav()" mat-icon-button matTooltip="Menu">
       <mat-icon>menu</mat-icon>
     </button>
-    <span class="app-title">Gestor Financeiro</span>
+    <span class="app-title">Salve Mais</span>
     <span class="toolbar-item-spacer"></span>
 
     <div class="toolbar-actions">
       <button mat-icon-button matTooltip="Notificações" routerLink="/notificacoes">
-        <mat-icon [matBadge]="getNotificationBadgeText()" 
+        <mat-icon [matBadge]="getNotificationBadgeText()"
                   [matBadgeHidden]="!shouldShowNotificationBadge()"
                   matBadgeColor="warn"
                   matBadgeSize="small">notifications</mat-icon>
@@ -54,7 +54,7 @@
 <!-- Toolbar simples para usuários não autenticados (sem barra de navegação) -->
 <ng-container *ngIf="!isAuthenticated">
   <mat-toolbar color="primary" class="app-toolbar">
-    <span class="app-title">Gestor Financeiro</span>
+    <span class="app-title">Salve Mais</span>
     <span class="toolbar-item-spacer"></span>
   </mat-toolbar>
 </ng-container>

@@ -1,4 +1,4 @@
-# Changelog - Gestor Financeiro
+# Changelog - Salve Mais
 
 
 ## [1.7.0] - 2025-07-22
@@ -108,7 +108,7 @@
 - Adicionado ícones para melhorar usabilidade nos formulários
 - Implementação de validação visual para campos de formulário
 - Alternância de visibilidade da senha em todos os formulários
-- Adicionado logo do Gestor Financeiro em todas as telas de autenticação
+- Adicionado logo do Salve Mais em todas as telas de autenticação
 - Mensagens informativas nas telas de autenticação
 - Navegação melhorada entre telas de autenticação
 - Feedback visual durante o processamento de formulários

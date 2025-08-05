@@ -2,7 +2,7 @@
   <mat-card class="register-card">
     <div class="register-header">
       <div class="logo-container">
-        <img src="assets/images/logo.svg" alt="Gestor Financeiro" class="logo">
+        <img src="assets/images/logo.svg" alt="Salve Mais" class="logo">
       </div>
       <h2 *ngIf="mode === 'register'">Cadastro de Tenant</h2>
       <h2 *ngIf="mode === 'confirm'">Confirmação de Tenant</h2>
@@ -12,7 +12,7 @@
       <!-- Modo Registro -->
       <ng-container *ngIf="mode === 'register'">
         <p class="info-text">
-          Cadastre seu tenant para começar a usar o Gestor Financeiro. Você receberá um email com instruções para confirmar o registro.
+          Cadastre seu tenant para começar a usar o Salve Mais. Você receberá um email com instruções para confirmar o registro.
         </p>
 
         <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">

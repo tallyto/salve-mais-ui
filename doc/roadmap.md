@@ -1,4 +1,4 @@
-# Roadmap - Gestor Financeiro
+# Roadmap - Salve Mais
 
 > **Roadmap Estratégico para Equipe de 2 Pessoas (2025-2026)**
 
