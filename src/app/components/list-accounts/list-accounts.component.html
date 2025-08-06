@@ -1,9 +1,4 @@
-<div class="p-card-header p-3 border-bottom-1 border-300">
-  <h2 class="text-xl font-medium m-0">Suas Contas</h2>
-  <div class="text-color-secondary text-sm">Contas bancárias cadastradas</div>
-</div>
-
-<div class="p-3">
+<div class="card-content p-3">
   <div class="table-container overflow-x-auto">
     <table [dataSource]="accounts" mat-table matSort matSortActive="id" matSortDisableClear matSortDirection="desc" class="w-full min-w-max">
 
@@ -11,7 +6,7 @@
       <ng-container matColumnDef="saldo">
         <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Saldo</th>
         <td *matCellDef="let account" mat-cell class="p-3">
-          <div *ngIf="!isEditing(account)" class="text-primary font-medium">
+          <div *ngIf="!isEditing(account)" [ngClass]="{'positive': account.saldo > 0, 'negative': account.saldo < 0}" class="font-medium">
             {{ account.saldo | currency:'BRL':'symbol':'1.2-2' }}
           </div>
           <mat-form-field *ngIf="isEditing(account)" appearance="outline" class="edit-field">
@@ -56,8 +51,8 @@
 
   <mat-paginator [length]="resultsLength" [pageSizeOptions]="[5, 10, 20]" [pageSize]="10" class="border-top-0"></mat-paginator>
 
-  <div *ngIf="accounts.length === 0" class="p-5 text-center text-color-secondary">
-    <mat-icon class="text-4xl mb-3 block">account_balance</mat-icon>
-    <span>Nenhuma conta cadastrada. Adicione uma conta utilizando o formulário acima.</span>
+  <div *ngIf="accounts.length === 0" class="empty-state p-5 text-center">
+    <mat-icon class="empty-icon">account_balance</mat-icon>
+    <p class="empty-message">Nenhuma conta cadastrada. Adicione uma conta utilizando o formulário acima.</p>
   </div>
 </div>

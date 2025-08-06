@@ -1,16 +1,32 @@
-<div class="p-3 mx-auto" >
-  <div class="p-card p-4 mb-4 shadow-1">
-    <div class="mb-4">
-      <h2 class="text-xl font-medium m-0 mb-1">Adicionar Conta</h2>
+<div class="account-container p-3 mx-auto">
+  <div class="header mb-4">
+    <div class="header-content">
+      <mat-icon class="header-icon">account_balance</mat-icon>
+      <div class="header-text">
+        <h2 class="page-title">Gerenciamento de Contas</h2>
+        <div class="account-subtitle text-color-secondary">
+          <mat-icon>date_range</mat-icon> Gerencie suas contas bancárias
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="account-card p-4 mb-4 shadow-1">
+    <div class="card-header mb-4">
+      <div class="header-title">
+        <mat-icon style="color: #2196f3; margin-right: 8px;">add_circle</mat-icon>
+        <h2 class="section-title m-0 mb-1">Adicionar Conta</h2>
+      </div>
       <div class="text-color-secondary text-sm">Insira os dados da nova conta bancária</div>
     </div>
 
-    <form (ngSubmit)="createAccount()" [formGroup]="accountForm">
+    <form (ngSubmit)="createAccount()" [formGroup]="accountForm" class="account-form">
       <div class="grid">
         <div class="col-12 md:col-6 mb-3">
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>Nome do titular</mat-label>
             <input autocomplete="off" formControlName="titular" matInput placeholder="Ex: Maria da Silva">
+            <mat-icon matSuffix>person</mat-icon>
           </mat-form-field>
         </div>
 
@@ -18,20 +34,29 @@
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>Saldo inicial</mat-label>
             <input type="number" min="0" formControlName="saldo" matInput placeholder="0,00">
+            <mat-icon matSuffix>attach_money</mat-icon>
           </mat-form-field>
         </div>
       </div>
 
-      <div class="flex justify-content-end gap-2">
-        <button mat-stroked-button type="button" class="text-color-secondary">Cancelar</button>
-        <button mat-raised-button color="primary" [disabled]="accountForm.invalid" type="submit" class="min-w-min" >
-          Salvar conta
+      <div class="form-actions flex justify-content-end gap-2">
+        <button mat-stroked-button type="button" class="text-color-secondary">
+          <mat-icon>cancel</mat-icon> Cancelar
+        </button>
+        <button mat-raised-button color="primary" [disabled]="accountForm.invalid" type="submit" class="min-w-min">
+          <mat-icon>save</mat-icon> Salvar conta
         </button>
       </div>
     </form>
   </div>
 
-  <div class="p-card shadow-1">
+  <div class="accounts-list-card data-card shadow-1">
+    <div class="card-header">
+      <div class="header-title">
+        <mat-icon style="color: #4caf50; margin-right: 8px;">account_balance_wallet</mat-icon>
+        <h2 class="section-title m-0">Suas Contas</h2>
+      </div>
+    </div>
     <app-list-accounts></app-list-accounts>
   </div>
 </div>

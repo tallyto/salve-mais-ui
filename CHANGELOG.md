@@ -1,5 +1,17 @@
 # Changelog - Salve Mais
 
+## [1.8.4] - 2025-08-06
+
+### Melhorado
+
+- Design do componente de contas bancárias atualizado seguindo o novo padrão visual
+- Adicionado cabeçalho estilizado para a página de contas
+- Melhorias visuais no formulário de adição de contas com ícones
+- Redesign da listagem de contas com cores de destaque para valores positivos e negativos
+- Estado vazio aprimorado para melhor orientação do usuário
+
+---
+
 ## [1.8.3] - 2025-08-06
 
 ### Melhorado
