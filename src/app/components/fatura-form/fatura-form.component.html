@@ -1,20 +1,35 @@
-<div class="fatura-container">
-  <div class="header">
-    <h2>Gerenciamento de Faturas</h2>
-    <button mat-raised-button color="primary" (click)="toggleFormulario()">
-      <mat-icon>{{ mostrarFormulario ? 'close' : 'add' }}</mat-icon>
-      {{ mostrarFormulario ? 'Cancelar' : 'Nova Fatura Manual' }}
-    </button>
+<div class="container">
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <mat-icon class="page-icon">receipt_long</mat-icon>
+      <div class="header-text">
+        <h1 class="page-title">Gerenciamento de Faturas</h1>
+        <div class="page-subtitle">
+          <span>Cadastre e gerencie as faturas dos seus cartões de crédito</span>
+        </div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button mat-raised-button color="primary" (click)="toggleFormulario()">
+        <mat-icon>{{ mostrarFormulario ? 'close' : 'add' }}</mat-icon>
+        {{ mostrarFormulario ? 'Cancelar' : 'Nova Fatura Manual' }}
+      </button>
+    </div>
   </div>
 
   <!-- Formulário de Fatura Manual -->
-  <mat-card *ngIf="mostrarFormulario" class="form-card">
-    <mat-card-header>
-      <mat-card-title>Criar Fatura Manual</mat-card-title>
-      <mat-card-subtitle>Cadastre uma fatura especificando cartão, valor e data de vencimento</mat-card-subtitle>
-    </mat-card-header>
-
-    <mat-card-content>
+  <div *ngIf="mostrarFormulario" class="card">
+    <div class="card-header">
+      <div class="header-title">
+        <mat-icon>add_circle</mat-icon>
+        <h2 class="section-title">Criar Fatura Manual</h2>
+      </div>
+    </div>
+    
+    <div class="form-container">
+      <div class="section-subtitle">Cadastre uma fatura especificando cartão, valor e data de vencimento</div>
+      
       <form [formGroup]="faturaForm" (ngSubmit)="onSubmit()">
         <div class="form-row">
           <mat-form-field appearance="outline" class="form-field">
@@ -24,6 +39,7 @@
                 {{ cartao.nome }}
               </mat-option>
             </mat-select>
+            <mat-icon matPrefix>credit_card</mat-icon>
             <mat-error *ngIf="faturaForm.get('cartaoCreditoId')?.hasError('required')">
               Selecione um cartão
             </mat-error>
@@ -32,6 +48,7 @@
           <mat-form-field appearance="outline" class="form-field">
             <mat-label>Valor Total</mat-label>
             <input matInput type="number" step="0.01" formControlName="valorTotal" placeholder="0,00">
+            <mat-icon matPrefix>attach_money</mat-icon>
             <mat-error *ngIf="faturaForm.get('valorTotal')?.hasError('required')">
               Valor é obrigatório
             </mat-error>
@@ -43,6 +60,7 @@
           <mat-form-field appearance="outline" class="form-field">
             <mat-label>Data de Vencimento</mat-label>
             <input matInput [matDatepicker]="picker" formControlName="dataVencimento">
+            <mat-icon matPrefix>event</mat-icon>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
             <mat-error *ngIf="faturaForm.get('dataVencimento')?.hasError('required')">
@@ -52,155 +70,161 @@
         </div>
 
         <div class="form-actions">
-          <button mat-button type="button" (click)="toggleFormulario()">
+          <button mat-stroked-button type="button" (click)="toggleFormulario()">
             Cancelar
           </button>
           <button mat-raised-button color="primary" type="submit"
                   [disabled]="faturaForm.invalid || loading">
-            <mat-icon *ngIf="loading">hourglass_empty</mat-icon>
+            <mat-icon>{{ loading ? 'hourglass_empty' : 'save' }}</mat-icon>
             {{ loading ? 'Criando...' : 'Criar Fatura' }}
           </button>
         </div>
       </form>
-    </mat-card-content>
-  </mat-card>
+    </div>
+  </div>
 
   <!-- Lista de Faturas -->
-  <mat-card class="lista-card">
-    <mat-card-header>
-      <mat-card-title>Faturas Cadastradas</mat-card-title>
-    </mat-card-header>
-
-    <mat-card-content>
-      <div *ngIf="loading" class="loading-container">
-        <mat-spinner diameter="50"></mat-spinner>
-        <p>Carregando faturas...</p>
+  <div class="card">
+    <div class="card-header">
+      <div class="header-title">
+        <mat-icon>list_alt</mat-icon>
+        <h2 class="section-title">Faturas Cadastradas</h2>
       </div>
+    </div>
 
-      <div *ngIf="!loading && faturas.length === 0" class="empty-state">
-        <mat-icon>receipt</mat-icon>
-        <p>Nenhuma fatura cadastrada</p>
-      </div>
+    <div *ngIf="loading" class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Carregando faturas...</p>
+    </div>
 
-      <div *ngIf="!loading && faturas.length > 0" class="table-container">
-        <table mat-table [dataSource]="faturas" class="faturas-table">
+    <div *ngIf="!loading && faturas.length === 0" class="empty-state">
+      <mat-icon>receipt_long</mat-icon>
+      <h3>Nenhuma fatura cadastrada</h3>
+      <p>Crie uma fatura manual ou gere automaticamente</p>
+    </div>
 
-          <!-- Coluna Nome do Cartão -->
-          <ng-container matColumnDef="nomeCartao">
-            <th mat-header-cell *matHeaderCellDef>Cartão</th>
-            <td mat-cell *matCellDef="let fatura">{{ fatura.nomeCartao }}</td>
-          </ng-container>
+    <div *ngIf="!loading && faturas.length > 0" class="table-container">
+      <table mat-table [dataSource]="faturas" class="faturas-table">
+        <!-- Coluna Nome do Cartão -->
+        <ng-container matColumnDef="nomeCartao">
+          <th mat-header-cell *matHeaderCellDef>Cartão</th>
+          <td mat-cell *matCellDef="let fatura">{{ fatura.nomeCartao }}</td>
+        </ng-container>
 
-          <!-- Coluna Valor Total -->
-          <ng-container matColumnDef="valorTotal">
-            <th mat-header-cell *matHeaderCellDef>Valor Total</th>
-            <td mat-cell *matCellDef="let fatura">
-              <span class="valor-total">{{ formatarMoeda(fatura.valorTotal) }}</span>
-            </td>
-          </ng-container>
+        <!-- Coluna Valor Total -->
+        <ng-container matColumnDef="valorTotal">
+          <th mat-header-cell *matHeaderCellDef>Valor Total</th>
+          <td mat-cell *matCellDef="let fatura">
+            <span class="valor-total">{{ formatarMoeda(fatura.valorTotal) }}</span>
+          </td>
+        </ng-container>
 
-          <!-- Coluna Data de Vencimento -->
-          <ng-container matColumnDef="dataVencimento">
-            <th mat-header-cell *matHeaderCellDef>Vencimento</th>
-            <td mat-cell *matCellDef="let fatura">{{ formatarData(fatura.dataVencimento) }}</td>
-          </ng-container>
+        <!-- Coluna Data de Vencimento -->
+        <ng-container matColumnDef="dataVencimento">
+          <th mat-header-cell *matHeaderCellDef>Vencimento</th>
+          <td mat-cell *matCellDef="let fatura">{{ formatarData(fatura.dataVencimento) }}</td>
+        </ng-container>
 
-          <!-- Coluna Data de Pagamento -->
-          <ng-container matColumnDef="dataPagamento">
-            <th mat-header-cell *matHeaderCellDef>Data Pagamento</th>
-            <td mat-cell *matCellDef="let fatura">
-              <span *ngIf="fatura.dataPagamento; else semPagamento">
-                {{ formatarData(fatura.dataPagamento) }}
+        <!-- Coluna Data de Pagamento -->
+        <ng-container matColumnDef="dataPagamento">
+          <th mat-header-cell *matHeaderCellDef>Data Pagamento</th>
+          <td mat-cell *matCellDef="let fatura">
+            <span *ngIf="fatura.dataPagamento; else semPagamento">
+              {{ formatarData(fatura.dataPagamento) }}
+            </span>
+            <ng-template #semPagamento>
+              <span class="text-muted">-</span>
+            </ng-template>
+          </td>
+        </ng-container>
+
+        <!-- Coluna Conta de Pagamento -->
+        <ng-container matColumnDef="contaPagamento">
+          <th mat-header-cell *matHeaderCellDef>Conta Pagamento</th>
+          <td mat-cell *matCellDef="let fatura">
+            <span *ngIf="fatura.nomeContaPagamento; else semConta">
+              {{ fatura.nomeContaPagamento }}
+            </span>
+            <ng-template #semConta>
+              <span class="text-muted">-</span>
+            </ng-template>
+          </td>
+        </ng-container>
+
+        <!-- Coluna Status -->
+        <ng-container matColumnDef="pago">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let fatura">
+            <span class="status-badge" [class]="fatura.pago ? 'status-pago' : 'status-pendente'">
+              <mat-icon>{{ fatura.pago ? 'check_circle' : 'pending' }}</mat-icon>
+              {{ fatura.pago ? 'Pago' : 'Pendente' }}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Coluna Total de Compras -->
+        <ng-container matColumnDef="totalCompras">
+          <th mat-header-cell *matHeaderCellDef>Compras</th>
+          <td mat-cell *matCellDef="let fatura">
+            <span class="total-compras">{{ fatura.totalCompras }}</span>
+          </td>
+        </ng-container>
+
+        <!-- Coluna Ações -->
+        <ng-container matColumnDef="acoes">
+          <th mat-header-cell *matHeaderCellDef>Ações</th>
+          <td mat-cell *matCellDef="let fatura">
+            <div class="acoes-container">
+              <button mat-icon-button
+                      *ngIf="!fatura.pago"
+                      (click)="marcarComoPaga(fatura)"
+                      matTooltip="Pagar com conta"
+                      color="primary">
+                <mat-icon>account_balance</mat-icon>
+              </button>
+
+              <button mat-icon-button
+                      *ngIf="!fatura.pago"
+                      (click)="marcarComoPageSimples(fatura.id)"
+                      matTooltip="Marcar como pago (sem débito)"
+                      color="accent">
+                <mat-icon>payment</mat-icon>
+              </button>
+
+              <button mat-icon-button
+                      *ngIf="!fatura.pago"
+                      (click)="excluirFatura(fatura.id)"
+                      matTooltip="Excluir fatura"
+                      color="warn">
+                <mat-icon>delete</mat-icon>
+              </button>
+
+              <span *ngIf="fatura.pago" class="fatura-paga-label">
+                <mat-icon>check_circle</mat-icon>
+                Paga
               </span>
-              <ng-template #semPagamento>
-                <span class="text-muted">-</span>
-              </ng-template>
-            </td>
-          </ng-container>
+            </div>
+          </td>
+        </ng-container>
 
-          <!-- Coluna Conta de Pagamento -->
-          <ng-container matColumnDef="contaPagamento">
-            <th mat-header-cell *matHeaderCellDef>Conta Pagamento</th>
-            <td mat-cell *matCellDef="let fatura">
-              <span *ngIf="fatura.nomeContaPagamento; else semConta">
-                {{ fatura.nomeContaPagamento }}
-              </span>
-              <ng-template #semConta>
-                <span class="text-muted">-</span>
-              </ng-template>
-            </td>
-          </ng-container>
-
-          <!-- Coluna Status -->
-          <ng-container matColumnDef="pago">
-            <th mat-header-cell *matHeaderCellDef>Status</th>
-            <td mat-cell *matCellDef="let fatura">
-              <span class="status-badge" [class]="fatura.pago ? 'status-pago' : 'status-pendente'">
-                {{ fatura.pago ? 'Pago' : 'Pendente' }}
-              </span>
-            </td>
-          </ng-container>
-
-          <!-- Coluna Total de Compras -->
-          <ng-container matColumnDef="totalCompras">
-            <th mat-header-cell *matHeaderCellDef>Compras</th>
-            <td mat-cell *matCellDef="let fatura">
-              <span class="total-compras">{{ fatura.totalCompras }}</span>
-            </td>
-          </ng-container>
-
-          <!-- Coluna Ações -->
-          <ng-container matColumnDef="acoes">
-            <th mat-header-cell *matHeaderCellDef>Ações</th>
-            <td mat-cell *matCellDef="let fatura">
-              <div class="acoes-container">
-                <button mat-icon-button
-                        *ngIf="!fatura.pago"
-                        (click)="marcarComoPaga(fatura)"
-                        matTooltip="Pagar com conta"
-                        color="primary">
-                  <mat-icon>account_balance</mat-icon>
-                </button>
-
-                <button mat-icon-button
-                        *ngIf="!fatura.pago"
-                        (click)="marcarComoPageSimples(fatura.id)"
-                        matTooltip="Marcar como pago (sem débito)"
-                        color="accent">
-                  <mat-icon>payment</mat-icon>
-                </button>
-
-                <button mat-icon-button
-                        *ngIf="!fatura.pago"
-                        (click)="excluirFatura(fatura.id)"
-                        matTooltip="Excluir fatura"
-                        color="warn">
-                  <mat-icon>delete</mat-icon>
-                </button>
-
-                <span *ngIf="fatura.pago" class="fatura-paga-label">
-                  <mat-icon>check_circle</mat-icon>
-                  Paga
-                </span>
-              </div>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-      </div>
-    </mat-card-content>
-  </mat-card>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
 
   <!-- Seção de Geração Automática -->
-  <mat-card class="automatica-card">
-    <mat-card-header>
-      <mat-card-title>Gerar Fatura Automática</mat-card-title>
-      <mat-card-subtitle>Gere faturas automaticamente baseadas nas compras dos cartões</mat-card-subtitle>
-    </mat-card-header>
-
-    <mat-card-content>
+  <div class="card">
+    <div class="card-header">
+      <div class="header-title">
+        <mat-icon>auto_fix_high</mat-icon>
+        <h2 class="section-title">Gerar Fatura Automática</h2>
+      </div>
+    </div>
+    
+    <div class="card-content">
+      <div class="section-subtitle">Gere faturas automaticamente baseadas nas compras dos cartões</div>
+      
       <div class="cartoes-automaticos">
         <div *ngFor="let cartao of cartoes" class="cartao-item">
           <div class="cartao-info">
@@ -215,6 +239,6 @@
           </button>
         </div>
       </div>
-    </mat-card-content>
-  </mat-card>
+    </div>
+  </div>
 </div>

@@ -1,5 +1,19 @@
 # Changelog - Salve Mais
 
+## [1.9.0] - 2025-08-06
+
+### Melhorado
+
+- Design do componente de faturas atualizado seguindo o novo padrão visual
+- Adicionado cabeçalho estilizado com ícones para a página de gerenciamento de faturas
+- Aprimoramento visual do formulário de criação de faturas com ícones informativos
+- Redesign da listagem de faturas com melhor visualização dos status e valores
+- Melhorias visuais nos indicadores de status (pendente/pago) com ícones intuitivos
+- Seção de geração automática de faturas reformulada com design mais moderno
+- Estado vazio aprimorado para melhor orientação do usuário
+
+---
+
 ## [1.8.9] - 2025-08-06
 
 ### Melhorado
@@ -10,14 +24,6 @@
 - Redesign dos cards de alertas para melhor visualização dos cartões em situação crítica
 - Melhorias na tabela de status dos limites com indicadores visuais mais claros
 - Estado vazio aprimorado para melhor orientação do usuário
-
----
-
-## [1.8.8] - 2025-08-06
-
-### Melhorado
-
-- Design do componente de cartão de crédito atualizado seguindo o novo padrão visual
 - Adicionado cabeçalho estilizado com ícones para a página de cartões de crédito
 - Aprimoramento visual do formulário com ícones informativos para cada campo
 - Redesign da listagem de cartões com melhor organização e visualização
