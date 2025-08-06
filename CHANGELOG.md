@@ -1,5 +1,22 @@
 # Changelog - Salve Mais
 
+## [1.8.1] - 2025-08-05
+
+### Melhorado
+
+- Aprimorado o componente de notificações com melhor alinhamento de elementos
+- Centralização dos ícones com o texto nos chips de filtro
+- Ajuste visual no cabeçalho do card de filtros
+- Refinamento da experiência do usuário com elementos visuais mais consistentes
+
+### Alterado
+
+- Melhorias na estrutura do HTML para garantir alinhamento adequado
+- Estilização CSS aprimorada para centralização de elementos visuais
+- Adicionado contêiner para o conteúdo dos chips de filtro
+
+---
+
 ## [1.8.0] - 2025-08-05
 
 ### Alterado

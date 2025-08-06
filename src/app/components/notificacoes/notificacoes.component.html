@@ -1,23 +1,37 @@
 <div class="notificacoes-container">
   <div class="header">
-    <h2>Notificações</h2>
-    <button mat-icon-button (click)="carregarNotificacoes()" matTooltip="Atualizar notificações">
-      <mat-icon>refresh</mat-icon>
-    </button>
+    <div class="header-content">
+      <mat-icon class="header-icon">notifications</mat-icon>
+      <div class="header-text">
+        <h2>Notificações</h2>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button mat-stroked-button color="primary" (click)="carregarNotificacoes()" class="refresh-button">
+        <mat-icon>refresh</mat-icon>
+        <span>Atualizar</span>
+      </button>
+    </div>
   </div>
 
   <!-- Filtros -->
   <mat-card class="filtros-card">
     <mat-card-header>
+      <mat-icon mat-card-avatar class="filtro-header-icon">filter_alt</mat-icon>
       <mat-card-title>Filtros</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <mat-chip-set aria-label="Filtros de notificação">
+      <mat-chip-set aria-label="Filtros de notificação" class="filtro-chips">
         <mat-chip-option
           *ngFor="let filtro of filtros"
           [selected]="filtroAtual === filtro.valor"
+          [class]="'filtro-' + filtro.valor.toLowerCase()"
           (click)="aplicarFiltro(filtro.valor)">
-          {{ filtro.label }}
+          <div class="chip-content">
+            <mat-icon class="filtro-icon">{{ getIconeFiltro(filtro.valor) }}</mat-icon>
+            <span>{{ filtro.label }}</span>
+            <span class="contador-chip" *ngIf="getContadorPorFiltro(filtro.valor) > 0">{{ getContadorPorFiltro(filtro.valor) }}</span>
+          </div>
         </mat-chip-option>
       </mat-chip-set>
     </mat-card-content>
@@ -25,18 +39,27 @@
 
   <!-- Loading -->
   <div *ngIf="loading" class="loading-container">
-    <mat-spinner diameter="50"></mat-spinner>
-    <p>Carregando notificações...</p>
+    <div class="loading-card">
+      <mat-spinner diameter="30"></mat-spinner>
+      <div class="loading-text">
+        <h3>Carregando</h3>
+      </div>
+    </div>
   </div>
 
   <!-- Lista de Notificações -->
   <div *ngIf="!loading" class="notificacoes-lista">
     <!-- Estado vazio -->
     <div *ngIf="filtrarNotificacoes().length === 0" class="empty-state">
-      <mat-icon>notifications_none</mat-icon>
-      <h3>Nenhuma notificação</h3>
-      <p *ngIf="filtroAtual === 'TODAS'">Você não possui notificações pendentes!</p>
-      <p *ngIf="filtroAtual !== 'TODAS'">Nenhuma notificação do tipo selecionado.</p>
+      <div class="empty-state-content">
+        <mat-icon class="empty-icon">notifications_off</mat-icon>
+        <h3>Nenhuma notificação</h3>
+        <p *ngIf="filtroAtual === 'TODAS'">Você não possui notificações pendentes.</p>
+        <p *ngIf="filtroAtual !== 'TODAS'">Nenhuma notificação do tipo "{{ getFiltroLabel(filtroAtual) }}".</p>
+        <button mat-stroked-button color="primary" (click)="aplicarFiltro('TODAS')" *ngIf="filtroAtual !== 'TODAS'">
+          Ver todas
+        </button>
+      </div>
     </div>
 
     <!-- Notificações -->
@@ -47,8 +70,8 @@
 
       <div class="notificacao-content">
         <!-- Ícone e Prioridade -->
-        <div class="notificacao-icon">
-          <mat-icon [style.color]="getCorPrioridade(notificacao.prioridade)">
+        <div class="notificacao-icon" [style.background-color]="getBackgroundColor(notificacao.prioridade)">
+          <mat-icon [style.color]="getIconColor(notificacao.prioridade)">
             {{ getIconeTipo(notificacao.tipo) }}
           </mat-icon>
         </div>
@@ -67,10 +90,18 @@
           <p class="notificacao-mensagem">{{ notificacao.mensagem }}</p>
 
           <div class="notificacao-footer">
-            <span class="tempo-info">
-              {{ formatarDias(notificacao.diasDiferenca, notificacao.tipo) }}
-            </span>
-            <span class="tipo-entidade">{{ notificacao.tipoEntidade }}</span>
+            <div class="tempo-info" [class.atrasado]="notificacao.tipo.includes('ATRASADA')">
+              <mat-icon class="tempo-icon">
+                {{ notificacao.tipo.includes('ATRASADA') ? 'event_busy' : 'event_available' }}
+              </mat-icon>
+              <span>{{ formatarDias(notificacao.diasDiferenca, notificacao.tipo) }}</span>
+            </div>
+            <div class="tipo-entidade">
+              <mat-icon class="entity-icon">
+                {{ notificacao.tipoEntidade === 'CONTA_FIXA' ? 'account_balance' : 'credit_card' }}
+              </mat-icon>
+              <span>{{ notificacao.tipoEntidade === 'CONTA_FIXA' ? 'Conta' : 'Fatura' }}</span>
+            </div>
           </div>
         </div>
 
@@ -85,21 +116,33 @@
   <!-- Resumo Estatísticas -->
   <mat-card *ngIf="!loading && notificacoes.length > 0" class="estatisticas-card">
     <mat-card-header>
-      <mat-card-title>Resumo</mat-card-title>
+      <mat-icon mat-card-avatar>insights</mat-icon>
+      <mat-card-title>Resumo de Notificações</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <div class="estatisticas-grid">
-        <div class="stat-item">
-          <div class="stat-number">{{ notificacoes.length }}</div>
-          <div class="stat-label">Total</div>
+        <div class="stat-item total">
+          <mat-icon class="stat-icon">notifications</mat-icon>
+          <div class="stat-content">
+            <div class="stat-number">{{ notificacoes.length }}</div>
+            <div class="stat-label">Total de Notificações</div>
+          </div>
         </div>
+        
         <div class="stat-item alta">
-          <div class="stat-number">{{ getNotificacoesPrioridade() }}</div>
-          <div class="stat-label">Prioridade Alta/Crítica</div>
+          <mat-icon class="stat-icon">warning</mat-icon>
+          <div class="stat-content">
+            <div class="stat-number">{{ getNotificacoesPrioridade() }}</div>
+            <div class="stat-label">Alta/Crítica Prioridade</div>
+          </div>
         </div>
+        
         <div class="stat-item atrasadas">
-          <div class="stat-number">{{ getNotificacoesAtrasadas() }}</div>
-          <div class="stat-label">Em Atraso</div>
+          <mat-icon class="stat-icon">schedule</mat-icon>
+          <div class="stat-content">
+            <div class="stat-number">{{ getNotificacoesAtrasadas() }}</div>
+            <div class="stat-label">Em Atraso</div>
+          </div>
         </div>
       </div>
     </mat-card-content>
