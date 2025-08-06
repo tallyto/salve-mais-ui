@@ -4,52 +4,54 @@
 </div>
 
 <div class="p-3">
-  <table [dataSource]="proventos" mat-table matSort matSortActive="id" matSortDisableClear matSortDirection="desc" class="w-full">
+  <div class="table-container overflow-x-auto">
+    <table [dataSource]="proventos" mat-table matSort matSortActive="id" matSortDisableClear matSortDirection="desc" class="w-full min-w-max">
 
-    <!-- Nome Column -->
-    <ng-container matColumnDef="descricao">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Descrição</th>
-      <td *matCellDef="let provento" mat-cell class="p-3"> {{ provento.descricao }}</td>
-    </ng-container>
+      <!-- Nome Column -->
+      <ng-container matColumnDef="descricao">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Descrição</th>
+        <td *matCellDef="let provento" mat-cell class="p-3"> {{ provento.descricao }}</td>
+      </ng-container>
 
-    <!-- Account Column -->
-    <ng-container matColumnDef="conta">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3">Conta</th>
-      <td *matCellDef="let provento" mat-cell class="p-3"> {{ provento.conta.titular }}</td>
-    </ng-container>
+      <!-- Account Column -->
+      <ng-container matColumnDef="conta">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3">Conta</th>
+        <td *matCellDef="let provento" mat-cell class="p-3"> {{ provento.conta.titular }}</td>
+      </ng-container>
 
-    <!-- Data Column -->
-    <ng-container matColumnDef="data">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Data</th>
-      <td *matCellDef="let provento" mat-cell class="p-3"> {{ provento.data | date:'dd/MM/yyyy' }}</td>
-    </ng-container>
+      <!-- Data Column -->
+      <ng-container matColumnDef="data">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Data</th>
+        <td *matCellDef="let provento" mat-cell class="p-3"> {{ provento.data | date:'dd/MM/yyyy' }}</td>
+      </ng-container>
 
-    <!-- Valor Column -->
-    <ng-container matColumnDef="valor">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3 text-right"> Valor</th>
-      <td *matCellDef="let provento" mat-cell class="p-3 text-right font-medium text-green-600">
-        {{ provento.valor | currency:'BRL':'symbol':'1.2-2' }}
-      </td>
-    </ng-container>
+      <!-- Valor Column -->
+      <ng-container matColumnDef="valor">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3 text-right"> Valor</th>
+        <td *matCellDef="let provento" mat-cell class="p-3 text-right font-medium text-green-600">
+          {{ provento.valor | currency:'BRL':'symbol':'1.2-2' }}
+        </td>
+      </ng-container>
 
-    <!-- Ações Column -->
-    <ng-container matColumnDef="acoes">
-      <th *matHeaderCellDef mat-header-cell class="p-3 text-right"> Ações</th>
-      <td *matCellDef="let provento" mat-cell class="p-3 text-right">
-        <div class="action-buttons flex justify-content-end gap-2">
-          <button mat-icon-button color="primary" matTooltip="Editar provento" (click)="onEditProvento(provento)">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" matTooltip="Excluir provento" (click)="excluirProvento(provento)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </div>
-      </td>
-    </ng-container>
+      <!-- Ações Column -->
+      <ng-container matColumnDef="acoes">
+        <th *matHeaderCellDef mat-header-cell class="p-3 text-right"> Ações</th>
+        <td *matCellDef="let provento" mat-cell class="p-3 text-right">
+          <div class="action-buttons flex justify-content-end gap-2">
+            <button mat-icon-button color="primary" matTooltip="Editar provento" (click)="onEditProvento(provento)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" matTooltip="Excluir provento" (click)="excluirProvento(provento)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
 
-    <tr *matHeaderRowDef="displayedColumnsProventos" mat-header-row class="bg-gray-50"></tr>
-    <tr *matRowDef="let row; columns: displayedColumnsProventos;" mat-row class="border-bottom-1 surface-border"></tr>
-  </table>
+      <tr *matHeaderRowDef="displayedColumnsProventos" mat-header-row class="bg-gray-50"></tr>
+      <tr *matRowDef="let row; columns: displayedColumnsProventos;" mat-row class="border-bottom-1 surface-border"></tr>
+    </table>
+  </div>
 
   <mat-paginator [length]="resultsLength" [pageSizeOptions]="[5, 10, 20]" [pageSize]="10" class="border-top-0"></mat-paginator>
 

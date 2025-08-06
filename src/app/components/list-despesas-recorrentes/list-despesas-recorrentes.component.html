@@ -33,64 +33,66 @@
   </div>
 
   <div class="p-3">
-    <table [dataSource]="listGastosRecorrentes" matSortActive="data" mat-table matSort matSortDisableClear matSortDirection="desc" class="w-full">
+    <div class="table-container overflow-x-auto">
+      <table [dataSource]="listGastosRecorrentes" matSortActive="data" mat-table matSort matSortDisableClear matSortDirection="desc" class="w-full min-w-max">
 
-      <!-- Descrição Column -->
-      <ng-container matColumnDef="descricao">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Descrição</th>
-        <td *matCellDef="let gastoRecorrente" mat-cell class="p-3"> {{ gastoRecorrente.descricao }}</td>
-      </ng-container>
+        <!-- Descrição Column -->
+        <ng-container matColumnDef="descricao">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Descrição</th>
+          <td *matCellDef="let gastoRecorrente" mat-cell class="p-3"> {{ gastoRecorrente.descricao }}</td>
+        </ng-container>
 
-      <!-- Categoria Column -->
-      <ng-container matColumnDef="categoria">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Categoria</th>
-        <td *matCellDef="let gastoRecorrente" mat-cell class="p-3">
-          {{ gastoRecorrente.categoria ? gastoRecorrente.categoria.nome : 'N/A' }}
-        </td>
-      </ng-container>
+        <!-- Categoria Column -->
+        <ng-container matColumnDef="categoria">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Categoria</th>
+          <td *matCellDef="let gastoRecorrente" mat-cell class="p-3">
+            {{ gastoRecorrente.categoria ? gastoRecorrente.categoria.nome : 'N/A' }}
+          </td>
+        </ng-container>
 
-      <!-- Cartão Column -->
-      <ng-container matColumnDef="cartaoCredito">
-        <th *matHeaderCellDef mat-header-cell class="p-3">Cartão</th>
-        <td *matCellDef="let gastoRecorrente" mat-cell class="p-3">
-          {{ gastoRecorrente.cartaoCredito ? gastoRecorrente.cartaoCredito.nome : 'N/A' }}
-        </td>
-      </ng-container>
+        <!-- Cartão Column -->
+        <ng-container matColumnDef="cartaoCredito">
+          <th *matHeaderCellDef mat-header-cell class="p-3">Cartão</th>
+          <td *matCellDef="let gastoRecorrente" mat-cell class="p-3">
+            {{ gastoRecorrente.cartaoCredito ? gastoRecorrente.cartaoCredito.nome : 'N/A' }}
+          </td>
+        </ng-container>
 
-      <!-- Data Column -->
-      <ng-container matColumnDef="data">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3">Data da Compra</th>
-        <td *matCellDef="let gastoRecorrente" mat-cell class="p-3">
-          {{ gastoRecorrente.data | date:'dd/MM/yyyy' }}
-        </td>
-      </ng-container>
+        <!-- Data Column -->
+        <ng-container matColumnDef="data">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3">Data da Compra</th>
+          <td *matCellDef="let gastoRecorrente" mat-cell class="p-3">
+            {{ gastoRecorrente.data | date:'dd/MM/yyyy' }}
+          </td>
+        </ng-container>
 
-      <!-- Valor Column -->
-      <ng-container matColumnDef="valor">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Valor</th>
-        <td *matCellDef="let gastoRecorrente" mat-cell class="p-3 font-medium text-blue-600">
-          {{ gastoRecorrente.valor | currency:'BRL':'symbol':'1.2-2' }}
-        </td>
-      </ng-container>
+        <!-- Valor Column -->
+        <ng-container matColumnDef="valor">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Valor</th>
+          <td *matCellDef="let gastoRecorrente" mat-cell class="p-3 font-medium text-blue-600">
+            {{ gastoRecorrente.valor | currency:'BRL':'symbol':'1.2-2' }}
+          </td>
+        </ng-container>
 
-      <!-- Adicione esta coluna para ações -->
-      <ng-container matColumnDef="acoes">
-        <th *matHeaderCellDef mat-header-cell class="p-3 text-right"> Ações</th>
-        <td *matCellDef="let gastoRecorrente" mat-cell class="p-3 text-right">
-          <div class="action-buttons flex justify-content-end gap-2">
-            <button mat-icon-button color="primary" matTooltip="Editar gasto" (click)="editarGasto(gastoRecorrente)">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" matTooltip="Excluir gasto" (click)="excluirGasto(gastoRecorrente)">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </div>
-        </td>
-      </ng-container>
+        <!-- Adicione esta coluna para ações -->
+        <ng-container matColumnDef="acoes">
+          <th *matHeaderCellDef mat-header-cell class="p-3 text-right"> Ações</th>
+          <td *matCellDef="let gastoRecorrente" mat-cell class="p-3 text-right">
+            <div class="action-buttons flex justify-content-end gap-2">
+              <button mat-icon-button color="primary" matTooltip="Editar gasto" (click)="editarGasto(gastoRecorrente)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" matTooltip="Excluir gasto" (click)="excluirGasto(gastoRecorrente)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
 
-      <tr *matHeaderRowDef="displayedColumnsGastoRecorrente" mat-header-row class="bg-gray-50"></tr>
-      <tr *matRowDef="let row; columns: displayedColumnsGastoRecorrente;" mat-row class="border-bottom-1 surface-border"></tr>
-    </table>
+        <tr *matHeaderRowDef="displayedColumnsGastoRecorrente" mat-header-row class="bg-gray-50"></tr>
+        <tr *matRowDef="let row; columns: displayedColumnsGastoRecorrente;" mat-row class="border-bottom-1 surface-border"></tr>
+      </table>
+    </div>
 
     <mat-paginator [length]="resultsLength" [pageSizeOptions]="[5, 10, 20]" [pageSize]="10" class="border-top-0"></mat-paginator>
 

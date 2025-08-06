@@ -32,21 +32,22 @@
 </div>
 
 <div class="p-3">
-  <table [dataSource]="contasFixas" matSortActive="id" mat-table matSort matSortDisableClear matSortDirection="desc" class="w-full">
+  <div class="table-container overflow-x-auto">
+    <table [dataSource]="contasFixas" matSortActive="id" mat-table matSort matSortDisableClear matSortDirection="desc" class="w-full min-w-max">
 
-    <!-- Nome Column -->
-    <ng-container matColumnDef="nome">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Nome</th>
-      <td *matCellDef="let contaFixa" mat-cell class="p-3"> {{ contaFixa.nome }}</td>
-    </ng-container>
+      <!-- Nome Column -->
+      <ng-container matColumnDef="nome">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Nome</th>
+        <td *matCellDef="let contaFixa" mat-cell class="p-3"> {{ contaFixa.nome }}</td>
+      </ng-container>
 
-    <!-- Categoria Column -->
-    <ng-container matColumnDef="categoria">
-      <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Categoria</th>
-      <td *matCellDef="let contaFixa" mat-cell class="p-3">
-        {{ contaFixa.categoria ? contaFixa.categoria.nome : 'N/A' }}
-      </td>
-    </ng-container>
+      <!-- Categoria Column -->
+      <ng-container matColumnDef="categoria">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Categoria</th>
+        <td *matCellDef="let contaFixa" mat-cell class="p-3">
+          {{ contaFixa.categoria ? contaFixa.categoria.nome : 'N/A' }}
+        </td>
+      </ng-container>
 
     <!-- Account Column -->
     <ng-container matColumnDef="conta">
@@ -94,7 +95,8 @@
 
     <tr *matHeaderRowDef="displayedColumnsContasFixas" mat-header-row class="bg-gray-50"></tr>
     <tr *matRowDef="let row; columns: displayedColumnsContasFixas;" mat-row class="border-bottom-1 surface-border"></tr>
-  </table>
+    </table>
+  </div>
 
   <mat-paginator [length]="resultsLength" [pageSizeOptions]="[5, 10, 20]" [pageSize]="10" class="border-top-0"></mat-paginator>
 

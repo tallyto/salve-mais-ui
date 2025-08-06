@@ -67,3 +67,55 @@
 .filter-controls button mat-icon {
   margin-right: 8px;
 }
+
+.table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  border-radius: 4px;
+}
+
+/* Ensure table has minimum width on small screens */
+.table-container table {
+  min-width: 700px; /* Minimum width to prevent cramping */
+}
+
+/* Style scrollbar for better UX */
+.table-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .p-3 {
+    padding: 0.75rem !important;
+  }
+
+  .table-container table {
+    min-width: 600px; /* Smaller minimum width on mobile */
+  }
+
+  /* Make action buttons smaller on mobile */
+  .action-buttons button {
+    padding: 6px !important;
+  }
+
+  .action-buttons mat-icon {
+    font-size: 18px !important;
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
