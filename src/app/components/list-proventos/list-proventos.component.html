@@ -1,16 +1,18 @@
-<div class="p-card-header p-3 border-bottom-1 border-300">
-  <h2 class="text-xl font-medium m-0">Seus Proventos</h2>
-  <div class="text-color-secondary text-sm">Receitas e recebimentos registrados</div>
-</div>
-
-<div class="p-3">
+<div class="card-content p-3">
   <div class="table-container overflow-x-auto">
     <table [dataSource]="proventos" mat-table matSort matSortActive="id" matSortDisableClear matSortDirection="desc" class="w-full min-w-max">
 
       <!-- Nome Column -->
       <ng-container matColumnDef="descricao">
         <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Descrição</th>
-        <td *matCellDef="let provento" mat-cell class="p-3"> {{ provento.descricao }}</td>
+        <td *matCellDef="let provento" mat-cell class="p-3"> 
+          <div class="provento-description">
+            <span class="provento-icon">
+              <mat-icon>paid</mat-icon>
+            </span>
+            {{ provento.descricao }}
+          </div>
+        </td>
       </ng-container>
 
       <!-- Account Column -->
@@ -28,7 +30,7 @@
       <!-- Valor Column -->
       <ng-container matColumnDef="valor">
         <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3 text-right"> Valor</th>
-        <td *matCellDef="let provento" mat-cell class="p-3 text-right font-medium text-green-600">
+        <td *matCellDef="let provento" mat-cell class="p-3 text-right font-medium positive">
           {{ provento.valor | currency:'BRL':'symbol':'1.2-2' }}
         </td>
       </ng-container>
@@ -55,8 +57,8 @@
 
   <mat-paginator [length]="resultsLength" [pageSizeOptions]="[5, 10, 20]" [pageSize]="10" class="border-top-0"></mat-paginator>
 
-  <div *ngIf="proventos && proventos.length === 0" class="p-5 text-center text-color-secondary">
-    <mat-icon class="text-4xl mb-3 block">payments</mat-icon>
-    <span>Nenhum provento registrado. Adicione um provento utilizando o formulário acima.</span>
+  <div *ngIf="proventos.length === 0" class="empty-state p-5 text-center">
+    <mat-icon class="empty-icon">payments</mat-icon>
+    <p class="empty-message">Nenhum provento cadastrado. Adicione uma receita utilizando o formulário acima.</p>
   </div>
 </div>

@@ -15,7 +15,114 @@
   color: rgba(0, 0, 0, 0.54);
 }
 
+.provento-container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 16px 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-icon {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+  color: #4caf50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.page-title {
+  margin: 0;
+  color: #333;
+  font-weight: 500;
+  font-size: 22px;
+}
+
+.provento-subtitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  color: #666;
+}
+
+/* Card styles */
+.provento-card, .proventos-list-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  overflow: hidden;
+  height: 100%;
+  border-top: 3px solid #4caf50;
+}
+
+.data-card {
+  border-top: 3px solid #4caf50;
+}
+
+.card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Form styles */
+.provento-form {
+  padding: 8px 0;
+}
+
+.form-actions {
+  margin-top: 16px;
+}
+
 /* Estilo do botão de salvar */
 button[type="submit"] {
   min-width: 140px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .provento-container {
+    padding: 16px;
+  }
+  
+  .header {
+    padding: 12px 16px;
+  }
 }

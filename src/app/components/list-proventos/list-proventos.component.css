@@ -2,8 +2,8 @@
   width: 100%;
 }
 
-.p-card-header {
-  background-color: #fff;
+.card-content {
+  padding: 0;
 }
 
 .action-buttons {
@@ -26,6 +26,113 @@
 
 .font-medium {
   font-weight: 500;
+}
+
+.bg-gray-50 {
+  background-color: #fafafa;
+}
+
+.surface-border {
+  border-color: #dee2e6;
+}
+
+.border-bottom-1 {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
+
+.border-300 {
+  border-color: #dee2e6;
+}
+
+.positive {
+  color: #4caf50;
+}
+
+.negative {
+  color: #f44336;
+}
+
+/* Table styles */
+.table-container {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+table.mat-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.mat-table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-weight: 500;
+  color: #555;
+  border-bottom: 1px solid #eee;
+  background-color: #f9f9f9;
+}
+
+.mat-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+  color: #333;
+}
+
+/* Hover effect on rows */
+.mat-row:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+::ng-deep .mat-paginator {
+  background: transparent !important;
+}
+
+::ng-deep .mat-sort-header-arrow {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+/* Empty state */
+.empty-state {
+  padding: 32px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #666;
+}
+
+.empty-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 16px;
+  color: #4caf50;
+  opacity: 0.6;
+}
+
+.empty-message {
+  font-size: 16px;
+  text-align: center;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+/* Provento description */
+.provento-description {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.provento-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: rgba(76, 175, 80, 0.1);
+  color: #4caf50;
 }
 
 .text-green-600 {

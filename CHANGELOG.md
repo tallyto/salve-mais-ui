@@ -1,5 +1,17 @@
 # Changelog - Salve Mais
 
+## [1.8.5] - 2025-08-06
+
+### Melhorado
+
+- Design do componente de proventos atualizado seguindo o novo padrão visual
+- Adicionado cabeçalho estilizado para a página de receitas
+- Aprimoramento visual do formulário com ícones informativos
+- Redesign da listagem de proventos com ícones para melhor visualização
+- Aperfeiçoamento da experiência do usuário com visual mais atraente e consistente
+
+---
+
 ## [1.8.4] - 2025-08-06
 
 ### Melhorado
