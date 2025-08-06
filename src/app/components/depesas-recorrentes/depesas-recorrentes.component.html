@@ -1,18 +1,35 @@
-<div class="p-3 mx-auto">
-  <div class="p-card p-4 mb-4 shadow-1">
-    <div class="mb-4">
-      <h2 class="text-xl font-medium m-0 mb-1">{{ editingGasto ? 'Editar Gasto Recorrente' : 'Cadastrar Gasto Recorrente' }}</h2>
-      <div class="text-color-secondary text-sm">
-        {{ editingGasto ? 'Atualize os dados do gasto selecionado' : 'Registre seus gastos com cartão de crédito' }}
+<div class="container p-3 mx-auto">
+  <div class="page-header mb-4">
+    <div class="header-content">
+      <mat-icon class="page-icon">credit_card</mat-icon>
+      <div class="header-text">
+        <h2 class="page-title">Gerenciamento de Despesas Recorrentes</h2>
+        <div class="page-subtitle text-color-secondary">
+          <mat-icon>replay</mat-icon> Controle seus gastos com cartão de crédito
+        </div>
       </div>
     </div>
+  </div>
 
-    <form (ngSubmit)="salvarGastoRecorrente()" [formGroup]="gastosRecorrentes">
+  <div class="form-card p-4 mb-4 shadow-1">
+    <div class="card-header mb-4">
+      <div class="header-title">
+        <mat-icon style="color: #9c27b0; margin-right: 8px;">add_circle</mat-icon>
+        <h2 class="section-title m-0 mb-1">{{ editingGasto ? 'Editar Gasto Recorrente' : 'Cadastrar Gasto Recorrente' }}</h2>
+      </div>
+    </div>
+    
+    <div class="text-color-secondary text-sm mb-4">
+      {{ editingGasto ? 'Atualize os dados do gasto selecionado' : 'Registre seus gastos com cartão de crédito' }}
+    </div>
+
+    <form (ngSubmit)="salvarGastoRecorrente()" [formGroup]="gastosRecorrentes" class="despesa-form">
       <div class="grid">
         <div class="col-12 md:col-6 mb-3">
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>Descrição</mat-label>
             <input formControlName="descricao" matInput placeholder="Ex: Tênis Adidas, Netflix">
+            <mat-icon matSuffix>description</mat-icon>
           </mat-form-field>
         </div>
 
@@ -20,6 +37,7 @@
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>Valor</mat-label>
             <input formControlName="valor" matInput placeholder="Ex: 125.42" type="number" min="0">
+            <mat-icon matSuffix>attach_money</mat-icon>
           </mat-form-field>
         </div>
 
@@ -29,6 +47,7 @@
             <mat-select formControlName="categoriaId">
               <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">{{categoria.nome}}</mat-option>
             </mat-select>
+            <mat-icon matSuffix>category</mat-icon>
           </mat-form-field>
         </div>
 
@@ -38,6 +57,7 @@
             <mat-select formControlName="cartaoId">
               <mat-option *ngFor="let cartao of cartoes" [value]="cartao.id">{{cartao.nome}}</mat-option>
             </mat-select>
+            <mat-icon matSuffix>credit_card</mat-icon>
           </mat-form-field>
         </div>
 
@@ -51,19 +71,26 @@
         </div>
       </div>
 
-      <div class="flex justify-content-end gap-2 mt-3">
+      <div class="form-actions flex justify-content-end gap-2 mt-3">
         <button mat-stroked-button type="button" (click)="limparFormulario()" class="text-color-secondary">
+          <mat-icon>{{ editingGasto ? 'cancel' : 'clear_all' }}</mat-icon>
           {{ editingGasto ? 'Cancelar edição' : 'Limpar' }}
         </button>
         <button mat-raised-button color="primary" [disabled]="gastosRecorrentes.invalid" type="submit">
+          <mat-icon>{{ editingGasto ? 'update' : 'save' }}</mat-icon>
           {{ editingGasto ? 'Atualizar gasto' : 'Salvar gasto' }}
         </button>
       </div>
     </form>
   </div>
 
-  <!-- Tabela Despesas Recorrentes -->
-  <div class="p-card shadow-1">
+  <div class="despesas-list-card p-0 shadow-1">
+    <div class="card-header">
+      <div class="header-title">
+        <mat-icon style="color: #9c27b0; margin-right: 8px;">list_alt</mat-icon>
+        <h2 class="section-title m-0">Suas Despesas Recorrentes</h2>
+      </div>
+    </div>
     <app-list-despesas-recorrentes></app-list-despesas-recorrentes>
   </div>
 </div>

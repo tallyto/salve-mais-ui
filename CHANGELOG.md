@@ -1,5 +1,32 @@
 # Changelog - Salve Mais
 
+## [1.8.7] - 2025-08-06
+
+### Melhorado
+
+- Design do componente de despesas recorrentes atualizado seguindo o novo padrão visual
+- Adicionado cabeçalho estilizado com ícones para a página de despesas recorrentes
+- Aprimoramento visual do formulário com ícones informativos para cada campo
+- Redesign da listagem de despesas recorrentes com destaque para valores
+- Melhor organização dos filtros de período para facilitar a navegação
+- Estado vazio aprimorado para melhor orientação do usuário
+
+---
+
+## [1.8.6] - 2025-08-06
+
+### Melhorado
+
+- Design do componente de despesas fixas atualizado seguindo o novo padrão visual
+- Adicionado cabeçalho estilizado com ícones para a página de despesas fixas
+- Aprimoramento visual do formulário com ícones informativos para cada campo
+- Redesign da listagem de despesas fixas com indicadores visuais de status (pago/pendente)
+- Melhor visualização de valores com destaque para despesas pagas e pendentes
+- Aperfeiçoamento da experiência do usuário com filtros mais intuitivos
+- Estado vazio aprimorado para facilitar a orientação do usuário
+
+---
+
 ## [1.8.5] - 2025-08-06
 
 ### Melhorado
