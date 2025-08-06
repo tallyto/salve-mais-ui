@@ -17,7 +17,8 @@ export class NotificacoesComponent implements OnInit {
     { valor: 'TODAS', label: 'Todas Notificações' },
     { valor: 'CONTA_ATRASADA', label: 'Contas Atrasadas' },
     { valor: 'CONTA_PROXIMA_VENCIMENTO', label: 'Contas a Vencer' },
-    { valor: 'FATURA_ATRASADA', label: 'Faturas Atrasadas' }
+    { valor: 'FATURA_ATRASADA', label: 'Faturas Atrasadas' },
+    { valor: 'FATURA_PROXIMA_VENCIMENTO', label: 'Faturas a Vencer' }
   ];
 
   constructor(
@@ -110,6 +111,7 @@ export class NotificacoesComponent implements OnInit {
       case 'CONTA_ATRASADA': return 'warning';
       case 'CONTA_PROXIMA_VENCIMENTO': return 'date_range';
       case 'FATURA_ATRASADA': return 'credit_score';
+      case 'FATURA_PROXIMA_VENCIMENTO': return 'payment';
       default: return 'filter_list';
     }
   }

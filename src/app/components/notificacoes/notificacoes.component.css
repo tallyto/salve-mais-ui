@@ -165,6 +165,14 @@ mat-chip-option.filtro-fatura_atrasada .filtro-icon {
   color: #9c27b0;
 }
 
+mat-chip-option.filtro-fatura_proxima_vencimento {
+  color: #00bcd4;
+}
+
+mat-chip-option.filtro-fatura_proxima_vencimento .filtro-icon {
+  color: #00bcd4;
+}
+
 mat-chip-option[selected] {
   background-color: #2196f3 !important;
   color: white !important;

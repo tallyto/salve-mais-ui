@@ -59,6 +59,13 @@ export class NotificacaoService {
   }
 
   /**
+   * Obtém faturas próximas ao vencimento
+   */
+  obterFaturasProximasVencimento(): Observable<NotificacaoDTO[]> {
+    return this.http.get<NotificacaoDTO[]>(`${this.apiUrl}/faturas-proximas-vencimento`);
+  }
+
+  /**
    * Obtém resumo de notificações
    */
   obterResumoNotificacoes(): Observable<ResumoNotificacoes> {
