@@ -301,10 +301,6 @@ mat-progress-bar {
   100% { transform: rotate(360deg); }
 }
 
-button[disabled] mat-icon {
-  animation: spin 1s linear infinite;
-}
-
 /* Responsividade */
 @media (max-width: 768px) {
   .container {
@@ -437,8 +433,4 @@ mat-progress-bar {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}
-
-button[disabled] mat-icon {
-  animation: spin 1s linear infinite;
 }

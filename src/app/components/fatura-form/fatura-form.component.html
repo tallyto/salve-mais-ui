@@ -26,10 +26,10 @@
         <h2 class="section-title">Criar Fatura Manual</h2>
       </div>
     </div>
-    
+
     <div class="form-container">
       <div class="section-subtitle">Cadastre uma fatura especificando cartão, valor e data de vencimento</div>
-      
+
       <form [formGroup]="faturaForm" (ngSubmit)="onSubmit()">
         <div class="form-row">
           <mat-form-field appearance="outline" class="form-field">
@@ -221,10 +221,10 @@
         <h2 class="section-title">Gerar Fatura Automática</h2>
       </div>
     </div>
-    
+
     <div class="card-content">
       <div class="section-subtitle">Gere faturas automaticamente baseadas nas compras dos cartões</div>
-      
+
       <div class="cartoes-automaticos">
         <div *ngFor="let cartao of cartoes" class="cartao-item">
           <div class="cartao-info">
