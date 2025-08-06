@@ -1,5 +1,17 @@
 # Changelog - Salve Mais
 
+## [1.8.8] - 2025-08-06
+
+### Melhorado
+
+- Design do componente de cartão de crédito atualizado seguindo o novo padrão visual
+- Adicionado cabeçalho estilizado com ícones para a página de cartões de crédito
+- Aprimoramento visual do formulário com ícones informativos para cada campo
+- Redesign da listagem de cartões com melhor organização e visualização
+- Estado vazio aprimorado para melhor orientação do usuário
+
+---
+
 ## [1.8.7] - 2025-08-06
 
 ### Melhorado

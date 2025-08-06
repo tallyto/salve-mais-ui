@@ -1,67 +1,94 @@
-<div class="p-3 mx-auto">
-  <div class="p-card p-4 mb-4 shadow-1">
-    <div class="mb-4">
-      <h2 class="text-xl font-medium m-0 mb-1">Cadastrar Cartão</h2>
-      <div class="text-color-secondary text-sm">Registre um novo cartão de crédito</div>
-    </div>
-
-    <form (ngSubmit)="salvarCartao()" [formGroup]="cartaoForm">
-      <div class="grid">
-        <div class="col-12 md:col-6 mb-3">
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Nome do Cartão</mat-label>
-            <input formControlName="nome" matInput placeholder="Ex: Mastercard Black Inter Gourmet">
-          </mat-form-field>
-        </div>
-
-        <div class="col-12 md:col-6 mb-3">
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Data de Vencimento</mat-label>
-            <input [matDatepicker]="picker" formControlName="vencimento" matInput>
-            <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
+<div class="container">
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <mat-icon class="page-icon">credit_card</mat-icon>
+      <div class="header-text">
+        <h1 class="page-title">Cartões de Crédito</h1>
+        <div class="page-subtitle">
+          <span>Gerencie seus cartões de crédito</span>
         </div>
       </div>
+    </div>
+  </div>
 
-      <div class="flex justify-content-end gap-2 mt-3">
-        <button mat-stroked-button type="button" class="text-color-secondary">Cancelar</button>
-        <button mat-raised-button color="primary" [disabled]="cartaoForm.invalid" type="submit">
-          Salvar cartão
-        </button>
+  <!-- Formulário de Cadastro -->
+  <div class="form-card">
+    <div class="card-header">
+      <div class="header-title">
+        <h2 class="section-title">Cadastrar Cartão</h2>
       </div>
-    </form>
-  </div>  <!-- Tabela de Cartões -->
-  <div class="p-card shadow-1">
-    <div class="p-card-header p-3 border-bottom-1 border-300">
-      <h2 class="text-xl font-medium m-0">Seus Cartões</h2>
-      <div class="text-color-secondary text-sm">Cartões de crédito cadastrados</div>
     </div>
 
-    <div class="p-3">
-      <table [dataSource]="cartoes" mat-table class="w-full">
+    <div class="form-container">
+      <div class="subtitle">Registre um novo cartão de crédito</div>
+
+      <form (ngSubmit)="salvarCartao()" [formGroup]="cartaoForm">
+        <div class="grid">
+          <div class="col-12 md:col-6 mb-3">
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>Nome do Cartão</mat-label>
+              <input formControlName="nome" matInput placeholder="Ex: Mastercard Black Inter Gourmet">
+              <mat-icon matPrefix>credit_card</mat-icon>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 md:col-6 mb-3">
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>Data de Vencimento</mat-label>
+              <input [matDatepicker]="picker" formControlName="vencimento" matInput>
+              <mat-icon matPrefix>event</mat-icon>
+              <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button mat-stroked-button type="button" class="text-color-secondary">Cancelar</button>
+          <button mat-raised-button color="primary" [disabled]="cartaoForm.invalid" type="submit">
+            <mat-icon>save</mat-icon>
+            Salvar cartão
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Tabela de Cartões -->
+  <div class="cards-list-card">
+    <div class="card-header">
+      <div class="header-title">
+        <h2 class="section-title">Seus Cartões</h2>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table [dataSource]="cartoes" mat-table class="cards-table">
         <!-- Nome Column -->
         <ng-container matColumnDef="nome">
-          <th *matHeaderCellDef mat-header-cell class="p-3">Nome</th>
-          <td *matCellDef="let cartao" mat-cell class="p-3">
+          <th *matHeaderCellDef mat-header-cell>Nome</th>
+          <td *matCellDef="let cartao" mat-cell>
             <div *ngIf="!isEditing(cartao)" class="font-medium">
               {{ cartao.nome }}
             </div>
             <mat-form-field *ngIf="isEditing(cartao)" appearance="outline" class="edit-field w-full">
               <input matInput [(ngModel)]="tempNome">
+              <mat-icon matPrefix>credit_card</mat-icon>
             </mat-form-field>
           </td>
         </ng-container>
 
         <!-- Vencimento Column -->
         <ng-container matColumnDef="vencimento">
-          <th *matHeaderCellDef mat-header-cell class="p-3">Vencimento</th>
-          <td *matCellDef="let cartao" mat-cell class="p-3">
+          <th *matHeaderCellDef mat-header-cell>Vencimento</th>
+          <td *matCellDef="let cartao" mat-cell>
             <div *ngIf="!isEditing(cartao)">
               {{ cartao.vencimento | date:'dd/MM/yyyy' }}
             </div>
             <mat-form-field *ngIf="isEditing(cartao)" appearance="outline" class="edit-field w-full">
               <input [matDatepicker]="editPicker" [(ngModel)]="tempVencimento" matInput>
+              <mat-icon matPrefix>event</mat-icon>
               <mat-datepicker-toggle [for]="editPicker" matIconSuffix></mat-datepicker-toggle>
               <mat-datepicker #editPicker></mat-datepicker>
             </mat-form-field>
@@ -70,9 +97,9 @@
 
         <!-- Ações Column -->
         <ng-container matColumnDef="acoes">
-          <th *matHeaderCellDef mat-header-cell class="p-3 text-right">Ações</th>
-          <td *matCellDef="let cartao" mat-cell class="p-3 text-right">
-            <div *ngIf="!isEditing(cartao)" class="action-buttons flex justify-content-end gap-2">
+          <th *matHeaderCellDef mat-header-cell class="text-right">Ações</th>
+          <td *matCellDef="let cartao" mat-cell class="text-right">
+            <div *ngIf="!isEditing(cartao)" class="action-buttons">
               <button mat-icon-button color="primary" (click)="startEdit(cartao)" matTooltip="Editar cartão">
                 <mat-icon>edit</mat-icon>
               </button>
@@ -80,7 +107,7 @@
                 <mat-icon>delete</mat-icon>
               </button>
             </div>
-            <div *ngIf="isEditing(cartao)" class="action-buttons flex justify-content-end gap-2">
+            <div *ngIf="isEditing(cartao)" class="action-buttons">
               <button mat-icon-button color="primary" (click)="saveEdit()" matTooltip="Salvar">
                 <mat-icon>check</mat-icon>
               </button>
@@ -91,13 +118,15 @@
           </td>
         </ng-container>
 
-        <tr *matHeaderRowDef="displayedColumnsCartao" mat-header-row class="bg-gray-50"></tr>
-        <tr *matRowDef="let row; columns: displayedColumnsCartao;" mat-row class="border-bottom-1 surface-border"></tr>
+        <tr *matHeaderRowDef="displayedColumnsCartao" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: displayedColumnsCartao;" mat-row></tr>
       </table>
 
-      <div *ngIf="cartoes && cartoes.length === 0" class="p-5 text-center text-color-secondary">
-        <mat-icon class="text-4xl mb-3 block">credit_card</mat-icon>
-        <span>Nenhum cartão cadastrado. Adicione um cartão utilizando o formulário acima.</span>
+      <!-- Estado vazio -->
+      <div *ngIf="cartoes && cartoes.length === 0" class="empty-state">
+        <mat-icon>credit_card_off</mat-icon>
+        <h3>Nenhum cartão cadastrado</h3>
+        <p>Adicione um cartão utilizando o formulário acima.</p>
       </div>
     </div>
   </div>
