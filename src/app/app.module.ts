@@ -88,7 +88,6 @@ import { MinhaContaComponent } from './components/minha-conta/minha-conta.compon
     FaturaFormComponent,
     PagamentoFaturaModalComponent,
     NotificacoesComponent,
-    NotificacoesWidgetComponent,
     ContaFixaRecorrenteComponent,
     MinhaContaComponent
   ],
@@ -130,7 +129,8 @@ import { MinhaContaComponent } from './components/minha-conta/minha-conta.compon
     MatDialogModule,
     MatChipsModule,
     LimiteAlertasWidgetComponent, // Importa o widget standalone
-    CartaoLimitesComponent // Importa o componente standalone
+    CartaoLimitesComponent, // Importa o componente standalone
+    NotificacoesWidgetComponent // Importa o widget de notificações standalone
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
