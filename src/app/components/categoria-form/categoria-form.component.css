@@ -1,20 +1,214 @@
+/* Estilos para o componente de categorias */
+.container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.page-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background-color: #673ab7; /* Roxo para categorias */
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.page-icon {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+  color: #673ab7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.page-title {
+  margin: 0;
+  color: #333;
+  font-weight: 500;
+  font-size: 22px;
+}
+
+.page-subtitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  color: #666;
+  font-size: 14px;
+}
+
+/* Card styles */
+.card {
+  background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  overflow: hidden;
+  height: 100%;
+  margin-bottom: 20px;
+  border-top: 3px solid #673ab7; /* Roxo para categorias */
+}
+
+.card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fafafa;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-title mat-icon {
+  color: #673ab7;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+  margin: 0;
+}
+
+.card-content {
+  padding: 16px;
+}
+
+/* Formulário */
+.form-description {
+  margin: 0 0 16px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.form-row {
+  margin-bottom: 16px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.form-actions button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .w-full {
   width: 100%;
 }
 
-.shadow-1 {
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+/* Tabelas */
+.table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 0 12px;
+  margin-top: 8px;
 }
 
-.p-card {
-  border-radius: 4px;
-  background-color: #fff;
-}
-
-table {
+.table-container table {
   width: 100%;
+  min-width: 400px;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
-.mat-mdc-row:hover {
-  background-color: rgba(0, 0, 0, 0.04);
+.table-container th.mat-header-cell {
+  background-color: #f5f5f5;
+  color: #673ab7;
+  font-weight: 500;
+  padding: 12px 16px;
+  font-size: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.table-container td.mat-cell {
+  padding: 12px 16px;
+  border-bottom: 1px solid #eeeeee;
+  vertical-align: middle;
+}
+
+.table-container tr.mat-row:last-child td.mat-cell {
+  border-bottom: none;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+.empty-row {
+  text-align: center;
+  padding: 16px;
+  color: #666;
+  font-style: italic;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .container {
+    padding: 16px;
+  }
+  
+  .page-header {
+    padding: 12px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .form-actions button {
+    width: 100%;
+  }
 }

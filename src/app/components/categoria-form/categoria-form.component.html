@@ -1,59 +1,99 @@
-<div class="p-3 mx-auto">
-  <div class="p-card p-4 mb-4 shadow-1">
-    <div class="mb-4">
-      <h2 class="text-xl font-medium m-0 mb-1">{{ editingCategoria ? 'Editar Categoria' : 'Cadastrar Categoria' }}</h2>
-      <div class="text-color-secondary text-sm">
-        {{ editingCategoria ? 'Atualize os dados da categoria selecionada' : 'Registre uma nova categoria para suas despesas e receitas' }}
+<div class="container">
+  <!-- Cabeçalho da página -->
+  <div class="page-header">
+    <div class="header-content">
+      <div class="page-icon">
+        <mat-icon>category</mat-icon>
+      </div>
+      <div class="header-text">
+        <h1 class="page-title">Gerenciamento de Categorias</h1>
+        <div class="page-subtitle">
+          <span>Organize suas despesas e receitas com categorias personalizadas</span>
+        </div>
       </div>
     </div>
+  </div>
 
-    <form (ngSubmit)="salvarCategoria()" [formGroup]="categoriaForm">
-      <div class="grid">
-        <div class="col-12 md:col-6 mb-3">
+  <!-- Formulário -->
+  <div class="card">
+    <div class="card-header">
+      <div class="header-title">
+        <mat-icon>{{ editingCategoria ? 'edit' : 'add_circle' }}</mat-icon>
+        <h2 class="section-title">{{ editingCategoria ? 'Editar Categoria' : 'Cadastrar Categoria' }}</h2>
+      </div>
+    </div>
+    <div class="card-content">
+      <p class="form-description">
+        {{ editingCategoria ? 'Atualize os dados da categoria selecionada' : 'Registre uma nova categoria para suas despesas e receitas' }}
+      </p>
+
+      <form (ngSubmit)="salvarCategoria()" [formGroup]="categoriaForm">
+        <div class="form-row">
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>Nome da Categoria</mat-label>
             <input formControlName="nome" matInput placeholder="Ex: Alimentação, Transporte">
+            <mat-icon matSuffix>label</mat-icon>
           </mat-form-field>
         </div>
-      </div>
 
-      <div class="flex justify-content-end gap-2 mt-3">
-        <button mat-stroked-button type="button" (click)="cancelarEdicao()" class="text-color-secondary">
-          {{ editingCategoria ? 'Cancelar edição' : 'Limpar' }}
-        </button>
-        <button mat-raised-button color="primary" [disabled]="categoriaForm.invalid" type="submit">
-          {{ editingCategoria ? 'Atualizar categoria' : 'Salvar categoria' }}
-        </button>
-      </div>
-    </form>
+        <div class="form-actions">
+          <button mat-stroked-button type="button" (click)="cancelarEdicao()">
+            <mat-icon>{{ editingCategoria ? 'close' : 'refresh' }}</mat-icon>
+            {{ editingCategoria ? 'Cancelar edição' : 'Limpar' }}
+          </button>
+          <button mat-raised-button color="primary" [disabled]="categoriaForm.invalid" type="submit">
+            <mat-icon>{{ editingCategoria ? 'save' : 'add' }}</mat-icon>
+            {{ editingCategoria ? 'Atualizar categoria' : 'Salvar categoria' }}
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 
   <!-- Tabela Categorias -->
-  <div class="p-card shadow-1 p-3">
-    <h3 class="text-xl font-medium m-0 mb-3">Categorias Cadastradas</h3>
-    <table [dataSource]="categorias" mat-table class="w-full">
-      <!-- Categoria Column -->
-      <ng-container matColumnDef="nome">
-        <th *matHeaderCellDef mat-header-cell> Nome</th>
-        <td *matCellDef="let categoria" mat-cell> {{ categoria.nome }} </td>
-      </ng-container>
+  <div class="card">
+    <div class="card-header">
+      <div class="header-title">
+        <mat-icon>list</mat-icon>
+        <h2 class="section-title">Categorias Cadastradas</h2>
+      </div>
+    </div>
+    <div class="card-content">
+      <div class="table-container">
+        <table [dataSource]="categorias" mat-table>
+          <!-- Categoria Column -->
+          <ng-container matColumnDef="nome">
+            <th *matHeaderCellDef mat-header-cell>Nome</th>
+            <td *matCellDef="let categoria" mat-cell>{{ categoria.nome }}</td>
+          </ng-container>
 
-      <!-- Actions Column -->
-      <ng-container matColumnDef="acoes">
-        <th *matHeaderCellDef mat-header-cell> Ações</th>
-        <td *matCellDef="let categoria" mat-cell>
-          <button mat-icon-button color="primary" (click)="editarCategoria(categoria)" matTooltip="Editar categoria">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" (click)="excluirCategoria(categoria)" matTooltip="Excluir categoria">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </td>
-      </ng-container>
+          <!-- Actions Column -->
+          <ng-container matColumnDef="acoes">
+            <th *matHeaderCellDef mat-header-cell>Ações</th>
+            <td *matCellDef="let categoria" mat-cell>
+              <div class="action-buttons">
+                <button mat-icon-button color="primary" (click)="editarCategoria(categoria)" matTooltip="Editar categoria">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="excluirCategoria(categoria)" matTooltip="Excluir categoria">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
 
-      <tr *matHeaderRowDef="displayedColumnsCategoria" mat-header-row></tr>
-      <tr *matRowDef="let row; columns: displayedColumnsCategoria;" mat-row></tr>
-    </table>
+          <tr *matHeaderRowDef="displayedColumnsCategoria" mat-header-row></tr>
+          <tr *matRowDef="let row; columns: displayedColumnsCategoria;" mat-row></tr>
+
+          <!-- Linha para quando não houver dados -->
+          <tr *matNoDataRow class="mat-row">
+            <td class="mat-cell empty-row" [attr.colspan]="displayedColumnsCategoria.length">
+              Nenhuma categoria cadastrada
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
   </div>
 </div>
 

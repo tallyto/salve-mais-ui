@@ -1,5 +1,20 @@
 # Changelog - Salve Mais
 
+## [1.9.3] - 2025-08-06
+
+### Melhorado
+
+- Design do componente de gerenciamento de categorias atualizado seguindo o novo padrão visual
+- Adicionado cabeçalho estilizado com ícones para a página de categorias
+- Reformulação do layout de formulário para melhor experiência do usuário
+- Aprimoramento visual com ícones informativos para cada campo
+- Redesign da tabela de categorias para melhor visualização
+- Melhor organização dos botões de ação com ícones correspondentes
+- Adicionado suporte para visualização de estado vazio na listagem
+- Design responsivo otimizado para dispositivos móveis
+
+---
+
 ## [1.9.2] - 2025-08-06
 
 ### Melhorado
