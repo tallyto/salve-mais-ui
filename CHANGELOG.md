@@ -1,5 +1,18 @@
 # Changelog - Salve Mais
 
+## [1.8.9] - 2025-08-06
+
+### Melhorado
+
+- Design do componente de limites de cartões atualizado seguindo o novo padrão visual
+- Adicionado cabeçalho estilizado com ícones para a página de gestão de limites
+- Aprimoramento visual do formulário de configuração de limites com ícones informativos
+- Redesign dos cards de alertas para melhor visualização dos cartões em situação crítica
+- Melhorias na tabela de status dos limites com indicadores visuais mais claros
+- Estado vazio aprimorado para melhor orientação do usuário
+
+---
+
 ## [1.8.8] - 2025-08-06
 
 ### Melhorado
@@ -9,15 +22,6 @@
 - Aprimoramento visual do formulário com ícones informativos para cada campo
 - Redesign da listagem de cartões com melhor organização e visualização
 - Estado vazio aprimorado para melhor orientação do usuário
-
----
-
-## [1.8.7] - 2025-08-06
-
-### Melhorado
-
-- Design do componente de despesas recorrentes atualizado seguindo o novo padrão visual
-- Adicionado cabeçalho estilizado com ícones para a página de despesas recorrentes
 - Aprimoramento visual do formulário com ícones informativos para cada campo
 - Redesign da listagem de despesas recorrentes com destaque para valores
 - Melhor organização dos filtros de período para facilitar a navegação
