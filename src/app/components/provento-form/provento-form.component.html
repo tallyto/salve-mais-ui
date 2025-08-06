@@ -19,7 +19,7 @@
       </div>
       <div class="text-color-secondary text-sm">Registre um novo recebimento ou receita</div>
     </div>
-    
+
     <form (ngSubmit)="salvarProvento()" [formGroup]="proventoForm" class="provento-form">
       <div class="grid">
         <div class="col-12 md:col-6 mb-3">
@@ -37,7 +37,7 @@
             <mat-icon matSuffix>attach_money</mat-icon>
           </mat-form-field>
         </div>
-        
+
         <div class="col-12 md:col-6 mb-3">
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>Conta</mat-label>
@@ -57,7 +57,7 @@
           </mat-form-field>
         </div>
       </div>
-      
+
       <div class="form-actions flex justify-content-end gap-2 mt-3">
         <button mat-stroked-button type="button" class="text-color-secondary">
           <mat-icon>cancel</mat-icon> Cancelar
