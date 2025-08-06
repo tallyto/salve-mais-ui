@@ -1,5 +1,21 @@
 # Changelog - Salve Mais
 
+## [1.8.2] - 2025-08-05
+
+### Adicionado
+
+- Suporte a notificações de faturas próximas do vencimento
+- Novo tipo de filtro para visualização de faturas a vencer
+- Endpoint adicional para obtenção de faturas próximas do vencimento
+
+### Melhorado
+
+- Interface de notificações agora exibe alertas para faturas que vencem em breve
+- Estilo visual customizado para o novo tipo de notificação
+- Experiência do usuário com acompanhamento completo de vencimentos de faturas
+
+---
+
 ## [1.8.1] - 2025-08-05
 
 ### Melhorado
