@@ -1,82 +1,92 @@
+/* Ajusta todos os ícones do Material no dashboard */
+.dashboard-container mat-icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+}
+
 .dashboard-container {
-  padding: 20px;
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.page-title {
-  margin-bottom: 30px;
-  color: #333;
-  font-weight: 500;
-  font-size: 24px;
-}
-
-.summary-card {
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-  padding: 20px;
-  height: 100%;
-  transition: all 0.3s ease;
-}
-
-.summary-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.summary-value {
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 5px;
-}
-
-.summary-label {
-  font-size: 14px;
-  color: #666;
-  text-transform: uppercase;
-}
-
-.card-icon {
-  background-color: rgba(25, 118, 210, 0.1);
-  color: #1976d2;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 15px;
-}
-
-.positive {
-  color: #4caf50;
-}
-
-.negative {
-  color: #f44336;
-}
-
-.data-card {
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
-  margin-bottom: 20px;
-  height: 100%;
-}
-
-.card-header {
-  padding: 15px 20px;
-  background-color: #f9fafc;
-  border-bottom: 1px solid #eee;
+/* Header */
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 24px;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 16px 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-.card-content {
-  padding: 15px 20px;
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
+.header-.progress-fill.health-excellent {
+  background-color: #4caf50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+.progress-fill.health-good {
+  background-color: #8bc34a;
+  box-shadow: 0 0 5px rgba(139, 195, 74, 0.5);
+}
+
+.progress-fill.health-average, .progress-fill.health-regular {
+  background-color: #ffc107;
+  box-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
+}
+
+.progress-fill.health-poor {
+  background-color: #f44336;
+  box-shadow: 0 0 5px rgba(244, 67, 54, 0.5);
+}
+
+/* Financial tip */
+.financial-tip-icon {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+  color: #1976d2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+}
+
+.page-title {
+  margin: 0;
+  color: #333;
+  font-weight: 500;
+  font-size: 22px;
+}
+
+.dashboard-date {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  color: #666;
+}
+
+/* Loading */
 .loading-overlay {
   position: fixed;
   top: 0;
@@ -90,11 +100,452 @@
   z-index: 1000;
 }
 
+/* Summary Cards */
+.summary-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  padding: 20px;
+  height: 100%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-top: 3px solid #2196f3;
+}
+
+.summary-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+
+.card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: rgba(33, 150, 243, 0.1);
+  color: #2196f3;
+  margin-bottom: 16px;
+}
+
+.card-icon mat-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.summary-label {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.summary-value {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.positive {
+  color: #4caf50;
+}
+
+.negative {
+  color: #f44336;
+}
+
+/* Data Cards */
+.data-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  overflow: hidden;
+  height: 100%;
+  transition: box-shadow 0.2s ease;
+  border-top: 3px solid #2196f3;
+}
+
+.data-card:hover {
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.card-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+}
+
+.card-content {
+  padding: 16px 20px;
+}
+
+/* Section Headers */
 .section-header {
   margin-top: 30px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid #eaeaea;
-  padding-bottom: 10px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+}
+
+/* Chart containers */
+.chart-container {
+  height: 300px;
+  position: relative;
+}
+
+/* Transaction table */
+.transaction-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.transaction-table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-weight: 500;
+  color: #555;
+  border-bottom: 1px solid #eee;
+  background-color: #f9f9f9;
+}
+
+.transaction-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+  color: #333;
+}
+
+.transaction-description {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.transaction-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: rgba(33, 150, 243, 0.1);
+}
+
+.transaction-icon mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  color: #2196f3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-tag {
+  background-color: rgba(33, 150, 243, 0.1);
+  color: #2196f3;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.card-tag {
+  background-color: rgba(156, 39, 176, 0.1);
+  color: #9c27b0;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+/* Variation table */
+.variation-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.variation-table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-weight: 500;
+  color: #555;
+  border-bottom: 1px solid #eee;
+  background-color: #f9f9f9;
+}
+
+.variation-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+  color: #333;
+}
+
+.metric-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.metric-icon {
+  color: #2196f3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+.variation-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+/* Financial Health section */
+.health-summary {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 16px;
+}
+
+.health-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: rgba(33, 150, 243, 0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.health-excellent {
+  background-color: rgba(76, 175, 80, 0.15);
+  color: #4caf50;
+}
+
+.health-good {
+  background-color: rgba(255, 193, 7, 0.15);
+  color: #ffc107;
+}
+
+.health-average {
+  background-color: rgba(255, 152, 0, 0.15);
+  color: #ff9800;
+}
+
+.health-poor {
+  background-color: rgba(244, 67, 54, 0.15);
+  color: #f44336;
+}
+
+.health-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.health-icon mat-icon {
+  font-size: 30px;
+  width: 30px;
+  height: 30px;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.health-value {
+  font-size: 20px;
+  font-weight: bold;
+  color: inherit;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.health-text h3 {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: inherit;
+}
+
+.health-text h3 span {
+  border-bottom: 2px solid currentColor;
+  padding-bottom: 2px;
+}
+
+.health-text p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+/* Progress bar */
+.progress-container {
+  margin-bottom: 16px;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+.progress-bar {
+  height: 10px;
+  background-color: #eee;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.5s ease;
+}
+
+.progress-fill.health-excellent {
+  background-color: #4caf50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+.progress-fill.health-good {
+  background-color: #8bc34a;
+  box-shadow: 0 0 5px rgba(139, 195, 74, 0.5);
+}
+
+.progress-fill.health-regular, .progress-fill.health-average {
+  background-color: #ffc107;
+  box-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
+}
+
+.progress-fill.health-poor {
+  background-color: #f44336;
+  box-shadow: 0 0 5px rgba(244, 67, 54, 0.5);
+}
+
+/* Financial tip */
+.financial-tip {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  background-color: rgba(33, 150, 243, 0.05);
+  border-radius: 8px;
+}
+
+.financial-tip mat-icon {
+  color: #2196f3;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tip-title {
+  margin: 0 0 4px 0;
+  font-weight: 500;
+  color: #333;
+}
+
+.tip-text {
+  margin: 0;
+  color: #666;
+  line-height: 1.4;
+}
+
+/* Account items */
+.account-item {
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.account-item:last-child {
+  border-bottom: none;
+}
+
+.account-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.account-name {
+  font-weight: 500;
+  color: #333;
+}
+
+.account-balance {
+  font-weight: 500;
+}
+
+.account-add-button {
+  margin-top: 16px;
+  text-align: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 16px;
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .health-summary {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .transaction-table th,
+  .transaction-table td,
+  .variation-table th,
+  .variation-table td {
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  .transaction-description {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .variation-table th:nth-child(3),
+  .variation-table td:nth-child(3) {
+    display: none;
+  }
+
+  .transaction-table th:nth-child(2),
+  .transaction-table td:nth-child(2),
+  .transaction-table th:nth-child(3),
+  .transaction-table td:nth-child(3) {
+    display: none;
+  }
 }
 
 .section-header h2 {
@@ -150,6 +601,15 @@
   justify-content: center;
 }
 
+.transaction-icon mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .card-bg {
   background-color: rgba(33, 150, 243, 0.1);
   color: #2196f3;
@@ -170,49 +630,6 @@
   font-size: 12px;
   color: #2196f3;
   display: inline-block;
-}
-
-/* Health indicators */
-.health-summary {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  margin-bottom: 20px;
-}
-
-.health-status {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.health-icon {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
-  font-size: 30px;
-}
-
-.health-value {
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.health-text h3 {
-  margin: 0 0 5px 0;
-  font-size: 18px;
-  font-weight: 500;
-}
-
-.health-text p {
-  margin: 0;
-  color: #666;
-  font-size: 14px;
 }
 
 .progress-container {
@@ -236,38 +653,6 @@
 .progress-fill {
   height: 100%;
   border-radius: 4px;
-}
-
-.health-excellent {
-  color: #4caf50;
-}
-
-.health-good {
-  color: #8bc34a;
-}
-
-.health-average {
-  color: #ffc107;
-}
-
-.health-poor {
-  color: #f44336;
-}
-
-.health-excellent .health-icon {
-  background-color: rgba(76, 175, 80, 0.1);
-}
-
-.health-good .health-icon {
-  background-color: rgba(139, 195, 74, 0.1);
-}
-
-.health-average .health-icon {
-  background-color: rgba(255, 193, 7, 0.1);
-}
-
-.health-poor .health-icon {
-  background-color: rgba(244, 67, 54, 0.1);
 }
 
 .progress-fill.health-excellent {
@@ -297,6 +682,11 @@
 
 .financial-tip mat-icon {
   color: #1976d2;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .tip-title {
@@ -410,6 +800,9 @@
   font-size: 20px;
   width: 20px;
   height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .metric-name {
@@ -451,6 +844,15 @@
   height: 32px;
   border-radius: 50%;
   font-weight: bold;
+}
+
+.trend-indicator mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .trend-positive {

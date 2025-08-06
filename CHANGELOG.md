@@ -1,5 +1,17 @@
 # Changelog - Salve Mais
 
+## [1.8.3] - 2025-08-06
+
+### Melhorado
+
+- Design do dashboard unificado seguindo o padrão visual do componente de notificações
+- Centralização de ícones nas transações recentes para melhor visualização
+- Aprimoramento no indicador de saúde financeira para melhor legibilidade
+- Padronização dos cards com cores e estilos consistentes
+- Experiência do usuário com visual mais coeso e profissional
+
+---
+
 ## [1.8.2] - 2025-08-05
 
 ### Adicionado

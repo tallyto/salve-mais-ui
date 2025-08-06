@@ -1,8 +1,14 @@
 <div class="dashboard-container">
-  <h1 class="page-title">Dashboard Financeiro</h1>
-
-  <div class="dashboard-date text-color-secondary mb-4">
-    <mat-icon>today</mat-icon> {{ today | date:'dd/MM/yyyy' }} - Visão geral da sua situação financeira
+  <div class="header">
+    <div class="header-content">
+      <mat-icon class="header-icon">dashboard</mat-icon>
+      <div class="header-text">
+        <h2 class="page-title">Dashboard Financeiro</h2>
+        <div class="dashboard-date text-color-secondary">
+          <mat-icon>today</mat-icon> {{ today | date:'dd/MM/yyyy' }} - Visão geral da sua situação financeira
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Loading Indicator -->
@@ -13,8 +19,8 @@
   <!-- Financial Summary -->
   <div class="grid mb-4">
     <div class="col-12 md:col-6 lg:col-3 mb-3">
-      <div class="summary-card">
-        <div class="card-icon">
+      <div class="summary-card" style="border-top-color: #4caf50;">
+        <div class="card-icon" style="background-color: rgba(76, 175, 80, 0.1); color: #4caf50;">
           <mat-icon>account_balance_wallet</mat-icon>
         </div>
         <div class="summary-label">Saldo Total</div>
@@ -31,8 +37,8 @@
     </div>
 
     <div class="col-12 md:col-6 lg:col-3 mb-3">
-      <div class="summary-card">
-        <div class="card-icon">
+      <div class="summary-card" style="border-top-color: #4caf50;">
+        <div class="card-icon" style="background-color: rgba(76, 175, 80, 0.1); color: #4caf50;">
           <mat-icon>trending_up</mat-icon>
         </div>
         <div class="summary-label">Receitas do Mês</div>
@@ -46,8 +52,8 @@
     </div>
 
     <div class="col-12 md:col-6 lg:col-3 mb-3">
-      <div class="summary-card">
-        <div class="card-icon">
+      <div class="summary-card" style="border-top-color: #f44336;">
+        <div class="card-icon" style="background-color: rgba(244, 67, 54, 0.1); color: #f44336;">
           <mat-icon>trending_down</mat-icon>
         </div>
         <div class="summary-label">Despesas do Mês</div>
@@ -61,8 +67,8 @@
     </div>
 
     <div class="col-12 md:col-6 lg:col-3 mb-3">
-      <div class="summary-card">
-        <div class="card-icon">
+      <div class="summary-card" style="border-top-color: #9c27b0;">
+        <div class="card-icon" style="background-color: rgba(156, 39, 176, 0.1); color: #9c27b0;">
           <mat-icon>account_balance</mat-icon>
         </div>
         <div class="summary-label">Contas Bancárias</div>
@@ -83,9 +89,12 @@
   <div class="grid mt-4 mb-4">
     <!-- Expenses by Category Chart -->
     <div class="col-12 lg:col-4 p-2 mb-3">
-      <div class="data-card h-full">
+      <div class="data-card h-full" style="border-top-color: #f44336;">
         <div class="card-header">
-          <h2 class="section-title m-0">Despesas por Categoria</h2>
+          <div class="header-title">
+            <mat-icon style="color: #f44336; margin-right: 8px;">pie_chart</mat-icon>
+            <h2 class="section-title m-0">Despesas por Categoria</h2>
+          </div>
         </div>
         <div class="card-content chart-container">
           <canvas baseChart
@@ -99,9 +108,12 @@
 
     <!-- Income vs Expenses Chart -->
     <div class="col-12 lg:col-4 p-2 mb-3">
-      <div class="data-card h-full">
+      <div class="data-card h-full" style="border-top-color: #4caf50;">
         <div class="card-header">
-          <h2 class="section-title m-0">Receitas vs Despesas</h2>
+          <div class="header-title">
+            <mat-icon style="color: #4caf50; margin-right: 8px;">bar_chart</mat-icon>
+            <h2 class="section-title m-0">Receitas vs Despesas</h2>
+          </div>
         </div>
         <div class="card-content chart-container">
           <canvas baseChart
@@ -115,9 +127,12 @@
 
     <!-- Monthly Trend Chart -->
     <div class="col-12 lg:col-4 p-2 mb-3">
-      <div class="data-card h-full">
+      <div class="data-card h-full" style="border-top-color: #2196f3;">
         <div class="card-header">
-          <h2 class="section-title m-0">Tendência Mensal</h2>
+          <div class="header-title">
+            <mat-icon style="color: #2196f3; margin-right: 8px;">trending_up</mat-icon>
+            <h2 class="section-title m-0">Tendência Mensal</h2>
+          </div>
         </div>
         <div class="card-content chart-container">
           <canvas baseChart
@@ -145,9 +160,12 @@
     <h2>Variação Mensal</h2>
   </div>
   <div class="col-12 mt-3 p-2 mb-4">
-    <div class="data-card">
+    <div class="data-card" style="border-top-color: #ff9800;">
       <div class="card-header">
-        <h2 class="section-title m-0">Comparativo com o Mês Anterior</h2>
+        <div class="header-title">
+          <mat-icon style="color: #ff9800; margin-right: 8px;">compare_arrows</mat-icon>
+          <h2 class="section-title m-0">Comparativo com o Mês Anterior</h2>
+        </div>
       </div>
       <div class="card-content">
         <div class="variation-table-container">
@@ -213,9 +231,12 @@
     <h2>Compras no Cartão</h2>
   </div>
   <div class="col-12 mt-3 p-2">
-    <div class="data-card">
-      <div class="card-header d-flex justify-content-between align-items-center">
-        <h2 class="section-title m-0">Últimas Compras</h2>
+    <div class="data-card" style="border-top-color: #9c27b0;">
+      <div class="card-header">
+        <div class="header-title">
+          <mat-icon style="color: #9c27b0; margin-right: 8px;">credit_card</mat-icon>
+          <h2 class="section-title m-0">Últimas Compras</h2>
+        </div>
         <span class="text-color-secondary">Últimos 5 lançamentos</span>
       </div>
       <div class="card-content">
@@ -272,9 +293,12 @@
   </div>
   <div class="grid mt-3">
     <div class="col-12 lg:col-6 p-2 mb-3">
-      <div class="data-card h-full">
+      <div class="data-card h-full" style="border-top-color: #4caf50;">
         <div class="card-header">
-          <h2 class="section-title m-0">Saúde Financeira</h2>
+          <div class="header-title">
+            <mat-icon style="color: #4caf50; margin-right: 8px;">health_and_safety</mat-icon>
+            <h2 class="section-title m-0">Saúde Financeira</h2>
+          </div>
         </div>
         <div class="card-content">
           <div class="health-summary mb-3">
@@ -291,7 +315,7 @@
               <h3>
                 <span *ngIf="getBalanceRatio() >= 75">Excelente</span>
                 <span *ngIf="getBalanceRatio() >= 50 && getBalanceRatio() < 75">Boa</span>
-                <span *ngIf="getBalanceRatio() >= 25 && getBalanceRatio() < 50">Regular</span>
+                <span *ngIf="getBalanceRatio() >= 25 && getBalanceRatio() < 50">Média</span>
                 <span *ngIf="getBalanceRatio() < 25">Preocupante</span>
               </h3>
               <p>Proporção entre saldo e despesas mensais</p>
@@ -318,9 +342,12 @@
     </div>
 
     <div class="col-12 lg:col-6 p-2 mb-3">
-      <div class="data-card h-full">
+      <div class="data-card h-full" style="border-top-color: #2196f3;">
         <div class="card-header">
-          <h2 class="section-title m-0">Resumo de Contas</h2>
+          <div class="header-title">
+            <mat-icon style="color: #2196f3; margin-right: 8px;">account_balance</mat-icon>
+            <h2 class="section-title m-0">Resumo de Contas</h2>
+          </div>
         </div>
         <div class="card-content">
           <div *ngFor="let account of accounts" class="account-item">
