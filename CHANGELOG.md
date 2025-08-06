@@ -1,5 +1,37 @@
 # Changelog - Salve Mais
 
+## [1.9.2] - 2025-08-06
+
+### Melhorado
+
+- Interface do relatório mensal simplificada para uma visualização mais clean
+- Removidas animações e efeitos de hover para uma experiência mais leve
+- Reduzidos os tamanhos de bordas, padding e espaçamento
+- Simplificação dos indicadores visuais mantendo a funcionalidade
+- Ajustados tamanhos de fonte e ícones para um visual mais minimalista
+- Otimização da experiência em dispositivos móveis com layout mais eficiente
+- Redução das sombras e destaque visual apenas em elementos importantes
+- Melhorada a hierarquia visual com menos distrações
+
+---
+
+## [1.9.1] - 2025-08-06
+
+### Melhorado
+
+- Design do componente de relatório mensal atualizado seguindo o novo padrão visual
+- Adicionado cabeçalho estilizado com ícones para a página de relatório mensal
+- Reformulação visual das tabelas com melhor legibilidade e indicadores visuais
+- Cards de resumo financeiro aprimorados com codificação de cores e ícones intuitivos
+- Melhorias nos painéis expansíveis de cartões com indicadores visuais de status
+- Aperfeiçoamento dos badges de status com ícones informativos
+- Animações sutis adicionadas para melhorar a experiência do usuário
+- Estado vazio para contas vencidas com mensagem positiva
+- Design responsivo aprimorado para visualização em dispositivos móveis
+- Área de contas vencidas destacada com alerta visual e animação de ícone
+
+---
+
 ## [1.9.0] - 2025-08-06
 
 ### Melhorado
