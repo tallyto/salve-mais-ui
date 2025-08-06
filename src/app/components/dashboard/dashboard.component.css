@@ -1,6 +1,5 @@
 .dashboard-container {
   padding: 20px;
-  background-color: #f5f7fa;
 }
 
 .page-title {
@@ -151,16 +150,6 @@
   justify-content: center;
 }
 
-.positive-bg {
-  background-color: rgba(76, 175, 80, 0.1);
-  color: #4caf50;
-}
-
-.negative-bg {
-  background-color: rgba(244, 67, 54, 0.1);
-  color: #f44336;
-}
-
 .card-bg {
   background-color: rgba(33, 150, 243, 0.1);
   color: #2196f3;
@@ -180,15 +169,6 @@
   padding: 4px 10px;
   font-size: 12px;
   color: #2196f3;
-  display: inline-block;
-}
-
-.recorrente-tag {
-  background-color: #ffecb3;
-  border-radius: 12px;
-  padding: 4px 10px;
-  font-size: 12px;
-  color: #ff9800;
   display: inline-block;
 }
 
@@ -371,11 +351,6 @@
   .grid {
     display: flex;
     flex-direction: column;
-  }
-
-  .col-4, .col-6, .col-12 {
-    width: 100%;
-    margin-bottom: 15px;
   }
 
   .dashboard-container {

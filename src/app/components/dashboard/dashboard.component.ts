@@ -376,13 +376,13 @@ export class DashboardComponent implements OnInit {
   getBalanceHealthClass(): string {
     const ratio = this.getBalanceRatio();
     if (ratio >= 75) {
-      return 'health-good';
+      return 'health-excellent';
     } else if (ratio >= 50) {
-      return 'health-average';
+      return 'health-good';
     } else if (ratio >= 25) {
-      return 'health-warning';
+      return 'health-average';
     } else {
-      return 'health-danger';
+      return 'health-poor';
     }
   }
 
