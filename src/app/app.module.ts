@@ -17,6 +17,7 @@ import { MatListModule } from "@angular/material/list";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatRadioModule } from "@angular/material/radio";
 import { MatSelectModule } from "@angular/material/select";
 import { MatSidenavModule } from "@angular/material/sidenav";
@@ -59,6 +60,7 @@ import { LimiteAlertasWidgetComponent } from './components/shared/limite-alertas
 import { CartaoLimitesComponent } from './components/cartao-limites/cartao-limites.component';
 import { ContaFixaRecorrenteComponent } from './components/conta-fixa-recorrente/conta-fixa-recorrente.component';
 import { PagamentoFaturaModalComponent } from './components/pagamento-fatura-modal/pagamento-fatura-modal.component';
+import { ComprovantesDialogComponent } from './components/comprovantes-dialog/comprovantes-dialog.component';
 
 import { NotificacoesComponent } from './components/notificacoes/notificacoes.component';
 import { NotificacoesWidgetComponent } from './components/notificacoes-widget/notificacoes-widget.component';
@@ -89,7 +91,8 @@ import { MinhaContaComponent } from './components/minha-conta/minha-conta.compon
     PagamentoFaturaModalComponent,
     NotificacoesComponent,
     ContaFixaRecorrenteComponent,
-    MinhaContaComponent
+    MinhaContaComponent,
+    ComprovantesDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -122,6 +125,7 @@ import { MinhaContaComponent } from './components/minha-conta/minha-conta.compon
     MatRadioModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
+    MatProgressBarModule,
     MatSortModule,
     NgChartsModule,
     RegisterComponent, // Importa o componente standalone

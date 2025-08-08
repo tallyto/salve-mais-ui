@@ -1,0 +1,43 @@
+<h2 mat-dialog-title>Comprovantes - {{ data.contaFixaNome }}</h2>
+
+<mat-dialog-content>
+  <div class="upload-container">
+    <h3>Adicionar Comprovante</h3>
+    <div class="file-input-container">
+      <input type="file" id="fileInput" (change)="selectFile($event)" accept="image/*,.pdf,.doc,.docx,.xls,.xlsx">
+      <button mat-raised-button color="primary" [disabled]="isUploading || !selectedFiles" (click)="upload()">
+        <mat-icon>cloud_upload</mat-icon>
+        Enviar
+      </button>
+    </div>
+    <mat-progress-bar *ngIf="isUploading" mode="indeterminate"></mat-progress-bar>
+  </div>
+
+  <div class="anexos-list">
+    <h3>Comprovantes Disponíveis</h3>
+    <div class="empty-message" *ngIf="anexos.length === 0">
+      <mat-icon>info</mat-icon>
+      <p>Nenhum comprovante encontrado para esta conta.</p>
+    </div>
+
+    <mat-list *ngIf="anexos.length > 0">
+      <mat-list-item *ngFor="let anexo of anexos" class="anexo-item">
+        <mat-icon matListItemIcon>{{ getFileIcon(anexo.tipo) }}</mat-icon>
+        <div matListItemTitle>{{ anexo.nome }}</div>
+        <div matListItemLine>Enviado em: {{ formatarData(anexo.dataUpload) }}</div>
+        <div matListItemMeta>
+          <button mat-icon-button color="primary" matTooltip="Baixar comprovante" (click)="downloadAnexo(anexo)">
+            <mat-icon>download</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" matTooltip="Remover comprovante" (click)="removerAnexo(anexo)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="fechar()">Fechar</button>
+</mat-dialog-actions>

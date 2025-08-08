@@ -1,0 +1,46 @@
+.upload-container {
+  margin-bottom: 20px;
+  padding: 15px;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+}
+
+.file-input-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.anexos-list {
+  margin-top: 20px;
+}
+
+.anexo-item {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 8px 0;
+}
+
+.empty-message {
+  display: flex;
+  align-items: center;
+  color: #888;
+  margin: 20px 0;
+}
+
+.empty-message mat-icon {
+  margin-right: 10px;
+  color: #aaa;
+}
+
+mat-list-item {
+  height: auto !important;
+  margin-bottom: 8px;
+}
+
+/* Ajuste para posicionar os botões de ação */
+:host ::ng-deep .mat-mdc-list-item-meta {
+  display: flex;
+  gap: 5px;
+}

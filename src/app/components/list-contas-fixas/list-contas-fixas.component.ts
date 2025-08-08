@@ -6,6 +6,8 @@ import { MatSort } from "@angular/material/sort";
 import { catchError, map, merge, of as observableOf, startWith, switchMap } from "rxjs";
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { ComprovantesDialogComponent } from '../comprovantes-dialog/comprovantes-dialog.component';
 
 interface MonthOption {
   value: number;
@@ -53,7 +55,8 @@ export class ListContasFixasComponent implements AfterViewInit {
   constructor(
     private financaService: ContasFixasService,
     private snackBar: MatSnackBar,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private dialog: MatDialog
   ) {
     this.despesaForm = this.formBuilder.group({
       id: [null],
@@ -225,5 +228,18 @@ export class ListContasFixasComponent implements AfterViewInit {
         }),
       )
       .subscribe(data => (this.contasFixas = data));
+  }
+
+  /**
+   * Abre o diálogo para gerenciar comprovantes da conta fixa
+   */
+  abrirComprovantes(contaFixa: Financa): void {
+    this.dialog.open(ComprovantesDialogComponent, {
+      width: '600px',
+      data: {
+        contaFixaId: contaFixa.id,
+        contaFixaNome: contaFixa.nome
+      }
+    });
   }
 }
