@@ -1,5 +1,20 @@
 # Changelog - Salve Mais
 
+## [Unreleased]
+
+### Adicionado
+
+- Sistema de anexos de comprovantes para contas fixas:
+  - Componente de diálogo para upload, visualização e download de comprovantes
+  - Integração com a API de anexos no backend
+  - Botão para acesso ao gerenciamento de comprovantes na listagem de contas fixas
+  - Interface intuitiva para upload de arquivos com feedback visual
+  - Visualização de lista de comprovantes com informações detalhadas
+  - Funcionalidade de download de comprovantes via URL assinada
+  - Opção para remoção de comprovantes
+
+---
+
 ## [1.9.3] - 2025-08-06
 
 ### Melhorado
