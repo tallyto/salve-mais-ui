@@ -1,5 +1,5 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {Observable, tap} from 'rxjs';
 import {Financa} from '../models/financa.model';
 import {ContaFixa, ContaFixaRecorrente} from '../models/conta-fixa.model';

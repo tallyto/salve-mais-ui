@@ -1,4 +1,4 @@
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -66,82 +66,77 @@ import { NotificacoesComponent } from './components/notificacoes/notificacoes.co
 import { NotificacoesWidgetComponent } from './components/notificacoes-widget/notificacoes-widget.component';
 import { MinhaContaComponent } from './components/minha-conta/minha-conta.component';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    DashboardComponent,
-    MenuLateralComponent,
-    CartaoFormComponent,
-    CategoriaFormComponent,
-    ProventoFormComponent,
-    DespesasFixasComponent,
-    DepesasRecorrentesComponent,
-    ListDespesasRecorrentesComponent,
-    ListContasFixasComponent,
-    ListProventosComponent,
-    AccountComponent,
-    ListAccountsComponent,
-    SpendingTrendChartComponent,
-    IncomeExpenseChartComponent,
-    ExpensePieChartComponent,
-    RedefinirSenhaComponent,
-    ConfirmDialogComponent,
-    RelatorioMensalComponent,
-    FaturaFormComponent,
-    PagamentoFaturaModalComponent,
-    NotificacoesComponent,
-    ContaFixaRecorrenteComponent,
-    MinhaContaComponent,
-    ComprovantesDialogComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    FormsModule,
-    MatButtonModule,
-    MatBadgeModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatListModule,
-    RouterModule,
-    MatIconModule,
-    MatExpansionModule,
-    MatTooltipModule,
-    AppRoutingModule,
-    HttpClientModule,
-    MatCardModule,
-    MatTableModule,
-    MatSidenavModule,
-    MatMenuModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatSnackBarModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatGridListModule,
-    MatSelectModule,
-    MatCheckboxModule,
-    MatRadioModule,
-    MatPaginatorModule,
-    MatProgressSpinnerModule,
-    MatProgressBarModule,
-    MatSortModule,
-    NgChartsModule,
-    RegisterComponent, // Importa o componente standalone
-    LoginComponent,
-    MatDialogModule,
-    MatChipsModule,
-    LimiteAlertasWidgetComponent, // Importa o widget standalone
-    CartaoLimitesComponent, // Importa o componente standalone
-    NotificacoesWidgetComponent // Importa o widget de notificações standalone
-  ],
-  providers: [
-    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    { provide: LocationStrategy, useClass: HashLocationStrategy }
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        DashboardComponent,
+        MenuLateralComponent,
+        CartaoFormComponent,
+        CategoriaFormComponent,
+        ProventoFormComponent,
+        DespesasFixasComponent,
+        DepesasRecorrentesComponent,
+        ListDespesasRecorrentesComponent,
+        ListContasFixasComponent,
+        ListProventosComponent,
+        AccountComponent,
+        ListAccountsComponent,
+        SpendingTrendChartComponent,
+        IncomeExpenseChartComponent,
+        ExpensePieChartComponent,
+        RedefinirSenhaComponent,
+        ConfirmDialogComponent,
+        RelatorioMensalComponent,
+        FaturaFormComponent,
+        PagamentoFaturaModalComponent,
+        NotificacoesComponent,
+        ContaFixaRecorrenteComponent,
+        MinhaContaComponent,
+        ComprovantesDialogComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        BrowserAnimationsModule,
+        FormsModule,
+        MatButtonModule,
+        MatBadgeModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatListModule,
+        RouterModule,
+        MatIconModule,
+        MatExpansionModule,
+        MatTooltipModule,
+        AppRoutingModule,
+        MatCardModule,
+        MatTableModule,
+        MatSidenavModule,
+        MatMenuModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatFormFieldModule,
+        MatSnackBarModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatGridListModule,
+        MatSelectModule,
+        MatCheckboxModule,
+        MatRadioModule,
+        MatPaginatorModule,
+        MatProgressSpinnerModule,
+        MatProgressBarModule,
+        MatSortModule,
+        NgChartsModule,
+        RegisterComponent, // Importa o componente standalone
+        LoginComponent,
+        MatDialogModule,
+        MatChipsModule,
+        LimiteAlertasWidgetComponent, // Importa o widget standalone
+        CartaoLimitesComponent, // Importa o componente standalone
+        NotificacoesWidgetComponent // Importa o widget de notificações standalone
+    ], providers: [
+        { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+        { provide: LocationStrategy, useClass: HashLocationStrategy },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule {
 }
