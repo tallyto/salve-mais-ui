@@ -15,9 +15,10 @@ interface MonthOption {
 }
 
 @Component({
-  selector: 'app-list-contas-fixas',
-  templateUrl: './list-contas-fixas.component.html',
-  styleUrls: ['./list-contas-fixas.component.css']
+    selector: 'app-list-contas-fixas',
+    templateUrl: './list-contas-fixas.component.html',
+    styleUrls: ['./list-contas-fixas.component.css'],
+    standalone: false
 })
 export class ListContasFixasComponent implements AfterViewInit {
   displayedColumnsContasFixas: string[] = ['nome', 'categoria', 'conta', 'vencimento', 'valor', 'pago', 'acoes'];

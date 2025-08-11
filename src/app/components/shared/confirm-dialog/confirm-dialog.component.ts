@@ -9,8 +9,8 @@ export interface ConfirmDialogData {
 }
 
 @Component({
-  selector: 'app-confirm-dialog',
-  template: `
+    selector: 'app-confirm-dialog',
+    template: `
     <h2 mat-dialog-title>{{ data.title }}</h2>
     <mat-dialog-content>
       <p [innerHTML]="data.message"></p>
@@ -22,6 +22,7 @@ export interface ConfirmDialogData {
       </button>
     </mat-dialog-actions>
   `,
+    standalone: false
 })
 export class ConfirmDialogComponent {
   constructor(

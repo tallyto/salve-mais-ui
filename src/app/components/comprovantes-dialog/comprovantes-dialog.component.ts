@@ -5,9 +5,10 @@ import { Anexo, UrlDownload } from '../../models/anexo.model';
 import { AnexoService } from '../../services/anexo.service';
 
 @Component({
-  selector: 'app-comprovantes-dialog',
-  templateUrl: './comprovantes-dialog.component.html',
-  styleUrls: ['./comprovantes-dialog.component.css']
+    selector: 'app-comprovantes-dialog',
+    templateUrl: './comprovantes-dialog.component.html',
+    styleUrls: ['./comprovantes-dialog.component.css'],
+    standalone: false
 })
 export class ComprovantesDialogComponent {
   anexos: Anexo[] = [];

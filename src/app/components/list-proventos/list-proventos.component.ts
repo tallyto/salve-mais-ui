@@ -6,9 +6,10 @@ import {MatSort} from "@angular/material/sort";
 import {catchError, map, merge, of as observableOf, startWith, switchMap} from "rxjs";
 
 @Component({
-  selector: 'app-list-proventos',
-  templateUrl: './list-proventos.component.html',
-  styleUrls: ['./list-proventos.component.css']
+    selector: 'app-list-proventos',
+    templateUrl: './list-proventos.component.html',
+    styleUrls: ['./list-proventos.component.css'],
+    standalone: false
 })
 export class ListProventosComponent implements AfterViewInit {
   resultsLength = 0;

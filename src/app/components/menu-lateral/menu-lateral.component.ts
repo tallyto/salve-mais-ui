@@ -8,9 +8,10 @@ import { NotificationEventService } from '../../services/notification-event.serv
 import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
-  selector: 'app-menu-lateral',
-  templateUrl: './menu-lateral.component.html',
-  styleUrls: ['./menu-lateral.component.css']
+    selector: 'app-menu-lateral',
+    templateUrl: './menu-lateral.component.html',
+    styleUrls: ['./menu-lateral.component.css'],
+    standalone: false
 })
 export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('sidenav') sidenav!: MatSidenav;

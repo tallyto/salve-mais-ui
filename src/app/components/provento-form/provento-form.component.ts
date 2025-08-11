@@ -8,9 +8,10 @@ import { Provento } from "../../models/provento.model";
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-provento-form',
-  templateUrl: './provento-form.component.html',
-  styleUrls: ['./provento-form.component.css']
+    selector: 'app-provento-form',
+    templateUrl: './provento-form.component.html',
+    styleUrls: ['./provento-form.component.css'],
+    standalone: false
 })
 export class ProventoFormComponent implements OnInit, OnDestroy {
   public proventoForm: FormGroup;

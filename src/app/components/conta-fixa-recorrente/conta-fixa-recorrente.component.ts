@@ -11,9 +11,10 @@ import { Categoria } from '../../models/categoria.model';
 import { Account } from '../../models/account.model';
 
 @Component({
-  selector: 'app-conta-fixa-recorrente',
-  templateUrl: './conta-fixa-recorrente.component.html',
-  styleUrls: ['./conta-fixa-recorrente.component.css']
+    selector: 'app-conta-fixa-recorrente',
+    templateUrl: './conta-fixa-recorrente.component.html',
+    styleUrls: ['./conta-fixa-recorrente.component.css'],
+    standalone: false
 })
 export class ContaFixaRecorrenteComponent implements OnInit {
   

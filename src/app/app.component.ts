@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router, NavigationEnd } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-root',
-  template: `<app-menu-lateral></app-menu-lateral>`,
-  styleUrls: ['./app.component.css']
+    selector: 'app-root',
+    template: `<app-menu-lateral></app-menu-lateral>`,
+    styleUrls: ['./app.component.css'],
+    standalone: false
 })
 export class AppComponent implements OnInit {
   title = 'gestor-financeiro-ui';

@@ -1,13 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CategoriaService} from "../../services/categoria.service";
 import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
 import {Categoria} from "../../models/categoria.model";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-categoria-form',
-  templateUrl: './categoria-form.component.html',
-  styleUrls: ['./categoria-form.component.css']
+    selector: 'app-categoria-form',
+    templateUrl: './categoria-form.component.html',
+    styleUrls: ['./categoria-form.component.css'],
+    standalone: false
 })
 export class CategoriaFormComponent implements OnInit {
   public categoriaForm: FormGroup;

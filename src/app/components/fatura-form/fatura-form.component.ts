@@ -9,9 +9,10 @@ import { Cartao } from '../../models/cartao.model';
 import { PagamentoFaturaModalComponent } from '../pagamento-fatura-modal/pagamento-fatura-modal.component';
 
 @Component({
-  selector: 'app-fatura-form',
-  templateUrl: './fatura-form.component.html',
-  styleUrls: ['./fatura-form.component.css']
+    selector: 'app-fatura-form',
+    templateUrl: './fatura-form.component.html',
+    styleUrls: ['./fatura-form.component.css'],
+    standalone: false
 })
 export class FaturaFormComponent implements OnInit {
   faturaForm: FormGroup;

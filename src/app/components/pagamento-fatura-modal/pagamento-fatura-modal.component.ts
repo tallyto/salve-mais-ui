@@ -8,9 +8,10 @@ import { Account } from '../../models/account.model';
 import { FaturaResponseDTO } from '../../models/fatura.model';
 
 @Component({
-  selector: 'app-pagamento-fatura-modal',
-  templateUrl: './pagamento-fatura-modal.component.html',
-  styleUrls: ['./pagamento-fatura-modal.component.css']
+    selector: 'app-pagamento-fatura-modal',
+    templateUrl: './pagamento-fatura-modal.component.html',
+    styleUrls: ['./pagamento-fatura-modal.component.css'],
+    standalone: false
 })
 export class PagamentoFaturaModalComponent implements OnInit {
   pagamentoForm: FormGroup;

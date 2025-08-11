@@ -7,9 +7,10 @@ import {Account} from "../../models/account.model";
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-list-accounts',
-  templateUrl: './list-accounts.component.html',
-  styleUrls: ['./list-accounts.component.css']
+    selector: 'app-list-accounts',
+    templateUrl: './list-accounts.component.html',
+    styleUrls: ['./list-accounts.component.css'],
+    standalone: false
 })
 export class ListAccountsComponent implements AfterViewInit {
   resultsLength = 0;

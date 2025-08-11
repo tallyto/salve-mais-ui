@@ -9,9 +9,10 @@ import {Financa} from "../../models/financa.model";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
-  selector: 'app-despesas-fixas',
-  templateUrl: './despesas-fixas.component.html',
-  styleUrls: ['./despesas-fixas.component.css']
+    selector: 'app-despesas-fixas',
+    templateUrl: './despesas-fixas.component.html',
+    styleUrls: ['./despesas-fixas.component.css'],
+    standalone: false
 })
 export class DespesasFixasComponent implements OnInit {
   despesaFixaForm: FormGroup;

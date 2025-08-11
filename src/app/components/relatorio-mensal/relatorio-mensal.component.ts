@@ -5,9 +5,10 @@ import { RelatorioMensalService } from '../../services/relatorio-mensal.service'
 import { RelatorioMensalDTO, ItemGastoFixoDTO } from '../../models/relatorio-mensal.model';
 
 @Component({
-  selector: 'app-relatorio-mensal',
-  templateUrl: './relatorio-mensal.component.html',
-  styleUrls: ['./relatorio-mensal.component.css']
+    selector: 'app-relatorio-mensal',
+    templateUrl: './relatorio-mensal.component.html',
+    styleUrls: ['./relatorio-mensal.component.css'],
+    standalone: false
 })
 export class RelatorioMensalComponent implements OnInit {
   relatorioForm: FormGroup;

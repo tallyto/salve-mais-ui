@@ -1,13 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CartaoService} from "../../services/cartao.service";
 import {Cartao} from "../../models/cartao.model";
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-cartao-form',
-  templateUrl: './cartao-form.component.html',
-  styleUrls: ['./cartao-form.component.css']
+    selector: 'app-cartao-form',
+    templateUrl: './cartao-form.component.html',
+    styleUrls: ['./cartao-form.component.css'],
+    standalone: false
 })
 export class CartaoFormComponent implements OnInit {
 

@@ -4,9 +4,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-notificacoes',
-  templateUrl: './notificacoes.component.html',
-  styleUrls: ['./notificacoes.component.css']
+    selector: 'app-notificacoes',
+    templateUrl: './notificacoes.component.html',
+    styleUrls: ['./notificacoes.component.css'],
+    standalone: false
 })
 export class NotificacoesComponent implements OnInit {
   notificacoes: NotificacaoDTO[] = [];

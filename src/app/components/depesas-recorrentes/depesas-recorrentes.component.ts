@@ -9,9 +9,10 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {GastoCartao} from "../../models/gasto-cartao.model";
 
 @Component({
-  selector: 'app-depesas-recorrentes',
-  templateUrl: './depesas-recorrentes.component.html',
-  styleUrls: ['./depesas-recorrentes.component.css']
+    selector: 'app-depesas-recorrentes',
+    templateUrl: './depesas-recorrentes.component.html',
+    styleUrls: ['./depesas-recorrentes.component.css'],
+    standalone: false
 })
 export class DepesasRecorrentesComponent implements OnInit {
   gastosRecorrentes: FormGroup;

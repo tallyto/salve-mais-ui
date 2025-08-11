@@ -4,9 +4,10 @@ import { UsuarioService } from '../../services/usuario.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-  selector: 'app-minha-conta',
-  templateUrl: './minha-conta.component.html',
-  styleUrls: ['./minha-conta.component.css']
+    selector: 'app-minha-conta',
+    templateUrl: './minha-conta.component.html',
+    styleUrls: ['./minha-conta.component.css'],
+    standalone: false
 })
 export class MinhaContaComponent implements OnInit {
   usuario: {

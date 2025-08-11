@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-redefinir-senha',
-  templateUrl: './redefinir-senha.component.html',
-  styleUrls: ['./redefinir-senha.component.css']
+    selector: 'app-redefinir-senha',
+    templateUrl: './redefinir-senha.component.html',
+    styleUrls: ['./redefinir-senha.component.css'],
+    standalone: false
 })
 export class RedefinirSenhaComponent implements OnInit {
   redefinirForm: FormGroup;
@@ -80,7 +81,7 @@ export class RedefinirSenhaComponent implements OnInit {
             this.router.navigate(['/login']);
           }, 1500);
         },
-        error: err => {
+        error: (err: { error: { message: any; error: any; }; }) => {
           const mensagem = err.error?.message || err.error?.error || 'Erro ao redefinir senha. Tente novamente.';
           this.snackBar.open(mensagem, 'Fechar', {
             duration: 4000,
