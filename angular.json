@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "gestor-financeiro-ui": {
+    "salve-mais-ui": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -14,7 +14,7 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": {
-              "base": "dist/gestor-financeiro-ui"
+              "base": "dist/salve-mais-ui"
             },
             "index": "src/index.html",
             "polyfills": [
@@ -68,10 +68,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "gestor-financeiro-ui:build:production"
+              "buildTarget": "salve-mais-ui:build:production"
             },
             "development": {
-              "buildTarget": "gestor-financeiro-ui:build:development"
+              "buildTarget": "salve-mais-ui:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -79,7 +79,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "gestor-financeiro-ui:build"
+            "buildTarget": "salve-mais-ui:build"
           }
         },
         "test": {
