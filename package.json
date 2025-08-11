@@ -1,6 +1,6 @@
 {
   "name": "salve-mais-ui",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "description": "Aplicação web para gerenciamento financeiro pessoal e controle de despesas",
   "keywords": ["finanças", "controle de gastos", "gestão financeira", "angular", "despesas", "orçamento"],
   "scripts": {
