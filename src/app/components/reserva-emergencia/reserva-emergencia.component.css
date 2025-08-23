@@ -1,0 +1,13 @@
+.large-icon {
+  font-size: 48px;
+  height: 48px;
+  width: 48px;
+}
+
+mat-card {
+  margin-bottom: 20px;
+}
+
+.mat-mdc-card-header {
+  margin-bottom: 16px;
+}

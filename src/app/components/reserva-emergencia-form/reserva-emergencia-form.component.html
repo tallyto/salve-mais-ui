@@ -1,0 +1,186 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-12">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>{{ isEditMode ? 'Editar' : 'Criar' }} Reserva de Emergência</mat-card-title>
+          <mat-card-subtitle>
+            Configure sua reserva financeira para emergências e imprevistos
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div *ngIf="loading" class="text-center p-5">
+            <mat-spinner diameter="50" class="mx-auto"></mat-spinner>
+            <p class="mt-3">Carregando...</p>
+          </div>
+
+          <form [formGroup]="reservaForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field appearance="outline" class="w-100 mb-3">
+                  <mat-label>Conta</mat-label>
+                  <mat-select formControlName="contaId" required>
+                    <mat-option *ngFor="let conta of contasDisponiveis" [value]="conta.id">
+                      {{ conta.titular }} {{ conta.descricao ? '- ' + conta.descricao : '' }}
+                      (Saldo: {{ conta.saldo | currency:'BRL' }})
+                    </mat-option>
+                  </mat-select>
+                  <mat-hint>Selecione a conta para gerenciar a reserva de emergência</mat-hint>
+                  <mat-error *ngIf="reservaForm.get('contaId')?.hasError('required')">
+                    Por favor, selecione uma conta
+                  </mat-error>
+                </mat-form-field>
+
+                <div *ngIf="contasDisponiveis?.length === 0" class="alert alert-warning">
+                  <mat-icon>warning</mat-icon>
+                  Nenhuma conta disponível. Crie uma conta primeiro.
+                </div>
+
+                <mat-form-field appearance="outline" class="w-100 mb-3">
+                  <mat-label>Multiplicador de Despesas</mat-label>
+                  <mat-select formControlName="multiplicadorDespesas" required>
+                    <mat-option *ngFor="let mult of multiplicadoresDisponiveis" [value]="mult.valor">
+                      {{ mult.descricao }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-hint>Este valor determina quantos meses de despesas você quer guardar</mat-hint>
+                  <mat-error *ngIf="reservaForm.get('multiplicadorDespesas')?.hasError('required')">
+                    Selecione um multiplicador
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="w-100 mb-3">
+                  <mat-label>Taxa de Rendimento Anual (%)</mat-label>
+                  <input matInput type="number" formControlName="taxaRendimento" required>
+                  <span matSuffix>% a.a.</span>
+                  <mat-hint>Taxa aproximada baseada na Selic atual (usada para cálculos de rendimento)</mat-hint>
+                  <mat-error *ngIf="reservaForm.get('taxaRendimento')?.hasError('min')">
+                    A taxa não pode ser negativa
+                  </mat-error>
+                  <mat-error *ngIf="reservaForm.get('taxaRendimento')?.hasError('max')">
+                    A taxa não pode exceder 100%
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-md-6">
+                <div class="d-flex mb-3">
+                  <mat-form-field appearance="outline" class="w-100 me-2">
+                    <mat-label>Objetivo (R$)</mat-label>
+                    <input matInput type="number" formControlName="objetivo" required>
+                    <span matPrefix>R$ &nbsp;</span>
+                    <mat-error *ngIf="reservaForm.get('objetivo')?.hasError('required')">
+                      Informe o valor objetivo
+                    </mat-error>
+                    <mat-error *ngIf="reservaForm.get('objetivo')?.hasError('min')">
+                      O valor deve ser maior que zero
+                    </mat-error>
+                  </mat-form-field>
+
+                  <button
+                    type="button"
+                    mat-raised-button
+                    color="primary"
+                    class="mb-3"
+                    (click)="calcularObjetivoAutomatico()"
+                    [disabled]="calculandoObjetivo">
+                    <mat-icon>calculate</mat-icon>
+                    {{ calculandoObjetivo ? 'Calculando...' : 'Calcular' }}
+                  </button>
+                </div>
+
+                <mat-form-field appearance="outline" class="w-100 mb-3">
+                  <mat-label>Contribuição Mensal (R$)</mat-label>
+                  <input matInput type="number" formControlName="valorContribuicaoMensal" required>
+                  <span matPrefix>R$ &nbsp;</span>
+                  <mat-hint>Quanto você planeja depositar mensalmente</mat-hint>
+                  <mat-error *ngIf="reservaForm.get('valorContribuicaoMensal')?.hasError('required')">
+                    Informe o valor da contribuição mensal
+                  </mat-error>
+                  <mat-error *ngIf="reservaForm.get('valorContribuicaoMensal')?.hasError('min')">
+                    O valor deve ser maior que zero
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row mt-3">
+              <div class="col-12">
+                <div class="alert alert-info">
+                  <mat-icon>info</mat-icon>
+                  <strong>Dica:</strong> Uma boa reserva de emergência deve cobrir entre 3 a 6 meses das suas despesas mensais.
+                  Quanto mais instável sua fonte de renda, maior deve ser sua reserva.
+                </div>
+
+                <button type="button" mat-stroked-button color="accent" class="me-2" (click)="simularTempoParaCompletar()">
+                  <mat-icon>timeline</mat-icon> Simular Tempo para Completar
+                </button>
+              </div>
+            </div>
+
+            <!-- Seção de Contribuição Inicial (apenas para criação) -->
+            <div class="row mt-4" *ngIf="!isEditMode">
+              <div class="col-12">
+                <mat-divider></mat-divider>
+                <div class="d-flex align-items-center my-3">
+                  <h3 class="mb-0 me-auto">Contribuição Inicial</h3>
+                  <mat-slide-toggle color="primary" [checked]="mostrarContribuicaoInicial" (change)="toggleContribuicaoInicial()">
+                    {{ mostrarContribuicaoInicial ? 'Ativo' : 'Desativado' }}
+                  </mat-slide-toggle>
+                </div>
+
+                <div *ngIf="mostrarContribuicaoInicial" [formGroup]="contribuicaoForm">
+                  <div class="alert alert-warning">
+                    <mat-icon>lightbulb</mat-icon>
+                    <strong>Dica:</strong> Faça uma contribuição inicial transferindo valores de uma conta corrente para iniciar sua reserva de emergência.
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <mat-form-field appearance="outline" class="w-100 mb-3">
+                        <mat-label>Conta de Origem</mat-label>
+                        <mat-select formControlName="contaOrigemId" required>
+                          <mat-option *ngFor="let conta of contasCorrentes" [value]="conta.id">
+                            {{ conta.titular }} {{ conta.descricao ? '- ' + conta.descricao : '' }}
+                            (Saldo: {{ conta.saldo | currency:'BRL' }})
+                          </mat-option>
+                        </mat-select>
+                        <mat-hint>Selecione a conta de onde virá o valor inicial</mat-hint>
+                        <mat-error *ngIf="contribuicaoForm.get('contaOrigemId')?.hasError('required')">
+                          Selecione uma conta de origem
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+
+                    <div class="col-md-6">
+                      <mat-form-field appearance="outline" class="w-100 mb-3">
+                        <mat-label>Valor Inicial (R$)</mat-label>
+                        <input matInput type="number" formControlName="valorInicial" required>
+                        <span matPrefix>R$ &nbsp;</span>
+                        <mat-hint>Valor a ser transferido para iniciar sua reserva</mat-hint>
+                        <mat-error *ngIf="contribuicaoForm.get('valorInicial')?.hasError('required')">
+                          Informe o valor inicial
+                        </mat-error>
+                        <mat-error *ngIf="contribuicaoForm.get('valorInicial')?.hasError('min')">
+                          O valor deve ser maior que zero
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-end mt-4">
+              <button type="button" mat-button (click)="cancelar()">Cancelar</button>
+              <button type="submit" mat-raised-button color="primary" [disabled]="reservaForm.invalid">
+                {{ isEditMode ? 'Atualizar' : 'Criar' }} Reserva
+              </button>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

@@ -10,7 +10,7 @@ import { environment } from '../../environments/environment';
 })
 export class AccountService {
 
-  private apiUrl = environment.apiUrl + '/conta'
+  private apiUrl = environment.apiUrl + '/contas'
 
   savedAccount = new EventEmitter<void>();
   constructor(private http: HttpClient) {

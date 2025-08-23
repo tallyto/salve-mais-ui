@@ -1,5 +1,26 @@
 # Changelog - Salve Mais
 
+## [1.12.1] - 2025-08-23
+
+### Adicionado
+
+- Sistema completo de Reserva de Emergência:
+  - Nova página para visualização de reservas de emergência
+  - Formulário para criação e edição de reservas
+  - Integração com o backend para cálculo automático de objetivo
+  - Interface para gerenciamento de contribuições para a reserva
+  - Seleção simplificada de contas para facilitar testes
+  - Visualização do progresso da reserva com indicadores visuais
+  - Simulação de tempo para completar a reserva baseado na contribuição mensal
+- Integração com tipos de conta:
+  - Atualização dos modelos para suportar diferentes tipos de conta
+  - Suporte a contas com rendimento
+
+### Melhorado
+
+- Flexibilidade na seleção de contas para diferentes funcionalidades
+- Interface de usuário intuitiva para gerenciamento financeiro
+
 ## [Unreleased]
 
 ### Adicionado

@@ -1,0 +1,13 @@
+mat-form-field {
+  width: 100%;
+}
+
+.alert-info {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+}
+
+.alert-info mat-icon {
+  margin-right: 8px;
+}

@@ -1,0 +1,140 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-12">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Reserva de Emergência</mat-card-title>
+          <mat-card-subtitle>Acompanhe o progresso da sua reserva financeira para emergências</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div *ngIf="loading" class="text-center p-5">
+            <mat-spinner diameter="50" class="mx-auto"></mat-spinner>
+            <p class="mt-3">Carregando dados...</p>
+          </div>
+
+          <div *ngIf="!loading && error" class="alert alert-danger">
+            {{ error }}
+          </div>
+
+          <div *ngIf="!loading && !error && !reservaAtual && reservas.length === 0" class="text-center p-4">
+            <mat-icon class="large-icon mb-3">savings</mat-icon>
+            <h3>Você ainda não possui uma reserva de emergência configurada</h3>
+            <p class="text-muted">
+              Uma reserva de emergência é fundamental para sua segurança financeira.
+              Recomenda-se ter entre 3 a 6 meses de despesas guardadas para imprevistos.
+            </p>
+            <button mat-raised-button color="primary" (click)="criarReserva()">
+              <mat-icon>add</mat-icon> Criar Reserva de Emergência
+            </button>
+          </div>
+
+          <div *ngIf="!loading && !error && reservaAtual" class="row">
+            <!-- Resumo e Progresso -->
+            <div class="col-md-6">
+              <div class="p-3">
+                <h3>Resumo</h3>
+                <mat-progress-bar
+                  [color]="getCorProgresso()"
+                  mode="determinate"
+                  [value]="reservaAtual.percentualConcluido">
+                </mat-progress-bar>
+
+                <div class="d-flex justify-content-between mt-2">
+                  <span>{{ reservaAtual.percentualConcluido | number:'1.0-1' }}% concluído</span>
+                  <span>Meta: {{ reservaAtual.objetivo | currency:'BRL' }}</span>
+                </div>
+
+                <div class="mt-4">
+                  <mat-list>
+                    <mat-list-item>
+                      <mat-icon matListItemIcon>account_balance</mat-icon>
+                      <div matListItemTitle>Saldo Atual</div>
+                      <div matListItemLine>{{ reservaAtual.saldoAtual | currency:'BRL' }}</div>
+                    </mat-list-item>
+
+                    <mat-list-item>
+                      <mat-icon matListItemIcon>savings</mat-icon>
+                      <div matListItemTitle>Contribuição Mensal</div>
+                      <div matListItemLine>{{ reservaAtual.valorContribuicaoMensal | currency:'BRL' }}</div>
+                    </mat-list-item>
+
+                    <mat-list-item>
+                      <mat-icon matListItemIcon>calendar_today</mat-icon>
+                      <div matListItemTitle>Previsão para Conclusão</div>
+                      <div matListItemLine>
+                        <span *ngIf="reservaAtual.dataPrevisaoCompletar">
+                          {{ reservaAtual.dataPrevisaoCompletar | date:'dd/MM/yyyy' }}
+                          ({{ reservaAtual.mesesRestantes }} meses restantes)
+                        </span>
+                        <span *ngIf="!reservaAtual.dataPrevisaoCompletar">Não calculado</span>
+                      </div>
+                    </mat-list-item>
+
+                    <mat-list-item>
+                      <mat-icon matListItemIcon>account_balance_wallet</mat-icon>
+                      <div matListItemTitle>Conta Vinculada</div>
+                      <div matListItemLine>{{ reservaAtual.conta.titular }} (Saldo: {{ reservaAtual.conta.saldo | currency:'BRL' }})</div>
+                    </mat-list-item>
+                  </mat-list>
+                </div>
+              </div>
+            </div>
+
+            <!-- Ações e Estatísticas -->
+            <div class="col-md-6">
+              <div class="p-3">
+                <h3>Ações</h3>
+                <div class="d-flex flex-column">
+                  <button mat-raised-button color="primary" class="mb-2" (click)="editarReserva(reservaAtual.id!)">
+                    <mat-icon>edit</mat-icon> Editar Configurações
+                  </button>
+
+                  <mat-expansion-panel class="mb-2">
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        <mat-icon>add_circle</mat-icon> Adicionar Valor
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div class="p-2">
+                      <mat-form-field appearance="outline" class="w-100">
+                        <mat-label>Valor a adicionar</mat-label>
+                        <input matInput type="number" #valorAdicionar>
+                        <span matSuffix>R$</span>
+                      </mat-form-field>
+
+                      <button mat-raised-button color="accent" (click)="atualizarSaldo(+valorAdicionar.value)">
+                        Adicionar
+                      </button>
+                    </div>
+                  </mat-expansion-panel>
+
+                  <button mat-stroked-button color="warn" (click)="excluirReserva(reservaAtual.id!)">
+                    <mat-icon>delete</mat-icon> Excluir Reserva
+                  </button>
+                </div>
+
+                <div class="mt-4">
+                  <h3>Estatísticas</h3>
+                  <p>
+                    <strong>Despesa Média Mensal:</strong> {{ reservaAtual.despesasMensaisMedia | currency:'BRL' }}
+                  </p>
+                  <p>
+                    <strong>Multiplicador de Reserva:</strong> {{ reservaAtual.multiplicadorDespesas }}x
+                  </p>
+                  <p>
+                    <strong>Data de Criação:</strong> {{ reservaAtual.dataCriacao | date:'dd/MM/yyyy' }}
+                  </p>
+                  <p>
+                    <strong>Valor Restante:</strong> {{ (reservaAtual.objetivo - reservaAtual.saldoAtual) | currency:'BRL' }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

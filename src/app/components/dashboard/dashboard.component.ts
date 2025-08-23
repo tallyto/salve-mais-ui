@@ -386,6 +386,79 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  // Métodos para a reserva de emergência
+  getReservaEmergenciaHealthClass(): string {
+    if (!this.summaryData || !this.summaryData.reservaEmergencia) {
+      return 'health-poor';
+    }
+    
+    const percentual = this.summaryData.reservaEmergencia.percentualConcluido || 0;
+    
+    if (percentual >= 75) {
+      return 'health-excellent';
+    } else if (percentual >= 50) {
+      return 'health-good';
+    } else if (percentual >= 25) {
+      return 'health-average';
+    } else {
+      return 'health-poor';
+    }
+  }
+
+  getReservaEmergenciaStatus(): string {
+    if (!this.summaryData || !this.summaryData.reservaEmergencia) {
+      return 'Não configurada';
+    }
+    
+    const percentual = this.summaryData.reservaEmergencia.percentualConcluido || 0;
+    
+    if (percentual >= 75) {
+      return 'Excelente';
+    } else if (percentual >= 50) {
+      return 'Boa';
+    } else if (percentual >= 25) {
+      return 'Em progresso';
+    } else {
+      return 'Inicial';
+    }
+  }
+
+  getReservaEmergenciaIcon(): string {
+    if (!this.summaryData || !this.summaryData.reservaEmergencia) {
+      return 'sentiment_very_dissatisfied';
+    }
+    
+    const percentual = this.summaryData.reservaEmergencia.percentualConcluido || 0;
+    
+    if (percentual >= 75) {
+      return 'sentiment_very_satisfied';
+    } else if (percentual >= 50) {
+      return 'sentiment_satisfied';
+    } else if (percentual >= 25) {
+      return 'sentiment_dissatisfied';
+    } else {
+      return 'sentiment_very_dissatisfied';
+    }
+  }
+
+  getReservaEmergenciaPercentual(): number {
+    if (!this.summaryData || !this.summaryData.reservaEmergencia || !this.summaryData.reservaEmergencia.percentualConcluido) {
+      return 0;
+    }
+    return this.summaryData.reservaEmergencia.percentualConcluido;
+  }
+
+  getReservaEmergenciaTempoRestante(): string {
+    if (!this.summaryData || !this.summaryData.reservaEmergencia || !this.summaryData.reservaEmergencia.tempoRestante) {
+      return '';
+    }
+    return this.summaryData.reservaEmergencia.tempoRestante.toString();
+  }
+
+  reservaEmergenciaEstaCompleta(): boolean {
+    return this.getReservaEmergenciaPercentual() >= 100;
+  }
+
   getFinancialTip(): string {
     const ratio = this.getBalanceRatio();
 

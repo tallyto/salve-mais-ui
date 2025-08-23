@@ -19,6 +19,8 @@ import { CartaoLimitesComponent } from './components/cartao-limites/cartao-limit
 import { ContaFixaRecorrenteComponent } from './components/conta-fixa-recorrente/conta-fixa-recorrente.component';
 import { NotificacoesComponent } from './components/notificacoes/notificacoes.component';
 import { MinhaContaComponent } from './components/minha-conta/minha-conta.component';
+import { ReservaEmergenciaComponent } from './components/reserva-emergencia/reserva-emergencia.component';
+import { ReservaEmergenciaFormComponent } from './components/reserva-emergencia-form/reserva-emergencia-form.component';
 
 
 const routes: Routes = [
@@ -41,6 +43,9 @@ const routes: Routes = [
   {path: 'redefinir-senha', component: RedefinirSenhaComponent},
   {path: 'criar-usuario', component: CriarUsuarioComponent},
   {path: 'relatorio-mensal', component: RelatorioMensalComponent, canActivate: [AuthGuard]},
+  {path: 'reserva-emergencia', component: ReservaEmergenciaComponent, canActivate: [AuthGuard]},
+  {path: 'reserva-emergencia/criar', component: ReservaEmergenciaFormComponent, canActivate: [AuthGuard]},
+  {path: 'reserva-emergencia/editar/:id', component: ReservaEmergenciaFormComponent, canActivate: [AuthGuard]},
   {path: '**', redirectTo: 'dashboard'}
 ];
 

@@ -12,6 +12,14 @@ export interface DashboardSummary {
   saldoMesAnterior: number;
   receitasMesAnterior?: number;
   despesasMesAnterior?: number;
+  reservaEmergencia?: {
+    id?: number;
+    objetivo?: number;
+    saldoAtual?: number;
+    percentualConcluido?: number;
+    tempoRestante?: number;
+  };
+  temReservaEmergencia?: boolean;
 }
 
 export interface VariationData {

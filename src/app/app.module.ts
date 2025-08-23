@@ -1,4 +1,4 @@
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi, HttpClientModule } from '@angular/common/http';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -21,6 +21,7 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatRadioModule } from "@angular/material/radio";
 import { MatSelectModule } from "@angular/material/select";
 import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatSortModule } from "@angular/material/sort";
 import { MatTableModule } from '@angular/material/table';
@@ -50,6 +51,8 @@ import { MenuLateralComponent } from './components/menu-lateral/menu-lateral.com
 import { ProventoFormComponent } from './components/provento-form/provento-form.component';
 import { RedefinirSenhaComponent } from './components/redefinir-senha/redefinir-senha.component';
 import { RegisterComponent } from './components/register/register.component';
+import { ReservaEmergenciaComponent } from './components/reserva-emergencia/reserva-emergencia.component';
+import { ReservaEmergenciaFormComponent } from './components/reserva-emergencia-form/reserva-emergencia-form.component';
 import { SpendingTrendChartComponent } from './components/spending-trend-chart/spending-trend-chart.component';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -66,77 +69,86 @@ import { NotificacoesComponent } from './components/notificacoes/notificacoes.co
 import { NotificacoesWidgetComponent } from './components/notificacoes-widget/notificacoes-widget.component';
 import { MinhaContaComponent } from './components/minha-conta/minha-conta.component';
 
-@NgModule({ declarations: [
-        AppComponent,
-        DashboardComponent,
-        MenuLateralComponent,
-        CartaoFormComponent,
-        CategoriaFormComponent,
-        ProventoFormComponent,
-        DespesasFixasComponent,
-        DepesasRecorrentesComponent,
-        ListDespesasRecorrentesComponent,
-        ListContasFixasComponent,
-        ListProventosComponent,
-        AccountComponent,
-        ListAccountsComponent,
-        SpendingTrendChartComponent,
-        IncomeExpenseChartComponent,
-        ExpensePieChartComponent,
-        RedefinirSenhaComponent,
-        ConfirmDialogComponent,
-        RelatorioMensalComponent,
-        FaturaFormComponent,
-        PagamentoFaturaModalComponent,
-        NotificacoesComponent,
-        ContaFixaRecorrenteComponent,
-        MinhaContaComponent,
-        ComprovantesDialogComponent
-    ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
-        BrowserAnimationsModule,
-        FormsModule,
-        MatButtonModule,
-        MatBadgeModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatListModule,
-        RouterModule,
-        MatIconModule,
-        MatExpansionModule,
-        MatTooltipModule,
-        AppRoutingModule,
-        MatCardModule,
-        MatTableModule,
-        MatSidenavModule,
-        MatMenuModule,
-        ReactiveFormsModule,
-        MatInputModule,
-        MatFormFieldModule,
-        MatSnackBarModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatGridListModule,
-        MatSelectModule,
-        MatCheckboxModule,
-        MatRadioModule,
-        MatPaginatorModule,
-        MatProgressSpinnerModule,
-        MatProgressBarModule,
-        MatSortModule,
-        NgChartsModule,
-        RegisterComponent, // Importa o componente standalone
-        LoginComponent,
-        MatDialogModule,
-        MatChipsModule,
-        LimiteAlertasWidgetComponent, // Importa o widget standalone
-        CartaoLimitesComponent, // Importa o componente standalone
-        NotificacoesWidgetComponent // Importa o widget de notificações standalone
-    ], providers: [
-        { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
-        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-        { provide: LocationStrategy, useClass: HashLocationStrategy },
-        provideHttpClient(withInterceptorsFromDi())
-    ] })
+@NgModule({
+  declarations: [
+    AppComponent,
+    DashboardComponent,
+    MenuLateralComponent,
+    CartaoFormComponent,
+    CategoriaFormComponent,
+    ProventoFormComponent,
+    DespesasFixasComponent,
+    DepesasRecorrentesComponent,
+    ListDespesasRecorrentesComponent,
+    ListContasFixasComponent,
+    ListProventosComponent,
+    AccountComponent,
+    ListAccountsComponent,
+    SpendingTrendChartComponent,
+    IncomeExpenseChartComponent,
+    ExpensePieChartComponent,
+    RedefinirSenhaComponent,
+    ConfirmDialogComponent,
+    RelatorioMensalComponent,
+    FaturaFormComponent,
+    PagamentoFaturaModalComponent,
+    NotificacoesComponent,
+    ContaFixaRecorrenteComponent,
+    MinhaContaComponent,
+    ComprovantesDialogComponent,
+    ReservaEmergenciaComponent,
+    ReservaEmergenciaFormComponent
+  ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    MatButtonModule,
+    MatBadgeModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatListModule,
+    RouterModule,
+    MatIconModule,
+    MatExpansionModule,
+    MatTooltipModule,
+    AppRoutingModule,
+    HttpClientModule,
+    MatCardModule,
+    MatTableModule,
+    MatSidenavModule,
+    MatMenuModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatGridListModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatRadioModule,
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    MatSortModule,
+    NgChartsModule,
+    MatSlideToggleModule,
+    RegisterComponent, // Importa o componente standalone
+    LoginComponent,
+    MatDialogModule,
+    MatChipsModule,
+    LimiteAlertasWidgetComponent, // Importa o widget standalone
+    CartaoLimitesComponent, // Importa o componente standalone
+    NotificacoesWidgetComponent // Importa o widget de notificações standalone
+  ],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    provideHttpClient(withInterceptorsFromDi())
+  ],
+  bootstrap: [AppComponent]
+})
 export class AppModule {
 }

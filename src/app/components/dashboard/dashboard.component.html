@@ -67,6 +67,35 @@
     </div>
 
     <div class="col-12 md:col-6 lg:col-3 mb-3">
+      <div class="summary-card" style="border-top-color: #ff9800;">
+        <div class="card-icon" style="background-color: rgba(255, 152, 0, 0.1); color: #ff9800;">
+          <mat-icon>savings</mat-icon>
+        </div>
+        <div class="summary-label">Reserva de Emergência</div>
+        <div class="summary-value" *ngIf="summaryData && summaryData.reservaEmergencia && summaryData.reservaEmergencia.saldoAtual !== undefined">
+          {{ summaryData.reservaEmergencia.saldoAtual | currency:'BRL':'symbol':'1.2-2' }}
+        </div>
+        <div class="summary-value" *ngIf="!summaryData || !summaryData.temReservaEmergencia || !summaryData.reservaEmergencia">
+          Não configurada
+        </div>
+        <div class="text-color-secondary" *ngIf="summaryData && summaryData.reservaEmergencia && summaryData.reservaEmergencia.percentualConcluido !== undefined">
+          <small>
+            {{ summaryData.reservaEmergencia.percentualConcluido | number:'1.1-1' }}% da meta
+            <a routerLink="/reserva-emergencia" class="small-link">Ver detalhes</a>
+          </small>
+        </div>
+        <div class="text-color-secondary" *ngIf="!summaryData || !summaryData.temReservaEmergencia || !summaryData.reservaEmergencia">
+          <small>
+            <a routerLink="/reserva-emergencia/criar" class="small-link">Configurar reserva</a>
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accounts Summary -->
+  <div class="grid mb-4">
+    <div class="col-12 md:col-6 lg:col-3 mb-3">
       <div class="summary-card" style="border-top-color: #9c27b0;">
         <div class="card-icon" style="background-color: rgba(156, 39, 176, 0.1); color: #9c27b0;">
           <mat-icon>account_balance</mat-icon>
@@ -336,6 +365,67 @@
               <p class="tip-title">Dica Financeira</p>
               <p class="tip-text">{{ getFinancialTip() }}</p>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reserva de Emergência Detalhada -->
+    <div class="col-12 lg:col-6 p-2 mb-3">
+      <div class="data-card h-full" style="border-top-color: #ff9800;">
+        <div class="card-header">
+          <div class="header-title">
+            <mat-icon style="color: #ff9800; margin-right: 8px;">savings</mat-icon>
+            <h2 class="section-title m-0">Reserva de Emergência</h2>
+          </div>
+        </div>
+        <div class="card-content">
+          <div *ngIf="summaryData && summaryData.reservaEmergencia && summaryData.temReservaEmergencia">
+            <div class="health-summary mb-3">
+              <div class="health-status" [ngClass]="getReservaEmergenciaHealthClass()">
+                <div class="health-icon">
+                  <mat-icon>{{ getReservaEmergenciaIcon() }}</mat-icon>
+                </div>
+                <div class="health-value">{{ getReservaEmergenciaPercentual() | number:'1.1-1' }}%</div>
+              </div>
+              <div class="health-text">
+                <h3>{{ getReservaEmergenciaStatus() }}</h3>
+                <p *ngIf="summaryData?.reservaEmergencia?.objetivo">Objetivo: {{ summaryData.reservaEmergencia.objetivo | currency:'BRL':'symbol':'1.2-2' }}</p>
+              </div>
+            </div>
+            <div class="progress-container mb-3">
+              <div class="progress-label">
+                <span>Progresso</span>
+                <span>{{ getReservaEmergenciaPercentual() | number:'1.1-1' }}%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" [style.width]="getReservaEmergenciaPercentual() + '%'" [ngClass]="getReservaEmergenciaHealthClass()"></div>
+              </div>
+            </div>
+            <div class="financial-tip">
+              <mat-icon>lightbulb</mat-icon>
+              <div>
+                <p class="tip-title">Informações</p>
+                <p class="tip-text" *ngIf="!reservaEmergenciaEstaCompleta() && getReservaEmergenciaTempoRestante()">
+                  Faltam aproximadamente {{ getReservaEmergenciaTempoRestante() }} meses para completar sua reserva.
+                </p>
+                <p class="tip-text" *ngIf="reservaEmergenciaEstaCompleta()">
+                  Sua reserva de emergência está completa! Considere investir o excedente.
+                </p>
+                <div class="account-add-button">
+                  <button mat-button color="primary" [routerLink]="['/reserva-emergencia']">
+                    <mat-icon>visibility</mat-icon> Ver detalhes
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="!summaryData || !summaryData.temReservaEmergencia || !summaryData.reservaEmergencia" class="text-center p-4">
+            <p class="mb-3 text-color-secondary">Você ainda não configurou sua reserva de emergência.</p>
+            <p class="mb-3">Uma reserva de emergência é fundamental para sua segurança financeira. Recomenda-se ter entre 3 a 6 meses de despesas guardados.</p>
+            <button mat-raised-button color="primary" [routerLink]="['/reserva-emergencia/criar']">
+              <mat-icon>add_circle_outline</mat-icon> Configurar reserva
+            </button>
           </div>
         </div>
       </div>
