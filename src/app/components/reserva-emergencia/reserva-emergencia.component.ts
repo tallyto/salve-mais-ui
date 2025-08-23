@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-reserva-emergencia',
   templateUrl: './reserva-emergencia.component.html',
-  styleUrls: ['./reserva-emergencia.component.css']
+  styleUrls: ['./reserva-emergencia.component.css'],standalone: false
 })
 export class ReservaEmergenciaComponent implements OnInit {
   reservas: ReservaEmergencia[] = [];
