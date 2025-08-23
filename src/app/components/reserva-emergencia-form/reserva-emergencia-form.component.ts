@@ -9,7 +9,8 @@ import { ReservaEmergenciaService } from '../../services/reserva-emergencia.serv
 @Component({
   selector: 'app-reserva-emergencia-form',
   templateUrl: './reserva-emergencia-form.component.html',
-  styleUrls: ['./reserva-emergencia-form.component.css']
+  styleUrls: ['./reserva-emergencia-form.component.css'],
+  standalone: false
 })
 export class ReservaEmergenciaFormComponent implements OnInit {
   reservaForm: FormGroup;
