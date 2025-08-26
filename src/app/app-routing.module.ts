@@ -5,7 +5,7 @@ import {CartaoFormComponent} from "./components/cartao-form/cartao-form.componen
 import {CategoriaFormComponent} from "./components/categoria-form/categoria-form.component";
 import {ProventoFormComponent} from "./components/provento-form/provento-form.component";
 import {DespesasFixasComponent} from "./components/despesas-fixas/despesas-fixas.component";
-import {DepesasRecorrentesComponent} from "./components/depesas-recorrentes/depesas-recorrentes.component";
+import {DespesasRecorrentesComponent} from "./components/despesas-recorrentes/despesas-recorrentes.component";
 import { AccountComponent } from './components/account/account.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
@@ -31,7 +31,7 @@ const routes: Routes = [
   {path: 'provento-form', component: ProventoFormComponent, canActivate: [AuthGuard]},
   {path: 'despesas-fixas', component: DespesasFixasComponent, canActivate: [AuthGuard]},
   {path: 'conta-fixa-recorrente', component: ContaFixaRecorrenteComponent, canActivate: [AuthGuard]},
-  {path: 'despesas-recorrentes', component: DepesasRecorrentesComponent, canActivate: [AuthGuard]},
+  {path: 'despesas-recorrentes', component: DespesasRecorrentesComponent, canActivate: [AuthGuard]},
   {path: 'faturas', component: FaturaFormComponent, canActivate: [AuthGuard]},
   {path: 'cartao-limites', component: CartaoLimitesComponent, canActivate: [AuthGuard]},
   {path: 'notificacoes', component: NotificacoesComponent, canActivate: [AuthGuard]},

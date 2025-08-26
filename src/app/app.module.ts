@@ -38,7 +38,7 @@ import { AccountComponent } from './components/account/account.component';
 import { CartaoFormComponent } from './components/cartao-form/cartao-form.component';
 import { CategoriaFormComponent } from './components/categoria-form/categoria-form.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { DepesasRecorrentesComponent } from './components/depesas-recorrentes/depesas-recorrentes.component';
+import { DespesasRecorrentesComponent } from './components/despesas-recorrentes/despesas-recorrentes.component';
 import { DespesasFixasComponent } from "./components/despesas-fixas/despesas-fixas.component";
 import { ExpensePieChartComponent } from './components/expense-pie-chart/expense-pie-chart.component';
 import { IncomeExpenseChartComponent } from './components/income-expense-chart/income-expense-chart.component';
@@ -78,7 +78,7 @@ import { MinhaContaComponent } from './components/minha-conta/minha-conta.compon
     CategoriaFormComponent,
     ProventoFormComponent,
     DespesasFixasComponent,
-    DepesasRecorrentesComponent,
+    DespesasRecorrentesComponent,
     ListDespesasRecorrentesComponent,
     ListContasFixasComponent,
     ListProventosComponent,
