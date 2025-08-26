@@ -47,15 +47,14 @@ export class CartaoFormComponent implements OnInit {
           verticalPosition: 'top',
         });
       },
-      error: error => {
-        console.log(error);
-        this.snackBar.open('Erro ao salvar cartão', 'Fechar', {
+      error: (errorMessage: string) => {
+        this.snackBar.open(errorMessage, 'Fechar', {
           duration: 3000,
           horizontalPosition: 'right',
           verticalPosition: 'top',
         });
       }
-    })
+    });
   }
 
   private listarCartoes(): void {
@@ -92,9 +91,8 @@ export class CartaoFormComponent implements OnInit {
             verticalPosition: 'top',
           });
         },
-        error: error => {
-          console.log(error);
-          this.snackBar.open('Erro ao atualizar cartão', 'Fechar', {
+        error: (errorMessage: string) => {
+          this.snackBar.open(errorMessage, 'Fechar', {
             duration: 3000,
             horizontalPosition: 'right',
             verticalPosition: 'top',
@@ -119,9 +117,8 @@ export class CartaoFormComponent implements OnInit {
             verticalPosition: 'top',
           });
         },
-        error: (error: any) => {
-          console.log(error);
-          this.snackBar.open('Erro ao excluir cartão', 'Fechar', {
+        error: (errorMessage: string) => {
+          this.snackBar.open(errorMessage, 'Fechar', {
             duration: 3000,
             horizontalPosition: 'right',
             verticalPosition: 'top',

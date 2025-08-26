@@ -48,11 +48,10 @@ export class CategoriaFormComponent implements OnInit {
         this.limparFormulario();
         this.listarCategorias();
       },
-      error: (error: any) => {
-        console.log(error);
-        this.openSnackBar('Erro ao salvar categoria');
+      error: (errorMessage: string) => {
+        this.openSnackBar(errorMessage);
       }
-    })
+    });
   }
 
   public listarCategorias(): void {
@@ -96,9 +95,8 @@ export class CategoriaFormComponent implements OnInit {
           this.openSnackBar('Categoria excluída com sucesso!');
           this.listarCategorias();
         },
-        error: (error: any) => {
-          console.log(error);
-          this.openSnackBar('Erro ao excluir categoria');
+        error: (errorMessage: string) => {
+          this.openSnackBar(errorMessage);
         }
       });
     }

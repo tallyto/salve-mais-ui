@@ -25,6 +25,14 @@
 
 ### Adicionado
 
+- Sistema centralizado de tratamento de erros para a aplicação:
+  - Novo serviço ErrorHandlerService para processamento consistente de erros HTTP
+  - Tratamento específico para diferentes códigos de status HTTP (401, 403, 404, 409, 422, 500+)
+  - Extração automática de mensagens de erro do backend para exibição ao usuário
+  - Integração com serviços existentes (Categoria, Conta, Cartão)
+  - Melhor experiência do usuário com mensagens de erro claras e informativas
+  - Suporte para diferentes formatos de resposta de erro do backend
+
 - Sistema de anexos de comprovantes para contas fixas:
   - Componente de diálogo para upload, visualização e download de comprovantes
   - Integração com a API de anexos no backend
