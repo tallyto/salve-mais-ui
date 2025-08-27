@@ -1,0 +1,100 @@
+.budget-rule-container {
+  padding: 20px;
+}
+
+.section-title {
+  margin-bottom: 20px;
+  color: #333;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+}
+
+.chart-container {
+  min-height: 300px;
+  position: relative;
+}
+
+.category-details {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.category-details:last-child {
+  border-bottom: none;
+}
+
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-warning {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.status-critical {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* Cores para a regra 50/30/20 */
+.necessidades-color {
+  color: #4caf50; /* Verde para necessidades */
+}
+
+.desejos-color {
+  color: #ff9800; /* Laranja para desejos */
+}
+
+.economia-color {
+  color: #2196f3; /* Azul para economia */
+}
+
+.progress-necessidades {
+  background-color: #4caf50 !important; /* Verde para necessidades */
+}
+
+.progress-desejos {
+  background-color: #ff9800 !important; /* Laranja para desejos */
+}
+
+.progress-economia {
+  background-color: #2196f3 !important; /* Azul para economia */
+}
+
+.progress {
+  height: 20px;
+}
+
+.bg-purple {
+  background-color: #9966FF;
+}
+
+.text-success {
+  color: #28a745;
+}
+
+.text-danger {
+  color: #dc3545;
+}
+
+.explanation-card {
+  margin-bottom: 20px;
+}
+
+.explanation-card .card {
+  border-left: 4px solid #17a2b8;
+}

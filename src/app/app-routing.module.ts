@@ -21,6 +21,7 @@ import { NotificacoesComponent } from './components/notificacoes/notificacoes.co
 import { MinhaContaComponent } from './components/minha-conta/minha-conta.component';
 import { ReservaEmergenciaComponent } from './components/reserva-emergencia/reserva-emergencia.component';
 import { ReservaEmergenciaFormComponent } from './components/reserva-emergencia-form/reserva-emergencia-form.component';
+import { BudgetRuleComponent } from './components/budget-rule/budget-rule.component';
 
 
 const routes: Routes = [
@@ -37,6 +38,7 @@ const routes: Routes = [
   {path: 'notificacoes', component: NotificacoesComponent, canActivate: [AuthGuard]},
   {path: 'account', component: AccountComponent, canActivate: [AuthGuard]},
   {path: 'minha-conta', component: MinhaContaComponent, canActivate: [AuthGuard]},
+  {path: 'budget-rule', component: BudgetRuleComponent, canActivate: [AuthGuard]},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
   {path: 'recuperar-senha', component: RecuperarSenhaComponent},

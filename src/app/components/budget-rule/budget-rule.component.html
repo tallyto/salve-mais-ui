@@ -1,0 +1,188 @@
+<div class="budget-rule-container">
+  <h2 class="section-title">Regra 50/30/20 - Distribuição de Gastos</h2>
+  
+  <div class="explanation-card mb-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">O que é a regra 50/30/20?</h5>
+        <p class="card-text">
+          É uma estratégia de orçamento pessoal que divide sua renda em três categorias:
+        </p>
+        <ul>
+          <li><strong>50% para necessidades:</strong> Moradia, alimentação, contas básicas, transporte</li>
+          <li><strong>30% para desejos:</strong> Lazer, entretenimento, restaurantes, viagens</li>
+          <li><strong>20% para economia:</strong> Poupança, investimentos, aposentadoria</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="text-center p-4">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Carregando...</span>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    Ocorreu um erro ao carregar os dados da regra 50/30/20. Por favor, tente novamente mais tarde.
+  </div>
+
+  <div *ngIf="!loading && !error && budgetData" class="budget-data">
+    <div class="row">
+      <!-- Coluna 1: Gráficos -->
+      <div class="col-md-6">
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5>Distribuição Ideal vs. Real</h5>
+          </div>
+          <div class="card-body">
+            <div class="chart-container">
+              <div class="row">
+                <div class="col-md-6">
+                  <h6 class="text-center">Distribuição Ideal</h6>
+                  <canvas baseChart
+                    [data]="idealChartData"
+                    [options]="chartOptions"
+                    [type]="'pie'">
+                  </canvas>
+                </div>
+                <div class="col-md-6">
+                  <h6 class="text-center">Distribuição Real</h6>
+                  <canvas baseChart
+                    [data]="realChartData"
+                    [options]="chartOptions"
+                    [type]="'pie'">
+                  </canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Coluna 2: Detalhes -->
+      <div class="col-md-6">
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5>Detalhamento por Categoria</h5>
+          </div>
+          <div class="card-body">
+            <!-- Necessidades -->
+            <div class="category-details mb-4">
+              <div class="d-flex justify-content-between align-items-center">
+                <h6 class="mb-0 necessidades-color">Necessidades (50%)</h6>
+                <span [ngClass]="getStatusClass(budgetData.necessidadesStatus)" class="status-badge">
+                  {{ getStatusText(budgetData.necessidadesStatus) }}
+                </span>
+              </div>
+              <div class="progress mt-2 mb-2">
+                <div class="progress-bar progress-necessidades" 
+                     [ngStyle]="{'width': budgetData.necessidadesPercentual + '%'}"
+                     [ngClass]="{'bg-danger': budgetData.necessidadesPercentual > 50}">
+                  {{ budgetData.necessidadesPercentual.toFixed(1) }}%
+                </div>
+              </div>
+              <div class="d-flex justify-content-between small">
+                <span>Ideal: R$ {{ budgetData.necessidadesIdeal.toFixed(2) }}</span>
+                <span>Real: R$ {{ budgetData.necessidadesReal.toFixed(2) }}</span>
+              </div>
+              <div [ngClass]="getDiferencaClass('necessidades', budgetData.necessidadesDiferenca)" class="small mt-1">
+                {{ getDiferencaText('necessidades', budgetData.necessidadesDiferenca) }}
+              </div>
+            </div>
+
+            <!-- Desejos -->
+            <div class="category-details mb-4">
+              <div class="d-flex justify-content-between align-items-center">
+                <h6 class="mb-0 desejos-color">Desejos (30%)</h6>
+                <span [ngClass]="getStatusClass(budgetData.desejosStatus)" class="status-badge">
+                  {{ getStatusText(budgetData.desejosStatus) }}
+                </span>
+              </div>
+              <div class="progress mt-2 mb-2">
+                <div class="progress-bar progress-desejos" 
+                     [ngStyle]="{'width': budgetData.desejosPercentual + '%'}"
+                     [ngClass]="{'bg-danger': budgetData.desejosPercentual > 30}">
+                  {{ budgetData.desejosPercentual.toFixed(1) }}%
+                </div>
+              </div>
+              <div class="d-flex justify-content-between small">
+                <span>Ideal: R$ {{ budgetData.desejosIdeal.toFixed(2) }}</span>
+                <span>Real: R$ {{ budgetData.desejosReal.toFixed(2) }}</span>
+              </div>
+              <div [ngClass]="getDiferencaClass('desejos', budgetData.desejosDiferenca)" class="small mt-1">
+                {{ getDiferencaText('desejos', budgetData.desejosDiferenca) }}
+              </div>
+            </div>
+
+            <!-- Economia -->
+            <div class="category-details">
+              <div class="d-flex justify-content-between align-items-center">
+                <h6 class="mb-0 economia-color">Economia (20%)</h6>
+                <span [ngClass]="getStatusClass(budgetData.economiaStatus)" class="status-badge">
+                  {{ getStatusText(budgetData.economiaStatus) }}
+                </span>
+              </div>
+              <div class="progress mt-2 mb-2">
+                <div class="progress-bar progress-economia" 
+                     [ngStyle]="{'width': budgetData.economiaPercentual + '%'}"
+                     [ngClass]="{'bg-danger': budgetData.economiaPercentual < 20}">
+                  {{ budgetData.economiaPercentual.toFixed(1) }}%
+                </div>
+              </div>
+              <div class="d-flex justify-content-between small">
+                <span>Ideal: R$ {{ budgetData.economiaIdeal.toFixed(2) }}</span>
+                <span>Real: R$ {{ budgetData.economiaReal.toFixed(2) }}</span>
+              </div>
+              <div [ngClass]="getDiferencaClass('economia', budgetData.economiaDiferenca)" class="small mt-1">
+                {{ getDiferencaText('economia', budgetData.economiaDiferenca) }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dicas -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5>Dicas para melhorar seu orçamento</h5>
+      </div>
+      <div class="card-body">
+        <div *ngIf="budgetData.necessidadesStatus === 'ACIMA' || budgetData.necessidadesStatus === 'MUITO_ACIMA'">
+          <h6>Necessidades acima do limite</h6>
+          <ul>
+            <li>Revise gastos fixos como aluguel, contas e financiamentos</li>
+            <li>Busque alternativas mais econômicas para serviços essenciais</li>
+            <li>Renegocie dívidas para reduzir parcelas mensais</li>
+          </ul>
+        </div>
+
+        <div *ngIf="budgetData.desejosStatus === 'ACIMA' || budgetData.desejosStatus === 'MUITO_ACIMA'">
+          <h6>Desejos acima do limite</h6>
+          <ul>
+            <li>Reduza gastos com entretenimento, restaurantes e compras não essenciais</li>
+            <li>Procure alternativas mais baratas para lazer</li>
+            <li>Estabeleça um limite semanal para gastos discricionários</li>
+          </ul>
+        </div>
+
+        <div *ngIf="budgetData.economiaStatus === 'ABAIXO' || budgetData.economiaStatus === 'MUITO_ABAIXO'">
+          <h6>Economia abaixo do objetivo</h6>
+          <ul>
+            <li>Configure transferências automáticas para sua conta de poupança</li>
+            <li>Defina metas de economia de curto e médio prazo</li>
+            <li>Considere aumentar sua receita com fontes adicionais</li>
+          </ul>
+        </div>
+
+        <div *ngIf="budgetData.necessidadesStatus === 'DENTRO_DO_LIMITE' && 
+                    budgetData.desejosStatus === 'DENTRO_DO_LIMITE' && 
+                    (budgetData.economiaStatus === 'ACIMA_DO_OBJETIVO' || budgetData.economiaStatus === 'QUASE_NO_OBJETIVO')">
+          <h6>Seu orçamento está equilibrado!</h6>
+          <p>Continue acompanhando seus gastos e economias para manter o equilíbrio financeiro.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

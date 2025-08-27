@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CategoriaService} from "../../services/categoria.service";
 import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
-import {Categoria} from "../../models/categoria.model";
+import {Categoria, TipoCategoria} from "../../models/categoria.model";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -12,7 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class CategoriaFormComponent implements OnInit {
   public categoriaForm: FormGroup;
-  public displayedColumnsCategoria: string[] = ['nome', 'acoes'];
+  public displayedColumnsCategoria: string[] = ['nome', 'tipo', 'acoes'];
   public categorias: Categoria[] = [];
   public editingCategoria: Categoria | null = null;
   private horizontalPosition: MatSnackBarHorizontalPosition = 'right';
@@ -26,11 +26,44 @@ export class CategoriaFormComponent implements OnInit {
     this.categoriaForm = this.formBuilder.group({
       id: [null],
       nome: ['', Validators.required],
+      tipo: [TipoCategoria.NECESSIDADE, Validators.required]
     })
   }
 
   ngOnInit() {
     this.listarCategorias()
+  }
+  
+  /**
+   * Retorna a classe CSS para o tipo de categoria
+   */
+  getTipoClass(tipo: TipoCategoria): string {
+    switch(tipo) {
+      case TipoCategoria.NECESSIDADE:
+        return 'tipo-necessidade';
+      case TipoCategoria.DESEJO:
+        return 'tipo-desejo';
+      case TipoCategoria.ECONOMIA:
+        return 'tipo-economia';
+      default:
+        return '';
+    }
+  }
+  
+  /**
+   * Retorna o label para o tipo de categoria
+   */
+  getTipoLabel(tipo: TipoCategoria): string {
+    switch(tipo) {
+      case TipoCategoria.NECESSIDADE:
+        return 'Necessidade (50%)';
+      case TipoCategoria.DESEJO:
+        return 'Desejo (30%)';
+      case TipoCategoria.ECONOMIA:
+        return 'Economia (20%)';
+      default:
+        return tipo;
+    }
   }
 
   salvarCategoria() {
@@ -42,7 +75,7 @@ export class CategoriaFormComponent implements OnInit {
     const isEditing = !!categoria.id;
 
     this.categoriaService.salvarCategoria(categoria).subscribe({
-      next: value => {
+      next: (value: any) => {
         const message = isEditing ? 'Categoria atualizada com sucesso!' : 'Categoria salva com sucesso!';
         this.openSnackBar(message);
         this.limparFormulario();
@@ -56,7 +89,7 @@ export class CategoriaFormComponent implements OnInit {
 
   public listarCategorias(): void {
     this.categoriaService.listarCategorias().subscribe(
-      categorias => this.categorias = categorias
+      (categorias: any) => this.categorias = categorias
     );
   }
 
@@ -72,7 +105,8 @@ export class CategoriaFormComponent implements OnInit {
     this.editingCategoria = categoria;
     this.categoriaForm.patchValue({
       id: categoria.id,
-      nome: categoria.nome
+      nome: categoria.nome,
+      tipo: categoria.tipo || TipoCategoria.NECESSIDADE
     });
   }
 
@@ -83,7 +117,8 @@ export class CategoriaFormComponent implements OnInit {
   limparFormulario(): void {
     this.categoriaForm.reset({
       id: null,
-      nome: ''
+      nome: '',
+      tipo: TipoCategoria.NECESSIDADE
     });
     this.editingCategoria = null;
   }
@@ -102,5 +137,3 @@ export class CategoriaFormComponent implements OnInit {
     }
   }
 }
-
-

@@ -35,6 +35,19 @@
             <mat-icon matSuffix>label</mat-icon>
           </mat-form-field>
         </div>
+        
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Tipo da Categoria (Regra 50/30/20)</mat-label>
+            <mat-select formControlName="tipo">
+              <mat-option class="tipo-necessidade" value="NECESSIDADE">Necessidade (50%)</mat-option>
+              <mat-option class="tipo-desejo" value="DESEJO">Desejo (30%)</mat-option>
+              <mat-option class="tipo-economia" value="ECONOMIA">Economia (20%)</mat-option>
+            </mat-select>
+            <mat-icon matSuffix>pie_chart</mat-icon>
+            <mat-hint>Classifique esta categoria de acordo com a regra 50/30/20</mat-hint>
+          </mat-form-field>
+        </div>
 
         <div class="form-actions">
           <button mat-stroked-button type="button" (click)="cancelarEdicao()">
@@ -65,6 +78,16 @@
           <ng-container matColumnDef="nome">
             <th *matHeaderCellDef mat-header-cell>Nome</th>
             <td *matCellDef="let categoria" mat-cell>{{ categoria.nome }}</td>
+          </ng-container>
+          
+          <!-- Tipo Column -->
+          <ng-container matColumnDef="tipo">
+            <th *matHeaderCellDef mat-header-cell>Tipo</th>
+            <td *matCellDef="let categoria" mat-cell>
+              <span class="tipo-categoria-chip" [ngClass]="getTipoClass(categoria.tipo)">
+                {{ getTipoLabel(categoria.tipo) }}
+              </span>
+            </td>
           </ng-container>
 
           <!-- Actions Column -->
