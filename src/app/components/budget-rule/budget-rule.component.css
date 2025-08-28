@@ -15,8 +15,6 @@ canvas.chartjs-render-monitor {
   max-width: 280px !important;
   max-height: 280px !important;
   margin: 0 auto !important;
-  animation: none !important;
-  transition: none !important;
 }
 
 .section-title {
@@ -48,10 +46,42 @@ canvas.chartjs-render-monitor {
   margin: 0 auto !important;
 }
 
+.progress-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 1s ease-out;
+}
+
+/* Estilo para o container de dicas */
+.tips-container {
+  border-radius: 0 0 6px 6px;
+}
+
+.tip-item {
+  position: relative;
+}
+
+.tip-item:last-child {
+  border-bottom: none !important;
+  border-radius: 0 0 6px 6px;
+}
+
+.tip-item h6 {
+  font-size: 1rem;
+}
+
+.tip-item ul li {
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.tip-item ul li:last-child {
+  margin-bottom: 0;
+}
+
 .explanation-card .card,
 .grid .card {
   border-radius: 6px;
-  transition: box-shadow 0.3s;
   overflow: hidden;
 }
 
@@ -129,7 +159,7 @@ canvas.chartjs-render-monitor {
 
 /* Estilos para as barras de progresso */
 .progress-bar {
-  height: 1.25rem;
+  height: 100%;
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -162,6 +192,7 @@ canvas.chartjs-render-monitor {
   border-radius: 4px;
   font-size: 0.75rem;
   font-weight: 500;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .status-success {
@@ -184,23 +215,76 @@ canvas.chartjs-render-monitor {
   color: white;
 }
 
-/* Estilos para detalhes de categoria */
-.category-details {
-  padding: 1rem 0;
-  border-bottom: 1px solid var(--surface-200);
+/* Estilos para detalhes das categorias */
+.detail-card {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.category-details:last-child {
-  border-bottom: none;
+.category-label {
+  display: flex;
+  align-items: center;
 }
 
-/* Classes de texto */
-.text-success {
-  color: var(--green-500) !important;
+.percentage-badge {
+  padding: 4px 8px;
+  border-radius: 16px;
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
-.text-danger {
-  color: var(--red-500) !important;
+.progress-bar-bg {
+  height: 8px;
+  background-color: var(--surface-200);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 4px;
+}
+
+.amount {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.amount-box {
+  flex: 1;
+}
+
+.diferenca-message {
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+/* Status badges */
+.status-indicator {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.status-success {
+  background-color: var(--green-100);
+  color: var(--green-700);
+}
+
+.status-warning {
+  background-color: var(--yellow-100);
+  color: var(--yellow-700);
+}
+
+.status-danger {
+  background-color: var(--red-100);
+  color: var(--red-700);
+}
+
+.status-critical {
+  background-color: var(--red-500);
+  color: white;
 }
 
 .progress-necessidades {

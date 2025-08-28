@@ -4,6 +4,8 @@ import { environment } from '../../../environments/environment';
 import { CommonModule } from '@angular/common';
 import { NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 interface BudgetRuleData {
   // Valores ideais
@@ -37,7 +39,7 @@ interface BudgetRuleData {
   templateUrl: './budget-rule.component.html',
   styleUrls: ['./budget-rule.component.css'],
   standalone: true,
-  imports: [CommonModule, NgChartsModule]
+  imports: [CommonModule, NgChartsModule, MatIconModule, MatProgressSpinnerModule]
 })
 export class BudgetRuleComponent implements OnInit {
   budgetData: BudgetRuleData | null = null;
@@ -49,7 +51,22 @@ export class BudgetRuleComponent implements OnInit {
     responsive: true,
     maintainAspectRatio: true,
     animation: {
-      duration: 0 // Desativa a animação inicial para evitar redimensionamento
+      duration: 1000,
+      easing: 'easeInOutQuart'
+    },
+    animations: {
+      colors: {
+        type: 'color',
+        duration: 1000,
+        easing: 'easeInOutQuart'
+      }
+    },
+    transitions: {
+      active: {
+        animation: {
+          duration: 300
+        }
+      }
     },
     layout: {
       padding: 10
