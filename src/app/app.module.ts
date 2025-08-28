@@ -35,6 +35,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AccountComponent } from './components/account/account.component';
+import { BudgetRuleComponent } from './components/budget-rule/budget-rule.component';
 import { CartaoFormComponent } from './components/cartao-form/cartao-form.component';
 import { CategoriaFormComponent } from './components/categoria-form/categoria-form.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';

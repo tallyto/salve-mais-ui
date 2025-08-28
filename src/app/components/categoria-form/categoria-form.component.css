@@ -29,6 +29,45 @@
   background-color: #673ab7; /* Roxo para categorias */
 }
 
+/* Estilos para os tipos de categoria (Regra 50/30/20) */
+.tipo-categoria-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-right: 8px;
+}
+
+.tipo-necessidade {
+  background-color: #4caf50; /* Verde para necessidades */
+  color: white;
+}
+
+.tipo-desejo {
+  background-color: #ff9800; /* Laranja para desejos */
+  color: white;
+}
+
+.tipo-economia {
+  background-color: #2196f3; /* Azul para economia */
+  color: white;
+}
+
+/* Estilo para o seletor de tipo de categoria */
+.mat-option.tipo-necessidade {
+  border-left: 4px solid #4caf50;
+}
+
+.mat-option.tipo-desejo {
+  border-left: 4px solid #ff9800;
+}
+
+.mat-option.tipo-economia {
+  border-left: 4px solid #2196f3;
+}
+
 .header-content {
   display: flex;
   align-items: center;

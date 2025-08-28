@@ -1,0 +1,388 @@
+.budget-rule-container {
+  padding: 1.25rem;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.budget-data {
+  margin-top: 1.25rem;
+}
+
+/* Força as dimensões dos gráficos desde o início */
+canvas.chartjs-render-monitor {
+  width: 280px !important;
+  height: 280px !important;
+  max-width: 280px !important;
+  max-height: 280px !important;
+  margin: 0 auto !important;
+}
+
+.section-title {
+  margin-bottom: 1.25rem;
+  color: var(--text-color);
+  border-bottom: 2px solid var(--surface-200);
+  padding-bottom: 0.625rem;
+}
+
+/* Ajustes para os containers dos gráficos */
+.chart-wrapper {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 280px;
+  max-height: 280px;
+  margin: 0 auto;
+}
+
+/* Definir tamanhos precisos para o canvas do gráfico */
+.chart-wrapper canvas {
+  width: 280px !important;
+  height: 280px !important;
+  max-width: 280px !important;
+  max-height: 280px !important;
+  margin: 0 auto !important;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 1s ease-out;
+}
+
+/* Estilo para o container de dicas */
+.tips-container {
+  border-radius: 0 0 6px 6px;
+}
+
+.tip-item {
+  position: relative;
+}
+
+.tip-item:last-child {
+  border-bottom: none !important;
+  border-radius: 0 0 6px 6px;
+}
+
+.tip-item h6 {
+  font-size: 1rem;
+}
+
+.tip-item ul li {
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.tip-item ul li:last-child {
+  margin-bottom: 0;
+}
+
+.explanation-card .card,
+.grid .card {
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.card {
+  box-shadow: 0 2px 1px -1px rgba(0,0,0,0.2), 
+              0 1px 1px 0 rgba(0,0,0,0.14), 
+              0 1px 3px 0 rgba(0,0,0,0.12);
+  margin-bottom: 0;
+  height: 100%;
+}
+
+.card-header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--surface-200);
+  font-weight: 600;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+/* Ajustes para media queries utilizando a nomenclatura do PrimeFlex */
+@media screen and (max-width: 992px) {
+  .chart-wrapper {
+    width: 250px;
+    height: 250px;
+    min-height: 250px;
+    max-height: 250px;
+  }
+  
+  .chart-wrapper canvas {
+    width: 250px !important;
+    height: 250px !important;
+    max-width: 250px !important;
+    max-height: 250px !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .chart-wrapper {
+    width: 220px;
+    height: 220px;
+    min-height: 220px;
+    max-height: 220px;
+  }
+  
+  .chart-wrapper canvas {
+    width: 220px !important;
+    height: 220px !important;
+    max-width: 220px !important;
+    max-height: 220px !important;
+  }
+  
+  .card {
+    margin-bottom: 1rem;
+  }
+  
+  .budget-rule-container {
+    padding: 1rem 0.75rem;
+  }
+}
+
+/* Estilos para as cores das categorias da regra 50/30/20 */
+.necessidades-color {
+  color: var(--green-500);
+}
+
+.desejos-color {
+  color: var(--orange-500);
+}
+
+.economia-color {
+  color: var(--blue-500);
+}
+
+/* Estilos para as barras de progresso */
+.progress-bar {
+  height: 100%;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: width 0.6s ease;
+}
+
+.progress-necessidades {
+  background-color: var(--green-500);
+}
+
+.progress-desejos {
+  background-color: var(--orange-500);
+}
+
+.progress-economia {
+  background-color: var(--blue-500);
+}
+
+.bg-danger {
+  background-color: var(--red-500) !important;
+}
+
+/* Estilos para os badges de status */
+.status-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.status-success {
+  background-color: var(--green-100);
+  color: var(--green-700);
+}
+
+.status-warning {
+  background-color: var(--yellow-100);
+  color: var(--yellow-700);
+}
+
+.status-danger {
+  background-color: var(--red-100);
+  color: var(--red-700);
+}
+
+.status-critical {
+  background-color: var(--red-500);
+  color: white;
+}
+
+/* Estilos para detalhes das categorias */
+.detail-card {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.category-label {
+  display: flex;
+  align-items: center;
+}
+
+.percentage-badge {
+  padding: 4px 8px;
+  border-radius: 16px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.progress-bar-bg {
+  height: 8px;
+  background-color: var(--surface-200);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 4px;
+}
+
+.amount {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.amount-box {
+  flex: 1;
+}
+
+.diferenca-message {
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+/* Status badges */
+.status-indicator {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.status-success {
+  background-color: var(--green-100);
+  color: var(--green-700);
+}
+
+.status-warning {
+  background-color: var(--yellow-100);
+  color: var(--yellow-700);
+}
+
+.status-danger {
+  background-color: var(--red-100);
+  color: var(--red-700);
+}
+
+.status-critical {
+  background-color: var(--red-500);
+  color: white;
+}
+
+.progress-necessidades {
+  background-color: #4caf50 !important; /* Verde para necessidades */
+}
+
+.progress-desejos {
+  background-color: #ff9800 !important; /* Laranja para desejos */
+}
+
+.progress-economia {
+  background-color: #2196f3 !important; /* Azul para economia */
+}
+
+.progress {
+  height: 20px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+  transition: width 0.6s ease;
+}
+
+.bg-purple {
+  background-color: #9966FF;
+}
+
+.text-success {
+  color: #28a745 !important;
+}
+
+.text-danger {
+  color: #dc3545 !important;
+}
+
+/* Estilo para os containers da linha de gráficos */
+.charts-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -15px;
+  margin-right: -15px;
+  width: 100%;
+}
+
+/* Ajustes específicos para garantir espaçamento adequado entre colunas */
+.charts-container .col-md-6 {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* Ajustes específicos para os cards de gráficos */
+.charts-container .card {
+  height: 100%;
+  min-height: 400px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  margin-bottom: 0;
+}
+
+.charts-container .card:hover {
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.charts-container .card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid rgba(0,0,0,0.125);
+  padding: 15px 20px;
+  height: 60px; /* Altura fixa para cabeçalhos */
+  display: flex;
+  align-items: center;
+}
+
+.charts-container .card-header h5 {
+  margin: 0;
+  font-weight: 600;
+  color: #333;
+}
+
+.charts-container .card-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Manter a última regra existente de explicação */
+.explanation-card {
+  margin-bottom: 20px;
+}
+
+.explanation-card .card {
+  border-left: 4px solid #17a2b8;
+}
