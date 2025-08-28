@@ -89,7 +89,7 @@ export class CategoriaFormComponent implements OnInit {
 
   public listarCategorias(): void {
     this.categoriaService.listarCategorias().subscribe(
-      (categorias: any) => this.categorias = categorias
+      (categorias: Categoria[]) => this.categorias = categorias
     );
   }
 
