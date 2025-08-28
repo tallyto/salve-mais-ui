@@ -3,28 +3,29 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { CommonModule } from '@angular/common';
 import { NgChartsModule } from 'ng2-charts';
+import { ChartConfiguration, ChartOptions } from 'chart.js';
 
 interface BudgetRuleData {
   // Valores ideais
   necessidadesIdeal: number;
   desejosIdeal: number;
   economiaIdeal: number;
-  
+
   // Valores reais
   necessidadesReal: number;
   desejosReal: number;
   economiaReal: number;
-  
+
   // Percentuais
   necessidadesPercentual: number;
   desejosPercentual: number;
   economiaPercentual: number;
-  
+
   // Diferenças
   necessidadesDiferenca: number;
   desejosDiferenca: number;
   economiaDiferenca: number;
-  
+
   // Status
   necessidadesStatus: string;
   desejosStatus: string;
@@ -43,24 +44,55 @@ export class BudgetRuleComponent implements OnInit {
   loading = true;
   error = false;
 
-  // Opções para o gráfico
-  chartOptions = {
+    // Opções para o gráfico
+  chartOptions: ChartConfiguration<'pie'>['options'] = {
     responsive: true,
-    maintainAspectRatio: false,
-    aspectRatio: 2,
+    maintainAspectRatio: true,
+    animation: {
+      duration: 0 // Desativa a animação inicial para evitar redimensionamento
+    },
+    layout: {
+      padding: 10
+    },
     plugins: {
       legend: {
         position: 'bottom',
+        display: true,
         labels: {
-          padding: 20
+          boxWidth: 12,
+          padding: 10,
+          font: {
+            size: 11
+          }
         }
       },
       tooltip: {
         callbacks: {
           label: (context: any) => {
             const label = context.label || '';
-            const value = context.raw || 0;
-            return `${label}: R$ ${value.toFixed(2)}`;
+            const dataIndex = context.dataIndex;
+
+            // Extrai a porcentagem se ela estiver incluída no label (formato: "Label (XX%)")
+            let percentage = '';
+            const matches = label.match(/\((\d+)%\)/);
+            if (matches && matches.length > 1) {
+              percentage = matches[1];
+            } else {
+              // Caso não tenha porcentagem no label, calcula com base no total do gráfico
+              const total = context.chart.getDatasetMeta(0).total || 0;
+              percentage = total > 0 ? Math.round((context.raw / total) * 100).toString() : '0';
+            }
+
+            // Se for o gráfico de distribuição real, mostre os valores reais
+            if (label.includes('Necessidades') || label.includes('Desejos') || label.includes('Economia')) {
+              // Verifica se o label contém alguma indicação de porcentagem, que significa que é o gráfico real
+              if (this.realValues[dataIndex] !== undefined && matches) {
+                return `${label.split(' (')[0]}: R$ ${this.realValues[dataIndex].toFixed(2)} (${percentage}%)`;
+              }
+            }
+
+            // Para outros casos ou gráfico ideal, mostre o valor do gráfico
+            return `${label.split(' (')[0]}: R$ ${context.raw.toFixed(2)} (${percentage}%)`;
           }
         }
       }
@@ -68,7 +100,7 @@ export class BudgetRuleComponent implements OnInit {
   };
 
   // Dados para o gráfico de valores ideais
-  idealChartData = {
+  idealChartData: ChartConfiguration<'pie'>['data'] = {
     labels: ['Necessidades (50%)', 'Desejos (30%)', 'Economia (20%)'],
     datasets: [{
       data: [0, 0, 0],
@@ -77,7 +109,7 @@ export class BudgetRuleComponent implements OnInit {
   };
 
   // Dados para o gráfico de valores reais
-  realChartData = {
+  realChartData: ChartConfiguration<'pie'>['data'] = {
     labels: ['Necessidades', 'Desejos', 'Economia'],
     datasets: [{
       data: [0, 0, 0],
@@ -85,10 +117,27 @@ export class BudgetRuleComponent implements OnInit {
     }]
   };
 
+  // Valores reais para referência nos tooltips
+  private realValues = [0, 0, 0];
+
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
+    // Inicializa os gráficos com valores padrão para evitar o redimensionamento
+    this.initializeChartData();
     this.fetchBudgetRuleData();
+  }
+
+  // Inicializa os dados dos gráficos com valores dummy para dimensões consistentes
+  initializeChartData(): void {
+    // Valores default para manter proporções consistentes durante o carregamento
+    const defaultValues = [50, 30, 20];
+
+    // Atualiza dados do gráfico ideal com valores padrão
+    this.idealChartData.datasets[0].data = defaultValues;
+
+    // Atualiza dados do gráfico real com os mesmos valores para manter consistência
+    this.realChartData.datasets[0].data = defaultValues;
   }
 
   fetchBudgetRuleData(): void {
@@ -117,8 +166,29 @@ export class BudgetRuleComponent implements OnInit {
         this.budgetData.economiaIdeal
       ];
 
+      // Usa os percentuais calculados pela API para o gráfico real
+      // Esses percentuais já levam em consideração o total da renda
+      const necessidadesPercent = Math.round(this.budgetData.necessidadesPercentual);
+      const desejosPercent = Math.round(this.budgetData.desejosPercentual);
+      const economiaPercent = Math.round(this.budgetData.economiaPercentual);
+
+      // Atualiza os labels com as porcentagens
+      this.realChartData.labels = [
+        `Necessidades (${necessidadesPercent}%)`,
+        `Desejos (${desejosPercent}%)`,
+        `Economia (${economiaPercent}%)`
+      ];
+
       // Atualiza dados do gráfico real
+      // Usando os percentuais para o tamanho das fatias do gráfico para representação visual correta
       this.realChartData.datasets[0].data = [
+        this.budgetData.necessidadesPercentual,
+        this.budgetData.desejosPercentual,
+        this.budgetData.economiaPercentual
+      ];
+
+      // Armazena os valores reais para uso nos tooltips
+      this.realValues = [
         this.budgetData.necessidadesReal,
         this.budgetData.desejosReal,
         this.budgetData.economiaReal
