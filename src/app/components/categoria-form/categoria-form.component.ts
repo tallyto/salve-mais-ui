@@ -75,7 +75,7 @@ export class CategoriaFormComponent implements OnInit {
     const isEditing = !!categoria.id;
 
     this.categoriaService.salvarCategoria(categoria).subscribe({
-      next: (value: any) => {
+      next: (value: Categoria) => {
         const message = isEditing ? 'Categoria atualizada com sucesso!' : 'Categoria salva com sucesso!';
         this.openSnackBar(message);
         this.limparFormulario();
