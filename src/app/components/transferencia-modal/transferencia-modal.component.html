@@ -58,15 +58,15 @@
     <div *ngIf="contas.length === 0" class="no-accounts-message">
       <p>Não existem outras contas disponíveis para transferência.</p>
     </div>
-    
+
     <div class="form-actions flex justify-content-end gap-2">
       <button mat-stroked-button type="button" (click)="fechar()" class="text-color-secondary">
         <mat-icon>cancel</mat-icon> Cancelar
       </button>
-      <button 
-        mat-raised-button 
-        color="primary" 
-        type="submit" 
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
         *ngIf="contas.length > 0"
         [disabled]="transferenciaForm.invalid || isLoading"
         class="min-w-min">

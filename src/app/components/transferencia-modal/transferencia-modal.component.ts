@@ -8,7 +8,8 @@ import { Account } from '../../models/account.model';
 @Component({
   selector: 'app-transferencia-modal',
   templateUrl: './transferencia-modal.component.html',
-  styleUrls: ['./transferencia-modal.component.css']
+  styleUrls: ['./transferencia-modal.component.css'],
+  standalone: false
 })
 export class TransferenciaModalComponent implements OnInit {
   transferenciaForm: FormGroup;
@@ -47,13 +48,13 @@ export class TransferenciaModalComponent implements OnInit {
         } else {
           this.contas = contas;
         }
-        
+
         // Se não houver contas para transferir, desabilita o campo de valor
         if (this.contas.length === 0) {
           this.transferenciaForm.get('valor')?.disable();
           this.transferenciaForm.get('contaDestinoId')?.disable();
         }
-        
+
         this.isLoading = false;
       },
       error: (err) => {
