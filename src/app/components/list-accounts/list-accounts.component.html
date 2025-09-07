@@ -18,7 +18,14 @@
       <!-- Nome Column -->
       <ng-container matColumnDef="titular">
         <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Titular</th>
-        <td *matCellDef="let account" mat-cell class="p-3"> {{ account.titular }}</td>
+        <td *matCellDef="let account" mat-cell class="p-3">
+          <div *ngIf="!isEditing(account)">
+            {{ account.titular }}
+          </div>
+          <mat-form-field *ngIf="isEditing(account)" appearance="outline" class="edit-field">
+            <input matInput [(ngModel)]="tempTitular" type="text">
+          </mat-form-field>
+        </td>
       </ng-container>
 
       <!-- Tipo Column -->
@@ -36,7 +43,7 @@
         <th *matHeaderCellDef mat-header-cell class="p-3 text-right"> Ações</th>
         <td *matCellDef="let account" mat-cell class="p-3 text-right">
           <div *ngIf="!isEditing(account)" class="action-buttons flex justify-content-end gap-2">
-            <button mat-icon-button color="primary" (click)="startEdit(account)" matTooltip="Editar saldo">
+            <button mat-icon-button color="primary" (click)="startEdit(account)" matTooltip="Editar conta">
               <mat-icon>edit</mat-icon>
             </button>
             <button mat-icon-button color="warn" (click)="excluirConta(account)" matTooltip="Excluir conta">

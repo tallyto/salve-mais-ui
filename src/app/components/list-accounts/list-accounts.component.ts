@@ -21,6 +21,7 @@ export class ListAccountsComponent implements AfterViewInit {
   accounts: Account[] = [];
   editingAccount: Account | null = null;
   tempSaldo: number = 0;
+  tempTitular: string = '';
 
   constructor(
     private accountService: AccountService,
@@ -45,27 +46,35 @@ export class ListAccountsComponent implements AfterViewInit {
   startEdit(account: Account) {
     this.editingAccount = account;
     this.tempSaldo = account.saldo;
+    this.tempTitular = account.titular;
   }
 
   cancelEdit() {
     this.editingAccount = null;
     this.tempSaldo = 0;
+    this.tempTitular = '';
   }
 
   saveEdit() {
     if (this.editingAccount) {
-      const updatedAccount = { ...this.editingAccount, saldo: this.tempSaldo };
+      const updatedAccount = { 
+        ...this.editingAccount, 
+        saldo: this.tempSaldo,
+        titular: this.tempTitular
+      };
       this.accountService.atualizarAccount(updatedAccount).subscribe({
         next: () => {
-          this.snackBar.open('Saldo atualizado com sucesso!', 'Fechar', {
+          this.snackBar.open('Conta atualizada com sucesso!', 'Fechar', {
             duration: 3000,
             panelClass: 'snackbar-success'
           });
           this.editingAccount = null;
+          this.tempSaldo = 0;
+          this.tempTitular = '';
           this.refreshAccountList();
         },
         error: (err: any) => {
-          this.snackBar.open('Erro ao atualizar saldo: ' + (err.error?.message || 'Erro desconhecido'), 'Fechar', {
+          this.snackBar.open('Erro ao atualizar conta: ' + (err.error?.message || 'Erro desconhecido'), 'Fechar', {
             duration: 3000,
             panelClass: 'snackbar-error'
           });
