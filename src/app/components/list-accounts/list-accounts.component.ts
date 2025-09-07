@@ -5,6 +5,8 @@ import {catchError, map, merge, of as observableOf, startWith, switchMap} from "
 import { AccountService } from 'src/app/services/account.service';
 import {Account} from "../../models/account.model";
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { TransferenciaModalComponent } from '../transferencia-modal/transferencia-modal.component';
 
 @Component({
     selector: 'app-list-accounts',
@@ -20,12 +22,12 @@ export class ListAccountsComponent implements AfterViewInit {
 
   accounts: Account[] = [];
   editingAccount: Account | null = null;
-  tempSaldo: number = 0;
   tempTitular: string = '';
 
   constructor(
     private accountService: AccountService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {
     this.accountService.savedAccount.subscribe({
       next: () => {
@@ -45,22 +47,20 @@ export class ListAccountsComponent implements AfterViewInit {
 
   startEdit(account: Account) {
     this.editingAccount = account;
-    this.tempSaldo = account.saldo;
     this.tempTitular = account.titular;
   }
 
   cancelEdit() {
     this.editingAccount = null;
-    this.tempSaldo = 0;
     this.tempTitular = '';
   }
 
   saveEdit() {
     if (this.editingAccount) {
-      const updatedAccount = { 
-        ...this.editingAccount, 
-        saldo: this.tempSaldo,
+      const updatedAccount = {
+        ...this.editingAccount,
         titular: this.tempTitular
+        // saldo is intentionally omitted to prevent direct balance updates
       };
       this.accountService.atualizarAccount(updatedAccount).subscribe({
         next: () => {
@@ -69,7 +69,6 @@ export class ListAccountsComponent implements AfterViewInit {
             panelClass: 'snackbar-success'
           });
           this.editingAccount = null;
-          this.tempSaldo = 0;
           this.tempTitular = '';
           this.refreshAccountList();
         },
@@ -135,6 +134,19 @@ export class ListAccountsComponent implements AfterViewInit {
       default:
         return tipo;
     }
+  }
+
+  abrirTransferencia(account: Account) {
+    const dialogRef = this.dialog.open(TransferenciaModalComponent, {
+      width: '500px',
+      data: { contaOrigem: account }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.refreshAccountList();
+      }
+    });
   }
 
   refreshAccountList() {

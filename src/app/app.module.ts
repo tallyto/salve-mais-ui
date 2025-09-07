@@ -48,6 +48,7 @@ import { ListContasFixasComponent } from './components/list-contas-fixas/list-co
 import { ListDespesasRecorrentesComponent } from './components/list-despesas-recorrentes/list-despesas-recorrentes.component';
 import { ListProventosComponent } from './components/list-proventos/list-proventos.component';
 import { LoginComponent } from './components/login/login.component';
+import { TransferenciaModalComponent } from './components/transferencia-modal/transferencia-modal.component';
 import { MenuLateralComponent } from './components/menu-lateral/menu-lateral.component';
 import { ProventoFormComponent } from './components/provento-form/provento-form.component';
 import { RedefinirSenhaComponent } from './components/redefinir-senha/redefinir-senha.component';
@@ -98,7 +99,8 @@ import { MinhaContaComponent } from './components/minha-conta/minha-conta.compon
     MinhaContaComponent,
     ComprovantesDialogComponent,
     ReservaEmergenciaComponent,
-    ReservaEmergenciaFormComponent
+    ReservaEmergenciaFormComponent,
+    TransferenciaModalComponent
   ],
   imports: [
     BrowserModule,

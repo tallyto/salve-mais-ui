@@ -6,12 +6,9 @@
       <ng-container matColumnDef="saldo">
         <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Saldo</th>
         <td *matCellDef="let account" mat-cell class="p-3">
-          <div *ngIf="!isEditing(account)" [ngClass]="{'positive': account.saldo > 0, 'negative': account.saldo < 0}" class="font-medium">
+          <div [ngClass]="{'positive': account.saldo > 0, 'negative': account.saldo < 0}" class="font-medium">
             {{ account.saldo | currency:'BRL':'symbol':'1.2-2' }}
           </div>
-          <mat-form-field *ngIf="isEditing(account)" appearance="outline" class="edit-field">
-            <input matInput [(ngModel)]="tempSaldo" type="number" step="0.01">
-          </mat-form-field>
         </td>
       </ng-container>
 
@@ -45,6 +42,9 @@
           <div *ngIf="!isEditing(account)" class="action-buttons flex justify-content-end gap-2">
             <button mat-icon-button color="primary" (click)="startEdit(account)" matTooltip="Editar conta">
               <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="accent" (click)="abrirTransferencia(account)" matTooltip="Transferir saldo">
+              <mat-icon>swap_horiz</mat-icon>
             </button>
             <button mat-icon-button color="warn" (click)="excluirConta(account)" matTooltip="Excluir conta">
               <mat-icon>delete</mat-icon>

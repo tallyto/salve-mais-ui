@@ -18,7 +18,13 @@ export class AccountService {
   }
 
   salvarAccount(account: Account): Observable<Account> {
-    return this.http.post<Account>(this.apiUrl, account)
+    // Define o saldo inicial como 0 e tipo como CORRENTE por padrão
+    const newAccount = {
+      ...account,
+      saldo: 0,
+      tipo: account.tipo || 'CORRENTE'
+    };
+    return this.http.post<Account>(this.apiUrl, newAccount);
   }
 
   atualizarAccount(account: Account): Observable<Account> {
@@ -45,5 +51,13 @@ export class AccountService {
 
   excluirAccount(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  transferirEntreConta(contaOrigemId: number, contaDestinoId: number, valor: number): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/transferir`, {
+      contaOrigemId,
+      contaDestinoId,
+      valor
+    });
   }
 }

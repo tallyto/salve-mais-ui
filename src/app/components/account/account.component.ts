@@ -18,9 +18,8 @@ export class AccountComponent {
     private snackBar: MatSnackBar) {
       this.accountForm = this.formBuilder.group({
         id: [null],
-        saldo: ['', [Validators.required, Validators.min(0)]],
         titular: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
-    })
+      })
     }
 
   createAccount() {

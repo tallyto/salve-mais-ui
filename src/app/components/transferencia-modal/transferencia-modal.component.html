@@ -1,0 +1,77 @@
+<div class="transferencia-form">
+  <div class="card-header mb-4">
+    <div class="header-title">
+      <mat-icon style="color: #2196f3; margin-right: 8px;">swap_horiz</mat-icon>
+      <h2 class="section-title m-0 mb-1">Transferência entre Contas</h2>
+    </div>
+    <div class="text-color-secondary text-sm">Movimente valores entre suas contas</div>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-overlay">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <div *ngIf="contaOrigem" class="account-info">
+    <div class="account-info-title">Conta de Origem</div>
+    <div>
+      <strong>Titular:</strong> {{ contaOrigem.titular }}
+    </div>
+    <div>
+      <strong>Saldo Disponível:</strong>
+      <span [ngClass]="{'positive': contaOrigem.saldo > 0, 'negative': contaOrigem.saldo < 0}">
+        {{ contaOrigem.saldo | currency:'BRL':'symbol':'1.2-2' }}
+      </span>
+    </div>
+  </div>
+
+  <form [formGroup]="transferenciaForm" (ngSubmit)="transferir()">
+    <div class="form-row">
+      <mat-form-field appearance="outline" [class.disabled-field]="contas.length === 0">
+        <mat-label>Conta de Destino</mat-label>
+        <mat-select formControlName="contaDestinoId">
+          <mat-option *ngIf="contas.length === 0" [value]="null">Nenhuma conta disponível</mat-option>
+          <mat-option *ngFor="let conta of contas" [value]="conta.id">
+            {{ conta.titular }} - {{ getTipoDescricao(conta.tipo) }}
+          </mat-option>
+        </mat-select>
+        <mat-icon matSuffix>account_balance</mat-icon>
+        <mat-error *ngIf="transferenciaForm.get('contaDestinoId')?.hasError('required')">
+          Selecione uma conta de destino
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" [class.disabled-field]="contas.length === 0">
+        <mat-label>Valor da Transferência</mat-label>
+        <input matInput formControlName="valor" type="number" step="0.01" min="0.01" placeholder="0,00">
+        <mat-icon matSuffix>attach_money</mat-icon>
+        <mat-error *ngIf="transferenciaForm.get('valor')?.hasError('required')">
+          Informe o valor da transferência
+        </mat-error>
+        <mat-error *ngIf="transferenciaForm.get('valor')?.hasError('min')">
+          O valor deve ser maior que zero
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="contas.length === 0" class="no-accounts-message">
+      <p>Não existem outras contas disponíveis para transferência.</p>
+    </div>
+    
+    <div class="form-actions flex justify-content-end gap-2">
+      <button mat-stroked-button type="button" (click)="fechar()" class="text-color-secondary">
+        <mat-icon>cancel</mat-icon> Cancelar
+      </button>
+      <button 
+        mat-raised-button 
+        color="primary" 
+        type="submit" 
+        *ngIf="contas.length > 0"
+        [disabled]="transferenciaForm.invalid || isLoading"
+        class="min-w-min">
+        <mat-icon>send</mat-icon> Transferir
+      </button>
+    </div>
+  </form>
+</div>
