@@ -2,6 +2,9 @@ export interface Account {
   id: number;
   saldo: number;
   titular: string;
+  tipo: string;
+  descricao?: string;
+  taxaRendimento?: number;
 }
 
 export interface AccountPage {

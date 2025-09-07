@@ -16,7 +16,7 @@ export class ListAccountsComponent implements AfterViewInit {
   resultsLength = 0;
   isLoadingResults = true;
 
-  displayedColumnsProventos: string[] = ['saldo', 'titular', 'acoes'];
+  displayedColumnsProventos: string[] = ['saldo', 'titular', 'tipo', 'acoes'];
 
   accounts: Account[] = [];
   editingAccount: Account | null = null;
@@ -95,6 +95,36 @@ export class ListAccountsComponent implements AfterViewInit {
           });
         }
       });
+    }
+  }
+
+  getBadgeClass(tipo: string): string {
+    switch (tipo) {
+      case 'CORRENTE':
+        return 'badge-primary';
+      case 'POUPANCA':
+        return 'badge-success';
+      case 'INVESTIMENTO':
+        return 'badge-warning';
+      case 'RESERVA_EMERGENCIA':
+        return 'badge-danger';
+      default:
+        return 'badge-info';
+    }
+  }
+
+  getTipoDescricao(tipo: string): string {
+    switch (tipo) {
+      case 'CORRENTE':
+        return 'Conta Corrente';
+      case 'POUPANCA':
+        return 'Poupança';
+      case 'INVESTIMENTO':
+        return 'Investimento';
+      case 'RESERVA_EMERGENCIA':
+        return 'Reserva de Emergência';
+      default:
+        return tipo;
     }
   }
 
