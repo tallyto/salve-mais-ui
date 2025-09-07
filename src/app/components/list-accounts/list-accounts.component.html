@@ -21,6 +21,16 @@
         <td *matCellDef="let account" mat-cell class="p-3"> {{ account.titular }}</td>
       </ng-container>
 
+      <!-- Tipo Column -->
+      <ng-container matColumnDef="tipo">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Tipo</th>
+        <td *matCellDef="let account" mat-cell class="p-3">
+          <div [ngClass]="getBadgeClass(account.tipo)" class="badge">
+            {{ getTipoDescricao(account.tipo) }}
+          </div>
+        </td>
+      </ng-container>
+
       <!-- Ações Column -->
       <ng-container matColumnDef="acoes">
         <th *matHeaderCellDef mat-header-cell class="p-3 text-right"> Ações</th>
