@@ -6,7 +6,8 @@ import { AnexoService } from '../../services/anexo.service';
 @Component({
   selector: 'app-comprovantes-list',
   templateUrl: './comprovantes-list.component.html',
-  styleUrls: ['./comprovantes-list.component.css']
+  styleUrls: ['./comprovantes-list.component.css'],
+  standalone: false
 })
 export class ComprovantesListComponent implements OnInit {
   anexos: Anexo[] = [];
@@ -96,7 +97,7 @@ export class ComprovantesListComponent implements OnInit {
 
   getFileIcon(tipo: string): string {
     if (!tipo) return 'insert_drive_file';
-    
+
     if (tipo.includes('pdf')) {
       return 'picture_as_pdf';
     } else if (tipo.includes('image')) {
@@ -116,7 +117,7 @@ export class ComprovantesListComponent implements OnInit {
     }
 
     const searchTermLower = this.searchTerm.trim().toLowerCase();
-    this.filteredAnexos = this.anexos.filter(anexo => 
+    this.filteredAnexos = this.anexos.filter(anexo =>
       anexo.nome.toLowerCase().includes(searchTermLower)
     );
   }
