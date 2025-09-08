@@ -22,6 +22,7 @@ import { MinhaContaComponent } from './components/minha-conta/minha-conta.compon
 import { ReservaEmergenciaComponent } from './components/reserva-emergencia/reserva-emergencia.component';
 import { ReservaEmergenciaFormComponent } from './components/reserva-emergencia-form/reserva-emergencia-form.component';
 import { BudgetRuleComponent } from './components/budget-rule/budget-rule.component';
+import { ComprovantesListComponent } from './components/comprovantes-list/comprovantes-list.component';
 
 
 const routes: Routes = [
@@ -39,6 +40,7 @@ const routes: Routes = [
   {path: 'account', component: AccountComponent, canActivate: [AuthGuard]},
   {path: 'minha-conta', component: MinhaContaComponent, canActivate: [AuthGuard]},
   {path: 'budget-rule', component: BudgetRuleComponent, canActivate: [AuthGuard]},
+  {path: 'comprovantes', component: ComprovantesListComponent, canActivate: [AuthGuard]},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
   {path: 'recuperar-senha', component: RecuperarSenhaComponent},

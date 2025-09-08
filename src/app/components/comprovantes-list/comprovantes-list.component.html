@@ -1,0 +1,46 @@
+<div class="comprovantes-container">
+  <div class="header-section">
+    <h1>Todos os Comprovantes</h1>
+    <div class="search-container">
+      <mat-form-field appearance="outline">
+        <mat-label>Buscar por nome</mat-label>
+        <input matInput [(ngModel)]="searchTerm" (keyup)="aplicarFiltro()" placeholder="Digite para buscar...">
+        <button *ngIf="searchTerm" matSuffix mat-icon-button aria-label="Limpar" (click)="limparFiltro()">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <mat-card class="main-card">
+    <div *ngIf="isLoading" class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Carregando comprovantes...</p>
+    </div>
+
+    <div *ngIf="!isLoading && filteredAnexos.length === 0" class="empty-message">
+      <mat-icon>info</mat-icon>
+      <p *ngIf="!searchTerm">Nenhum comprovante encontrado no sistema.</p>
+      <p *ngIf="searchTerm">Nenhum comprovante encontrado para a busca "{{ searchTerm }}".</p>
+    </div>
+
+    <mat-list *ngIf="!isLoading && filteredAnexos.length > 0">
+      <h3 mat-subheader>{{ filteredAnexos.length }} comprovante(s) encontrado(s)</h3>
+      <mat-list-item *ngFor="let anexo of filteredAnexos" class="anexo-item">
+        <mat-icon matListItemIcon>{{ getFileIcon(anexo.tipo) }}</mat-icon>
+        <div matListItemTitle>{{ anexo.nome }}</div>
+        <div matListItemLine>Enviado em: {{ formatarData(anexo.dataUpload) }}</div>
+        <div matListItemLine *ngIf="anexo.contaFixaId">Conta Fixa ID: {{ anexo.contaFixaId }}</div>
+        <div matListItemMeta>
+          <button mat-icon-button color="primary" matTooltip="Baixar comprovante" (click)="downloadAnexo(anexo)">
+            <mat-icon>download</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" matTooltip="Remover comprovante" (click)="removerAnexo(anexo)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </mat-card>
+</div>

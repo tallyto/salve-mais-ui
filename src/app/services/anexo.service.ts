@@ -33,6 +33,13 @@ export class AnexoService {
   }
 
   /**
+   * Lista todos os comprovantes do sistema
+   */
+  listarTodosComprovantes(): Observable<Anexo[]> {
+    return this.http.get<Anexo[]>(`${this.apiUrl}/comprovantes`);
+  }
+
+  /**
    * Obtém URL para download do comprovante
    * @param contaFixaId ID da conta fixa
    * @param anexoId ID do anexo
@@ -42,11 +49,27 @@ export class AnexoService {
   }
 
   /**
+   * Obtém URL para download do comprovante (sem contexto de conta fixa)
+   * @param anexoId ID do anexo
+   */
+  obterUrlDownloadGlobal(anexoId: number): Observable<UrlDownload> {
+    return this.http.get<UrlDownload>(`${this.apiUrl}/comprovantes/${anexoId}/download`);
+  }
+
+  /**
    * Remove um comprovante
    * @param contaFixaId ID da conta fixa
    * @param anexoId ID do anexo
    */
   removerComprovante(contaFixaId: number, anexoId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/contas-fixas/${contaFixaId}/comprovantes/${anexoId}`);
+  }
+
+  /**
+   * Remove um comprovante (sem contexto de conta fixa)
+   * @param anexoId ID do anexo
+   */
+  removerComprovanteGlobal(anexoId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/comprovantes/${anexoId}`);
   }
 }
