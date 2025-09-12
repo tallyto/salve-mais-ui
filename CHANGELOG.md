@@ -1,5 +1,35 @@
 # Changelog - Salve Mais
 
+## [1.14.0] - 2025-09-12
+
+### Adicionado
+
+- Sistema de comprovantes:
+  - Nova interface para visualização de todos os comprovantes
+  - Integração no menu lateral para acesso rápido
+  - Melhorias no serviço de anexos
+- Gerenciamento de contas:
+  - Funcionalidade de transferência entre contas
+  - Possibilidade de edição do nome do titular na listagem de contas
+  - Exibição do tipo de conta como badge visual na listagem
+- Melhorias no componente de regra de orçamento 50/30/20:
+  - Suporte para ícones do Material Design
+  - Layout mais informativo para o card de dicas de orçamento
+  - Animações nos gráficos e barras de progresso
+  - Mais dicas práticas para cada categoria financeira
+  - Atualização para usar PrimeFlex em vez de Bootstrap
+
+### Alterado
+
+- Removida a edição direta de saldo das contas, substituída pela funcionalidade de transferência
+- Melhorada a disposição dos gráficos no componente de regra de orçamento
+- Padronizado o estilo visual de todos os cards no componente de orçamento
+
+### Corrigido
+
+- Resolvidos problemas de build
+- Corrigido alinhamento do card de dicas no componente de regra de orçamento
+
 ## [1.13.0] - 2025-08-26
 
 ### Adicionado
