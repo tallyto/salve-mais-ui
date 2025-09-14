@@ -83,4 +83,21 @@ export class ContasFixasService {
       })
     );
   }
+  
+  /**
+   * Marca uma conta fixa como paga e cria a transação correspondente
+   */
+  pagarContaFixa(contaFixaId: number, observacoes?: string): Observable<Financa> {
+    let params: any = {};
+    if (observacoes) {
+      params.observacoes = observacoes;
+    }
+    
+    return this.http.post<Financa>(`${this.apiUrl}/${contaFixaId}/pagar`, null, { params }).pipe(
+      tap(() => {
+        // Notificar atualização das notificações após pagar conta fixa
+        this.notificationEventService.notifyAfterContaOperation();
+      })
+    );
+  }
 }

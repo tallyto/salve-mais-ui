@@ -243,4 +243,54 @@ export class ListContasFixasComponent implements AfterViewInit {
       }
     });
   }
+  
+  /**
+   * Realiza o pagamento de uma conta fixa
+   */
+  pagarContaFixa(contaFixa: Financa): void {
+    if (contaFixa.pago) {
+      this.snackBar.open('Esta conta já está paga!', 'Fechar', {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'top',
+      });
+      return;
+    }
+    
+    if (confirm(`Deseja confirmar o pagamento de "${contaFixa.nome}" no valor de ${contaFixa.valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}?`)) {
+      this.isLoadingResults = true;
+      
+      this.financaService.pagarContaFixa(contaFixa.id).subscribe({
+        next: () => {
+          this.snackBar.open('Conta paga com sucesso!', 'Fechar', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+          });
+          this.refreshContasFixasList();
+        },
+        error: (error) => {
+          console.error('Erro ao pagar conta:', error);
+          let errorMessage = 'Erro ao realizar o pagamento';
+          
+          if (error.error && typeof error.error === 'string') {
+            errorMessage = error.error;
+          } else if (error.error && error.error.message) {
+            errorMessage = error.error.message;
+          } else if (error.message) {
+            errorMessage = error.message;
+          }
+          
+          this.snackBar.open(errorMessage, 'Fechar', {
+            duration: 5000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+          });
+        },
+        complete: () => {
+          this.isLoadingResults = false;
+        }
+      });
+    }
+  }
 }

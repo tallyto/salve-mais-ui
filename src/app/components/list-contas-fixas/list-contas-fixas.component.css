@@ -112,6 +112,12 @@
   text-align: right;
 }
 
+/* Estilos para o botão de pagamento */
+button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* Responsividade */
 @media screen and (max-width: 768px) {
   .filters-row {

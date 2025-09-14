@@ -1,0 +1,92 @@
+<div class="container">
+  <div class="header">
+    <button mat-icon-button (click)="voltar()" class="back-button">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <h1>Detalhes da Transação</h1>
+  </div>
+
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>Carregando detalhes...</p>
+  </div>
+
+  <div *ngIf="error" class="error-container">
+    <mat-icon class="error-icon">error</mat-icon>
+    <p>Não foi possível carregar os detalhes da transação.</p>
+    <button mat-raised-button color="primary" (click)="carregarTransacao()">
+      Tentar Novamente
+    </button>
+  </div>
+
+  <div *ngIf="!loading && !error && transacao" class="transacao-card">
+    <div class="transacao-header">
+      <div class="tipo-data">
+        <span class="tipo-badge" [ngClass]="getCorValor(transacao.tipo)">
+          {{ getDescricaoTipo(transacao.tipo) }}
+        </span>
+        <span class="data">{{ formatarData(transacao.data) }}</span>
+      </div>
+      <div class="valor-container" [ngClass]="getCorValor(transacao.tipo)">
+        {{ formatarMoeda(transacao.valor) }}
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="transacao-info">
+      <div class="info-section">
+        <h2>Informações Gerais</h2>
+        <div class="info-item">
+          <span class="label">Descrição:</span>
+          <span class="value">{{ transacao.descricao }}</span>
+        </div>
+        <div class="info-item" *ngIf="transacao.observacoes">
+          <span class="label">Observações:</span>
+          <span class="value">{{ transacao.observacoes }}</span>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div class="info-section">
+        <h2>Contas</h2>
+        <div class="info-item" *ngIf="transacao.conta">
+          <span class="label">Conta:</span>
+          <span class="value">{{ transacao.conta.titular }}</span>
+        </div>
+        <div class="info-item" *ngIf="transacao.contaDestino">
+          <span class="label">Conta Destino:</span>
+          <span class="value">{{ transacao.contaDestino.titular }}</span>
+        </div>
+      </div>
+
+      <ng-container *ngIf="transacao.categoria || transacao.provento || transacao.contaFixa || transacao.fatura">
+        <mat-divider></mat-divider>
+
+        <div class="info-section">
+          <h2>Detalhes Específicos</h2>
+          <div class="info-item" *ngIf="transacao.categoria">
+            <span class="label">Categoria:</span>
+            <span class="value">{{ transacao.categoria.nome }}</span>
+          </div>
+          <div class="info-item" *ngIf="transacao.provento">
+            <span class="label">Provento:</span>
+            <span class="value">{{ transacao.provento.descricao }}</span>
+          </div>
+          <div class="info-item" *ngIf="transacao.contaFixa">
+            <span class="label">Conta Fixa:</span>
+            <span class="value">{{ transacao.contaFixa.nome }}</span>
+          </div>
+          <div class="info-item" *ngIf="transacao.fatura">
+            <span class="label">Fatura:</span>
+            <span class="value">
+              {{ transacao.fatura.cartao }} - 
+              Vencimento: {{ transacao.fatura.dataVencimento | date: 'dd/MM/yyyy' }}
+            </span>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>

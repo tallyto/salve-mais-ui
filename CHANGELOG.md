@@ -1,5 +1,14 @@
 # Changelog - Salve Mais
 
+## [Unreleased]
+
+### Alterado
+
+- Removida a funcionalidade de estorno de transações:
+  - Substituída por um componente de detalhamento de transações mais completo
+  - Removidos botões e opções de estorno da interface
+  - Simplificação da interface de gerenciamento de transações
+
 ## [1.14.0] - 2025-09-12
 
 ### Adicionado

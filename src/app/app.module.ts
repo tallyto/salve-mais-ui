@@ -64,12 +64,14 @@ import { ReservaEmergenciaComponent } from './components/reserva-emergencia/rese
 import { ConfirmDialogComponent } from './components/shared/confirm-dialog/confirm-dialog.component';
 import { LimiteAlertasWidgetComponent } from './components/shared/limite-alertas-widget.component';
 import { SpendingTrendChartComponent } from './components/spending-trend-chart/spending-trend-chart.component';
+import { TransacaoDetalheComponent } from './components/transacao-detalhe/transacao-detalhe.component';
 import { TransferenciaModalComponent } from './components/transferencia-modal/transferencia-modal.component';
 import { AuthInterceptor } from './services/auth.interceptor';
 
 import { MinhaContaComponent } from './components/minha-conta/minha-conta.component';
 import { NotificacoesWidgetComponent } from './components/notificacoes-widget/notificacoes-widget.component';
 import { NotificacoesComponent } from './components/notificacoes/notificacoes.component';
+import { ListTransacoesComponent } from './components/list-transacoes/list-transacoes.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +103,8 @@ import { NotificacoesComponent } from './components/notificacoes/notificacoes.co
     ComprovantesListComponent,
     ReservaEmergenciaComponent,
     ReservaEmergenciaFormComponent,
-    TransferenciaModalComponent
+    TransferenciaModalComponent,
+    TransacaoDetalheComponent
   ],
   imports: [
     BrowserModule,
@@ -144,7 +147,8 @@ import { NotificacoesComponent } from './components/notificacoes/notificacoes.co
     MatChipsModule,
     LimiteAlertasWidgetComponent, // Importa o widget standalone
     CartaoLimitesComponent, // Importa o componente standalone
-    NotificacoesWidgetComponent // Importa o widget de notificações standalone
+    NotificacoesWidgetComponent, // Importa o widget de notificações standalone
+    ListTransacoesComponent // Importa o componente de listagem de transações standalone
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
