@@ -255,8 +255,6 @@ export class NotificacoesWidgetComponent implements OnInit {
 
   ngOnInit(): void {
     this.carregarResumo();
-    // Atualizar a cada 5 minutos
-    setInterval(() => this.carregarResumo(), 5 * 60 * 1000);
   }
 
   carregarResumo(): void {
