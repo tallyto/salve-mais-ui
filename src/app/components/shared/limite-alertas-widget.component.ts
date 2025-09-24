@@ -213,8 +213,6 @@ export class LimiteAlertasWidgetComponent implements OnInit {
 
   ngOnInit() {
     this.carregarAlertas();
-    // Atualizar a cada 5 minutos
-    setInterval(() => this.carregarAlertas(), 5 * 60 * 1000);
   }
 
   carregarAlertas() {
