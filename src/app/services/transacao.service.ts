@@ -55,4 +55,8 @@ export class TransacaoService {
   obterTransacao(id: number): Observable<Transacao> {
     return this.http.get<Transacao>(`${this.apiUrl}/${id}`);
   }
+
+  deletarTransacao(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }

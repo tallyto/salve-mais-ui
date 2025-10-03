@@ -123,14 +123,6 @@
         <td mat-cell *matCellDef="let transacao">{{ transacao.categoria?.nome || '-' }}</td>
       </ng-container>
 
-      <!-- Estornada Column -->
-      <ng-container matColumnDef="estornada">
-        <th mat-header-cell *matHeaderCellDef>Estornada</th>
-        <td mat-cell *matCellDef="let transacao">
-          <mat-icon *ngIf="transacao.estornada" class="texto-alerta">check_circle</mat-icon>
-          <mat-icon *ngIf="!transacao.estornada">remove_circle_outline</mat-icon>
-        </td>
-      </ng-container>
 
       <!-- Actions Column -->
       <ng-container matColumnDef="acoes">
@@ -143,6 +135,10 @@
             <button mat-menu-item [routerLink]="['/transacao', transacao.id]">
               <mat-icon>visibility</mat-icon>
               <span>Ver Detalhes</span>
+            </button>
+            <button mat-menu-item (click)="confirmarExclusao(transacao)">
+              <mat-icon color="warn">delete</mat-icon>
+              <span>Excluir</span>
             </button>
           </mat-menu>
         </td>

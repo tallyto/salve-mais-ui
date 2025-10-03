@@ -64,7 +64,6 @@ export class ListTransacoesComponent implements OnInit {
     'valor', 
     'conta', 
     'categoria', 
-    'estornada', 
     'acoes'
   ];
 
@@ -198,6 +197,39 @@ export class ListTransacoesComponent implements OnInit {
       default:
         return tipo;
     }
+  }
+
+  confirmarExclusao(transacao: Transacao): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Excluir transação',
+        message: `Tem certeza que deseja excluir a transação <b>#${transacao.id}</b> (<i>${transacao.descricao}</i>)? Essa ação não poderá ser desfeita.`,
+        confirmText: 'Excluir',
+        cancelText: 'Cancelar'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.excluirTransacao(transacao.id);
+      }
+    });
+  }
+
+  private excluirTransacao(id: number): void {
+    this.loading = true;
+    this.transacaoService.deletarTransacao(id).subscribe({
+      next: () => {
+        // Recarrega mantendo filtro/paginação atuais
+        this.carregarTransacoes(this.filtroForm.value);
+        this.snackBar.open('Transação excluída com sucesso', 'Fechar', { duration: 3000 });
+      },
+      error: (err) => {
+        console.error('Erro ao excluir transação', err);
+        this.snackBar.open('Erro ao excluir transação', 'Fechar', { duration: 3000 });
+        this.loading = false;
+      }
+    });
   }
 
 }
