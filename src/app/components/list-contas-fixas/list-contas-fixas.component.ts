@@ -192,6 +192,83 @@ export class ListContasFixasComponent implements AfterViewInit {
       this.years.push(year);
     }
   }
+  
+  /**
+   * Navega para o mês anterior
+   */
+  previousMonth(): void {
+    if (this.selectedMonth === 1) {
+      this.selectedMonth = 12;
+      this.selectedYear--;
+    } else {
+      this.selectedMonth--;
+    }
+    this.onFilterChange();
+  }
+  
+  /**
+   * Navega para o próximo mês
+   */
+  nextMonth(): void {
+    if (this.selectedMonth === 12) {
+      this.selectedMonth = 1;
+      this.selectedYear++;
+    } else {
+      this.selectedMonth++;
+    }
+    this.onFilterChange();
+  }
+  
+  /**
+   * Define o filtro para o mês passado
+   */
+  setLastMonth(): void {
+    const lastMonth = new Date();
+    lastMonth.setMonth(lastMonth.getMonth() - 1);
+    this.selectedMonth = lastMonth.getMonth() + 1;
+    this.selectedYear = lastMonth.getFullYear();
+    this.onFilterChange();
+  }
+  
+  /**
+   * Define o filtro para o próximo mês
+   */
+  setNextMonth(): void {
+    const nextMonth = new Date();
+    nextMonth.setMonth(nextMonth.getMonth() + 1);
+    this.selectedMonth = nextMonth.getMonth() + 1;
+    this.selectedYear = nextMonth.getFullYear();
+    this.onFilterChange();
+  }
+  
+  /**
+   * Verifica se o filtro está no mês atual
+   */
+  isCurrentMonth(): boolean {
+    const currentDate = new Date();
+    return this.selectedMonth === currentDate.getMonth() + 1 && 
+           this.selectedYear === currentDate.getFullYear();
+  }
+  
+  /**
+   * Verifica se o filtro está no mês passado
+   */
+  isLastMonth(): boolean {
+    const lastMonth = new Date();
+    lastMonth.setMonth(lastMonth.getMonth() - 1);
+    return this.selectedMonth === lastMonth.getMonth() + 1 && 
+           this.selectedYear === lastMonth.getFullYear();
+  }
+  
+  /**
+   * Verifica se o filtro está no próximo mês
+   */
+  isNextMonth(): boolean {
+    const nextMonth = new Date();
+    nextMonth.setMonth(nextMonth.getMonth() + 1);
+    return this.selectedMonth === nextMonth.getMonth() + 1 && 
+           this.selectedYear === nextMonth.getFullYear();
+  }
 
   private refreshContasFixasList() {
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));

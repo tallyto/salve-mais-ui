@@ -1,29 +1,79 @@
 /* Filtros */
 .filters-container {
-  padding: 16px;
-  background-color: #fafafa;
+  padding: 20px;
+  background-color: #ffffff;
   border-bottom: 1px solid #e0e0e0;
+}
+
+.filters-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.filters-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+}
+
+.period-navigation {
+  display: flex;
+  gap: 4px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 2px;
+}
+
+.period-navigation button {
+  color: #666;
+}
+
+.period-navigation button:hover {
+  background-color: #f5f5f5;
 }
 
 .filters-row {
   display: flex;
-  gap: 16px;
+  gap: 12px;
   align-items: center;
   flex-wrap: wrap;
 }
 
 .filter-field {
-  flex: 1;
-  min-width: 120px;
-  max-width: 200px;
+  min-width: 140px;
+  max-width: 180px;
 }
 
-.reset-button {
-  height: 40px;
+.quick-filters {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 4px;
 }
 
-.reset-button mat-icon {
-  margin-right: 4px;
+.quick-filters button {
+  font-size: 13px;
+  color: #666;
+  min-width: 70px;
+  padding: 0 12px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.quick-filters button:hover {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.quick-filters button.active {
+  background-color: #1976d2;
+  color: white;
+  font-weight: 500;
 }
 
 /* Tabela */
@@ -90,6 +140,25 @@
 
 /* Responsividade */
 @media screen and (max-width: 768px) {
+  .filters-container {
+    padding: 16px;
+  }
+
+  .filters-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .filters-title {
+    font-size: 18px;
+  }
+
+  .period-navigation {
+    align-self: stretch;
+    justify-content: center;
+  }
+
   .filters-row {
     flex-direction: column;
     align-items: stretch;
@@ -97,6 +166,20 @@
 
   .filter-field {
     max-width: none;
+    width: 100%;
+  }
+
+  .quick-filters {
+    width: 100%;
+    margin-left: 0;
+    justify-content: stretch;
+  }
+
+  .quick-filters button {
+    flex: 1;
+    min-width: 0;
+    font-size: 12px;
+    padding: 0 8px;
   }
 }
 

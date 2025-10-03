@@ -1,7 +1,22 @@
 <div>
   <!-- Filtros de Mês e Ano -->
   <div class="filters-container">
+    <div class="filters-header">
+      <h3 class="filters-title">{{ getSelectedPeriodText() }}</h3>
+      
+      <!-- Navegação Rápida -->
+      <div class="period-navigation">
+        <button mat-icon-button matTooltip="Mês anterior" (click)="previousMonth()">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Próximo mês" (click)="nextMonth()">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+    </div>
+
     <div class="filters-row">
+      <!-- Seleção de Mês e Ano -->
       <mat-form-field appearance="outline" class="filter-field">
         <mat-label>Mês</mat-label>
         <mat-select [(value)]="selectedMonth" (selectionChange)="onFilterChange()">
@@ -20,10 +35,27 @@
         </mat-select>
       </mat-form-field>
 
-      <button mat-stroked-button color="primary" (click)="resetFilters()" class="reset-button">
-        <mat-icon>refresh</mat-icon>
-        Mês Atual
-      </button>
+      <!-- Atalhos Rápidos -->
+      <div class="quick-filters">
+        <button 
+          mat-button 
+          (click)="resetFilters()" 
+          [class.active]="isCurrentMonth()">
+          Hoje
+        </button>
+        <button 
+          mat-button 
+          (click)="setLastMonth()" 
+          [class.active]="isLastMonth()">
+          Mês Passado
+        </button>
+        <button 
+          mat-button 
+          (click)="setNextMonth()" 
+          [class.active]="isNextMonth()">
+          Próximo
+        </button>
+      </div>
     </div>
   </div>
 
