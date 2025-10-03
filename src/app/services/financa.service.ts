@@ -100,4 +100,16 @@ export class ContasFixasService {
       })
     );
   }
+  
+  /**
+   * Recria uma despesa fixa para o próximo mês como não paga
+   */
+  recriarDespesaProximoMes(contaFixaId: number): Observable<Financa> {
+    return this.http.post<Financa>(`${this.apiUrl}/${contaFixaId}/recriar-proximo-mes`, null).pipe(
+      tap(() => {
+        // Notificar atualização das notificações após recriar conta fixa
+        this.notificationEventService.notifyAfterContaOperation();
+      })
+    );
+  }
 }

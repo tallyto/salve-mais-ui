@@ -78,12 +78,7 @@
       <th *matHeaderCellDef mat-header-cell class="text-right"> Ações</th>
       <td *matCellDef="let contaFixa" mat-cell class="text-right">
         <div class="action-buttons">
-          <button mat-icon-button color="primary" matTooltip="Editar despesa" (click)="startEdit(contaFixa)">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="accent" matTooltip="Gerenciar comprovantes" (click)="abrirComprovantes(contaFixa)">
-            <mat-icon>attach_file</mat-icon>
-          </button>
+          <!-- Ações Principais (sempre visíveis) -->
           <button 
             mat-icon-button 
             [color]="contaFixa.pago ? 'disabled' : 'primary'" 
@@ -92,9 +87,38 @@
             [disabled]="contaFixa.pago">
             <mat-icon>payments</mat-icon>
           </button>
-          <button mat-icon-button color="warn" matTooltip="Excluir despesa" (click)="excluirDespesa(contaFixa)">
-            <mat-icon>delete</mat-icon>
+          
+          <button 
+            mat-icon-button 
+            color="primary" 
+            matTooltip="Editar despesa" 
+            (click)="startEdit(contaFixa)">
+            <mat-icon>edit</mat-icon>
           </button>
+          
+          <!-- Menu de Mais Opções -->
+          <button mat-icon-button [matMenuTriggerFor]="moreMenu" matTooltip="Mais opções">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          
+          <mat-menu #moreMenu="matMenu">
+            <button mat-menu-item (click)="abrirComprovantes(contaFixa)">
+              <mat-icon color="accent">attach_file</mat-icon>
+              <span>Comprovantes</span>
+            </button>
+            
+            <button mat-menu-item (click)="recriarDespesaProximoMes(contaFixa)">
+              <mat-icon color="accent">event_repeat</mat-icon>
+              <span>Lançar no próximo mês</span>
+            </button>
+            
+            <mat-divider></mat-divider>
+            
+            <button mat-menu-item (click)="excluirDespesa(contaFixa)">
+              <mat-icon color="warn">delete</mat-icon>
+              <span class="text-warn">Excluir despesa</span>
+            </button>
+          </mat-menu>
         </div>
       </td>
     </ng-container>

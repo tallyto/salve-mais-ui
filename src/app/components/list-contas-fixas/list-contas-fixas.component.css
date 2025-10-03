@@ -81,7 +81,12 @@
 .action-buttons {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   gap: 8px;
+}
+
+.text-warn {
+  color: #f44336;
 }
 
 /* Estado vazio */
@@ -141,6 +146,10 @@ button[disabled] {
   }
 
   /* Make action buttons smaller on mobile */
+  .action-buttons {
+    gap: 4px;
+  }
+  
   .action-buttons button {
     padding: 6px !important;
   }

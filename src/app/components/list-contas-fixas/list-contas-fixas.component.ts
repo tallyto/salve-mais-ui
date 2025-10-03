@@ -293,4 +293,48 @@ export class ListContasFixasComponent implements AfterViewInit {
       });
     }
   }
+  
+  /**
+   * Recria uma despesa fixa para o próximo mês como não paga
+   */
+  recriarDespesaProximoMes(contaFixa: Financa): void {
+    const mesAtual = this.months.find(m => m.value === this.selectedMonth)?.label || '';
+    const proximoMes = this.months.find(m => m.value === (this.selectedMonth % 12) + 1)?.label || '';
+    
+    if (confirm(`Deseja recriar a despesa "${contaFixa.nome}" para ${proximoMes} como não paga?`)) {
+      this.isLoadingResults = true;
+      
+      this.financaService.recriarDespesaProximoMes(contaFixa.id).subscribe({
+        next: (novaDespesa) => {
+          this.snackBar.open(`Despesa recriada com sucesso para ${proximoMes}!`, 'Fechar', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+          });
+          this.refreshContasFixasList();
+        },
+        error: (error) => {
+          console.error('Erro ao recriar despesa:', error);
+          let errorMessage = 'Erro ao recriar despesa';
+          
+          if (error.error && typeof error.error === 'string') {
+            errorMessage = error.error;
+          } else if (error.error && error.error.message) {
+            errorMessage = error.error.message;
+          } else if (error.message) {
+            errorMessage = error.message;
+          }
+          
+          this.snackBar.open(errorMessage, 'Fechar', {
+            duration: 5000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top',
+          });
+        },
+        complete: () => {
+          this.isLoadingResults = false;
+        }
+      });
+    }
+  }
 }
