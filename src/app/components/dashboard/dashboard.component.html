@@ -111,6 +111,72 @@
     </div>
   </div>
 
+  <!-- Parcelas Summary -->
+  <div class="section-header mb-3" *ngIf="summaryData && summaryData.parcelasResumo">
+    <h2>Compras Parceladas</h2>
+  </div>
+  <div class="grid mb-4" *ngIf="summaryData && summaryData.parcelasResumo">
+    <div class="col-12 md:col-6 lg:col-3 mb-3">
+      <div class="summary-card" style="border-top-color: #2196f3;">
+        <div class="card-icon" style="background-color: rgba(33, 150, 243, 0.1); color: #2196f3;">
+          <mat-icon>shopping_cart</mat-icon>
+        </div>
+        <div class="summary-label">Parcelas Ativas</div>
+        <div class="summary-value">{{ summaryData.parcelasResumo.totalParcelasAtivas }}</div>
+        <div class="text-color-secondary">
+          <small>
+            <a routerLink="/compras-parceladas" class="small-link">Ver todas</a>
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 md:col-6 lg:col-3 mb-3">
+      <div class="summary-card" style="border-top-color: #4caf50;">
+        <div class="card-icon" style="background-color: rgba(76, 175, 80, 0.1); color: #4caf50;">
+          <mat-icon>check_circle</mat-icon>
+        </div>
+        <div class="summary-label">Pagas no Mês</div>
+        <div class="summary-value">{{ summaryData.parcelasResumo.parcelasPagasMes }}</div>
+        <div class="text-color-secondary">
+          <small>
+            {{ summaryData.parcelasResumo.valorPagoMes | currency:'BRL':'symbol':'1.2-2' }}
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 md:col-6 lg:col-3 mb-3">
+      <div class="summary-card" style="border-top-color: #ff9800;">
+        <div class="card-icon" style="background-color: rgba(255, 152, 0, 0.1); color: #ff9800;">
+          <mat-icon>pending</mat-icon>
+        </div>
+        <div class="summary-label">Pendentes no Mês</div>
+        <div class="summary-value">{{ summaryData.parcelasResumo.parcelasNaoPagasMes }}</div>
+        <div class="text-color-secondary">
+          <small>
+            {{ summaryData.parcelasResumo.valorRestanteMes | currency:'BRL':'symbol':'1.2-2' }}
+          </small>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 md:col-6 lg:col-3 mb-3">
+      <div class="summary-card" style="border-top-color: #9c27b0;">
+        <div class="card-icon" style="background-color: rgba(156, 39, 176, 0.1); color: #9c27b0;">
+          <mat-icon>payment</mat-icon>
+        </div>
+        <div class="summary-label">Total do Mês</div>
+        <div class="summary-value">{{ summaryData.parcelasResumo.valorTotalParcelasMes | currency:'BRL':'symbol':'1.2-2' }}</div>
+        <div class="text-color-secondary">
+          <small>
+            {{ summaryData.parcelasResumo.parcelasPagasMes + summaryData.parcelasResumo.parcelasNaoPagasMes }} parcelas
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Charts Section -->
   <div class="section-header mb-3">
     <h2>Análise Financeira</h2>

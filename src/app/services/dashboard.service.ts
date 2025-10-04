@@ -20,6 +20,14 @@ export interface DashboardSummary {
     tempoRestante?: number;
   };
   temReservaEmergencia?: boolean;
+  parcelasResumo?: {
+    totalParcelasAtivas: number;
+    parcelasPagasMes: number;
+    parcelasNaoPagasMes: number;
+    valorTotalParcelasMes: number;
+    valorPagoMes: number;
+    valorRestanteMes: number;
+  };
 }
 
 export interface VariationData {
