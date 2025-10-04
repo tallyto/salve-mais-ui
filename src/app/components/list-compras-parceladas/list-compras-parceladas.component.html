@@ -112,7 +112,7 @@
                     {{ parcela.dataVencimento | date: 'dd/MM/yyyy' }}
                   </div>
                   <div class="col-3">
-                    <mat-chip [color]="parcela.paga ? 'primary' : 'warn'" [selected]="true">
+                    <mat-chip [color]="parcela.paga ? 'primary' : 'warn'">
                       {{ parcela.paga ? '✓ Paga' : '⏱ Pendente' }}
                     </mat-chip>
                   </div>
