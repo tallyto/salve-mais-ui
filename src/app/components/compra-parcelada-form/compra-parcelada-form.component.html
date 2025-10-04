@@ -11,7 +11,7 @@
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <!-- Descrição -->
         <mat-form-field appearance="outline" class="w-full mb-3">
-          <mat-label>Descrição</mat-label>
+          <mat-label>Descrição *</mat-label>
           <input
             matInput
             formControlName="descricao"
@@ -24,7 +24,7 @@
 
         <!-- Valor Total -->
         <mat-form-field appearance="outline" class="w-full mb-3">
-          <mat-label>Valor Total</mat-label>
+          <mat-label>Valor Total *</mat-label>
           <span matPrefix>R$&nbsp;</span>
           <input
             matInput
@@ -41,7 +41,7 @@
 
         <!-- Data da Compra -->
         <mat-form-field appearance="outline" class="w-full mb-3">
-          <mat-label>Data da Compra</mat-label>
+          <mat-label>Data da Compra *</mat-label>
           <input
             matInput
             [matDatepicker]="picker"
@@ -55,7 +55,7 @@
         <div class="grid">
           <div class="col-12 md:col-6">
             <mat-form-field appearance="outline" class="w-full">
-              <mat-label>Parcela Inicial</mat-label>
+              <mat-label>Parcela Inicial *</mat-label>
               <input
                 matInput
                 type="number"
@@ -72,7 +72,7 @@
 
           <div class="col-12 md:col-6">
             <mat-form-field appearance="outline" class="w-full">
-              <mat-label>Total de Parcelas</mat-label>
+              <mat-label>Total de Parcelas *</mat-label>
               <input
                 matInput
                 type="number"
@@ -106,7 +106,7 @@
 
         <!-- Categoria -->
         <mat-form-field appearance="outline" class="w-full mb-3">
-          <mat-label>Categoria</mat-label>
+          <mat-label>Categoria *</mat-label>
           <mat-select formControlName="categoriaId">
             <mat-option [value]="null">Selecione uma categoria</mat-option>
             <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">
@@ -126,7 +126,7 @@
 
         <!-- Cartão -->
         <mat-form-field appearance="outline" class="w-full mb-3">
-          <mat-label>Cartão de Crédito</mat-label>
+          <mat-label>Cartão de Crédito *</mat-label>
           <mat-select formControlName="cartaoId">
             <mat-option [value]="null">Selecione um cartão</mat-option>
             <mat-option *ngFor="let cartao of cartoes" [value]="cartao.id">
