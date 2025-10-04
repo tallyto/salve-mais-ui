@@ -119,9 +119,10 @@ export class CompraParceladaService {
 
   /**
    * Calcula o valor de cada parcela
+   * Divide o valor total pelo TOTAL de parcelas (não pelas restantes)
+   * Exemplo: R$ 1.800 em 5x começando da 3ª = R$ 1.800 / 5 = R$ 360 por parcela
    */
   calcularValorParcela(valorTotal: number, parcelaInicial: number, totalParcelas: number): number {
-    const parcelasRestantes = this.calcularParcelasRestantes(parcelaInicial, totalParcelas);
-    return valorTotal / parcelasRestantes;
+    return valorTotal / totalParcelas;
   }
 }
