@@ -1,4 +1,55 @@
-<div class="container">
+<!-- Modo Dialog -->
+<div *ngIf="isDialogMode">
+  <h2 mat-dialog-title class="flex align-items-center gap-2">
+    <mat-icon>credit_card</mat-icon>
+    <span>Novo Cartão de Crédito</span>
+  </h2>
+
+  <mat-dialog-content>
+    <form [formGroup]="cartaoForm" id="cartaoDialogForm">
+      <div class="p-0">
+        <div class="mb-3">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Nome do Cartão</mat-label>
+            <input formControlName="nome" matInput placeholder="Ex: Mastercard Black" autofocus>
+            <mat-icon matSuffix>credit_card</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="mb-3">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Data de Vencimento da Fatura</mat-label>
+            <input [matDatepicker]="dialogPicker" formControlName="vencimento" matInput>
+            <mat-icon matSuffix>event</mat-icon>
+            <mat-datepicker-toggle [for]="dialogPicker" matIconSuffix></mat-datepicker-toggle>
+            <mat-datepicker #dialogPicker></mat-datepicker>
+            <mat-hint>Dia do vencimento da fatura</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="gap-2">
+    <button mat-button type="button" (click)="fecharDialog()">
+      <mat-icon>close</mat-icon>
+      Cancelar
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="cartaoForm.invalid"
+      (click)="salvarCartao()"
+    >
+      <mat-icon>save</mat-icon>
+      Salvar
+    </button>
+  </mat-dialog-actions>
+</div>
+
+<!-- Modo Página Completa -->
+<div *ngIf="!isDialogMode" class="container">
   <!-- Header -->
   <div class="page-header">
     <div class="header-content">
@@ -130,4 +181,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> <!-- Fim do modo página -->

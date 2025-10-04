@@ -1,0 +1,181 @@
+<div class="p-4">
+  <mat-card>
+    <mat-card-header class="bg-primary">
+      <mat-card-title class="flex align-items-center text-white">
+        <mat-icon class="mr-2">credit_card</mat-icon>
+        Nova Compra Parcelada
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="p-4">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <!-- Descrição -->
+        <mat-form-field appearance="outline" class="w-full mb-3">
+          <mat-label>Descrição</mat-label>
+          <input
+            matInput
+            formControlName="descricao"
+            placeholder="Ex: Notebook Dell Inspiron"
+          />
+          <mat-error *ngIf="descricaoInvalid">
+            Descrição é obrigatória (mínimo 3 caracteres)
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Valor Total -->
+        <mat-form-field appearance="outline" class="w-full mb-3">
+          <mat-label>Valor Total</mat-label>
+          <span matPrefix>R$&nbsp;</span>
+          <input
+            matInput
+            type="number"
+            formControlName="valorTotal"
+            placeholder="0.00"
+            step="0.01"
+            min="0.01"
+          />
+          <mat-error *ngIf="valorTotalInvalid">
+            Valor total deve ser maior que zero
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Data da Compra -->
+        <mat-form-field appearance="outline" class="w-full mb-3">
+          <mat-label>Data da Compra</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="dataCompra"
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <!-- Parcelas -->
+        <div class="grid">
+          <div class="col-12 md:col-6">
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>Parcela Inicial</mat-label>
+              <input
+                matInput
+                type="number"
+                formControlName="parcelaInicial"
+                placeholder="1"
+                min="1"
+              />
+              <mat-hint>Ex: 1 para começar da primeira parcela</mat-hint>
+              <mat-error *ngIf="parcelaInicialInvalid">
+                Parcela inicial inválida ou maior que total
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 md:col-6">
+            <mat-form-field appearance="outline" class="w-full">
+              <mat-label>Total de Parcelas</mat-label>
+              <input
+                matInput
+                type="number"
+                formControlName="totalParcelas"
+                placeholder="10"
+                min="1"
+              />
+              <mat-hint>Ex: 10 para parcelar em 10x</mat-hint>
+              <mat-error *ngIf="totalParcelasInvalid">
+                Total de parcelas deve ser no mínimo 1
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Info das Parcelas Calculadas -->
+        <mat-card *ngIf="parcelasRestantes > 0" class="mb-3 bg-blue-50">
+          <mat-card-content>
+            <div class="flex align-items-center mb-2">
+              <mat-icon color="primary" class="mr-2">info</mat-icon>
+              <h4 class="m-0">Informações das Parcelas</h4>
+            </div>
+            <p class="mb-1">
+              <strong>Parcelas a serem geradas:</strong> {{ parcelasRestantes }}
+            </p>
+            <p class="mb-0">
+              <strong>Valor de cada parcela:</strong> R$ {{ valorParcela | number: '1.2-2' }}
+            </p>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Categoria -->
+        <mat-form-field appearance="outline" class="w-full mb-3">
+          <mat-label>Categoria</mat-label>
+          <mat-select formControlName="categoriaId">
+            <mat-option [value]="null">Selecione uma categoria</mat-option>
+            <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">
+              {{ categoria.nome }}
+            </mat-option>
+          </mat-select>
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="novaCategoria()"
+            matTooltip="Criar nova categoria"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <!-- Cartão -->
+        <mat-form-field appearance="outline" class="w-full mb-3">
+          <mat-label>Cartão de Crédito</mat-label>
+          <mat-select formControlName="cartaoId">
+            <mat-option [value]="null">Selecione um cartão</mat-option>
+            <mat-option *ngFor="let cartao of cartoes" [value]="cartao.id">
+              {{ cartao.nome }}
+              <span *ngIf="cartao.limiteTotal"> - Limite: R$ {{ cartao.limiteTotal | number: '1.2-2' }}</span>
+            </mat-option>
+          </mat-select>
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="novoCartao()"
+            matTooltip="Criar novo cartão"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <!-- Mensagem de Erro -->
+        <mat-card *ngIf="errorMessage" class="mb-3 bg-red-50">
+          <mat-card-content class="flex align-items-center">
+            <mat-icon color="warn" class="mr-2">error</mat-icon>
+            <span>{{ errorMessage }}</span>
+          </mat-card-content>
+        </mat-card>
+
+        <!-- Botões -->
+        <div class="flex justify-content-end gap-2">
+          <button
+            mat-raised-button
+            type="button"
+            (click)="cancel()"
+            [disabled]="loading"
+          >
+            <mat-icon>close</mat-icon>
+            Cancelar
+          </button>
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="form.invalid || loading"
+          >
+            <mat-spinner *ngIf="loading" diameter="20" class="mr-2"></mat-spinner>
+            <mat-icon *ngIf="!loading">save</mat-icon>
+            {{ loading ? 'Salvando...' : 'Cadastrar Compra Parcelada' }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

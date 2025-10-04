@@ -1,0 +1,32 @@
+/* Estilos customizados mínimos - usando PrimeFlex e Material Design */
+
+.bg-primary {
+  background-color: #673ab7 !important;
+}
+
+.text-white {
+  color: white !important;
+}
+
+.bg-blue-50 {
+  background-color: #e3f2fd !important;
+}
+
+.bg-red-50 {
+  background-color: #ffebee !important;
+}
+
+mat-card-header.bg-primary mat-card-title {
+  color: white;
+  margin: 0;
+  padding: 16px 0;
+}
+
+mat-form-field.w-full {
+  width: 100%;
+}
+
+mat-spinner {
+  display: inline-block;
+  vertical-align: middle;
+}

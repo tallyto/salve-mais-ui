@@ -1,4 +1,57 @@
-<div class="container">
+<!-- Modo Dialog -->
+<div *ngIf="isDialogMode">
+  <h2 mat-dialog-title class="flex align-items-center gap-2">
+    <mat-icon>category</mat-icon>
+    <span>Nova Categoria</span>
+  </h2>
+
+  <mat-dialog-content>
+    <form [formGroup]="categoriaForm" id="categoriaDialogForm">
+      <div class="p-0">
+        <div class="mb-3">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Nome da Categoria</mat-label>
+            <input formControlName="nome" matInput placeholder="Ex: Alimentação, Transporte" autofocus>
+            <mat-icon matSuffix>label</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="mb-3">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Tipo da Categoria (Regra 50/30/20)</mat-label>
+            <mat-select formControlName="tipo">
+              <mat-option value="NECESSIDADE">💼 Necessidade (50%)</mat-option>
+              <mat-option value="DESEJO">🎉 Desejo (30%)</mat-option>
+              <mat-option value="ECONOMIA">💰 Economia (20%)</mat-option>
+            </mat-select>
+            <mat-icon matSuffix>pie_chart</mat-icon>
+            <mat-hint>Classifique de acordo com a regra 50/30/20</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="gap-2">
+    <button mat-button type="button" (click)="fecharDialog()">
+      <mat-icon>close</mat-icon>
+      Cancelar
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="categoriaForm.invalid"
+      (click)="salvarCategoria()"
+    >
+      <mat-icon>save</mat-icon>
+      Salvar
+    </button>
+  </mat-dialog-actions>
+</div>
+
+<!-- Modo Página Completa -->
+<div *ngIf="!isDialogMode" class="container">
   <!-- Cabeçalho da página -->
   <div class="page-header">
     <div class="header-content">
@@ -35,7 +88,7 @@
             <mat-icon matSuffix>label</mat-icon>
           </mat-form-field>
         </div>
-        
+
         <div class="form-row">
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>Tipo da Categoria (Regra 50/30/20)</mat-label>
@@ -79,7 +132,7 @@
             <th *matHeaderCellDef mat-header-cell>Nome</th>
             <td *matCellDef="let categoria" mat-cell>{{ categoria.nome }}</td>
           </ng-container>
-          
+
           <!-- Tipo Column -->
           <ng-container matColumnDef="tipo">
             <th *matHeaderCellDef mat-header-cell>Tipo</th>
@@ -118,5 +171,5 @@
       </div>
     </div>
   </div>
-</div>
+</div> <!-- Fim do modo página -->
 

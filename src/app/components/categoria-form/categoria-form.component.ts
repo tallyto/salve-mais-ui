@@ -1,20 +1,45 @@
-import {Component, OnInit} from '@angular/core';
-import {CategoriaService} from "../../services/categoria.service";
-import {MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition} from "@angular/material/snack-bar";
-import {Categoria, TipoCategoria} from "../../models/categoria.model";
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Optional } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarModule, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { CategoriaService } from "../../services/categoria.service";
+import { Categoria, TipoCategoria } from "../../models/categoria.model";
 
 @Component({
-    selector: 'app-categoria-form',
-    templateUrl: './categoria-form.component.html',
-    styleUrls: ['./categoria-form.component.css'],
-    standalone: false
+  selector: 'app-categoria-form',
+  templateUrl: './categoria-form.component.html',
+  styleUrls: ['./categoria-form.component.css'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSelectModule,
+    MatTableModule,
+    MatTooltipModule,
+    MatDialogModule,
+    MatSnackBarModule
+  ]
 })
 export class CategoriaFormComponent implements OnInit {
   public categoriaForm: FormGroup;
   public displayedColumnsCategoria: string[] = ['nome', 'tipo', 'acoes'];
   public categorias: Categoria[] = [];
   public editingCategoria: Categoria | null = null;
+  public isDialogMode: boolean = false;
   private horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   private verticalPosition: MatSnackBarVerticalPosition = 'top';
 
@@ -22,7 +47,9 @@ export class CategoriaFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private categoriaService: CategoriaService,
     private snackBar: MatSnackBar,
+    @Optional() public dialogRef: MatDialogRef<CategoriaFormComponent>
   ) {
+    this.isDialogMode = !!dialogRef;
     this.categoriaForm = this.formBuilder.group({
       id: [null],
       nome: ['', Validators.required],
@@ -33,7 +60,7 @@ export class CategoriaFormComponent implements OnInit {
   ngOnInit() {
     this.listarCategorias()
   }
-  
+
   /**
    * Retorna a classe CSS para o tipo de categoria
    */
@@ -49,7 +76,7 @@ export class CategoriaFormComponent implements OnInit {
         return '';
     }
   }
-  
+
   /**
    * Retorna o label para o tipo de categoria
    */
@@ -79,12 +106,24 @@ export class CategoriaFormComponent implements OnInit {
         const message = isEditing ? 'Categoria atualizada com sucesso!' : 'Categoria salva com sucesso!';
         this.openSnackBar(message);
         this.limparFormulario();
-        this.listarCategorias();
+
+        // Se estiver em modo dialog, fecha o dialog retornando a categoria criada
+        if (this.isDialogMode && this.dialogRef) {
+          this.dialogRef.close(value);
+        } else {
+          this.listarCategorias();
+        }
       },
       error: (errorMessage: string) => {
         this.openSnackBar(errorMessage);
       }
     });
+  }
+
+  fecharDialog(): void {
+    if (this.dialogRef) {
+      this.dialogRef.close();
+    }
   }
 
   public listarCategorias(): void {

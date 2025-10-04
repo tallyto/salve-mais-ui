@@ -36,9 +36,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AccountComponent } from './components/account/account.component';
-import { CartaoFormComponent } from './components/cartao-form/cartao-form.component';
 import { CartaoLimitesComponent } from './components/cartao-limites/cartao-limites.component';
-import { CategoriaFormComponent } from './components/categoria-form/categoria-form.component';
 import { ComprovantesDialogComponent } from './components/comprovantes-dialog/comprovantes-dialog.component';
 import { ComprovantesListComponent } from './components/comprovantes-list/comprovantes-list.component';
 import { ContaFixaRecorrenteComponent } from './components/conta-fixa-recorrente/conta-fixa-recorrente.component';
@@ -72,14 +70,14 @@ import { MinhaContaComponent } from './components/minha-conta/minha-conta.compon
 import { NotificacoesWidgetComponent } from './components/notificacoes-widget/notificacoes-widget.component';
 import { NotificacoesComponent } from './components/notificacoes/notificacoes.component';
 import { ListTransacoesComponent } from './components/list-transacoes/list-transacoes.component';
+import { CompraParceladaFormComponent } from './components/compra-parcelada-form/compra-parcelada-form.component';
+import { ListComprasParceladasComponent } from './components/list-compras-parceladas/list-compras-parceladas.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     MenuLateralComponent,
-    CartaoFormComponent,
-    CategoriaFormComponent,
     ProventoFormComponent,
     DespesasFixasComponent,
     DespesasRecorrentesComponent,
@@ -148,7 +146,9 @@ import { ListTransacoesComponent } from './components/list-transacoes/list-trans
     LimiteAlertasWidgetComponent, // Importa o widget standalone
     CartaoLimitesComponent, // Importa o componente standalone
     NotificacoesWidgetComponent, // Importa o widget de notificações standalone
-    ListTransacoesComponent // Importa o componente de listagem de transações standalone
+    ListTransacoesComponent, // Importa o componente de listagem de transações standalone
+    CompraParceladaFormComponent, // Importa o componente de formulário de compras parceladas standalone
+    ListComprasParceladasComponent // Importa o componente de listagem de compras parceladas standalone
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },

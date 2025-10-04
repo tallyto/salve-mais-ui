@@ -25,6 +25,8 @@ import { BudgetRuleComponent } from './components/budget-rule/budget-rule.compon
 import { ComprovantesListComponent } from './components/comprovantes-list/comprovantes-list.component';
 import { ListTransacoesComponent } from './components/list-transacoes/list-transacoes.component';
 import { TransacaoDetalheComponent } from './components/transacao-detalhe/transacao-detalhe.component';
+import { CompraParceladaFormComponent } from './components/compra-parcelada-form/compra-parcelada-form.component';
+import { ListComprasParceladasComponent } from './components/list-compras-parceladas/list-compras-parceladas.component';
 
 
 const routes: Routes = [
@@ -45,6 +47,8 @@ const routes: Routes = [
   {path: 'comprovantes', component: ComprovantesListComponent, canActivate: [AuthGuard]},
   {path: 'transacoes', component: ListTransacoesComponent, canActivate: [AuthGuard]},
   {path: 'transacao/:id', component: TransacaoDetalheComponent, canActivate: [AuthGuard]},
+  {path: 'compras-parceladas', component: ListComprasParceladasComponent, canActivate: [AuthGuard]},
+  {path: 'compras-parceladas/nova', component: CompraParceladaFormComponent, canActivate: [AuthGuard]},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
   {path: 'recuperar-senha', component: RecuperarSenhaComponent},
