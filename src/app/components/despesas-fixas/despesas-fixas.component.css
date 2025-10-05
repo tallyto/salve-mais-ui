@@ -11,6 +11,14 @@
   color: rgba(0, 0, 0, 0.6);
 }
 
+::ng-deep .mat-select-value {
+  color: rgba(0, 0, 0, 0.87);
+}
+
+::ng-deep .mat-select-placeholder {
+  color: rgba(0, 0, 0, 0.42);
+}
+
 ::ng-deep .mat-datepicker-toggle {
   color: rgba(0, 0, 0, 0.54);
 }
