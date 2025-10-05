@@ -117,7 +117,7 @@
             mat-icon-button
             matSuffix
             type="button"
-            (click)="novaCategoria()"
+            (click)="novaCategoria(); $event.stopPropagation()"
             matTooltip="Criar nova categoria"
           >
             <mat-icon>add</mat-icon>
@@ -138,7 +138,7 @@
             mat-icon-button
             matSuffix
             type="button"
-            (click)="novoCartao()"
+            (click)="novoCartao(); $event.stopPropagation()"
             matTooltip="Criar novo cartão"
           >
             <mat-icon>add</mat-icon>
