@@ -55,9 +55,7 @@
       <mat-icon class="page-icon">credit_card</mat-icon>
       <div class="header-text">
         <h1 class="page-title">Cartões de Crédito</h1>
-        <div class="page-subtitle">
-          <span>Gerencie seus cartões de crédito</span>
-        </div>
+        <p class="page-subtitle">Gerencie seus cartões de crédito</p>
       </div>
     </div>
   </div>
@@ -72,41 +70,34 @@
     </div>
 
     <div class="form-container">
-      <div class="subtitle">
-        <mat-icon style="font-size: 16px; width: 16px; height: 16px; vertical-align: middle;">info</mat-icon>
-        Preencha as informações do seu cartão de crédito
-      </div>
-
       <form (ngSubmit)="salvarCartao()" [formGroup]="cartaoForm">
         <div class="grid">
           <div class="col-12 md:col-6 mb-3">
             <mat-form-field appearance="outline" class="w-full">
               <mat-label>Nome do Cartão</mat-label>
-              <input formControlName="nome" matInput placeholder="Ex: Mastercard Black Inter Gourmet" autofocus>
+              <input formControlName="nome" matInput placeholder="Ex: Mastercard Black" autofocus>
               <mat-icon matPrefix>credit_card</mat-icon>
-              <mat-hint>Escolha um nome fácil de identificar</mat-hint>
             </mat-form-field>
           </div>
 
           <div class="col-12 md:col-6 mb-3">
             <mat-form-field appearance="outline" class="w-full">
               <mat-label>Data de Vencimento</mat-label>
-              <input [matDatepicker]="picker" formControlName="vencimento" matInput placeholder="Selecione a data">
+              <input [matDatepicker]="picker" formControlName="vencimento" matInput>
               <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
-              <mat-hint>Dia do vencimento da fatura</mat-hint>
             </mat-form-field>
           </div>
         </div>
 
         <div class="form-actions">
-          <button mat-stroked-button type="button" class="text-color-secondary">
+          <button mat-stroked-button type="button">
             <mat-icon>close</mat-icon>
             Cancelar
           </button>
           <button mat-raised-button color="primary" [disabled]="cartaoForm.invalid" type="submit">
             <mat-icon>save</mat-icon>
-            Salvar Cartão
+            Salvar
           </button>
         </div>
       </form>
@@ -117,7 +108,7 @@
   <div class="cards-list-card">
     <div class="card-header">
       <div class="header-title">
-        <mat-icon>account_balance_wallet</mat-icon>
+        <mat-icon>list</mat-icon>
         <h2 class="section-title">Meus Cartões</h2>
       </div>
     </div>
@@ -126,16 +117,10 @@
       <table [dataSource]="cartoes" mat-table class="cards-table">
         <!-- Nome Column -->
         <ng-container matColumnDef="nome">
-          <th *matHeaderCellDef mat-header-cell>
-            <mat-icon style="font-size: 16px; width: 16px; height: 16px; vertical-align: middle; margin-right: 8px;">credit_card</mat-icon>
-            Cartão
-          </th>
+          <th *matHeaderCellDef mat-header-cell>Nome</th>
           <td *matCellDef="let cartao" mat-cell>
             <div *ngIf="!isEditing(cartao)" class="font-medium">
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <mat-icon style="color: #667eea;">credit_card</mat-icon>
-                <span>{{ cartao.nome }}</span>
-              </div>
+              {{ cartao.nome }}
             </div>
             <mat-form-field *ngIf="isEditing(cartao)" appearance="outline" class="edit-field w-full">
               <input matInput [(ngModel)]="tempNome">
@@ -146,14 +131,10 @@
 
         <!-- Vencimento Column -->
         <ng-container matColumnDef="vencimento">
-          <th *matHeaderCellDef mat-header-cell>
-            <mat-icon style="font-size: 16px; width: 16px; height: 16px; vertical-align: middle; margin-right: 8px;">event</mat-icon>
-            Vencimento
-          </th>
+          <th *matHeaderCellDef mat-header-cell>Vencimento</th>
           <td *matCellDef="let cartao" mat-cell>
-            <div *ngIf="!isEditing(cartao)" style="display: flex; align-items: center; gap: 8px;">
-              <mat-icon style="color: #667eea; font-size: 20px; width: 20px; height: 20px;">calendar_today</mat-icon>
-              <span>{{ cartao.vencimento | date:'dd/MM/yyyy' }}</span>
+            <div *ngIf="!isEditing(cartao)">
+              {{ cartao.vencimento | date:'dd/MM/yyyy' }}
             </div>
             <mat-form-field *ngIf="isEditing(cartao)" appearance="outline" class="edit-field w-full">
               <input [matDatepicker]="editPicker" [(ngModel)]="tempVencimento" matInput>
@@ -168,18 +149,18 @@
           <th *matHeaderCellDef mat-header-cell class="text-right">Ações</th>
           <td *matCellDef="let cartao" mat-cell class="text-right">
             <div *ngIf="!isEditing(cartao)" class="action-buttons">
-              <button mat-icon-button color="primary" (click)="startEdit(cartao)" matTooltip="Editar cartão" matTooltipPosition="above">
+              <button mat-icon-button color="primary" (click)="startEdit(cartao)" matTooltip="Editar">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button mat-icon-button color="warn" (click)="excluirCartao(cartao)" matTooltip="Excluir cartão" matTooltipPosition="above">
+              <button mat-icon-button color="warn" (click)="excluirCartao(cartao)" matTooltip="Excluir">
                 <mat-icon>delete</mat-icon>
               </button>
             </div>
             <div *ngIf="isEditing(cartao)" class="action-buttons">
-              <button mat-icon-button color="primary" (click)="saveEdit()" matTooltip="Salvar alterações" matTooltipPosition="above">
+              <button mat-icon-button color="primary" (click)="saveEdit()" matTooltip="Salvar">
                 <mat-icon>check</mat-icon>
               </button>
-              <button mat-icon-button color="warn" (click)="cancelEdit()" matTooltip="Cancelar edição" matTooltipPosition="above">
+              <button mat-icon-button color="warn" (click)="cancelEdit()" matTooltip="Cancelar">
                 <mat-icon>close</mat-icon>
               </button>
             </div>
@@ -194,7 +175,7 @@
       <div *ngIf="cartoes && cartoes.length === 0" class="empty-state">
         <mat-icon>credit_card_off</mat-icon>
         <h3>Nenhum cartão cadastrado</h3>
-        <p>Comece adicionando um cartão utilizando o formulário acima</p>
+        <p>Adicione seu primeiro cartão usando o formulário acima</p>
       </div>
     </div>
   </div>
