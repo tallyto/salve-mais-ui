@@ -1,19 +1,14 @@
-/* Modo Dialog - Simples e limpo */
+/* Dialog Mode */
 mat-dialog-content {
   min-width: 400px;
-  padding: 24px 24px 20px 24px !important;
-  overflow: visible;
-}
-
-mat-dialog-title {
-  margin-bottom: 8px !important;
+  padding: 24px !important;
 }
 
 mat-dialog-actions {
   padding: 16px 24px !important;
 }
 
-/* Estilos para os tipos de categoria (Regra 50/30/20) */
+/* Category Type Chips (50/30/20 Rule) */
 .tipo-categoria-chip {
   display: inline-flex;
   align-items: center;
@@ -38,7 +33,7 @@ mat-dialog-actions {
   color: white;
 }
 
-/* Borda colorida para as opções do select */
+/* Select option borders */
 .mat-option.tipo-necessidade {
   border-left: 4px solid #4caf50;
 }
@@ -51,9 +46,3 @@ mat-dialog-actions {
   border-left: 4px solid #2196f3;
 }
 
-/* Modo Página - estilos básicos (mantém layout original) */
-.container {
-  padding: 24px;
-  max-width: 1200px;
-  margin: 0 auto;
-}

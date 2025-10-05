@@ -216,18 +216,29 @@ export class ListTransacoesComponent implements OnInit {
     });
   }
 
-  private excluirTransacao(id: number): void {
-    this.loading = true;
-    this.transacaoService.deletarTransacao(id).subscribe({
-      next: () => {
-        // Recarrega mantendo filtro/paginação atuais
-        this.carregarTransacoes(this.filtroForm.value);
-        this.snackBar.open('Transação excluída com sucesso', 'Fechar', { duration: 3000 });
-      },
-      error: (err) => {
-        console.error('Erro ao excluir transação', err);
-        this.snackBar.open('Erro ao excluir transação', 'Fechar', { duration: 3000 });
-        this.loading = false;
+  excluirTransacao(id: number): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: {
+        title: 'Confirmar Exclusão',
+        message: 'Tem certeza que deseja excluir esta transação?'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loading = true;
+        this.transacaoService.deletarTransacao(id).subscribe({
+          next: () => {
+            this.carregarTransacoes(this.filtroForm.value);
+            this.snackBar.open('Transação excluída com sucesso', 'Fechar', { duration: 3000 });
+          },
+          error: (err) => {
+            console.error('Erro ao excluir transação', err);
+            this.snackBar.open('Erro ao excluir transação', 'Fechar', { duration: 3000 });
+            this.loading = false;
+          }
+        });
       }
     });
   }
