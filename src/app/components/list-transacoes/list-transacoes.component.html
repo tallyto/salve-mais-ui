@@ -37,6 +37,9 @@
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>Tipo</mat-label>
             <mat-select formControlName="tipo">
+              <mat-select-trigger>
+                {{ getTipoDisplayText(filtroForm.get('tipo')?.value) }}
+              </mat-select-trigger>
               <mat-option [value]="null">Todos os tipos</mat-option>
               <mat-option value="CREDITO" class="tipo-option receita">
                 <span class="tipo-option-content receita">

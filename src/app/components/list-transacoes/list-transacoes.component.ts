@@ -91,10 +91,12 @@ export class ListTransacoesComponent implements OnInit {
   }
 
   carregarTransacoes(filtro?: TransacaoFiltro): void {
+    console.log('Carregando transações com filtro:', filtro); // Debug
     this.loading = true;
     this.transacaoService.listarTransacoes(filtro, this.pageIndex, this.pageSize)
       .subscribe(
         response => {
+          console.log('Transações carregadas:', response); // Debug
           this.transacoes = response.content;
           this.totalElements = response.totalElements;
           this.loading = false;
@@ -133,16 +135,16 @@ export class ListTransacoesComponent implements OnInit {
 
   aplicarFiltro(): void {
     const filtro: TransacaoFiltro = {};
-
+    
     const formValue = this.filtroForm.value;
-
-    if (formValue.contaId) {
+    
+    if (formValue.contaId && formValue.contaId !== null) {
       filtro.contaId = formValue.contaId;
     }
-    if (formValue.tipo) {
+    if (formValue.tipo && formValue.tipo !== null) {
       filtro.tipo = formValue.tipo;
     }
-    if (formValue.categoriaId) {
+    if (formValue.categoriaId && formValue.categoriaId !== null) {
       filtro.categoriaId = formValue.categoriaId;
     }
     if (formValue.dataInicio) {
@@ -151,8 +153,9 @@ export class ListTransacoesComponent implements OnInit {
     if (formValue.dataFim) {
       filtro.dataFim = formValue.dataFim;
     }
-
-    this.pageIndex = 0; // Resetar para primeira página ao aplicar filtro
+    
+    console.log('Filtro aplicado:', filtro); // Debug
+    this.pageIndex = 0;
     this.carregarTransacoes(filtro);
   }
 
@@ -222,6 +225,26 @@ export class ListTransacoesComponent implements OnInit {
         return 'Pagamento de Fatura';
       default:
         return tipo as string;
+    }
+  }
+
+  getTipoDisplayText(tipo: string | null): string {
+    if (!tipo) {
+      return 'Todos os tipos';
+    }
+    switch (tipo) {
+      case 'CREDITO':
+        return 'Entrada (Crédito)';
+      case 'DEBITO':
+        return 'Saída (Débito)';
+      case 'TRANSFERENCIA_ENTRADA':
+        return 'Transferência Entrada';
+      case 'TRANSFERENCIA_SAIDA':
+        return 'Transferência Saída';
+      case 'PAGAMENTO_FATURA':
+        return 'Pagamento Fatura';
+      default:
+        return tipo;
     }
   }
 
