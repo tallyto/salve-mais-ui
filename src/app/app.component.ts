@@ -17,20 +17,25 @@ export class AppComponent implements OnInit {
     'card-form': 'Gerenciar Cartões - Salve Mais',
     'categoria-form': 'Gerenciar Categorias - Salve Mais',
     'provento-form': 'Gerenciar Proventos - Salve Mais',
-    'despesas-fixas': 'Despesas Fixas - Salve Mais',
+    'despesas-fixas': 'Débitos em Conta - Salve Mais',
     'conta-fixa-recorrente': 'Contas Fixas Recorrentes - Salve Mais',
-    'despesas-recorrentes': 'Despesas Recorrentes - Salve Mais',
+    'despesas-recorrentes': 'Gastos Recorrentes no Cartão - Salve Mais',
     'faturas': 'Faturas - Salve Mais',
-    'cartao-limites': 'Limites do Cartão - Salve Mais',
+    'cartao-limites': 'Limites e Alertas - Salve Mais',
     'notificacoes': 'Notificações - Salve Mais',
-    'account': 'Contas - Salve Mais',
+    'account': 'Contas Bancárias - Salve Mais',
     'minha-conta': 'Minha Conta - Salve Mais',
     'register': 'Cadastro - Salve Mais',
     'login': 'Login - Salve Mais',
     'recuperar-senha': 'Recuperar Senha - Salve Mais',
     'redefinir-senha': 'Redefinir Senha - Salve Mais',
     'criar-usuario': 'Criar Usuário - Salve Mais',
-    'relatorio-mensal': 'Relatório Mensal - Salve Mais'
+    'relatorio-mensal': 'Relatório Mensal - Salve Mais',
+    'compras-parceladas': 'Compras Parceladas - Salve Mais',
+    'transacoes': 'Histórico de Transações - Salve Mais',
+    'comprovantes': 'Comprovantes - Salve Mais',
+    'budget-rule': 'Regra 50/30/20 - Salve Mais',
+    'reserva-emergencia': 'Reserva de Emergência - Salve Mais'
   };
 
   constructor(

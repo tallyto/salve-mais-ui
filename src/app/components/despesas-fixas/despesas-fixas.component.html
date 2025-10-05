@@ -1,11 +1,11 @@
 <div class="container p-3 mx-auto">
   <div class="page-header mb-4">
     <div class="header-content">
-      <mat-icon class="page-icon">receipt_long</mat-icon>
+      <mat-icon class="page-icon">account_balance</mat-icon>
       <div class="header-text">
-        <h2 class="page-title">Gerenciamento de Despesas Fixas</h2>
+        <h2 class="page-title">Débitos em Conta</h2>
         <div class="page-subtitle text-color-secondary">
-          <mat-icon>calendar_today</mat-icon> Controle suas despesas mensais recorrentes
+          <mat-icon>calendar_today</mat-icon> Pagamentos recorrentes via PIX, boleto, TED ou débito em conta
         </div>
       </div>
     </div>
@@ -15,17 +15,17 @@
     <div class="card-header mb-4">
       <div class="header-title">
         <mat-icon style="color: #f44336; margin-right: 8px;">add_circle</mat-icon>
-        <h2 class="section-title m-0 mb-1">{{ editingDespesa ? 'Editar Despesa Fixa' : 'Cadastrar Despesa Fixa' }}</h2>
+        <h2 class="section-title m-0 mb-1">{{ editingDespesa ? 'Editar Débito' : 'Cadastrar Débito em Conta' }}</h2>
       </div>
       <button mat-raised-button color="accent" type="button" routerLink="/conta-fixa-recorrente"
-              matTooltip="Criar múltiplas contas fixas com recorrência">
+              matTooltip="Criar múltiplos débitos com recorrência">
         <mat-icon>event_repeat</mat-icon>
         Criar Recorrente
       </button>
     </div>
 
     <div class="text-color-secondary text-sm mb-4">
-      {{ editingDespesa ? 'Atualize os dados da despesa selecionada' : 'Registre uma nova despesa mensal fixa' }}
+      {{ editingDespesa ? 'Atualize os dados do débito selecionado' : 'Registre pagamentos recorrentes debitados da sua conta' }}
     </div>
 
     <form (ngSubmit)="salvarDespesaFixa()" [formGroup]="despesaFixaForm" class="despesa-form">
@@ -116,7 +116,7 @@
         </button>
         <button mat-raised-button color="primary" [disabled]="despesaFixaForm.invalid" type="submit">
           <mat-icon>{{ editingDespesa ? 'update' : 'save' }}</mat-icon>
-          {{ editingDespesa ? 'Atualizar despesa' : 'Salvar despesa' }}
+          {{ editingDespesa ? 'Atualizar' : 'Salvar' }}
         </button>
       </div>
     </form>
@@ -126,7 +126,7 @@
     <div class="card-header">
       <div class="header-title">
         <mat-icon style="color: #f44336; margin-right: 8px;">list_alt</mat-icon>
-        <h2 class="section-title m-0">Suas Despesas Fixas</h2>
+        <h2 class="section-title m-0">Meus Débitos em Conta</h2>
       </div>
     </div>
     <app-list-contas-fixas></app-list-contas-fixas>

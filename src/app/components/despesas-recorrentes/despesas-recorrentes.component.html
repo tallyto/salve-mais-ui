@@ -3,9 +3,9 @@
     <div class="header-content">
       <mat-icon class="page-icon">credit_card</mat-icon>
       <div class="header-text">
-        <h2 class="page-title">Gerenciamento de Despesas Recorrentes</h2>
+        <h2 class="page-title">Gastos Recorrentes no Cartão</h2>
         <div class="page-subtitle text-color-secondary">
-          <mat-icon>replay</mat-icon> Controle seus gastos com cartão de crédito
+          <mat-icon>replay</mat-icon> Lançamentos mensais recorrentes no cartão de crédito (sem parcelas)
         </div>
       </div>
     </div>
@@ -20,7 +20,7 @@
     </div>
 
     <div class="text-color-secondary text-sm mb-4">
-      {{ editingGasto ? 'Atualize os dados do gasto selecionado' : 'Registre seus gastos com cartão de crédito' }}
+      {{ editingGasto ? 'Atualize os dados do gasto selecionado' : 'Registre gastos mensais recorrentes no cartão (Netflix, Spotify, academias, etc)' }}
     </div>
 
     <form (ngSubmit)="salvarGastoRecorrente()" [formGroup]="gastosRecorrentes" class="despesa-form">
@@ -78,7 +78,7 @@
         </button>
         <button mat-raised-button color="primary" [disabled]="gastosRecorrentes.invalid" type="submit">
           <mat-icon>{{ editingGasto ? 'update' : 'save' }}</mat-icon>
-          {{ editingGasto ? 'Atualizar gasto' : 'Salvar gasto' }}
+          {{ editingGasto ? 'Atualizar' : 'Salvar' }}
         </button>
       </div>
     </form>
@@ -88,7 +88,7 @@
     <div class="card-header">
       <div class="header-title">
         <mat-icon style="color: #9c27b0; margin-right: 8px;">list_alt</mat-icon>
-        <h2 class="section-title m-0">Suas Despesas Recorrentes</h2>
+        <h2 class="section-title m-0">Meus Gastos Recorrentes</h2>
       </div>
     </div>
     <app-list-despesas-recorrentes></app-list-despesas-recorrentes>
