@@ -34,8 +34,8 @@ export class DespesasFixasComponent implements OnInit {
     this.despesaFixaForm = this.formBuilder.group({
       id: [null],
       nome: ['', Validators.required],
-      categoriaId: ['', Validators.required],
-      contaId: ['', Validators.required],
+      categoriaId: [null, Validators.required],
+      contaId: [null, Validators.required],
       vencimento: ['', Validators.required],
       valor: ['', [Validators.required, Validators.min(0)]],
       pago: [false, Validators.required]
@@ -114,8 +114,8 @@ export class DespesasFixasComponent implements OnInit {
     this.despesaFixaForm.reset({
       id: null,
       nome: '',
-      categoriaId: '',
-      contaId: '',
+      categoriaId: null,
+      contaId: null,
       vencimento: '',
       valor: '',
       pago: false
