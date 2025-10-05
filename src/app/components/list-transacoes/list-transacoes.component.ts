@@ -232,8 +232,8 @@ export class ListTransacoesComponent implements OnInit {
 
   isSaida(tipo: TipoTransacao | string): boolean {
     const tipoStr = typeof tipo === 'string' ? tipo : tipo;
-    return tipoStr === 'DEBITO' || 
-           tipoStr === 'TRANSFERENCIA_SAIDA' || 
+    return tipoStr === 'DEBITO' ||
+           tipoStr === 'TRANSFERENCIA_SAIDA' ||
            tipoStr === 'PAGAMENTO_FATURA';
   }
 
