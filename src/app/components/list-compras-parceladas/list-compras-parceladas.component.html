@@ -1,141 +1,139 @@
-<div class="p-4">
-  <mat-card>
-    <mat-card-header class="bg-primary">
-      <mat-card-title class="flex justify-content-between align-items-center text-white w-full">
-        <div class="flex align-items-center">
-          <mat-icon class="mr-2">shopping_cart</mat-icon>
-          Compras Parceladas
+<div class="container">
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <mat-icon class="page-icon">shopping_cart</mat-icon>
+      <div class="header-text">
+        <h1 class="page-title">Compras Parceladas</h1>
+        <p class="page-subtitle">Gerencie suas compras parceladas</p>
+      </div>
+    </div>
+    <button mat-raised-button color="primary" (click)="novaCompra()">
+      <mat-icon>add</mat-icon>
+      Nova Compra
+    </button>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="content-card">
+    <div class="loading-state">
+      <mat-spinner></mat-spinner>
+    </div>
+  </div>
+
+  <!-- Lista vazia -->
+  <div *ngIf="!loading && compras.length === 0" class="content-card">
+    <div class="empty-state">
+      <mat-icon>inbox</mat-icon>
+      <h3>Nenhuma compra parcelada</h3>
+      <p>Comece cadastrando sua primeira compra parcelada</p>
+      <button mat-raised-button color="primary" (click)="novaCompra()">
+        <mat-icon>add</mat-icon>
+        Cadastrar Compra
+      </button>
+    </div>
+  </div>
+
+  <!-- Lista de compras -->
+  <div *ngIf="!loading && compras.length > 0">
+    <!-- Card para cada compra -->
+    <div *ngFor="let compra of compras" class="compra-card">
+      <!-- Header da compra -->
+      <div class="compra-header">
+        <div class="compra-title">
+          <mat-icon>receipt</mat-icon>
+          {{ compra.descricao }}
         </div>
-        <button mat-raised-button color="accent" (click)="novaCompra()">
-          <mat-icon>add</mat-icon>
-          Nova Compra
-        </button>
-      </mat-card-title>
-    </mat-card-header>
-
-    <mat-card-content class="p-0">
-      <!-- Loading -->
-      <div *ngIf="loading" class="flex justify-content-center align-items-center p-5">
-        <mat-spinner></mat-spinner>
+        <div class="action-buttons">
+          <button mat-icon-button color="primary" (click)="editar(compra.id)" matTooltip="Editar">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="excluir(compra.id)" matTooltip="Excluir">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
       </div>
 
-      <!-- Lista vazia -->
-      <div *ngIf="!loading && compras.length === 0" class="text-center p-5">
-        <mat-icon class="mb-3" style="font-size: 72px; width: 72px; height: 72px; color: #ccc;">inbox</mat-icon>
-        <p class="text-muted mb-3">Nenhuma compra parcelada encontrada</p>
-        <button mat-raised-button color="primary" (click)="novaCompra()">
-          <mat-icon>add</mat-icon>
-          Cadastrar Primeira Compra
-        </button>
+      <!-- Conteúdo da compra -->
+      <div class="compra-content">
+        <div class="grid">
+          <div class="col-12 md:col-6 info-row">
+            <span class="info-label">Valor Total:</span>
+            <span class="info-value">R$ {{ compra.valorTotal | number: '1.2-2' }}</span>
+          </div>
+          <div class="col-12 md:col-6 info-row">
+            <span class="info-label">Data:</span>
+            <span class="info-value">{{ compra.dataCompra | date: 'dd/MM/yyyy' }}</span>
+          </div>
+          <div class="col-12 md:col-6 info-row">
+            <span class="info-label">Categoria:</span>
+            <span class="info-value">{{ compra.categoriaNome }}</span>
+          </div>
+          <div class="col-12 md:col-6 info-row">
+            <span class="info-label">Cartão:</span>
+            <span class="info-value">{{ compra.cartaoNome }}</span>
+          </div>
+          <div class="col-12 md:col-6 info-row">
+            <span class="info-label">Parcelas:</span>
+            <span class="info-value">{{ compra.parcelaInicial }}/{{ compra.totalParcelas }}</span>
+          </div>
+          <div class="col-12 md:col-6 info-row">
+            <span class="info-label">Valor/Parcela:</span>
+            <span class="info-value">R$ {{ compra.valorParcela | number: '1.2-2' }}</span>
+          </div>
+        </div>
+
+        <!-- Progresso de Pagamento -->
+        <div class="progress-section">
+          <div class="progress-header">
+            <span><strong>Progresso de Pagamento</strong></span>
+            <span>{{ calcularParcelasPagas(compra.parcelas || []) }}/{{ (compra.parcelas || []).length }} pagas</span>
+          </div>
+          <mat-progress-bar
+            mode="determinate"
+            [value]="getProgressoPagamento(compra)"
+            [color]="getProgressoPagamento(compra) === 100 ? 'primary' : 'accent'">
+          </mat-progress-bar>
+        </div>
+
+        <!-- Botão para expandir parcelas -->
+        <div class="expand-button">
+          <button mat-button color="primary" (click)="toggleExpandCompra(compra.id)">
+            <mat-icon>{{ expandedCompraId === compra.id ? 'expand_less' : 'expand_more' }}</mat-icon>
+            {{ expandedCompraId === compra.id ? 'Ocultar' : 'Ver' }} Parcelas
+          </button>
+        </div>
+
+        <!-- Detalhes das Parcelas -->
+        <div *ngIf="expandedCompraId === compra.id && compra.parcelas && compra.parcelas.length > 0"
+             class="parcelas-section">
+          <h4 class="parcelas-title">Parcelas</h4>
+
+          <div *ngFor="let parcela of compra.parcelas" class="parcela-item">
+            <mat-checkbox
+              [checked]="parcela.paga"
+              (change)="togglePagamento(parcela, $event.checked)">
+            </mat-checkbox>
+            <span class="parcela-numero">{{ parcela.numeroParcela }}/{{ parcela.totalParcelas }}</span>
+            <span class="parcela-valor">R$ {{ parcela.valor | number: '1.2-2' }}</span>
+            <span class="parcela-data">{{ parcela.dataVencimento | date: 'dd/MM/yyyy' }}</span>
+            <span class="parcela-status">
+              <mat-chip [color]="parcela.paga ? 'primary' : 'warn'">
+                {{ parcela.paga ? '✓ Paga' : '⏱ Pendente' }}
+              </mat-chip>
+            </span>
+          </div>
+        </div>
       </div>
+    </div>
 
-      <!-- Lista de compras -->
-      <div *ngIf="!loading && compras.length > 0" class="p-3">
-        <!-- Card para cada compra -->
-        <mat-card *ngFor="let compra of compras" class="mb-3">
-          <mat-card-header>
-            <mat-card-title class="flex justify-content-between align-items-center w-full">
-              <div>
-                <mat-icon class="mr-2">receipt</mat-icon>
-                {{ compra.descricao }}
-              </div>
-              <div class="flex gap-2">
-                <button mat-icon-button color="primary" (click)="editar(compra.id)" matTooltip="Editar">
-                  <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-icon-button color="warn" (click)="excluir(compra.id)" matTooltip="Excluir">
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </div>
-            </mat-card-title>
-          </mat-card-header>
-
-          <mat-card-content>
-            <div class="grid">
-              <div class="col-12 md:col-6 mb-2">
-                <strong>Valor Total:</strong> R$ {{ compra.valorTotal | number: '1.2-2' }}
-              </div>
-              <div class="col-12 md:col-6 mb-2">
-                <strong>Data:</strong> {{ compra.dataCompra | date: 'dd/MM/yyyy' }}
-              </div>
-              <div class="col-12 md:col-6 mb-2">
-                <strong>Categoria:</strong> {{ compra.categoriaNome }}
-              </div>
-              <div class="col-12 md:col-6 mb-2">
-                <strong>Cartão:</strong> {{ compra.cartaoNome }}
-              </div>
-              <div class="col-12 md:col-6 mb-2">
-                <strong>Parcelas:</strong> {{ compra.parcelaInicial }}/{{ compra.totalParcelas }}
-              </div>
-              <div class="col-12 md:col-6 mb-2">
-                <strong>Valor/Parcela:</strong> R$ {{ compra.valorParcela | number: '1.2-2' }}
-              </div>
-            </div>
-
-            <!-- Progresso de Pagamento -->
-            <div class="mt-3">
-              <div class="flex justify-content-between align-items-center mb-2">
-                <span><strong>Progresso:</strong></span>
-                <span>{{ calcularParcelasPagas(compra.parcelas || []) }}/{{ (compra.parcelas || []).length }} pagas</span>
-              </div>
-              <mat-progress-bar
-                mode="determinate"
-                [value]="getProgressoPagamento(compra)"
-                [color]="getProgressoPagamento(compra) === 100 ? 'primary' : 'accent'">
-              </mat-progress-bar>
-            </div>
-
-            <!-- Botão para expandir parcelas -->
-            <div class="mt-3 text-center">
-              <button mat-button color="primary" (click)="toggleExpandCompra(compra.id)">
-                <mat-icon>{{ expandedCompraId === compra.id ? 'expand_less' : 'expand_more' }}</mat-icon>
-                {{ expandedCompraId === compra.id ? 'Ocultar' : 'Ver' }} Parcelas
-              </button>
-            </div>
-
-            <!-- Detalhes das Parcelas -->
-            <div *ngIf="expandedCompraId === compra.id && compra.parcelas && compra.parcelas.length > 0"
-                 class="mt-3 bg-blue-50 p-3"
-                 style="border-radius: 8px;">
-              <h4 class="mb-3">Parcelas</h4>
-
-              <div *ngFor="let parcela of compra.parcelas" class="mb-2 p-2 bg-white" style="border-radius: 4px;">
-                <div class="grid align-items-center">
-                  <div class="col-1">
-                    <mat-checkbox
-                      [checked]="parcela.paga"
-                      (change)="togglePagamento(parcela, $event.checked)">
-                    </mat-checkbox>
-                  </div>
-                  <div class="col-2">
-                    <strong>{{ parcela.numeroParcela }}/{{ parcela.totalParcelas }}</strong>
-                  </div>
-                  <div class="col-3">
-                    R$ {{ parcela.valor | number: '1.2-2' }}
-                  </div>
-                  <div class="col-3">
-                    {{ parcela.dataVencimento | date: 'dd/MM/yyyy' }}
-                  </div>
-                  <div class="col-3">
-                    <mat-chip [color]="parcela.paga ? 'primary' : 'warn'">
-                      {{ parcela.paga ? '✓ Paga' : '⏱ Pendente' }}
-                    </mat-chip>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </mat-card-content>
-        </mat-card>
-
-        <!-- Paginação -->
-        <mat-paginator
-          [length]="totalElements"
-          [pageSize]="size"
-          [pageIndex]="page"
-          [pageSizeOptions]="[5, 10, 25, 50]"
-          (page)="onPageChange($event)">
-        </mat-paginator>
-      </div>
-    </mat-card-content>
-  </mat-card>
+    <!-- Paginação -->
+    <mat-paginator
+      [length]="totalElements"
+      [pageSize]="size"
+      [pageIndex]="page"
+      [pageSizeOptions]="[5, 10, 25, 50]"
+      (page)="onPageChange($event)">
+    </mat-paginator>
+  </div>
 </div>

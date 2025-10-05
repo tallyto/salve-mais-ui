@@ -1,47 +1,242 @@
-/* Estilos customizados mínimos - usando PrimeFlex e Material Design */
+/* Layout Clean - Seguindo padrão do sistema */
 
-.bg-primary {
-  background-color: #673ab7 !important;
+.container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.text-white {
-  color: white !important;
+/* Header */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 16px 24px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-.bg-blue-50 {
-  background-color: #e3f2fd !important;
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
-mat-card-header.bg-primary mat-card-title {
-  color: white;
+.page-icon {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+  color: var(--primary-color);
+}
+
+.header-text {
+  flex: 1;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 600;
   margin: 0;
-  padding: 16px;
+  color: #333;
 }
 
-.compra-row {
-  cursor: pointer;
+.page-subtitle {
+  font-size: 14px;
+  color: #666;
+  margin-top: 4px;
 }
 
-.compra-row:hover {
-  background-color: #f5f5f5;
+/* Cards */
+.content-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.detail-row {
-  height: 0;
-}
-
-.parcelas-detail {
+/* Compra Card */
+.compra-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
   overflow: hidden;
 }
 
-.text-muted {
-  color: #6c757d;
+.compra-header {
+  padding: 16px 24px;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-table {
-  width: 100%;
+.compra-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-mat-spinner {
-  margin: 0 auto;
+.compra-content {
+  padding: 24px;
+}
+
+.info-row {
+  margin-bottom: 12px;
+}
+
+.info-label {
+  font-weight: 600;
+  color: #666;
+  margin-right: 8px;
+}
+
+.info-value {
+  color: #333;
+}
+
+/* Progresso */
+.progress-section {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+/* Parcelas */
+.parcelas-section {
+  margin-top: 20px;
+  padding: 16px;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+.parcelas-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  color: #333;
+}
+
+.parcela-item {
+  background: white;
+  padding: 12px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.parcela-numero {
+  font-weight: 600;
+  color: #333;
+  min-width: 60px;
+}
+
+.parcela-valor {
+  color: #333;
+  min-width: 100px;
+}
+
+.parcela-data {
+  color: #666;
+  min-width: 100px;
+}
+
+.parcela-status {
+  margin-left: auto;
+}
+
+/* Estado Vazio */
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: #999;
+}
+
+.empty-state mat-icon {
+  font-size: 64px;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.empty-state h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #666;
+}
+
+.empty-state p {
+  font-size: 14px;
+  margin: 0 0 16px 0;
+  color: #999;
+}
+
+/* Loading */
+.loading-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 48px;
+}
+
+/* Ações */
+.action-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+.expand-button {
+  text-align: center;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e0e0e0;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .container {
+    padding: 16px;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .compra-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .compra-content {
+    padding: 16px;
+  }
+
+  .parcela-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .parcela-status {
+    margin-left: 0;
+  }
 }
