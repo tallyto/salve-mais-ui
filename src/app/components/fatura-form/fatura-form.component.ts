@@ -186,6 +186,16 @@ export class FaturaFormComponent implements OnInit {
     }
   }
 
+  onCartaoPreviewChange(cartaoId: number): void {
+    const cartaoSelecionado = this.cartoes.find(c => c.id === cartaoId);
+    if (cartaoSelecionado && cartaoSelecionado.vencimento) {
+      // Preenche automaticamente a data de vencimento do cartão
+      this.previewForm.patchValue({
+        dataVencimento: cartaoSelecionado.vencimento
+      });
+    }
+  }
+
   buscarPreview(): void {
     if (this.previewForm.valid) {
       this.loadingPreview = true;
@@ -240,5 +250,10 @@ export class FaturaFormComponent implements OnInit {
 
   formatarData(data: string): string {
     return new Date(data).toLocaleDateString('pt-BR');
+  }
+
+  formatarDiaVencimento(vencimento: string): string {
+    const data = new Date(vencimento);
+    return data.getDate().toString().padStart(2, '0');
   }
 }

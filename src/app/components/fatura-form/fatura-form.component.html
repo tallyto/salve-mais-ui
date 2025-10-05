@@ -38,9 +38,9 @@
         <div class="form-row">
           <mat-form-field appearance="outline" class="form-field">
             <mat-label>Cartão de Crédito</mat-label>
-            <mat-select formControlName="cartaoCreditoId">
+            <mat-select formControlName="cartaoCreditoId" (selectionChange)="onCartaoPreviewChange($event.value)">
               <mat-option *ngFor="let cartao of cartoes" [value]="cartao.id">
-                {{ cartao.nome }}
+                {{ cartao.nome }} - Vence dia {{ formatarDiaVencimento(cartao.vencimento) }}
               </mat-option>
             </mat-select>
             <mat-icon matPrefix>credit_card</mat-icon>
@@ -51,10 +51,11 @@
 
           <mat-form-field appearance="outline" class="form-field">
             <mat-label>Data de Vencimento</mat-label>
-            <input matInput [matDatepicker]="pickerPreview" formControlName="dataVencimento">
+            <input matInput [matDatepicker]="pickerPreview" formControlName="dataVencimento" readonly>
             <mat-icon matPrefix>event</mat-icon>
             <mat-datepicker-toggle matSuffix [for]="pickerPreview"></mat-datepicker-toggle>
             <mat-datepicker #pickerPreview></mat-datepicker>
+            <mat-hint>Data preenchida automaticamente do cartão</mat-hint>
             <mat-error *ngIf="previewForm.get('dataVencimento')?.hasError('required')">
               Data de vencimento é obrigatória
             </mat-error>
