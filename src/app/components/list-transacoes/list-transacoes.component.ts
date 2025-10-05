@@ -133,9 +133,9 @@ export class ListTransacoesComponent implements OnInit {
 
   aplicarFiltro(): void {
     const filtro: TransacaoFiltro = {};
-    
+
     const formValue = this.filtroForm.value;
-    
+
     if (formValue.contaId && formValue.contaId !== null) {
       filtro.contaId = formValue.contaId;
     }
@@ -151,7 +151,7 @@ export class ListTransacoesComponent implements OnInit {
     if (formValue.dataFim) {
       filtro.dataFim = formValue.dataFim;
     }
-    
+
     this.pageIndex = 0;
     this.carregarTransacoes(filtro);
   }

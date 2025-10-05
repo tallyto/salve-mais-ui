@@ -538,3 +538,187 @@
   background-color: #4caf50 !important;
   color: white !important;
 }
+
+/* Preview da Fatura */
+.preview-result {
+  margin-top: 24px;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+}
+
+.preview-header {
+  margin-bottom: 20px;
+}
+
+.preview-header h3 {
+  margin: 0 0 8px 0;
+  color: #333;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.preview-header p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.preview-summary {
+  background-color: white;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.summary-item:last-child {
+  border-bottom: none;
+}
+
+.summary-item.total {
+  margin-top: 8px;
+  padding-top: 16px;
+  border-top: 2px solid #673ab7;
+  font-size: 18px;
+  font-weight: 600;
+  color: #673ab7;
+}
+
+.summary-item .label {
+  color: #666;
+}
+
+.summary-item .value {
+  font-weight: 500;
+  color: #333;
+}
+
+.summary-item.total .value {
+  color: #673ab7;
+}
+
+.preview-section {
+  margin-bottom: 24px;
+}
+
+.preview-section h4 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px 0;
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.preview-section h4 mat-icon {
+  color: #673ab7;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item-card {
+  background-color: white;
+  border-radius: 6px;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  transition: box-shadow 0.2s;
+}
+
+.item-card:hover {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.item-descricao {
+  font-weight: 500;
+  color: #333;
+  font-size: 14px;
+}
+
+.item-categoria {
+  font-size: 12px;
+  color: #673ab7;
+  font-weight: 500;
+}
+
+.item-data {
+  font-size: 12px;
+  color: #999;
+}
+
+.item-valor {
+  font-weight: 600;
+  color: #333;
+  font-size: 16px;
+  white-space: nowrap;
+  margin-left: 16px;
+}
+
+.preview-empty {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+}
+
+.preview-empty mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: #ccc;
+  margin-bottom: 16px;
+}
+
+.preview-empty p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.preview-actions {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.preview-actions button {
+  padding: 0 32px;
+}
+
+/* Responsividade do Preview */
+@media (max-width: 768px) {
+  .item-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .item-valor {
+    margin-left: 0;
+    align-self: flex-end;
+  }
+}
+

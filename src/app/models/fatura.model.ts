@@ -36,3 +36,35 @@ export interface CartaoCredito {
   limite: number;
   vencimento: string;
 }
+
+// Novo: Interface para o preview da fatura
+export interface FaturaPreviewDTO {
+  cartaoCreditoId: number;
+  nomeCartao: string;
+  dataVencimento: string;
+  compras: CompraPreviewDTO[];
+  parcelas: ParcelaPreviewDTO[];
+  valorCompras: number;
+  valorParcelas: number;
+  valorTotal: number;
+}
+
+export interface CompraPreviewDTO {
+  id: number;
+  descricao: string;
+  valor: number;
+  data: string;
+  categoria: string;
+}
+
+export interface ParcelaPreviewDTO {
+  id: number;
+  numeroParcela: number;
+  totalParcelas: number;
+  valor: number;
+  dataVencimento: string;
+  paga: boolean;
+  compraParceladaId: number;
+  descricaoCompra: string;
+}
+

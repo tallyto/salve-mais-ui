@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import {Observable, tap} from "rxjs";
-import {Fatura, FaturaManualDTO, FaturaResponseDTO} from "../models/fatura.model";
+import {Fatura, FaturaManualDTO, FaturaResponseDTO, FaturaPreviewDTO} from "../models/fatura.model";
 import { environment } from '../../environments/environment';
 import { NotificationEventService } from './notification-event.service';
 
@@ -72,6 +72,17 @@ export class FaturaService {
 
   public excluirFatura(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  /**
+   * Busca preview da fatura mostrando compras e parcelas que seriam incluídas
+   * @param cartaoCreditoId ID do cartão
+   * @param dataVencimento Data de vencimento (formato: yyyy-MM-dd)
+   */
+  public buscarPreviewFatura(cartaoCreditoId: number, dataVencimento: string): Observable<FaturaPreviewDTO> {
+    return this.http.get<FaturaPreviewDTO>(`${this.apiUrl}/preview/${cartaoCreditoId}`, {
+      params: { dataVencimento }
+    });
   }
 
   // Métodos legados mantidos para compatibilidade

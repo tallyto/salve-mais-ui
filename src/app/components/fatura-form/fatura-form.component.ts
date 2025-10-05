@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { FaturaService } from '../../services/fatura.service';
 import { CartaoService } from '../../services/cartao.service';
-import { FaturaManualDTO, FaturaResponseDTO } from '../../models/fatura.model';
+import { FaturaManualDTO, FaturaResponseDTO, FaturaPreviewDTO } from '../../models/fatura.model';
 import { Cartao } from '../../models/cartao.model';
 import { PagamentoFaturaModalComponent } from '../pagamento-fatura-modal/pagamento-fatura-modal.component';
 
@@ -16,10 +16,14 @@ import { PagamentoFaturaModalComponent } from '../pagamento-fatura-modal/pagamen
 })
 export class FaturaFormComponent implements OnInit {
   faturaForm: FormGroup;
+  previewForm: FormGroup;
   cartoes: Cartao[] = [];
   faturas: FaturaResponseDTO[] = [];
   loading = false;
   mostrarFormulario = false;
+  mostrarPreview = false;
+  loadingPreview = false;
+  preview: FaturaPreviewDTO | null = null;
 
   displayedColumns: string[] = ['nomeCartao', 'valorTotal', 'dataVencimento', 'dataPagamento', 'contaPagamento', 'pago', 'totalCompras', 'acoes'];
 
@@ -33,6 +37,11 @@ export class FaturaFormComponent implements OnInit {
     this.faturaForm = this.fb.group({
       cartaoCreditoId: ['', Validators.required],
       valorTotal: ['', [Validators.required, Validators.min(0.01)]],
+      dataVencimento: ['', Validators.required]
+    });
+
+    this.previewForm = this.fb.group({
+      cartaoCreditoId: ['', Validators.required],
       dataVencimento: ['', Validators.required]
     });
   }
@@ -167,6 +176,59 @@ export class FaturaFormComponent implements OnInit {
     if (!this.mostrarFormulario) {
       this.faturaForm.reset();
     }
+  }
+
+  togglePreview(): void {
+    this.mostrarPreview = !this.mostrarPreview;
+    if (!this.mostrarPreview) {
+      this.previewForm.reset();
+      this.preview = null;
+    }
+  }
+
+  buscarPreview(): void {
+    if (this.previewForm.valid) {
+      this.loadingPreview = true;
+
+      const dataVencimento = this.previewForm.value.dataVencimento;
+      const dataFormatada = dataVencimento instanceof Date
+        ? dataVencimento.toISOString().split('T')[0]
+        : dataVencimento;
+
+      this.faturaService.buscarPreviewFatura(
+        this.previewForm.value.cartaoCreditoId,
+        dataFormatada
+      ).subscribe({
+        next: (preview) => {
+          this.preview = preview;
+          this.loadingPreview = false;
+        },
+        error: (error) => {
+          console.error('Erro ao buscar preview:', error);
+          this.snackBar.open('Erro ao buscar preview da fatura', 'Fechar', { duration: 3000 });
+          this.loadingPreview = false;
+        }
+      });
+    }
+  }
+
+  gerarFaturaDaPreview(): void {
+    if (!this.preview) return;
+
+    this.loading = true;
+    this.faturaService.gerarFaturaAutomatica(this.preview.cartaoCreditoId).subscribe({
+      next: () => {
+        this.snackBar.open('Fatura gerada com sucesso!', 'Fechar', { duration: 3000 });
+        this.togglePreview();
+        this.carregarFaturas();
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Erro ao gerar fatura:', error);
+        this.snackBar.open('Erro ao gerar fatura', 'Fechar', { duration: 3000 });
+        this.loading = false;
+      }
+    });
   }
 
   formatarMoeda(valor: number): string {

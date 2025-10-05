@@ -11,10 +11,135 @@
       </div>
     </div>
     <div class="header-actions">
+      <button mat-raised-button color="accent" (click)="togglePreview()" style="margin-right: 10px;">
+        <mat-icon>{{ mostrarPreview ? 'close' : 'visibility' }}</mat-icon>
+        {{ mostrarPreview ? 'Fechar Preview' : 'Preview da Fatura' }}
+      </button>
       <button mat-raised-button color="primary" (click)="toggleFormulario()">
         <mat-icon>{{ mostrarFormulario ? 'close' : 'add' }}</mat-icon>
         {{ mostrarFormulario ? 'Cancelar' : 'Nova Fatura Manual' }}
       </button>
+    </div>
+  </div>
+
+  <!-- Preview da Fatura -->
+  <div *ngIf="mostrarPreview" class="card">
+    <div class="card-header">
+      <div class="header-title">
+        <mat-icon>visibility</mat-icon>
+        <h2 class="section-title">Preview da Fatura</h2>
+      </div>
+    </div>
+
+    <div class="form-container">
+      <div class="section-subtitle">Veja quais compras e parcelas seriam incluídas na fatura antes de gerá-la</div>
+
+      <form [formGroup]="previewForm" (ngSubmit)="buscarPreview()">
+        <div class="form-row">
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Cartão de Crédito</mat-label>
+            <mat-select formControlName="cartaoCreditoId">
+              <mat-option *ngFor="let cartao of cartoes" [value]="cartao.id">
+                {{ cartao.nome }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix>credit_card</mat-icon>
+            <mat-error *ngIf="previewForm.get('cartaoCreditoId')?.hasError('required')">
+              Selecione um cartão
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Data de Vencimento</mat-label>
+            <input matInput [matDatepicker]="pickerPreview" formControlName="dataVencimento">
+            <mat-icon matPrefix>event</mat-icon>
+            <mat-datepicker-toggle matSuffix [for]="pickerPreview"></mat-datepicker-toggle>
+            <mat-datepicker #pickerPreview></mat-datepicker>
+            <mat-error *ngIf="previewForm.get('dataVencimento')?.hasError('required')">
+              Data de vencimento é obrigatória
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-actions">
+          <button mat-stroked-button type="button" (click)="togglePreview()">
+            Cancelar
+          </button>
+          <button mat-raised-button color="primary" type="submit"
+                  [disabled]="previewForm.invalid || loadingPreview">
+            <mat-icon>{{ loadingPreview ? 'hourglass_empty' : 'search' }}</mat-icon>
+            {{ loadingPreview ? 'Carregando...' : 'Buscar Preview' }}
+          </button>
+        </div>
+      </form>
+
+      <!-- Resultado do Preview -->
+      <div *ngIf="preview" class="preview-result">
+        <div class="preview-header">
+          <h3>{{ preview.nomeCartao }}</h3>
+          <p>Vencimento: {{ formatarData(preview.dataVencimento) }}</p>
+        </div>
+
+        <!-- Resumo de Valores -->
+        <div class="preview-summary">
+          <div class="summary-item">
+            <span class="label">Compras à vista:</span>
+            <span class="value">{{ formatarMoeda(preview.valorCompras) }}</span>
+          </div>
+          <div class="summary-item">
+            <span class="label">Parcelas:</span>
+            <span class="value">{{ formatarMoeda(preview.valorParcelas) }}</span>
+          </div>
+          <div class="summary-item total">
+            <span class="label">Valor Total:</span>
+            <span class="value">{{ formatarMoeda(preview.valorTotal) }}</span>
+          </div>
+        </div>
+
+        <!-- Compras à Vista -->
+        <div class="preview-section" *ngIf="preview.compras && preview.compras.length > 0">
+          <h4><mat-icon>shopping_cart</mat-icon> Compras à Vista ({{ preview.compras.length }})</h4>
+          <div class="items-list">
+            <div class="item-card" *ngFor="let compra of preview.compras">
+              <div class="item-info">
+                <span class="item-descricao">{{ compra.descricao }}</span>
+                <span class="item-categoria">{{ compra.categoria }}</span>
+                <span class="item-data">{{ formatarData(compra.data) }}</span>
+              </div>
+              <div class="item-valor">{{ formatarMoeda(compra.valor) }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Parcelas -->
+        <div class="preview-section" *ngIf="preview.parcelas && preview.parcelas.length > 0">
+          <h4><mat-icon>payment</mat-icon> Parcelas ({{ preview.parcelas.length }})</h4>
+          <div class="items-list">
+            <div class="item-card" *ngFor="let parcela of preview.parcelas">
+              <div class="item-info">
+                <span class="item-descricao">{{ parcela.descricaoCompra }}</span>
+                <span class="item-categoria">Parcela {{ parcela.numeroParcela }}/{{ parcela.totalParcelas }}</span>
+                <span class="item-data">Vence em: {{ formatarData(parcela.dataVencimento) }}</span>
+              </div>
+              <div class="item-valor">{{ formatarMoeda(parcela.valor) }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mensagem quando não há itens -->
+        <div class="preview-empty" *ngIf="preview.compras.length === 0 && preview.parcelas.length === 0">
+          <mat-icon>inbox</mat-icon>
+          <p>Nenhuma compra ou parcela encontrada para este período</p>
+        </div>
+
+        <!-- Botão para gerar fatura -->
+        <div class="preview-actions" *ngIf="preview.compras.length > 0 || preview.parcelas.length > 0">
+          <button mat-raised-button color="primary" (click)="gerarFaturaDaPreview()" [disabled]="loading">
+            <mat-icon>{{ loading ? 'hourglass_empty' : 'add_circle' }}</mat-icon>
+            {{ loading ? 'Gerando...' : 'Gerar Fatura' }}
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
