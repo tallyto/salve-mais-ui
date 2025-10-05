@@ -102,8 +102,9 @@ Esta atualização adiciona um **sistema de preview de faturas** que permite vis
 ### 1. **Acessar Preview da Fatura**
 1. Na página de Faturas, clique em **"Preview da Fatura"**
 2. Selecione o **cartão de crédito**
-3. Escolha a **data de vencimento** (ex: 10/10/2025)
-4. Clique em **"Buscar Preview"**
+   - ✨ **Novo**: A data de vencimento é preenchida automaticamente!
+   - O dia de vencimento é exibido junto ao nome do cartão
+3. Clique em **"Buscar Preview"**
 
 ### 2. **Visualizar Detalhes**
 O preview mostrará:
@@ -180,6 +181,21 @@ As parcelas são incluídas na fatura se:
 3. **Planejamento**: Saber o valor total antes de gerar
 4. **Confiança**: Validar se todas as compras/parcelas estão corretas
 5. **UX Melhorada**: Interface moderna e intuitiva
+6. **Automação**: Data de vencimento preenchida automaticamente do cartão
+
+## ⚡ Melhorias de UX (Última Atualização)
+
+### Preenchimento Automático da Data
+- ✨ Ao selecionar um cartão, a data de vencimento é **preenchida automaticamente**
+- 📅 Campo de data marcado como **readonly** para evitar edições acidentais
+- 👁️ Dia de vencimento exibido junto ao nome do cartão (ex: "Nubank - Vence dia 10")
+- 💡 Hint informativo: "Data preenchida automaticamente do cartão"
+
+**Benefícios:**
+- ⚡ Mais rápido - apenas 2 cliques para ver o preview
+- 🎯 Mais preciso - usa a data correta do cartão
+- 🚫 Sem erros - não há como digitar data errada
+- 💚 Melhor experiência do usuário
 
 ## 🚀 Próximos Passos (Sugestões)
 
