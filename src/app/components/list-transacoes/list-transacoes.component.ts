@@ -91,12 +91,10 @@ export class ListTransacoesComponent implements OnInit {
   }
 
   carregarTransacoes(filtro?: TransacaoFiltro): void {
-    console.log('Carregando transações com filtro:', filtro); // Debug
     this.loading = true;
     this.transacaoService.listarTransacoes(filtro, this.pageIndex, this.pageSize)
       .subscribe(
         response => {
-          console.log('Transações carregadas:', response); // Debug
           this.transacoes = response.content;
           this.totalElements = response.totalElements;
           this.loading = false;
@@ -154,7 +152,6 @@ export class ListTransacoesComponent implements OnInit {
       filtro.dataFim = formValue.dataFim;
     }
     
-    console.log('Filtro aplicado:', filtro); // Debug
     this.pageIndex = 0;
     this.carregarTransacoes(filtro);
   }
