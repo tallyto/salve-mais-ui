@@ -132,13 +132,38 @@ export class ListTransacoesComponent implements OnInit {
   }
 
   aplicarFiltro(): void {
-    const filtro: TransacaoFiltro = this.filtroForm.value;
+    const filtro: TransacaoFiltro = {};
+    
+    const formValue = this.filtroForm.value;
+    
+    if (formValue.contaId) {
+      filtro.contaId = formValue.contaId;
+    }
+    if (formValue.tipo) {
+      filtro.tipo = formValue.tipo;
+    }
+    if (formValue.categoriaId) {
+      filtro.categoriaId = formValue.categoriaId;
+    }
+    if (formValue.dataInicio) {
+      filtro.dataInicio = formValue.dataInicio;
+    }
+    if (formValue.dataFim) {
+      filtro.dataFim = formValue.dataFim;
+    }
+    
     this.pageIndex = 0; // Resetar para primeira página ao aplicar filtro
     this.carregarTransacoes(filtro);
   }
 
   limparFiltro(): void {
-    this.filtroForm.reset();
+    this.filtroForm.reset({
+      contaId: null,
+      tipo: null,
+      categoriaId: null,
+      dataInicio: null,
+      dataFim: null
+    });
     this.pageIndex = 0;
     this.carregarTransacoes();
   }
@@ -196,6 +221,32 @@ export class ListTransacoesComponent implements OnInit {
         return 'Pagamento de Fatura';
       default:
         return tipo;
+    }
+  }
+
+  isEntrada(tipo: TipoTransacao): boolean {
+    return tipo === TipoTransacao.CREDITO || tipo === TipoTransacao.TRANSFERENCIA_ENTRADA;
+  }
+
+  isSaida(tipo: TipoTransacao): boolean {
+    return tipo === TipoTransacao.DEBITO || 
+           tipo === TipoTransacao.TRANSFERENCIA_SAIDA || 
+           tipo === TipoTransacao.PAGAMENTO_FATURA;
+  }
+
+  getTipoIcon(tipo: TipoTransacao): string {
+    switch (tipo) {
+      case TipoTransacao.CREDITO:
+        return 'arrow_upward';
+      case TipoTransacao.DEBITO:
+        return 'arrow_downward';
+      case TipoTransacao.TRANSFERENCIA_ENTRADA:
+      case TipoTransacao.TRANSFERENCIA_SAIDA:
+        return 'swap_horiz';
+      case TipoTransacao.PAGAMENTO_FATURA:
+        return 'credit_card';
+      default:
+        return 'help';
     }
   }
 

@@ -35,3 +35,33 @@
   color: #c62828;
   font-weight: 600;
 }
+
+/* Select options styling */
+.tipo-option-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tipo-option-content.receita {
+  color: #2e7d32;
+}
+
+.tipo-option-content.despesa {
+  color: #c62828;
+}
+
+.tipo-option-content mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+/* Border left for options */
+::ng-deep .mat-option.tipo-option.receita {
+  border-left: 4px solid #2e7d32;
+}
+
+::ng-deep .mat-option.tipo-option.despesa {
+  border-left: 4px solid #c62828;
+}
