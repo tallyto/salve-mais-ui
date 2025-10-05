@@ -7,6 +7,9 @@ import {Account} from "../../models/account.model";
 import {AccountService} from "../../services/account.service";
 import {Financa} from "../../models/financa.model";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatDialog} from "@angular/material/dialog";
+import {CategoriaFormComponent} from "../categoria-form/categoria-form.component";
+import {AccountComponent} from "../account/account.component";
 
 @Component({
     selector: 'app-despesas-fixas',
@@ -25,7 +28,8 @@ export class DespesasFixasComponent implements OnInit {
     private formBuilder: FormBuilder,
     private categoriaService: CategoriaService,
     private accountService: AccountService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {
     this.despesaFixaForm = this.formBuilder.group({
       id: [null],
@@ -40,11 +44,7 @@ export class DespesasFixasComponent implements OnInit {
 
   ngOnInit(): void {
     this.carregarCategorias();
-    this.accountService.listarAccounts(0, 50, '').subscribe({
-      next: accountPage => {
-        this.accounts = accountPage.content;
-      }
-    });
+    this.carregarContas();
 
     // Subscribe to edit event
     this.financaService.editingFinanca.subscribe((financa: Financa) => {
@@ -122,4 +122,52 @@ export class DespesasFixasComponent implements OnInit {
     });
     this.editingDespesa = null;
   }
+
+  novaCategoria(): void {
+    const dialogRef = this.dialog.open(CategoriaFormComponent, {
+      width: '500px',
+      disableClose: false
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.carregarCategorias();
+        this.despesaFixaForm.patchValue({ categoriaId: result.id });
+        this.snackBar.open('Categoria criada com sucesso!', 'Fechar', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        });
+      }
+    });
+  }
+
+  novaConta(): void {
+    const dialogRef = this.dialog.open(AccountComponent, {
+      width: '600px',
+      disableClose: false,
+      data: { isDialogMode: true }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.carregarContas();
+        this.despesaFixaForm.patchValue({ contaId: result.id });
+        this.snackBar.open('Conta criada com sucesso!', 'Fechar', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        });
+      }
+    });
+  }
+
+  carregarContas(): void {
+    this.accountService.listarAccounts(0, 50, '').subscribe({
+      next: accountPage => {
+        this.accounts = accountPage.content;
+      }
+    });
+  }
 }
+

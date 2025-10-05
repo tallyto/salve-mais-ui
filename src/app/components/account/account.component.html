@@ -1,4 +1,44 @@
-<div class="account-container p-3 mx-auto">
+<!-- Modo Dialog -->
+<div *ngIf="isDialogMode">
+  <h2 mat-dialog-title class="flex align-items-center gap-2">
+    <mat-icon>account_balance</mat-icon>
+    <span>Nova Conta</span>
+  </h2>
+
+  <mat-dialog-content>
+    <form [formGroup]="accountForm" id="accountDialogForm">
+      <div class="p-0">
+        <div class="mb-3">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Nome do titular</mat-label>
+            <input autocomplete="off" formControlName="titular" matInput placeholder="Ex: Maria da Silva" autofocus>
+            <mat-icon matSuffix>person</mat-icon>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="gap-2">
+    <button mat-button type="button" (click)="fecharDialog()">
+      <mat-icon>close</mat-icon>
+      Cancelar
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="accountForm.invalid"
+      (click)="createAccount()"
+    >
+      <mat-icon>save</mat-icon>
+      Salvar
+    </button>
+  </mat-dialog-actions>
+</div>
+
+<!-- Modo Página Completa -->
+<div *ngIf="!isDialogMode" class="account-container p-3 mx-auto">
   <div class="header mb-4">
     <div class="header-content">
       <mat-icon class="header-icon">account_balance</mat-icon>

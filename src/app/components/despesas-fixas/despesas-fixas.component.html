@@ -42,9 +42,20 @@
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>Categoria</mat-label>
             <mat-select formControlName="categoriaId">
+              <mat-option *ngIf="categorias.length === 0" disabled>
+                <em>Nenhuma categoria cadastrada</em>
+              </mat-option>
               <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">{{categoria.nome}}</mat-option>
             </mat-select>
-            <mat-icon matSuffix>category</mat-icon>
+            <button
+              mat-icon-button
+              matSuffix
+              type="button"
+              (click)="novaCategoria(); $event.stopPropagation()"
+              matTooltip="Criar nova categoria"
+            >
+              <mat-icon>add</mat-icon>
+            </button>
           </mat-form-field>
         </div>
 
@@ -52,9 +63,20 @@
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>Conta</mat-label>
             <mat-select formControlName="contaId">
+              <mat-option *ngIf="accounts.length === 0" disabled>
+                <em>Nenhuma conta cadastrada</em>
+              </mat-option>
               <mat-option *ngFor="let conta of accounts" [value]="conta.id">{{conta.titular}}</mat-option>
             </mat-select>
-            <mat-icon matSuffix>account_balance</mat-icon>
+            <button
+              mat-icon-button
+              matSuffix
+              type="button"
+              (click)="novaConta(); $event.stopPropagation()"
+              matTooltip="Criar nova conta"
+            >
+              <mat-icon>add</mat-icon>
+            </button>
           </mat-form-field>
         </div>
 
