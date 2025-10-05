@@ -58,12 +58,12 @@ export class ListTransacoesComponent implements OnInit {
   pageSize = 10;
   pageIndex = 0;
   displayedColumns: string[] = [
-    'data', 
-    'tipo', 
-    'descricao', 
-    'valor', 
-    'conta', 
-    'categoria', 
+    'data',
+    'tipo',
+    'descricao',
+    'valor',
+    'conta',
+    'categoria',
     'acoes'
   ];
 
@@ -133,9 +133,9 @@ export class ListTransacoesComponent implements OnInit {
 
   aplicarFiltro(): void {
     const filtro: TransacaoFiltro = {};
-    
+
     const formValue = this.filtroForm.value;
-    
+
     if (formValue.contaId) {
       filtro.contaId = formValue.contaId;
     }
@@ -151,7 +151,7 @@ export class ListTransacoesComponent implements OnInit {
     if (formValue.dataFim) {
       filtro.dataFim = formValue.dataFim;
     }
-    
+
     this.pageIndex = 0; // Resetar para primeira página ao aplicar filtro
     this.carregarTransacoes(filtro);
   }
@@ -207,43 +207,47 @@ export class ListTransacoesComponent implements OnInit {
     }
   }
 
-  getTipoTransacaoLabel(tipo: TipoTransacao): string {
-    switch (tipo) {
-      case TipoTransacao.CREDITO:
+  getTipoTransacaoLabel(tipo: TipoTransacao | string): string {
+    const tipoStr = typeof tipo === 'string' ? tipo : tipo;
+    switch (tipoStr) {
+      case 'CREDITO':
         return 'Crédito';
-      case TipoTransacao.DEBITO:
+      case 'DEBITO':
         return 'Débito';
-      case TipoTransacao.TRANSFERENCIA_SAIDA:
+      case 'TRANSFERENCIA_SAIDA':
         return 'Transferência (Saída)';
-      case TipoTransacao.TRANSFERENCIA_ENTRADA:
+      case 'TRANSFERENCIA_ENTRADA':
         return 'Transferência (Entrada)';
-      case TipoTransacao.PAGAMENTO_FATURA:
+      case 'PAGAMENTO_FATURA':
         return 'Pagamento de Fatura';
       default:
-        return tipo;
+        return tipo as string;
     }
   }
 
-  isEntrada(tipo: TipoTransacao): boolean {
-    return tipo === TipoTransacao.CREDITO || tipo === TipoTransacao.TRANSFERENCIA_ENTRADA;
+  isEntrada(tipo: TipoTransacao | string): boolean {
+    const tipoStr = typeof tipo === 'string' ? tipo : tipo;
+    return tipoStr === 'CREDITO' || tipoStr === 'TRANSFERENCIA_ENTRADA';
   }
 
-  isSaida(tipo: TipoTransacao): boolean {
-    return tipo === TipoTransacao.DEBITO || 
-           tipo === TipoTransacao.TRANSFERENCIA_SAIDA || 
-           tipo === TipoTransacao.PAGAMENTO_FATURA;
+  isSaida(tipo: TipoTransacao | string): boolean {
+    const tipoStr = typeof tipo === 'string' ? tipo : tipo;
+    return tipoStr === 'DEBITO' || 
+           tipoStr === 'TRANSFERENCIA_SAIDA' || 
+           tipoStr === 'PAGAMENTO_FATURA';
   }
 
-  getTipoIcon(tipo: TipoTransacao): string {
-    switch (tipo) {
-      case TipoTransacao.CREDITO:
+  getTipoIcon(tipo: TipoTransacao | string): string {
+    const tipoStr = typeof tipo === 'string' ? tipo : tipo;
+    switch (tipoStr) {
+      case 'CREDITO':
         return 'arrow_upward';
-      case TipoTransacao.DEBITO:
+      case 'DEBITO':
         return 'arrow_downward';
-      case TipoTransacao.TRANSFERENCIA_ENTRADA:
-      case TipoTransacao.TRANSFERENCIA_SAIDA:
+      case 'TRANSFERENCIA_ENTRADA':
+      case 'TRANSFERENCIA_SAIDA':
         return 'swap_horiz';
-      case TipoTransacao.PAGAMENTO_FATURA:
+      case 'PAGAMENTO_FATURA':
         return 'credit_card';
       default:
         return 'help';

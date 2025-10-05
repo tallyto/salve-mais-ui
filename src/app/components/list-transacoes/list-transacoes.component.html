@@ -41,31 +41,31 @@
               <mat-option value="CREDITO" class="tipo-option receita">
                 <span class="tipo-option-content receita">
                   <mat-icon>arrow_upward</mat-icon>
-                  Entrada (Crédito)
+                  <span>Entrada (Crédito)</span>
                 </span>
               </mat-option>
               <mat-option value="DEBITO" class="tipo-option despesa">
                 <span class="tipo-option-content despesa">
                   <mat-icon>arrow_downward</mat-icon>
-                  Saída (Débito)
+                  <span>Saída (Débito)</span>
                 </span>
               </mat-option>
               <mat-option value="TRANSFERENCIA_ENTRADA" class="tipo-option receita">
                 <span class="tipo-option-content receita">
                   <mat-icon>swap_horiz</mat-icon>
-                  Transferência Entrada
+                  <span>Transferência Entrada</span>
                 </span>
               </mat-option>
               <mat-option value="TRANSFERENCIA_SAIDA" class="tipo-option despesa">
                 <span class="tipo-option-content despesa">
                   <mat-icon>swap_horiz</mat-icon>
-                  Transferência Saída
+                  <span>Transferência Saída</span>
                 </span>
               </mat-option>
               <mat-option value="PAGAMENTO_FATURA" class="tipo-option despesa">
                 <span class="tipo-option-content despesa">
                   <mat-icon>credit_card</mat-icon>
-                  Pagamento Fatura
+                  <span>Pagamento Fatura</span>
                 </span>
               </mat-option>
             </mat-select>
@@ -149,8 +149,8 @@
       <ng-container matColumnDef="tipo">
         <th mat-header-cell *matHeaderCellDef>Tipo</th>
         <td mat-cell *matCellDef="let transacao">
-          <span class="tipo-badge" 
-                [class.receita]="isEntrada(transacao.tipo)" 
+          <span class="tipo-badge"
+                [class.receita]="isEntrada(transacao.tipo)"
                 [class.despesa]="isSaida(transacao.tipo)">
             <mat-icon>{{ getTipoIcon(transacao.tipo) }}</mat-icon>
             {{ getTipoTransacaoLabel(transacao.tipo) }}
@@ -168,8 +168,8 @@
       <ng-container matColumnDef="valor">
         <th mat-header-cell *matHeaderCellDef class="text-right">Valor</th>
         <td mat-cell *matCellDef="let transacao" class="text-right">
-          <span class="valor-text" 
-                [class.receita]="isEntrada(transacao.tipo)" 
+          <span class="valor-text"
+                [class.receita]="isEntrada(transacao.tipo)"
                 [class.despesa]="isSaida(transacao.tipo)">
             {{ transacao.valor | currency: 'BRL' }}
           </span>
@@ -228,7 +228,7 @@
     </table>
 
     <!-- Paginação -->
-    <mat-paginator 
+    <mat-paginator
       [length]="totalElements"
       [pageSize]="pageSize"
       [pageIndex]="pageIndex"

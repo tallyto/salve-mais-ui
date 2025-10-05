@@ -57,6 +57,11 @@
   height: 18px;
 }
 
+/* Hide icon in selected value (only show in dropdown) */
+::ng-deep .mat-select-value .tipo-option-content mat-icon {
+  display: none;
+}
+
 /* Border left for options */
 ::ng-deep .mat-option.tipo-option.receita {
   border-left: 4px solid #2e7d32;
