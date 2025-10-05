@@ -1,4 +1,6 @@
-/* Modo Dialog - Simples e limpo */
+/* ===========================
+   Modo Dialog - Simples e limpo
+   =========================== */
 mat-dialog-content {
   min-width: 500px;
   padding: 24px 24px 20px 24px !important;
@@ -13,9 +15,261 @@ mat-dialog-actions {
   padding: 16px 24px !important;
 }
 
-/* Modo Página - estilos básicos (mantém layout original) */
+/* ===========================
+   Modo Página - Layout Moderno
+   =========================== */
 .container {
   padding: 24px;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: calc(100vh - 48px);
+}
+
+/* Header da Página */
+.page-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 24px;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+  color: white;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.page-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-text {
+  flex: 1;
+}
+
+.page-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: white;
+}
+
+.page-subtitle {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Cards de Conteúdo */
+.form-card,
+.cards-list-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin-bottom: 24px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.form-card:hover,
+.cards-list-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.card-header {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 20px 24px;
+  border-bottom: 3px solid #667eea;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  color: #2d3748;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-title mat-icon {
+  color: #667eea;
+}
+
+/* Formulário */
+.form-container {
+  padding: 32px 24px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #718096;
+  margin-bottom: 24px;
+  padding-left: 4px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* Tabela */
+.table-container {
+  padding: 0;
+}
+
+.cards-table {
+  width: 100%;
+  background: white;
+}
+
+.cards-table th {
+  background: #f8f9fa;
+  color: #495057;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 16px 24px;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.cards-table td {
+  padding: 20px 24px;
+  color: #2d3748;
+  font-size: 15px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.cards-table tr:hover {
+  background: #f7fafc;
+  transition: background 0.2s;
+}
+
+/* Botões de Ação */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.action-buttons button {
+  transition: transform 0.2s;
+}
+
+.action-buttons button:hover {
+  transform: scale(1.1);
+}
+
+/* Campo de Edição Inline */
+.edit-field {
+  margin-bottom: 0 !important;
+}
+
+.edit-field .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+/* Estado Vazio */
+.empty-state {
+  text-align: center;
+  padding: 64px 24px;
+  color: #a0aec0;
+}
+
+.empty-state mat-icon {
+  font-size: 80px;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.empty-state h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #4a5568;
+}
+
+.empty-state p {
+  font-size: 14px;
+  margin: 0;
+  color: #718096;
+}
+
+/* Badges e Indicadores */
+.card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  background: #e6f2ff;
+  color: #0066cc;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .container {
+    padding: 16px;
+  }
+
+  .page-header {
+    padding: 24px;
+  }
+
+  .page-title {
+    font-size: 24px;
+  }
+
+  .page-icon {
+    font-size: 36px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .form-container {
+    padding: 24px 16px;
+  }
+
+  .cards-table th,
+  .cards-table td {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
 }
