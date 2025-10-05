@@ -20,7 +20,6 @@
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>Data de Vencimento da Fatura</mat-label>
             <input [matDatepicker]="dialogPicker" formControlName="vencimento" matInput>
-            <mat-icon matSuffix>event</mat-icon>
             <mat-datepicker-toggle [for]="dialogPicker" matIconSuffix></mat-datepicker-toggle>
             <mat-datepicker #dialogPicker></mat-datepicker>
             <mat-hint>Dia do vencimento da fatura</mat-hint>
@@ -88,7 +87,6 @@
             <mat-form-field appearance="outline" class="w-full">
               <mat-label>Data de Vencimento</mat-label>
               <input [matDatepicker]="picker" formControlName="vencimento" matInput>
-              <mat-icon matPrefix>event</mat-icon>
               <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
@@ -139,7 +137,6 @@
             </div>
             <mat-form-field *ngIf="isEditing(cartao)" appearance="outline" class="edit-field w-full">
               <input [matDatepicker]="editPicker" [(ngModel)]="tempVencimento" matInput>
-              <mat-icon matPrefix>event</mat-icon>
               <mat-datepicker-toggle [for]="editPicker" matIconSuffix></mat-datepicker-toggle>
               <mat-datepicker #editPicker></mat-datepicker>
             </mat-form-field>
