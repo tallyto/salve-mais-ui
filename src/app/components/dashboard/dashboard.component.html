@@ -524,4 +524,50 @@
       </div>
     </div>
   </div>
+
+  <!-- Compras Parceladas Detalhadas -->
+  <div class="section-header mb-3" *ngIf="comprasParceladas && comprasParceladas.length">
+    <h2>Compras Parceladas Ativas</h2>
+  </div>
+  <div class="grid mb-4" *ngIf="comprasParceladas && comprasParceladas.length">
+    <div class="col-12">
+      <div class="data-card">
+        <table class="table table-striped w-full">
+          <thead>
+            <tr>
+              <th>Descrição</th>
+              <th>Cartão</th>
+              <th>Categoria</th>
+              <th>Valor Total</th>
+              <th>Parcelas</th>
+              <th>Valor/Parcela</th>
+              <th>Próximo Vencimento</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let compra of comprasParceladas">
+              <td>{{ compra.descricao }}</td>
+              <td>{{ compra.cartaoNome }}</td>
+              <td>{{ compra.categoriaNome }}</td>
+              <td>{{ compra.valorTotal | currency:'BRL':'symbol':'1.2-2' }}</td>
+              <td>{{ compra.parcelaInicial }}/{{ compra.totalParcelas }}</td>
+              <td>{{ compra.valorParcela | currency:'BRL':'symbol':'1.2-2' }}</td>
+              <td>
+                {{ getProximoVencimento(compra) | date:'dd/MM/yyyy' }}
+              </td>
+              <td>
+                <span class="badge" [ngClass]="getStatusClass(compra)">
+                  {{ getStatusCompra(compra) }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="text-right mt-2">
+          <a routerLink="/compras-parceladas" class="small-link">Ver todas as compras parceladas</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

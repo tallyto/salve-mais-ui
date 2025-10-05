@@ -10,6 +10,8 @@ import { GastoCartaoService } from '../../services/gasto-cartao.service';
 import { GastoCartao } from '../../models/gasto-cartao.model';
 import { catchError } from 'rxjs/operators';
 import { Page } from '../../models/page.model';
+import { CompraParceladaService } from '../../services/compra-parcelada.service';
+import { CompraParcelada } from '../../models/compra-parcelada.model';
 
 interface Transaction {
   descricao: string;
@@ -52,6 +54,10 @@ export class DashboardComponent implements OnInit {
 
   // Dados para transações recentes
   recentTransactions: Transaction[] = [];
+
+  // Dados para compras parceladas
+  comprasParceladas: CompraParcelada[] = [];
+  comprasParceladasCarregando: boolean = false;
 
   // Configurações para os gráficos
   // Pie Chart (Despesas por Categoria)
@@ -163,11 +169,13 @@ export class DashboardComponent implements OnInit {
     private accountService: AccountService,
     private proventoService: ProventoService,
     private dashboardService: DashboardService,
-    private gastoCartaoService: GastoCartaoService
+    private gastoCartaoService: GastoCartaoService,
+    private compraParceladaService: CompraParceladaService
   ) { }
 
   ngOnInit(): void {
     this.loadDashboardData();
+    this.loadComprasParceladas();
   }
 
   loadDashboardData(): void {
@@ -237,6 +245,25 @@ export class DashboardComponent implements OnInit {
       error: (error) => {
         console.error('Erro ao carregar dados básicos:', error);
         this.isLoading = false;
+      }
+    });
+  }
+
+  // Carrega as compras parceladas ativas (não pagas)
+  loadComprasParceladas(): void {
+    this.comprasParceladasCarregando = true;
+    // Busca as 5 compras parceladas mais recentes com parcelas não pagas
+    this.compraParceladaService.listar(0, 5).subscribe({
+      next: (result) => {
+        // Filtra para mostrar apenas compras com parcelas não pagas
+        this.comprasParceladas = result.content.filter(cp =>
+          cp.parcelas?.some(p => !p.paga)
+        );
+        this.comprasParceladasCarregando = false;
+      },
+      error: (err) => {
+        this.comprasParceladas = [];
+        this.comprasParceladasCarregando = false;
       }
     });
   }
@@ -552,5 +579,29 @@ export class DashboardComponent implements OnInit {
       case 'down': return 'keyboard_arrow_down';
       default: return 'remove';
     }
+  }
+
+  // Métodos auxiliares para compras parceladas
+  getProximoVencimento(compra: CompraParcelada): string {
+    if (!compra.parcelas || compra.parcelas.length === 0) {
+      return '-';
+    }
+    const parcelaNaoPaga = compra.parcelas.find(p => !p.paga);
+    return parcelaNaoPaga ? parcelaNaoPaga.dataVencimento : '-';
+  }
+
+  temParcelasPendentes(compra: CompraParcelada): boolean {
+    if (!compra.parcelas || compra.parcelas.length === 0) {
+      return false;
+    }
+    return compra.parcelas.some(p => !p.paga);
+  }
+
+  getStatusCompra(compra: CompraParcelada): string {
+    return this.temParcelasPendentes(compra) ? 'Em aberto' : 'Quitada';
+  }
+
+  getStatusClass(compra: CompraParcelada): string {
+    return this.temParcelasPendentes(compra) ? 'badge-warning' : 'badge-success';
   }
 }
