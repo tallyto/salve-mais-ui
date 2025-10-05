@@ -49,6 +49,7 @@ const routes: Routes = [
   {path: 'transacao/:id', component: TransacaoDetalheComponent, canActivate: [AuthGuard]},
   {path: 'compras-parceladas', component: ListComprasParceladasComponent, canActivate: [AuthGuard]},
   {path: 'compras-parceladas/nova', component: CompraParceladaFormComponent, canActivate: [AuthGuard]},
+  {path: 'compras-parceladas/editar/:id', component: CompraParceladaFormComponent, canActivate: [AuthGuard]},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
   {path: 'recuperar-senha', component: RecuperarSenhaComponent},

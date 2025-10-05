@@ -45,6 +45,13 @@ export class CompraParceladaService {
   }
 
   /**
+   * Atualiza uma compra parcelada
+   */
+  atualizar(id: number, compra: CompraParceladaRequest): Observable<CompraParcelada> {
+    return this.http.put<CompraParcelada>(`${this.apiUrl}/${id}`, compra);
+  }
+
+  /**
    * Lista compras parceladas de um cartão específico
    */
   listarPorCartao(cartaoId: number, page: number = 0, size: number = 10): Observable<ComprasParceladasPaginadas> {

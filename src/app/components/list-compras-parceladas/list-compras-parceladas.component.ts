@@ -152,6 +152,10 @@ export class ListComprasParceladasComponent implements OnInit {
     this.router.navigate(['/compras-parceladas/nova']);
   }
 
+  editar(id: number): void {
+    this.router.navigate(['/compras-parceladas/editar', id]);
+  }
+
   calcularParcelasPagas(parcelas?: Parcela[]): number {
     if (!parcelas) return 0;
     return parcelas.filter(p => p.paga).length;

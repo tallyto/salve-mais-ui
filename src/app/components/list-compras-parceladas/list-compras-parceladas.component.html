@@ -39,9 +39,14 @@
                 <mat-icon class="mr-2">receipt</mat-icon>
                 {{ compra.descricao }}
               </div>
-              <button mat-icon-button color="warn" (click)="excluir(compra.id)" matTooltip="Excluir">
-                <mat-icon>delete</mat-icon>
-              </button>
+              <div class="flex gap-2">
+                <button mat-icon-button color="primary" (click)="editar(compra.id)" matTooltip="Editar">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="excluir(compra.id)" matTooltip="Excluir">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
             </mat-card-title>
           </mat-card-header>
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -53,6 +53,8 @@ export class CompraParceladaFormComponent implements OnInit {
   valorParcela: number = 0;
   loading: boolean = false;
   errorMessage: string = '';
+  isEditMode: boolean = false;
+  compraId: number | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -60,6 +62,7 @@ export class CompraParceladaFormComponent implements OnInit {
     private categoriaService: CategoriaService,
     private cartaoService: CartaoService,
     private router: Router,
+    private route: ActivatedRoute,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
   ) {}
@@ -69,6 +72,46 @@ export class CompraParceladaFormComponent implements OnInit {
     this.loadCategorias();
     this.loadCartoes();
     this.setupCalculations();
+    this.checkEditMode();
+  }
+
+  checkEditMode(): void {
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+      if (id) {
+        this.isEditMode = true;
+        this.compraId = +id;
+        this.loadCompraParcelada(this.compraId);
+      }
+    });
+  }
+
+  loadCompraParcelada(id: number): void {
+    this.loading = true;
+    this.compraParceladaService.buscarPorId(id).subscribe({
+      next: (compra) => {
+        this.form.patchValue({
+          descricao: compra.descricao,
+          valorTotal: compra.valorTotal,
+          dataCompra: compra.dataCompra,
+          parcelaInicial: compra.parcelaInicial,
+          totalParcelas: compra.totalParcelas,
+          categoriaId: compra.categoriaId,
+          cartaoId: compra.cartaoId
+        });
+        this.loading = false;
+      },
+      error: (error) => {
+        console.error('Erro ao carregar compra parcelada:', error);
+        this.snackBar.open('Erro ao carregar compra parcelada', 'Fechar', {
+          duration: 3000,
+          horizontalPosition: 'end',
+          verticalPosition: 'top'
+        });
+        this.loading = false;
+        this.router.navigate(['/compras-parceladas']);
+      }
+    });
   }
 
   initForm(): void {
@@ -154,18 +197,43 @@ export class CompraParceladaFormComponent implements OnInit {
 
     const request: CompraParceladaRequest = this.form.value;
 
-    this.compraParceladaService.criar(request).subscribe({
-      next: (response) => {
-        console.log('Compra parcelada criada:', response);
-        alert(`Compra parcelada criada com sucesso! ${this.parcelasRestantes} parcelas de R$ ${this.valorParcela.toFixed(2)}`);
-        this.router.navigate(['/compras-parceladas']);
-      },
-      error: (error) => {
-        console.error('Erro ao criar compra parcelada:', error);
-        this.errorMessage = error.error?.message || 'Erro ao criar compra parcelada';
-        this.loading = false;
-      }
-    });
+    if (this.isEditMode && this.compraId) {
+      // Modo de edição
+      this.compraParceladaService.atualizar(this.compraId, request).subscribe({
+        next: (response) => {
+          console.log('Compra parcelada atualizada:', response);
+          this.snackBar.open('Compra parcelada atualizada com sucesso!', 'Fechar', {
+            duration: 3000,
+            horizontalPosition: 'end',
+            verticalPosition: 'top'
+          });
+          this.router.navigate(['/compras-parceladas']);
+        },
+        error: (error) => {
+          console.error('Erro ao atualizar compra parcelada:', error);
+          this.errorMessage = error.error?.message || 'Erro ao atualizar compra parcelada';
+          this.loading = false;
+        }
+      });
+    } else {
+      // Modo de criação
+      this.compraParceladaService.criar(request).subscribe({
+        next: (response) => {
+          console.log('Compra parcelada criada:', response);
+          this.snackBar.open(`Compra parcelada criada com sucesso! ${this.parcelasRestantes} parcelas de R$ ${this.valorParcela.toFixed(2)}`, 'Fechar', {
+            duration: 3000,
+            horizontalPosition: 'end',
+            verticalPosition: 'top'
+          });
+          this.router.navigate(['/compras-parceladas']);
+        },
+        error: (error) => {
+          console.error('Erro ao criar compra parcelada:', error);
+          this.errorMessage = error.error?.message || 'Erro ao criar compra parcelada';
+          this.loading = false;
+        }
+      });
+    }
   }
 
   cancel(): void {

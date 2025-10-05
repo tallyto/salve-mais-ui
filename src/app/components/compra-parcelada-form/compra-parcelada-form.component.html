@@ -3,7 +3,7 @@
     <mat-card-header class="bg-primary">
       <mat-card-title class="flex align-items-center text-white">
         <mat-icon class="mr-2">credit_card</mat-icon>
-        Nova Compra Parcelada
+        {{ isEditMode ? 'Editar Compra Parcelada' : 'Nova Compra Parcelada' }}
       </mat-card-title>
     </mat-card-header>
 
@@ -172,7 +172,7 @@
           >
             <mat-spinner *ngIf="loading" diameter="20" class="mr-2"></mat-spinner>
             <mat-icon *ngIf="!loading">save</mat-icon>
-            {{ loading ? 'Salvando...' : 'Cadastrar Compra Parcelada' }}
+            {{ loading ? 'Salvando...' : (isEditMode ? 'Atualizar Compra Parcelada' : 'Cadastrar Compra Parcelada') }}
           </button>
         </div>
       </form>

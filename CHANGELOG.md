@@ -2,12 +2,25 @@
 
 ## [Unreleased]
 
-### Alterado
+## [1.15.0] - 2025-10-05
 
-- Removida a funcionalidade de estorno de transações:
-  - Substituída por um componente de detalhamento de transações mais completo
-  - Removidos botões e opções de estorno da interface
-  - Simplificação da interface de gerenciamento de transações
+### Adicionado
+
+- Funcionalidade de edição de compras parceladas:
+  - Novo endpoint PUT no service para atualizar compras parceladas
+  - Suporte para modo de edição no formulário de compra parcelada
+  - Detecção automática de modo de criação ou edição via parâmetros de rota
+  - Botão de edição na listagem de compras parceladas
+  - Nova rota `/compras-parceladas/editar/:id` configurada
+  - Carregamento automático dos dados da compra ao abrir em modo de edição
+  - Título e botões dinâmicos conforme o modo (criar/editar)
+  - Mensagens de feedback diferenciadas para criação e edição
+
+### Melhorado
+
+- Interface do formulário de compra parcelada com suporte a edição
+- Validação mantida tanto para criação quanto para edição
+- Experiência do usuário com SnackBar ao invés de alerts
 
 ## [1.14.0] - 2025-09-12
 
