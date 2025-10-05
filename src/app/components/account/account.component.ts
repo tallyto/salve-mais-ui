@@ -33,7 +33,7 @@ export class AccountComponent {
       this.accountService.salvarAccount(this.accountForm.value).subscribe({
         next: value => {
           const message = 'Conta cadastrada com sucesso!';
-          
+
           if (this.isDialogMode) {
             this.dialogRef.close(value);
           } else {

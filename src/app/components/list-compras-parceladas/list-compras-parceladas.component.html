@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="header-content">
       <mat-icon class="page-icon">shopping_cart</mat-icon>
-      <div class="header-text">
+      <div class="flex-1">
         <h1 class="page-title">Compras Parceladas</h1>
         <p class="page-subtitle">Gerencie suas compras parceladas</p>
       </div>
@@ -39,8 +39,8 @@
     <!-- Card para cada compra -->
     <div *ngFor="let compra of compras" class="compra-card">
       <!-- Header da compra -->
-      <div class="compra-header">
-        <div class="compra-title">
+      <div class="compra-header flex justify-content-between align-items-center">
+        <div class="compra-title flex align-items-center gap-2">
           <mat-icon>receipt</mat-icon>
           {{ compra.descricao }}
         </div>
@@ -85,7 +85,7 @@
 
         <!-- Progresso de Pagamento -->
         <div class="progress-section">
-          <div class="progress-header">
+          <div class="progress-header flex justify-content-between align-items-center mb-2">
             <span><strong>Progresso de Pagamento</strong></span>
             <span>{{ calcularParcelasPagas(compra.parcelas || []) }}/{{ (compra.parcelas || []).length }} pagas</span>
           </div>
@@ -109,7 +109,7 @@
              class="parcelas-section">
           <h4 class="parcelas-title">Parcelas</h4>
 
-          <div *ngFor="let parcela of compra.parcelas" class="parcela-item">
+          <div *ngFor="let parcela of compra.parcelas" class="parcela-item flex align-items-center gap-3">
             <mat-checkbox
               [checked]="parcela.paga"
               (change)="togglePagamento(parcela, $event.checked)">
@@ -117,7 +117,7 @@
             <span class="parcela-numero">{{ parcela.numeroParcela }}/{{ parcela.totalParcelas }}</span>
             <span class="parcela-valor">R$ {{ parcela.valor | number: '1.2-2' }}</span>
             <span class="parcela-data">{{ parcela.dataVencimento | date: 'dd/MM/yyyy' }}</span>
-            <span class="parcela-status">
+            <span class="ml-auto">
               <mat-chip [color]="parcela.paga ? 'primary' : 'warn'">
                 {{ parcela.paga ? '✓ Paga' : '⏱ Pendente' }}
               </mat-chip>

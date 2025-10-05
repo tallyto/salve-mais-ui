@@ -53,19 +53,23 @@
   <div class="page-header">
     <div class="header-content">
       <mat-icon class="page-icon">credit_card</mat-icon>
-      <div class="header-text">
+      <div class="flex-1">
         <h1 class="page-title">Cartões de Crédito</h1>
         <p class="page-subtitle">Gerencie seus cartões de crédito</p>
       </div>
     </div>
+    <button mat-raised-button color="primary">
+      <mat-icon>add</mat-icon>
+      Novo Cartão
+    </button>
   </div>
 
   <!-- Formulário de Cadastro -->
-  <div class="form-card">
+  <div class="content-card">
     <div class="card-header">
       <div class="header-title">
         <mat-icon>add_card</mat-icon>
-        <h2 class="section-title">Novo Cartão</h2>
+        <h2 class="section-title">Cadastrar Cartão</h2>
       </div>
     </div>
 
@@ -105,11 +109,11 @@
   </div>
 
   <!-- Tabela de Cartões -->
-  <div class="cards-list-card">
+  <div class="content-card">
     <div class="card-header">
       <div class="header-title">
         <mat-icon>list</mat-icon>
-        <h2 class="section-title">Meus Cartões</h2>
+        <h2 class="section-title">Lista de Cartões</h2>
       </div>
     </div>
 
@@ -119,7 +123,7 @@
         <ng-container matColumnDef="nome">
           <th *matHeaderCellDef mat-header-cell>Nome</th>
           <td *matCellDef="let cartao" mat-cell>
-            <div *ngIf="!isEditing(cartao)" class="font-medium">
+            <div *ngIf="!isEditing(cartao)">
               {{ cartao.nome }}
             </div>
             <mat-form-field *ngIf="isEditing(cartao)" appearance="outline" class="edit-field w-full">
