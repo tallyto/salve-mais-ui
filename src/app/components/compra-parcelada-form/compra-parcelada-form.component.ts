@@ -119,7 +119,7 @@ export class CompraParceladaFormComponent implements OnInit {
     this.form = this.fb.group({
       descricao: ['', [Validators.required, Validators.minLength(3)]],
       valorTotal: [null, [Validators.required, Validators.min(0.01)]],
-      dataCompra: [new Date().toISOString().split('T')[0], Validators.required],
+      dataCompra: [new Date(), Validators.required],
       parcelaInicial: [1, [Validators.required, Validators.min(1)]],
       totalParcelas: [null, [Validators.required, Validators.min(1)]],
       categoriaId: [null, Validators.required],
@@ -162,8 +162,9 @@ export class CompraParceladaFormComponent implements OnInit {
     }
   }
 
-  calcularDatasVencimento(dataCompra: string, parcelaInicial: number, totalParcelas: number): void {
-    const dataBase = new Date(dataCompra + 'T00:00:00');
+  calcularDatasVencimento(dataCompra: Date | string, parcelaInicial: number, totalParcelas: number): void {
+    // Garantir que temos um objeto Date válido
+    const dataBase = dataCompra instanceof Date ? new Date(dataCompra) : new Date(dataCompra + 'T00:00:00');
     this.datasVencimento = [];
 
     for (let i = parcelaInicial; i <= totalParcelas; i++) {
@@ -219,7 +220,16 @@ export class CompraParceladaFormComponent implements OnInit {
     this.loading = true;
     this.errorMessage = '';
 
-    const request: CompraParceladaRequest = this.form.value;
+    // Converter Date para string no formato YYYY-MM-DD
+    const formValue = this.form.value;
+    const dataCompra = formValue.dataCompra instanceof Date 
+      ? formValue.dataCompra.toISOString().split('T')[0]
+      : formValue.dataCompra;
+
+    const request: CompraParceladaRequest = {
+      ...formValue,
+      dataCompra: dataCompra
+    };
 
     if (this.isEditMode && this.compraId) {
       // Modo de edição
