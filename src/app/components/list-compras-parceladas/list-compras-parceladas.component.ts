@@ -44,6 +44,7 @@ import { Cartao } from '../../models/cartao.model';
 })
 export class ListComprasParceladasComponent implements OnInit {
   compras: CompraParcelada[] = [];
+  todasCompras: CompraParcelada[] = []; // Cache de todas as compras
   categorias: Categoria[] = [];
   cartoes: Cartao[] = [];
   loading: boolean = false;
@@ -95,11 +96,15 @@ export class ListComprasParceladasComponent implements OnInit {
   loadCompras(): void {
     this.loading = true;
     
-    // Se houver filtros aplicados, filtrar no cliente
-    // (O ideal seria implementar filtros no backend, mas faremos no frontend por enquanto)
-    this.compraParceladaService.listar(this.page, this.size).subscribe({
+    // Busca todas as compras (com paginação grande o suficiente)
+    // TODO: Implementar filtros no backend para melhor performance
+    this.compraParceladaService.listar(0, 1000).subscribe({
       next: (response) => {
-        let comprasFiltradas = response.content;
+        // Armazena todas as compras
+        this.todasCompras = response.content;
+        
+        // Aplica filtros
+        let comprasFiltradas = this.todasCompras;
         
         // Aplicar filtro de cartão
         if (this.filtroCartaoId) {
@@ -111,9 +116,15 @@ export class ListComprasParceladasComponent implements OnInit {
           comprasFiltradas = comprasFiltradas.filter(c => c.categoriaId === this.filtroCategoriaId);
         }
         
-        this.compras = comprasFiltradas;
+        // Calcula paginação
         this.totalElements = comprasFiltradas.length;
         this.totalPages = Math.ceil(comprasFiltradas.length / this.size);
+        
+        // Aplica paginação manual
+        const inicio = this.page * this.size;
+        const fim = inicio + this.size;
+        this.compras = comprasFiltradas.slice(inicio, fim);
+        
         this.loading = false;
       },
       error: (error: any) => {
