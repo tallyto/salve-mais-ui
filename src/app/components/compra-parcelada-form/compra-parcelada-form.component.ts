@@ -51,6 +51,7 @@ export class CompraParceladaFormComponent implements OnInit {
   cartoes: Cartao[] = [];
   parcelasRestantes: number = 0;
   valorParcela: number = 0;
+  datasVencimento: Date[] = [];
   loading: boolean = false;
   errorMessage: string = '';
   isEditMode: boolean = false;
@@ -137,6 +138,7 @@ export class CompraParceladaFormComponent implements OnInit {
     const valorTotal = this.form.get('valorTotal')?.value;
     const parcelaInicial = this.form.get('parcelaInicial')?.value;
     const totalParcelas = this.form.get('totalParcelas')?.value;
+    const dataCompra = this.form.get('dataCompra')?.value;
 
     if (valorTotal && parcelaInicial && totalParcelas && parcelaInicial <= totalParcelas) {
       this.parcelasRestantes = this.compraParceladaService.calcularParcelasRestantes(
@@ -148,10 +150,32 @@ export class CompraParceladaFormComponent implements OnInit {
         parcelaInicial,
         totalParcelas
       );
+
+      // Calcular datas de vencimento das parcelas
+      if (dataCompra) {
+        this.calcularDatasVencimento(dataCompra, parcelaInicial, totalParcelas);
+      }
     } else {
       this.parcelasRestantes = 0;
       this.valorParcela = 0;
+      this.datasVencimento = [];
     }
+  }
+
+  calcularDatasVencimento(dataCompra: string, parcelaInicial: number, totalParcelas: number): void {
+    const dataBase = new Date(dataCompra + 'T00:00:00');
+    this.datasVencimento = [];
+
+    for (let i = parcelaInicial; i <= totalParcelas; i++) {
+      const dataVencimento = new Date(dataBase);
+      const mesesAFrente = i - parcelaInicial;
+      dataVencimento.setMonth(dataBase.getMonth() + mesesAFrente);
+      this.datasVencimento.push(dataVencimento);
+    }
+  }
+
+  formatarData(data: Date): string {
+    return data.toLocaleDateString('pt-BR');
   }
 
   loadCategorias(): void {

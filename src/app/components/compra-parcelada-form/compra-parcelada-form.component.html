@@ -98,9 +98,25 @@
             <p class="mb-1">
               <strong>Parcelas a serem geradas:</strong> {{ parcelasRestantes }}
             </p>
-            <p class="mb-0">
+            <p class="mb-2">
               <strong>Valor de cada parcela:</strong> R$ {{ valorParcela | number: '1.2-2' }}
             </p>
+
+            <!-- Datas de Vencimento -->
+            <div *ngIf="datasVencimento.length > 0" class="mt-3">
+              <div class="flex align-items-center mb-2">
+                <mat-icon color="primary" class="mr-2">event</mat-icon>
+                <strong>Datas de Vencimento:</strong>
+              </div>
+              <div class="parcelas-preview">
+                <div *ngFor="let data of datasVencimento; let i = index" class="parcela-item">
+                  <span class="parcela-numero">
+                    {{ form.get('parcelaInicial')?.value + i }}/{{ form.get('totalParcelas')?.value }}
+                  </span>
+                  <span class="parcela-data">{{ formatarData(data) }}</span>
+                </div>
+              </div>
+            </div>
           </mat-card-content>
         </mat-card>
 
