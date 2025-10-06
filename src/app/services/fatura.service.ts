@@ -40,8 +40,11 @@ export class FaturaService {
     );
   }
 
-  public gerarFaturaAutomatica(cartaoCreditoId: number): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/gerar/${cartaoCreditoId}`, {}).pipe(
+  public gerarFaturaAutomatica(cartaoCreditoId: number, dataVencimento?: string): Observable<void> {
+    const options = dataVencimento 
+      ? { params: { dataVencimento } } 
+      : {};
+    return this.http.post<void>(`${this.apiUrl}/gerar/${cartaoCreditoId}`, {}, options).pipe(
       tap(() => {
         // Notificar atualização das notificações após gerar fatura
         this.notificationEventService.notifyAfterFaturaOperation();

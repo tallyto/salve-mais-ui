@@ -189,9 +189,16 @@ export class FaturaFormComponent implements OnInit {
   onCartaoPreviewChange(cartaoId: number): void {
     const cartaoSelecionado = this.cartoes.find(c => c.id === cartaoId);
     if (cartaoSelecionado && cartaoSelecionado.vencimento) {
-      // Preenche automaticamente a data de vencimento do cartão
+      // Extrai apenas o dia do vencimento do cartão e cria data no mês atual
+      const diaVencimento = parseInt(this.formatarDiaVencimento(cartaoSelecionado.vencimento));
+      const hoje = new Date();
+      const dataVencimentoMesAtual = new Date(hoje.getFullYear(), hoje.getMonth(), diaVencimento);
+      
+      // Formata para YYYY-MM-DD para o input
+      const dataFormatada = dataVencimentoMesAtual.toISOString().split('T')[0];
+      
       this.previewForm.patchValue({
-        dataVencimento: cartaoSelecionado.vencimento
+        dataVencimento: dataFormatada
       });
     }
   }
@@ -226,14 +233,18 @@ export class FaturaFormComponent implements OnInit {
     if (!this.preview) return;
 
     this.loading = true;
-    this.faturaService.gerarFaturaAutomatica(this.preview.cartaoCreditoId).subscribe({
+    
+    // Usa a data de vencimento do preview para garantir que gera com o mês atual
+    const dataVencimento = this.preview.dataVencimento;
+    
+    this.faturaService.gerarFaturaAutomatica(this.preview.cartaoCreditoId, dataVencimento).subscribe({
       next: () => {
         this.snackBar.open('Fatura gerada com sucesso!', 'Fechar', { duration: 3000 });
         this.togglePreview();
         this.carregarFaturas();
         this.loading = false;
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error('Erro ao gerar fatura:', error);
         this.snackBar.open('Erro ao gerar fatura', 'Fechar', { duration: 3000 });
         this.loading = false;

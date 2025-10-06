@@ -222,7 +222,7 @@ export class CompraParceladaFormComponent implements OnInit {
 
     // Converter Date para string no formato YYYY-MM-DD
     const formValue = this.form.value;
-    const dataCompra = formValue.dataCompra instanceof Date 
+    const dataCompra = formValue.dataCompra instanceof Date
       ? formValue.dataCompra.toISOString().split('T')[0]
       : formValue.dataCompra;
 
