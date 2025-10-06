@@ -3,6 +3,52 @@
    (Estilos comuns agora em styles.css)
    =========================== */
 
+/* Filtros */
+.filter-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.filter-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.filter-header mat-icon {
+  font-size: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.filter-header h3 {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.filter-content {
+  padding: 1.5rem;
+}
+
+.filter-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .filter-actions {
+    margin-top: 1rem;
+  }
+}
+
 /* Compra Card */
 .compra-card {
   background: white;

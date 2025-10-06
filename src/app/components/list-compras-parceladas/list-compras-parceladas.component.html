@@ -14,6 +14,55 @@
     </button>
   </div>
 
+  <!-- Filtros -->
+  <div class="filter-card">
+    <div class="filter-header">
+      <mat-icon>filter_list</mat-icon>
+      <h3>Filtros</h3>
+    </div>
+    
+    <div class="filter-content">
+      <div class="grid">
+        <div class="col-12 md:col-5">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Cartão</mat-label>
+            <mat-select [(ngModel)]="filtroCartaoId">
+              <mat-option [value]="null">Todos</mat-option>
+              <mat-option *ngFor="let cartao of cartoes" [value]="cartao.id">
+                {{ cartao.nome }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix>credit_card</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="col-12 md:col-5">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Categoria</mat-label>
+            <mat-select [(ngModel)]="filtroCategoriaId">
+              <mat-option [value]="null">Todas</mat-option>
+              <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">
+                {{ categoria.nome }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matPrefix>category</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="col-12 md:col-2 filter-actions">
+          <button mat-raised-button color="primary" (click)="aplicarFiltros()" class="w-full mb-2">
+            <mat-icon>search</mat-icon>
+            Filtrar
+          </button>
+          <button mat-stroked-button (click)="limparFiltros()" class="w-full">
+            <mat-icon>clear</mat-icon>
+            Limpar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Loading -->
   <div *ngIf="loading" class="content-card">
     <div class="loading-state">

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,14 +11,22 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { CompraParceladaService } from '../../services/compra-parcelada.service';
+import { CategoriaService } from '../../services/categoria.service';
+import { CartaoService } from '../../services/cartao.service';
 import { CompraParcelada, Parcela } from '../../models/compra-parcelada.model';
+import { Categoria } from '../../models/categoria.model';
+import { Cartao } from '../../models/cartao.model';
 
 @Component({
   selector: 'app-list-compras-parceladas',
   standalone: true,
   imports: [
     CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
     MatCardModule,
     MatButtonModule,
     MatIconModule,
@@ -26,36 +35,85 @@ import { CompraParcelada, Parcela } from '../../models/compra-parcelada.model';
     MatPaginatorModule,
     MatTooltipModule,
     MatChipsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSelectModule,
+    MatFormFieldModule
   ],
   templateUrl: './list-compras-parceladas.component.html',
   styleUrls: ['./list-compras-parceladas.component.css']
 })
 export class ListComprasParceladasComponent implements OnInit {
   compras: CompraParcelada[] = [];
+  categorias: Categoria[] = [];
+  cartoes: Cartao[] = [];
   loading: boolean = false;
   page: number = 0;
   size: number = 10;
   totalElements: number = 0;
   totalPages: number = 0;
   expandedCompraId: number | null = null;
+  
+  // Filtros
+  filtroCartaoId: number | null = null;
+  filtroCategoriaId: number | null = null;
 
   constructor(
     private compraParceladaService: CompraParceladaService,
+    private categoriaService: CategoriaService,
+    private cartaoService: CartaoService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.loadCompras();
+    this.loadCategorias();
+    this.loadCartoes();
+  }
+
+  loadCategorias(): void {
+    this.categoriaService.listarCategorias().subscribe({
+      next: (categorias: Categoria[]) => {
+        this.categorias = categorias;
+      },
+      error: (error: any) => {
+        console.error('Erro ao carregar categorias:', error);
+      }
+    });
+  }
+
+  loadCartoes(): void {
+    this.cartaoService.listarCartoes().subscribe({
+      next: (cartoes: Cartao[]) => {
+        this.cartoes = cartoes;
+      },
+      error: (error: any) => {
+        console.error('Erro ao carregar cartões:', error);
+      }
+    });
   }
 
   loadCompras(): void {
     this.loading = true;
+    
+    // Se houver filtros aplicados, filtrar no cliente
+    // (O ideal seria implementar filtros no backend, mas faremos no frontend por enquanto)
     this.compraParceladaService.listar(this.page, this.size).subscribe({
       next: (response) => {
-        this.compras = response.content;
-        this.totalElements = response.totalElements;
-        this.totalPages = response.totalPages;
+        let comprasFiltradas = response.content;
+        
+        // Aplicar filtro de cartão
+        if (this.filtroCartaoId) {
+          comprasFiltradas = comprasFiltradas.filter(c => c.cartaoId === this.filtroCartaoId);
+        }
+        
+        // Aplicar filtro de categoria
+        if (this.filtroCategoriaId) {
+          comprasFiltradas = comprasFiltradas.filter(c => c.categoriaId === this.filtroCategoriaId);
+        }
+        
+        this.compras = comprasFiltradas;
+        this.totalElements = comprasFiltradas.length;
+        this.totalPages = Math.ceil(comprasFiltradas.length / this.size);
         this.loading = false;
       },
       error: (error: any) => {
@@ -63,6 +121,18 @@ export class ListComprasParceladasComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+
+  aplicarFiltros(): void {
+    this.page = 0; // Reset para primeira página
+    this.loadCompras();
+  }
+
+  limparFiltros(): void {
+    this.filtroCartaoId = null;
+    this.filtroCategoriaId = null;
+    this.page = 0;
+    this.loadCompras();
   }
 
   toggleExpandCompra(compraId: number): void {
