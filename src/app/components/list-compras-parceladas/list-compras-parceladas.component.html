@@ -112,7 +112,7 @@
           </div>
           <div class="col-12 md:col-6 info-row">
             <span class="info-label">Data:</span>
-            <span class="info-value">{{ compra.dataCompra | date: 'dd/MM/yyyy' }}</span>
+            <span class="info-value">{{ formatarData(compra.dataCompra) }}</span>
           </div>
           <div class="col-12 md:col-6 info-row">
             <span class="info-label">Categoria:</span>
@@ -165,7 +165,7 @@
             </mat-checkbox>
             <span class="parcela-numero">{{ parcela.numeroParcela }}/{{ parcela.totalParcelas }}</span>
             <span class="parcela-valor">R$ {{ parcela.valor | number: '1.2-2' }}</span>
-            <span class="parcela-data">{{ parcela.dataVencimento | date: 'dd/MM/yyyy' }}</span>
+            <span class="parcela-data">{{ formatarData(parcela.dataVencimento) }}</span>
             <span class="ml-auto">
               <mat-chip [color]="parcela.paga ? 'primary' : 'warn'">
                 {{ parcela.paga ? '✓ Paga' : '⏱ Pendente' }}

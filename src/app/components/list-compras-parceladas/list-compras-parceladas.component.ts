@@ -266,4 +266,23 @@ export class ListComprasParceladasComponent implements OnInit {
       this.loadCompras();
     }
   }
+
+  /**
+   * Formata data string (YYYY-MM-DD) para formato brasileiro (dd/MM/yyyy)
+   * Evita problemas de timezone ao converter strings ISO para Date
+   */
+  formatarData(dataStr: string): string {
+    if (!dataStr) return '';
+    
+    // Se já vier no formato dd/MM/yyyy, retorna direto
+    if (dataStr.includes('/')) return dataStr;
+    
+    // Converte YYYY-MM-DD para dd/MM/yyyy
+    const partes = dataStr.split('-');
+    if (partes.length === 3) {
+      return `${partes[2]}/${partes[1]}/${partes[0]}`;
+    }
+    
+    return dataStr;
+  }
 }
