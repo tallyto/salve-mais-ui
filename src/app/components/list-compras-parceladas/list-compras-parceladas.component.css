@@ -6,8 +6,8 @@
 /* Filtros */
 .filter-card {
   background: white;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 1.5rem;
   overflow: hidden;
 }
@@ -16,7 +16,7 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 1rem 1.5rem;
+  padding: 1.25rem 1.5rem;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
 }
@@ -37,6 +37,18 @@
   padding: 1.5rem;
 }
 
+.search-section {
+  margin-bottom: 1rem;
+}
+
+.search-field {
+  font-size: 1rem;
+}
+
+.search-field mat-icon {
+  color: #667eea;
+}
+
 .filter-actions {
   display: flex;
   flex-direction: column;
@@ -49,27 +61,145 @@
   }
 }
 
-/* Compra Card */
-.compra-card {
-  background: white;
+/* Contador de Resultados */
+.results-info {
+  background: #f5f5f5;
+  padding: 0.75rem 1.25rem;
   border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   margin-bottom: 1rem;
 }
 
-.compra-header {
-  padding: 1rem 1.5rem;
-  border-bottom: 1px solid #e0e0e0;
+.results-info p {
+  margin: 0;
+  color: #666;
+  font-size: 0.95rem;
 }
 
-.compra-title {
-  font-size: 1.125rem;
+.filter-badge {
+  color: #667eea;
+  font-weight: 600;
+}
+
+/* Compra Card */
+.compra-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 1.25rem;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.compra-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.compra-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 2px solid #f0f0f0;
+  background: linear-gradient(to right, #fafafa 0%, #ffffff 100%);
+}
+
+.compra-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.compra-title-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.title-icon {
+  color: #667eea;
+  font-size: 2rem;
+  width: 2rem;
+  height: 2rem;
+}
+
+.title-text {
+  flex: 1;
+}
+
+.compra-titulo {
+  margin: 0;
+  font-size: 1.25rem;
   font-weight: 600;
   color: #333;
 }
 
+.compra-data-badge {
+  margin: 0.25rem 0 0 0;
+  font-size: 0.85rem;
+  color: #666;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
 .compra-content {
   padding: 1.5rem;
+}
+
+/* Info Cards Grid */
+.info-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.info-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border-left: 3px solid #667eea;
+  transition: all 0.2s ease;
+}
+
+.info-card:hover {
+  background: #f0f0f0;
+  transform: translateX(2px);
+}
+
+.info-icon {
+  color: #667eea;
+  font-size: 1.75rem;
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.info-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.info-label {
+  font-size: 0.75rem;
+  color: #888;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.info-value {
+  font-size: 1rem;
+  color: #333;
+  font-weight: 500;
+}
+
+.info-value.highlight {
+  color: #667eea;
+  font-weight: 700;
+  font-size: 1.1rem;
 }
 
 /* Progresso */

@@ -18,12 +18,34 @@
   <div class="filter-card">
     <div class="filter-header">
       <mat-icon>filter_list</mat-icon>
-      <h3>Filtros</h3>
+      <h3>Filtros e Busca</h3>
     </div>
     
     <div class="filter-content">
+      <!-- Busca Textual -->
+      <div class="search-section mb-3">
+        <mat-form-field appearance="outline" class="w-full search-field">
+          <mat-label>Buscar por descrição, categoria ou cartão</mat-label>
+          <input 
+            matInput 
+            [(ngModel)]="buscaTexto"
+            (keyup.enter)="aplicarFiltros()"
+            placeholder="Digite para buscar...">
+          <mat-icon matPrefix>search</mat-icon>
+          <button 
+            mat-icon-button 
+            matSuffix 
+            *ngIf="buscaTexto" 
+            (click)="buscaTexto = ''; aplicarFiltros()"
+            matTooltip="Limpar busca">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <!-- Filtros de Seleção -->
       <div class="grid">
-        <div class="col-12 md:col-5">
+        <div class="col-12 md:col-4">
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>Cartão</mat-label>
             <mat-select [(ngModel)]="filtroCartaoId">
@@ -36,7 +58,7 @@
           </mat-form-field>
         </div>
 
-        <div class="col-12 md:col-5">
+        <div class="col-12 md:col-4">
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>Categoria</mat-label>
             <mat-select [(ngModel)]="filtroCategoriaId">
@@ -49,21 +71,19 @@
           </mat-form-field>
         </div>
 
-        <div class="col-12 md:col-2 filter-actions">
+        <div class="col-12 md:col-4 filter-actions">
           <button mat-raised-button color="primary" (click)="aplicarFiltros()" class="w-full mb-2">
             <mat-icon>search</mat-icon>
-            Filtrar
+            Aplicar Filtros
           </button>
           <button mat-stroked-button (click)="limparFiltros()" class="w-full">
             <mat-icon>clear</mat-icon>
-            Limpar
+            Limpar Tudo
           </button>
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- Loading -->
+  </div>  <!-- Loading -->
   <div *ngIf="loading" class="content-card">
     <div class="loading-state">
       <mat-spinner></mat-spinner>
@@ -85,50 +105,73 @@
 
   <!-- Lista de compras -->
   <div *ngIf="!loading && compras.length > 0">
+    <!-- Contador de resultados -->
+    <div class="results-info">
+      <p>
+        <strong>{{ totalElements }}</strong> compra<span *ngIf="totalElements !== 1">s</span> encontrada<span *ngIf="totalElements !== 1">s</span>
+        <span *ngIf="buscaTexto || filtroCartaoId || filtroCategoriaId" class="filter-badge">
+          (filtrado)
+        </span>
+      </p>
+    </div>
+
     <!-- Card para cada compra -->
     <div *ngFor="let compra of compras" class="compra-card">
       <!-- Header da compra -->
-      <div class="compra-header flex justify-content-between align-items-center">
-        <div class="compra-title flex align-items-center gap-2">
-          <mat-icon>receipt</mat-icon>
-          {{ compra.descricao }}
-        </div>
-        <div class="action-buttons">
-          <button mat-icon-button color="primary" (click)="editar(compra.id)" matTooltip="Editar">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" (click)="excluir(compra.id)" matTooltip="Excluir">
-            <mat-icon>delete</mat-icon>
-          </button>
+      <div class="compra-header">
+        <div class="compra-header-content">
+          <div class="compra-title-section">
+            <mat-icon class="title-icon">receipt</mat-icon>
+            <div class="title-text">
+              <h3 class="compra-titulo">{{ compra.descricao }}</h3>
+              <p class="compra-data-badge">{{ formatarData(compra.dataCompra) }}</p>
+            </div>
+          </div>
+          <div class="action-buttons">
+            <button mat-icon-button color="primary" (click)="editar(compra.id)" matTooltip="Editar">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="excluir(compra.id)" matTooltip="Excluir">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
         </div>
       </div>
 
       <!-- Conteúdo da compra -->
       <div class="compra-content">
-        <div class="grid">
-          <div class="col-12 md:col-6 info-row">
-            <span class="info-label">Valor Total:</span>
-            <span class="info-value">R$ {{ compra.valorTotal | number: '1.2-2' }}</span>
+        <!-- Info Cards Grid -->
+        <div class="info-cards-grid">
+          <div class="info-card">
+            <mat-icon class="info-icon">payments</mat-icon>
+            <div class="info-details">
+              <span class="info-label">Valor Total</span>
+              <span class="info-value highlight">R$ {{ compra.valorTotal | number: '1.2-2' }}</span>
+            </div>
           </div>
-          <div class="col-12 md:col-6 info-row">
-            <span class="info-label">Data:</span>
-            <span class="info-value">{{ formatarData(compra.dataCompra) }}</span>
+          
+          <div class="info-card">
+            <mat-icon class="info-icon">category</mat-icon>
+            <div class="info-details">
+              <span class="info-label">Categoria</span>
+              <span class="info-value">{{ compra.categoriaNome }}</span>
+            </div>
           </div>
-          <div class="col-12 md:col-6 info-row">
-            <span class="info-label">Categoria:</span>
-            <span class="info-value">{{ compra.categoriaNome }}</span>
+          
+          <div class="info-card">
+            <mat-icon class="info-icon">credit_card</mat-icon>
+            <div class="info-details">
+              <span class="info-label">Cartão</span>
+              <span class="info-value">{{ compra.cartaoNome }}</span>
+            </div>
           </div>
-          <div class="col-12 md:col-6 info-row">
-            <span class="info-label">Cartão:</span>
-            <span class="info-value">{{ compra.cartaoNome }}</span>
-          </div>
-          <div class="col-12 md:col-6 info-row">
-            <span class="info-label">Parcelas:</span>
-            <span class="info-value">{{ compra.parcelaInicial }}/{{ compra.totalParcelas }}</span>
-          </div>
-          <div class="col-12 md:col-6 info-row">
-            <span class="info-label">Valor/Parcela:</span>
-            <span class="info-value">R$ {{ compra.valorParcela | number: '1.2-2' }}</span>
+          
+          <div class="info-card">
+            <mat-icon class="info-icon">format_list_numbered</mat-icon>
+            <div class="info-details">
+              <span class="info-label">Parcelas</span>
+              <span class="info-value">{{ compra.parcelaInicial }}/{{ compra.totalParcelas }} × R$ {{ compra.valorParcela | number: '1.2-2' }}</span>
+            </div>
           </div>
         </div>
 

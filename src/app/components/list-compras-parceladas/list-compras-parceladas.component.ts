@@ -13,6 +13,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { CompraParceladaService } from '../../services/compra-parcelada.service';
 import { CategoriaService } from '../../services/categoria.service';
 import { CartaoService } from '../../services/cartao.service';
@@ -37,7 +38,8 @@ import { Cartao } from '../../models/cartao.model';
     MatChipsModule,
     MatProgressSpinnerModule,
     MatSelectModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatInputModule
   ],
   templateUrl: './list-compras-parceladas.component.html',
   styleUrls: ['./list-compras-parceladas.component.css']
@@ -53,10 +55,11 @@ export class ListComprasParceladasComponent implements OnInit {
   totalElements: number = 0;
   totalPages: number = 0;
   expandedCompraId: number | null = null;
-  
+
   // Filtros
   filtroCartaoId: number | null = null;
   filtroCategoriaId: number | null = null;
+  buscaTexto: string = '';
 
   constructor(
     private compraParceladaService: CompraParceladaService,
@@ -95,36 +98,46 @@ export class ListComprasParceladasComponent implements OnInit {
 
   loadCompras(): void {
     this.loading = true;
-    
+
     // Busca todas as compras (com paginação grande o suficiente)
     // TODO: Implementar filtros no backend para melhor performance
     this.compraParceladaService.listar(0, 1000).subscribe({
       next: (response) => {
         // Armazena todas as compras
         this.todasCompras = response.content;
-        
+
         // Aplica filtros
         let comprasFiltradas = this.todasCompras;
-        
+
+        // Aplicar busca textual
+        if (this.buscaTexto && this.buscaTexto.trim() !== '') {
+          const termo = this.buscaTexto.toLowerCase().trim();
+          comprasFiltradas = comprasFiltradas.filter(c => 
+            c.descricao.toLowerCase().includes(termo) ||
+            c.categoriaNome?.toLowerCase().includes(termo) ||
+            c.cartaoNome?.toLowerCase().includes(termo)
+          );
+        }
+
         // Aplicar filtro de cartão
         if (this.filtroCartaoId) {
           comprasFiltradas = comprasFiltradas.filter(c => c.cartaoId === this.filtroCartaoId);
         }
-        
+
         // Aplicar filtro de categoria
         if (this.filtroCategoriaId) {
           comprasFiltradas = comprasFiltradas.filter(c => c.categoriaId === this.filtroCategoriaId);
         }
-        
+
         // Calcula paginação
         this.totalElements = comprasFiltradas.length;
         this.totalPages = Math.ceil(comprasFiltradas.length / this.size);
-        
+
         // Aplica paginação manual
         const inicio = this.page * this.size;
         const fim = inicio + this.size;
         this.compras = comprasFiltradas.slice(inicio, fim);
-        
+
         this.loading = false;
       },
       error: (error: any) => {
@@ -142,6 +155,7 @@ export class ListComprasParceladasComponent implements OnInit {
   limparFiltros(): void {
     this.filtroCartaoId = null;
     this.filtroCategoriaId = null;
+    this.buscaTexto = '';
     this.page = 0;
     this.loadCompras();
   }
@@ -284,16 +298,16 @@ export class ListComprasParceladasComponent implements OnInit {
    */
   formatarData(dataStr: string): string {
     if (!dataStr) return '';
-    
+
     // Se já vier no formato dd/MM/yyyy, retorna direto
     if (dataStr.includes('/')) return dataStr;
-    
+
     // Converte YYYY-MM-DD para dd/MM/yyyy
     const partes = dataStr.split('-');
     if (partes.length === 3) {
       return `${partes[2]}/${partes[1]}/${partes[0]}`;
     }
-    
+
     return dataStr;
   }
 }
