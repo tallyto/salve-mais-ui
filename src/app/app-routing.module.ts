@@ -27,6 +27,7 @@ import { ListTransacoesComponent } from './components/list-transacoes/list-trans
 import { TransacaoDetalheComponent } from './components/transacao-detalhe/transacao-detalhe.component';
 import { CompraParceladaFormComponent } from './components/compra-parcelada-form/compra-parcelada-form.component';
 import { ListComprasParceladasComponent } from './components/list-compras-parceladas/list-compras-parceladas.component';
+import { PagamentosStatusComponent } from './components/pagamentos-status/pagamentos-status.component';
 
 
 const routes: Routes = [
@@ -41,6 +42,7 @@ const routes: Routes = [
   {path: 'faturas', component: FaturaFormComponent, canActivate: [AuthGuard]},
   {path: 'cartao-limites', component: CartaoLimitesComponent, canActivate: [AuthGuard]},
   {path: 'notificacoes', component: NotificacoesComponent, canActivate: [AuthGuard]},
+  {path: 'pagamentos-status', component: PagamentosStatusComponent, canActivate: [AuthGuard]},
   {path: 'account', component: AccountComponent, canActivate: [AuthGuard]},
   {path: 'minha-conta', component: MinhaContaComponent, canActivate: [AuthGuard]},
   {path: 'budget-rule', component: BudgetRuleComponent, canActivate: [AuthGuard]},

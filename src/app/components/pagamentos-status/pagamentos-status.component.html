@@ -1,0 +1,326 @@
+<div class="pagamentos-container">
+  <div class="header">
+    <div class="header-content">
+      <mat-icon class="header-icon">payment</mat-icon>
+      <div class="header-text">
+        <h2 class="page-title">Status de Pagamentos</h2>
+        <p class="subtitle">Visão consolidada de pagamentos realizados e pendentes</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Indicator -->
+  <div *ngIf="isLoading" class="loading-overlay">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="grid mb-4" *ngIf="!isLoading">
+    <div class="col-12 md:col-6 mb-3">
+      <div class="summary-card paid-card">
+        <div class="card-icon paid-icon">
+          <mat-icon>check_circle</mat-icon>
+        </div>
+        <div class="summary-label">Total Pago</div>
+        <div class="summary-value paid">{{ statusPagamentos.totalPago | currency:'BRL':'symbol':'1.2-2' }}</div>
+        <div class="summary-details">
+          <small>{{ statusPagamentos.faturasPagas.length + statusPagamentos.contasFixasPagas.length }} pagamentos realizados</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 md:col-6 mb-3">
+      <div class="summary-card pending-card">
+        <div class="card-icon pending-icon">
+          <mat-icon>pending</mat-icon>
+        </div>
+        <div class="summary-label">Total Pendente</div>
+        <div class="summary-value pending">{{ statusPagamentos.totalPendente | currency:'BRL':'symbol':'1.2-2' }}</div>
+        <div class="summary-details">
+          <small>{{ statusPagamentos.faturasPendentes.length + statusPagamentos.contasFixasPendentes.length }} pagamentos aguardando</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Faturas Section -->
+  <div class="section" *ngIf="!isLoading">
+    <mat-card class="data-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>credit_card</mat-icon>
+          Faturas de Cartão
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <!-- Faturas Pendentes -->
+        <div class="subsection" *ngIf="statusPagamentos.faturasPendentes.length > 0">
+          <h3 class="subsection-title pending-title">
+            <mat-icon>warning</mat-icon>
+            Faturas Pendentes ({{ statusPagamentos.faturasPendentes.length }})
+          </h3>
+          <div class="table-container">
+            <table mat-table [dataSource]="statusPagamentos.faturasPendentes" class="faturas-table">
+              <ng-container matColumnDef="nomeCartao">
+                <th mat-header-cell *matHeaderCellDef>Cartão</th>
+                <td mat-cell *matCellDef="let fatura">{{ fatura.nomeCartao }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="valor">
+                <th mat-header-cell *matHeaderCellDef>Valor</th>
+                <td mat-cell *matCellDef="let fatura">
+                  <span class="valor-destaque">{{ fatura.valorTotal | currency:'BRL':'symbol':'1.2-2' }}</span>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="vencimento">
+                <th mat-header-cell *matHeaderCellDef>Vencimento</th>
+                <td mat-cell *matCellDef="let fatura">{{ fatura.dataVencimento | date:'dd/MM/yyyy' }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="dataPagamento">
+                <th mat-header-cell *matHeaderCellDef>Pagamento</th>
+                <td mat-cell *matCellDef="let fatura">
+                  <span class="text-muted">-</span>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let fatura">
+                  <span class="status-badge status-pendente">
+                    <mat-icon>pending</mat-icon>
+                    Pendente
+                  </span>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="faturasColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: faturasColumns;"></tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- Faturas Pagas -->
+        <div class="subsection" *ngIf="statusPagamentos.faturasPagas.length > 0">
+          <h3 class="subsection-title paid-title">
+            <mat-icon>check_circle</mat-icon>
+            Faturas Pagas ({{ statusPagamentos.faturasPagas.length }})
+          </h3>
+          <div class="table-container">
+            <table mat-table [dataSource]="statusPagamentos.faturasPagas" class="faturas-table">
+              <ng-container matColumnDef="nomeCartao">
+                <th mat-header-cell *matHeaderCellDef>Cartão</th>
+                <td mat-cell *matCellDef="let fatura">{{ fatura.nomeCartao }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="valor">
+                <th mat-header-cell *matHeaderCellDef>Valor</th>
+                <td mat-cell *matCellDef="let fatura">
+                  <span class="valor-pago">{{ fatura.valorTotal | currency:'BRL':'symbol':'1.2-2' }}</span>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="vencimento">
+                <th mat-header-cell *matHeaderCellDef>Vencimento</th>
+                <td mat-cell *matCellDef="let fatura">{{ fatura.dataVencimento | date:'dd/MM/yyyy' }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="dataPagamento">
+                <th mat-header-cell *matHeaderCellDef>Pagamento</th>
+                <td mat-cell *matCellDef="let fatura">
+                  {{ fatura.dataPagamento | date:'dd/MM/yyyy' }}
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let fatura">
+                  <span class="status-badge status-pago">
+                    <mat-icon>check_circle</mat-icon>
+                    Pago
+                  </span>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="faturasColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: faturasColumns;"></tr>
+            </table>
+          </div>
+        </div>
+
+        <div *ngIf="statusPagamentos.faturasPagas.length === 0 && statusPagamentos.faturasPendentes.length === 0" class="empty-state">
+          <mat-icon>credit_card_off</mat-icon>
+          <p>Nenhuma fatura encontrada</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Contas Fixas Section -->
+  <div class="section" *ngIf="!isLoading">
+    <mat-card class="data-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>receipt_long</mat-icon>
+          Contas Fixas
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <!-- Contas Pendentes -->
+        <div class="subsection" *ngIf="statusPagamentos.contasFixasPendentes.length > 0">
+          <h3 class="subsection-title pending-title">
+            <mat-icon>warning</mat-icon>
+            Contas Pendentes ({{ statusPagamentos.contasFixasPendentes.length }})
+          </h3>
+          <div class="table-container">
+            <table mat-table [dataSource]="statusPagamentos.contasFixasPendentes" class="contas-table">
+              <ng-container matColumnDef="nome">
+                <th mat-header-cell *matHeaderCellDef>Nome</th>
+                <td mat-cell *matCellDef="let conta">{{ conta.nome }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="categoria">
+                <th mat-header-cell *matHeaderCellDef>Categoria</th>
+                <td mat-cell *matCellDef="let conta">
+                  <span class="categoria-badge">{{ conta.categoria.nome }}</span>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="valor">
+                <th mat-header-cell *matHeaderCellDef>Valor</th>
+                <td mat-cell *matCellDef="let conta">
+                  <span class="valor-destaque">{{ conta.valor | currency:'BRL':'symbol':'1.2-2' }}</span>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="vencimento">
+                <th mat-header-cell *matHeaderCellDef>Vencimento</th>
+                <td mat-cell *matCellDef="let conta">{{ conta.vencimento }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let conta">
+                  <span class="status-badge status-pendente">
+                    <mat-icon>pending</mat-icon>
+                    Pendente
+                  </span>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="contasFixasColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: contasFixasColumns;"></tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- Contas Pagas -->
+        <div class="subsection" *ngIf="statusPagamentos.contasFixasPagas.length > 0">
+          <h3 class="subsection-title paid-title">
+            <mat-icon>check_circle</mat-icon>
+            Contas Pagas ({{ statusPagamentos.contasFixasPagas.length }})
+          </h3>
+          <div class="table-container">
+            <table mat-table [dataSource]="statusPagamentos.contasFixasPagas" class="contas-table">
+              <ng-container matColumnDef="nome">
+                <th mat-header-cell *matHeaderCellDef>Nome</th>
+                <td mat-cell *matCellDef="let conta">{{ conta.nome }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="categoria">
+                <th mat-header-cell *matHeaderCellDef>Categoria</th>
+                <td mat-cell *matCellDef="let conta">
+                  <span class="categoria-badge">{{ conta.categoria.nome }}</span>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="valor">
+                <th mat-header-cell *matHeaderCellDef>Valor</th>
+                <td mat-cell *matCellDef="let conta">
+                  <span class="valor-pago">{{ conta.valor | currency:'BRL':'symbol':'1.2-2' }}</span>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="vencimento">
+                <th mat-header-cell *matHeaderCellDef>Vencimento</th>
+                <td mat-cell *matCellDef="let conta">{{ conta.vencimento }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let conta">
+                  <span class="status-badge status-pago">
+                    <mat-icon>check_circle</mat-icon>
+                    Pago
+                  </span>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="contasFixasColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: contasFixasColumns;"></tr>
+            </table>
+          </div>
+        </div>
+
+        <div *ngIf="statusPagamentos.contasFixasPagas.length === 0 && statusPagamentos.contasFixasPendentes.length === 0" class="empty-state">
+          <mat-icon>receipt_long</mat-icon>
+          <p>Nenhuma conta fixa encontrada</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Compras Parceladas Section -->
+  <div class="section" *ngIf="!isLoading && statusPagamentos.comprasParceladas.length > 0">
+    <mat-card class="data-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>shopping_cart</mat-icon>
+          Compras Parceladas
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="parcelas-grid">
+          <div *ngFor="let compra of statusPagamentos.comprasParceladas" class="parcela-card">
+            <div class="parcela-header">
+              <h4>{{ compra.descricao }}</h4>
+              <span class="parcela-total">{{ compra.valorTotal | currency:'BRL':'symbol':'1.2-2' }}</span>
+            </div>
+            <div class="parcela-info">
+              <div class="info-item">
+                <mat-icon class="small-icon">credit_card</mat-icon>
+                <span>{{ compra.cartaoNome }}</span>
+              </div>
+              <div class="info-item">
+                <mat-icon class="small-icon">category</mat-icon>
+                <span>{{ compra.categoriaNome }}</span>
+              </div>
+            </div>
+            <div class="parcela-status">
+              <div class="status-item paid">
+                <mat-icon>check_circle</mat-icon>
+                <span>{{ getParcelasPagasMes(compra) }} pagas no mês</span>
+                <span class="valor">{{ getValorParcelasPagasMes(compra) | currency:'BRL':'symbol':'1.2-2' }}</span>
+              </div>
+              <div class="status-item pending">
+                <mat-icon>pending</mat-icon>
+                <span>{{ getParcelasPendentesMes(compra) }} pendentes no mês</span>
+                <span class="valor">{{ getValorParcelasPendentesMes(compra) | currency:'BRL':'symbol':'1.2-2' }}</span>
+              </div>
+            </div>
+            <div class="parcela-progress">
+              <div class="progress-text">
+                <span>{{ compra.totalParcelas - (compra.parcelasRestantes || 0) }} de {{ compra.totalParcelas }} parcelas</span>
+              </div>
+              <mat-progress-bar 
+                mode="determinate" 
+                [value]="((compra.totalParcelas - (compra.parcelasRestantes || 0)) / compra.totalParcelas) * 100">
+              </mat-progress-bar>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -2,6 +2,37 @@
 
 ## [Unreleased]
 
+## [1.16.0] - 2025-11-02
+
+### Adicionado
+
+- **Nova funcionalidade: Status de Pagamentos**
+  - Componente `PagamentosStatusComponent` para visão consolidada de pagamentos
+  - Cards de resumo com total pago e total pendente do mês atual
+  - Seção de Faturas de Cartão:
+    - Tabela de faturas pendentes com destaque visual
+    - Tabela de faturas pagas com informações completas
+    - Filtro automático por mês/ano atual
+  - Seção de Contas Fixas:
+    - Tabela de contas pendentes
+    - Tabela de contas pagas
+    - Badges de categoria para melhor organização
+  - Seção de Compras Parceladas:
+    - Cards individuais para cada compra
+    - Visualização de parcelas pagas e pendentes do mês
+    - Barra de progresso do total de parcelas
+    - Informações detalhadas: cartão, categoria, valores
+  - Rota `/pagamentos-status` adicionada ao sistema
+  - Link de acesso no menu lateral sob "Despesas e Pagamentos"
+  - Design moderno com efeitos hover e elevação
+  - Layout responsivo otimizado para desktop e mobile
+  - Empty states para quando não há dados
+  - Integração com serviços existentes: FaturaService, ContasFixasService, CompraParceladaService
+
+### Melhorado
+
+- Ícone de "Compras Parceladas" alterado de `payment` para `shopping_cart` no menu lateral para melhor identificação
+
 ## [1.15.0] - 2025-10-05
 
 ### Adicionado

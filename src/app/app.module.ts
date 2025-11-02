@@ -72,6 +72,7 @@ import { NotificacoesComponent } from './components/notificacoes/notificacoes.co
 import { ListTransacoesComponent } from './components/list-transacoes/list-transacoes.component';
 import { CompraParceladaFormComponent } from './components/compra-parcelada-form/compra-parcelada-form.component';
 import { ListComprasParceladasComponent } from './components/list-compras-parceladas/list-compras-parceladas.component';
+import { PagamentosStatusComponent } from './components/pagamentos-status/pagamentos-status.component';
 
 @NgModule({
   declarations: [
@@ -102,7 +103,8 @@ import { ListComprasParceladasComponent } from './components/list-compras-parcel
     ReservaEmergenciaComponent,
     ReservaEmergenciaFormComponent,
     TransferenciaModalComponent,
-    TransacaoDetalheComponent
+    TransacaoDetalheComponent,
+    PagamentosStatusComponent
   ],
   imports: [
     BrowserModule,
