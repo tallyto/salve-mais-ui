@@ -23,8 +23,22 @@ export class FaturaService {
     return this.http.get<Fatura[]>(this.apiUrl)
   }
 
-  public listarFaturasNovas(): Observable<FaturaResponseDTO[]> {
-    return this.http.get<FaturaResponseDTO[]>(this.apiUrl);
+  public listarFaturasNovas(page: number = 0, size: number = 10, sort: string = 'id,desc', mes?: number, ano?: number): Observable<any> {
+    let params: any = {
+      page,
+      size,
+      sort
+    };
+
+    if (mes !== undefined) {
+      params.mes = mes;
+    }
+
+    if (ano !== undefined) {
+      params.ano = ano;
+    }
+
+    return this.http.get<any>(this.apiUrl, { params });
   }
 
   public buscarFatura(id: number): Observable<FaturaResponseDTO> {

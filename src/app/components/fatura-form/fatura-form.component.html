@@ -218,19 +218,78 @@
       </div>
     </div>
 
-    <div *ngIf="loading" class="loading-container">
+    <!-- Filtros de Mês e Ano -->
+    <div class="filters-container">
+      <div class="filters-header">
+        <h3 class="filters-title">{{ getSelectedPeriodText() }}</h3>
+        
+        <div class="period-navigation">
+          <div class="nav-buttons">
+            <button mat-icon-button matTooltip="Mês anterior" (click)="previousMonth()">
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Próximo mês" (click)="nextMonth()">
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="filters-row">
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Mês</mat-label>
+          <mat-select [(value)]="selectedMonth" (selectionChange)="onFilterChange()">
+            <mat-option *ngFor="let month of months" [value]="month.value">
+              {{ month.label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Ano</mat-label>
+          <mat-select [(value)]="selectedYear" (selectionChange)="onFilterChange()">
+            <mat-option *ngFor="let year of years" [value]="year">
+              {{ year }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="quick-filters">
+          <button 
+            mat-button 
+            (click)="resetFilters()" 
+            [class.active]="isCurrentMonth()">
+            Hoje
+          </button>
+          <button 
+            mat-button 
+            (click)="setLastMonth()" 
+            [class.active]="isLastMonth()">
+            Mês Passado
+          </button>
+          <button 
+            mat-button 
+            (click)="setNextMonth()" 
+            [class.active]="isNextMonth()">
+            Próximo
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="isLoadingResults" class="loading-container">
       <mat-spinner diameter="50"></mat-spinner>
       <p>Carregando faturas...</p>
     </div>
 
-    <div *ngIf="!loading && faturas.length === 0" class="empty-state">
+    <div *ngIf="!isLoadingResults && faturas.length === 0" class="empty-state">
       <mat-icon>receipt_long</mat-icon>
-      <h3>Nenhuma fatura cadastrada</h3>
-      <p>Crie uma fatura manual ou gere automaticamente</p>
+      <h3>Nenhuma fatura cadastrada para {{ getSelectedPeriodText() }}</h3>
+      <p>Selecione outro período ou crie uma nova fatura</p>
     </div>
 
-    <div *ngIf="!loading && faturas.length > 0" class="table-container">
-      <table mat-table [dataSource]="faturas" class="faturas-table">
+    <div *ngIf="!isLoadingResults && faturas.length > 0" class="table-container">
+      <table mat-table [dataSource]="faturas" matSort matSortActive="id" matSortDirection="desc" class="faturas-table">
         <!-- Coluna Nome do Cartão -->
         <ng-container matColumnDef="nomeCartao">
           <th mat-header-cell *matHeaderCellDef>Cartão</th>
@@ -336,6 +395,8 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
+      
+      <mat-paginator [length]="resultsLength" [pageSizeOptions]="[5, 10, 20]" [pageSize]="10"></mat-paginator>
     </div>
   </div>
 
