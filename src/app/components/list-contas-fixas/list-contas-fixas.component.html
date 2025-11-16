@@ -5,12 +5,14 @@
     
     <!-- Navegação Rápida -->
     <div class="period-navigation">
-      <button mat-icon-button matTooltip="Mês anterior" (click)="previousMonth()">
-        <mat-icon>chevron_left</mat-icon>
-      </button>
-      <button mat-icon-button matTooltip="Próximo mês" (click)="nextMonth()">
-        <mat-icon>chevron_right</mat-icon>
-      </button>
+      <div class="nav-buttons">
+        <button mat-icon-button matTooltip="Mês anterior" (click)="previousMonth()">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Próximo mês" (click)="nextMonth()">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
       <button mat-raised-button color="accent" (click)="exportarParaExcel()" matTooltip="Exportar para Excel">
         <mat-icon>download</mat-icon>
         Exportar
