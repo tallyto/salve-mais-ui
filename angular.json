@@ -68,6 +68,18 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "local": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.local.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -80,6 +92,9 @@
             },
             "development": {
               "buildTarget": "salve-mais-ui:build:development"
+            },
+            "local": {
+              "buildTarget": "salve-mais-ui:build:local"
             }
           },
           "defaultConfiguration": "development"
