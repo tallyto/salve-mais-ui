@@ -62,19 +62,25 @@ export class DashboardService {
 
   constructor(private http: HttpClient) { }
 
-  getSummary(): Observable<DashboardSummary> {
-    return this.http.get<DashboardSummary>(`${this.apiUrl}/summary`);
+  getSummary(mes?: number, ano?: number): Observable<DashboardSummary> {
+    const params: any = {};
+    if (mes) params.mes = mes.toString();
+    if (ano) params.ano = ano.toString();
+    return this.http.get<DashboardSummary>(`${this.apiUrl}/summary`, { params });
   }
 
-  getExpensesByCategory(): Observable<CategoryExpense[]> {
-    return this.http.get<CategoryExpense[]>(`${this.apiUrl}/expenses-by-category`);
+  getExpensesByCategory(mes?: number, ano?: number): Observable<CategoryExpense[]> {
+    const params: any = {};
+    if (mes) params.mes = mes.toString();
+    if (ano) params.ano = ano.toString();
+    return this.http.get<CategoryExpense[]>(`${this.apiUrl}/expenses-by-category`, { params });
   }
 
   getMonthlyTrendByYear(year: number): Observable<MonthlyExpense[]> {
     return this.http.get<MonthlyExpense[]>(`${this.apiUrl}/monthly-trend/year/${year}`);
   }
 
-  getVariationData(): Observable<VariationData[]> {
+  getVariationData(mes?: number, ano?: number): Observable<VariationData[]> {
     // Este endpoint deve retornar dados de variação comparando o mês atual com o anterior
     // Exemplo de resposta esperada:
     // [
@@ -88,7 +94,10 @@ export class DashboardService {
     //     "icon": "account_balance_wallet"
     //   }
     // ]
-    return this.http.get<VariationData[]>(`${this.apiUrl}/variations`);
+    const params: any = {};
+    if (mes) params.mes = mes.toString();
+    if (ano) params.ano = ano.toString();
+    return this.http.get<VariationData[]>(`${this.apiUrl}/variations`, { params });
   }
 }
 

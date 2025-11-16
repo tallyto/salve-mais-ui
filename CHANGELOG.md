@@ -2,6 +2,32 @@
 
 ## [Unreleased]
 
+## [1.17.0] - 2025-11-16
+
+### Adicionado
+
+- **Filtros de período no Dashboard**
+  - Seletores de mês e ano para visualizar dados de períodos anteriores e futuros
+  - Botões de navegação rápida (mês anterior/próximo)
+  - Atalhos rápidos: "Hoje", "Mês Passado" e "Próximo"
+  - Design consistente com componente de débito em conta
+  - Atualização automática de todos os dados ao alterar o período:
+    - Resumo financeiro (saldo, receitas, despesas)
+    - Gráficos de despesas por categoria
+    - Dados de variação mensal
+    - Compras de cartão
+  - Interface visual com destaque do período selecionado
+  - Suporte completo no backend para filtros de mês/ano
+
+### Backend
+
+- Endpoints do DashboardController atualizados para aceitar parâmetros opcionais de mês e ano:
+  - `/api/dashboard/summary?mes={mes}&ano={ano}`
+  - `/api/dashboard/expenses-by-category?mes={mes}&ano={ano}`
+  - `/api/dashboard/variations?mes={mes}&ano={ano}`
+- DashboardService.java modificado para filtrar dados conforme mês/ano especificado
+- Manutenção da compatibilidade com requisições sem parâmetros (mês atual como padrão)
+
 ## [1.16.0] - 2025-11-02
 
 ### Adicionado

@@ -43,6 +43,25 @@ export class DashboardComponent implements OnInit {
   isLoading: boolean = true;
   today: Date = new Date();
 
+  // Filtros de mês e ano
+  selectedMonth: number;
+  selectedYear: number;
+  months: { value: number, label: string }[] = [
+    { value: 1, label: 'Janeiro' },
+    { value: 2, label: 'Fevereiro' },
+    { value: 3, label: 'Março' },
+    { value: 4, label: 'Abril' },
+    { value: 5, label: 'Maio' },
+    { value: 6, label: 'Junho' },
+    { value: 7, label: 'Julho' },
+    { value: 8, label: 'Agosto' },
+    { value: 9, label: 'Setembro' },
+    { value: 10, label: 'Outubro' },
+    { value: 11, label: 'Novembro' },
+    { value: 12, label: 'Dezembro' }
+  ];
+  years: number[] = [];
+
   // Dados do dashboard vindos da API
   summaryData: DashboardSummary | null = null;
   categoryData: CategoryExpense[] = [];
@@ -171,7 +190,15 @@ export class DashboardComponent implements OnInit {
     private dashboardService: DashboardService,
     private gastoCartaoService: GastoCartaoService,
     private compraParceladaService: CompraParceladaService
-  ) { }
+  ) {
+    // Inicializar filtros com mês e ano atuais
+    const currentDate = new Date();
+    this.selectedMonth = currentDate.getMonth() + 1;
+    this.selectedYear = currentDate.getFullYear();
+
+    // Gerar lista de anos (últimos 3 anos até próximos 2 anos)
+    this.generateYears();
+  }
 
   ngOnInit(): void {
     this.loadDashboardData();
@@ -183,11 +210,11 @@ export class DashboardComponent implements OnInit {
 
     // Usando forkJoin para fazer todas as chamadas em paralelo
     forkJoin({
-      summary: this.dashboardService.getSummary(),
-      categories: this.dashboardService.getExpensesByCategory(),
-      monthlyTrend: this.dashboardService.getMonthlyTrendByYear(new Date().getFullYear()),
+      summary: this.dashboardService.getSummary(this.selectedMonth, this.selectedYear),
+      categories: this.dashboardService.getExpensesByCategory(this.selectedMonth, this.selectedYear),
+      monthlyTrend: this.dashboardService.getMonthlyTrendByYear(this.selectedYear),
       comprasCartao: this.gastoCartaoService.listCompras(0, 5, 'data,desc').pipe(),
-      variations: this.dashboardService.getVariationData().pipe(catchError(() => of([])))
+      variations: this.dashboardService.getVariationData(this.selectedMonth, this.selectedYear).pipe(catchError(() => of([])))
     }).subscribe({
       next: (results) => {
         this.summaryData = results.summary;
@@ -603,5 +630,84 @@ export class DashboardComponent implements OnInit {
 
   getStatusClass(compra: CompraParcelada): string {
     return this.temParcelasPendentes(compra) ? 'badge-warning' : 'badge-success';
+  }
+
+  // Métodos para filtros de mês e ano
+  generateYears(): void {
+    const currentYear = new Date().getFullYear();
+    this.years = [];
+    for (let i = currentYear - 3; i <= currentYear + 2; i++) {
+      this.years.push(i);
+    }
+  }
+
+  previousMonth(): void {
+    if (this.selectedMonth === 1) {
+      this.selectedMonth = 12;
+      this.selectedYear--;
+    } else {
+      this.selectedMonth--;
+    }
+    this.onFilterChange();
+  }
+
+  nextMonth(): void {
+    if (this.selectedMonth === 12) {
+      this.selectedMonth = 1;
+      this.selectedYear++;
+    } else {
+      this.selectedMonth++;
+    }
+    this.onFilterChange();
+  }
+
+  resetFilters(): void {
+    const currentDate = new Date();
+    this.selectedMonth = currentDate.getMonth() + 1;
+    this.selectedYear = currentDate.getFullYear();
+    this.onFilterChange();
+  }
+
+  setLastMonth(): void {
+    const lastMonth = new Date();
+    lastMonth.setMonth(lastMonth.getMonth() - 1);
+    this.selectedMonth = lastMonth.getMonth() + 1;
+    this.selectedYear = lastMonth.getFullYear();
+    this.onFilterChange();
+  }
+
+  setNextMonth(): void {
+    const nextMonth = new Date();
+    nextMonth.setMonth(nextMonth.getMonth() + 1);
+    this.selectedMonth = nextMonth.getMonth() + 1;
+    this.selectedYear = nextMonth.getFullYear();
+    this.onFilterChange();
+  }
+
+  isCurrentMonth(): boolean {
+    const currentDate = new Date();
+    return this.selectedMonth === currentDate.getMonth() + 1 && this.selectedYear === currentDate.getFullYear();
+  }
+
+  isLastMonth(): boolean {
+    const lastMonth = new Date();
+    lastMonth.setMonth(lastMonth.getMonth() - 1);
+    return this.selectedMonth === lastMonth.getMonth() + 1 && this.selectedYear === lastMonth.getFullYear();
+  }
+
+  isNextMonth(): boolean {
+    const nextMonth = new Date();
+    nextMonth.setMonth(nextMonth.getMonth() + 1);
+    return this.selectedMonth === nextMonth.getMonth() + 1 && this.selectedYear === nextMonth.getFullYear();
+  }
+
+  getSelectedPeriodText(): string {
+    const monthName = this.months.find(m => m.value === this.selectedMonth)?.label || '';
+    return `${monthName} de ${this.selectedYear}`;
+  }
+
+  onFilterChange(): void {
+    this.loadDashboardData();
+    this.loadComprasParceladas();
   }
 }

@@ -11,6 +11,66 @@
     </div>
   </div>
 
+  <!-- Filtros de Mês e Ano -->
+  <div class="filters-container">
+    <div class="filters-header">
+      <h3 class="filters-title">{{ getSelectedPeriodText() }}</h3>
+      
+      <!-- Navegação Rápida -->
+      <div class="period-navigation">
+        <button mat-icon-button matTooltip="Mês anterior" (click)="previousMonth()">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Próximo mês" (click)="nextMonth()">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="filters-row">
+      <!-- Seleção de Mês e Ano -->
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Mês</mat-label>
+        <mat-select [(value)]="selectedMonth" (selectionChange)="onFilterChange()">
+          <mat-option *ngFor="let month of months" [value]="month.value">
+            {{ month.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Ano</mat-label>
+        <mat-select [(value)]="selectedYear" (selectionChange)="onFilterChange()">
+          <mat-option *ngFor="let year of years" [value]="year">
+            {{ year }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Atalhos Rápidos -->
+      <div class="quick-filters">
+        <button 
+          mat-button 
+          (click)="resetFilters()" 
+          [class.active]="isCurrentMonth()">
+          Hoje
+        </button>
+        <button 
+          mat-button 
+          (click)="setLastMonth()" 
+          [class.active]="isLastMonth()">
+          Mês Passado
+        </button>
+        <button 
+          mat-button 
+          (click)="setNextMonth()" 
+          [class.active]="isNextMonth()">
+          Próximo
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Loading Indicator -->
   <div *ngIf="isLoading" class="loading-overlay">
     <mat-spinner diameter="50"></mat-spinner>
