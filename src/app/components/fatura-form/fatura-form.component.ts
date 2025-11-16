@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
@@ -22,7 +22,7 @@ interface MonthOption {
     styleUrls: ['./fatura-form.component.css'],
     standalone: false
 })
-export class FaturaFormComponent implements OnInit {
+export class FaturaFormComponent implements OnInit, AfterViewInit {
   faturaForm: FormGroup;
   previewForm: FormGroup;
   cartoes: Cartao[] = [];
@@ -55,8 +55,10 @@ export class FaturaFormComponent implements OnInit {
   ];
   years: number[] = [];
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  // @ts-expect-error
+  @ViewChild(MatPaginator) paginator: MatPaginator
+  // @ts-expect-error
+  @ViewChild(MatSort) sort: MatSort;
 
   displayedColumns: string[] = ['nomeCartao', 'valorTotal', 'dataVencimento', 'dataPagamento', 'contaPagamento', 'pago', 'totalCompras', 'acoes'];
 
@@ -194,12 +196,16 @@ export class FaturaFormComponent implements OnInit {
           ).pipe(catchError(() => observableOf(null)));
         }),
         map(data => {
+          // Flip flag to show that loading has finished.
           this.isLoadingResults = false;
 
           if (data === null) {
             return [];
           }
 
+          // Only refresh the result length if there is new data. In case of rate
+          // limit errors, we do not want to reset the paginator to zero, as that
+          // would prevent users from re-triggering requests.
           this.resultsLength = data.totalElements;
           return data.content;
         }),
