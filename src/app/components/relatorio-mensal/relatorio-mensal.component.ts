@@ -36,6 +36,11 @@ export class RelatorioMensalComponent implements OnInit {
   // Configuração dos anos (últimos 5 anos + próximos 2 anos)
   anos: number[] = [];
 
+  // Filtros de mês e ano
+  selectedMonth: number;
+  selectedYear: number;
+  months: { value: number, name: string }[] = [];
+
   constructor(
     private formBuilder: FormBuilder,
     private relatorioService: RelatorioMensalService,
@@ -52,6 +57,11 @@ export class RelatorioMensalComponent implements OnInit {
       ano: [anoAtual, [Validators.required]],
       mes: [new Date().getMonth() + 1, [Validators.required]]
     });
+
+    // Inicializar filtros
+    this.months = this.meses;
+    this.selectedMonth = new Date().getMonth() + 1;
+    this.selectedYear = anoAtual;
   }
 
   ngOnInit(): void {
@@ -81,15 +91,9 @@ export class RelatorioMensalComponent implements OnInit {
    * Gera relatório para o mês e ano selecionados
    */
   gerarRelatorio(): void {
-    if (this.relatorioForm.invalid) {
-      this.showError('Por favor, selecione um mês e ano válidos');
-      return;
-    }
-
-    const { ano, mes } = this.relatorioForm.value;
     this.isLoading = true;
 
-    this.relatorioService.gerarRelatorio(ano, mes).subscribe({
+    this.relatorioService.gerarRelatorio(this.selectedYear, this.selectedMonth).subscribe({
       next: (relatorio) => {
         this.relatorioData = relatorio;
         this.isLoading = false;
@@ -173,5 +177,132 @@ export class RelatorioMensalComponent implements OnInit {
       verticalPosition: 'top',
       panelClass: ['success-snackbar']
     });
+  }
+
+  /**
+   * Retorna texto do período selecionado
+   */
+  getSelectedPeriodText(): string {
+    const mesNome = this.meses.find(m => m.value === this.selectedMonth)?.name || '';
+    return `${mesNome} de ${this.selectedYear}`;
+  }
+
+  /**
+   * Vai para o mês anterior
+   */
+  previousMonth(): void {
+    let mes = this.selectedMonth - 1;
+    let ano = this.selectedYear;
+    if (mes < 1) {
+      mes = 12;
+      ano--;
+    }
+    this.selectedMonth = mes;
+    this.selectedYear = ano;
+    this.onFilterChange();
+  }
+
+  /**
+   * Vai para o próximo mês
+   */
+  nextMonth(): void {
+    let mes = this.selectedMonth + 1;
+    let ano = this.selectedYear;
+    if (mes > 12) {
+      mes = 1;
+      ano++;
+    }
+    this.selectedMonth = mes;
+    this.selectedYear = ano;
+    this.onFilterChange();
+  }
+
+  /**
+   * Verifica se é o mês atual
+   */
+  isCurrentMonth(): boolean {
+    const hoje = new Date();
+    return this.selectedMonth === hoje.getMonth() + 1 && 
+           this.selectedYear === hoje.getFullYear();
+  }
+
+  /**
+   * Verifica se é o mês passado
+   */
+  isLastMonth(): boolean {
+    const hoje = new Date();
+    let mesPassado = hoje.getMonth();
+    let anoPassado = hoje.getFullYear();
+    if (mesPassado === 0) {
+      mesPassado = 12;
+      anoPassado--;
+    }
+    return this.selectedMonth === mesPassado && 
+           this.selectedYear === anoPassado;
+  }
+
+  /**
+   * Verifica se é o próximo mês
+   */
+  isNextMonth(): boolean {
+    const hoje = new Date();
+    let proximoMes = hoje.getMonth() + 2;
+    let anoProximo = hoje.getFullYear();
+    if (proximoMes > 12) {
+      proximoMes -= 12;
+      anoProximo++;
+    }
+    return this.selectedMonth === proximoMes && 
+           this.selectedYear === anoProximo;
+  }
+
+  /**
+   * Define para o mês passado
+   */
+  setLastMonth(): void {
+    const hoje = new Date();
+    let mes = hoje.getMonth();
+    let ano = hoje.getFullYear();
+    if (mes === 0) {
+      mes = 12;
+      ano--;
+    }
+    this.selectedMonth = mes;
+    this.selectedYear = ano;
+    this.onFilterChange();
+  }
+
+  /**
+   * Define para o próximo mês
+   */
+  setNextMonth(): void {
+    const hoje = new Date();
+    let mes = hoje.getMonth() + 2;
+    let ano = hoje.getFullYear();
+    if (mes > 12) {
+      mes -= 12;
+      ano++;
+    }
+    this.selectedMonth = mes;
+    this.selectedYear = ano;
+    this.onFilterChange();
+  }
+
+
+  /**
+   * Reset para o mês/ano atual
+   */
+  resetFilters(): void {
+    const hoje = new Date();
+    this.selectedMonth = hoje.getMonth() + 1;
+    this.selectedYear = hoje.getFullYear();
+    this.onFilterChange();
+  }
+
+  /**
+   * Chamado quando os filtros mudam
+   */
+  onFilterChange(): void {
+    this.gerarRelatorio();
   }
 }

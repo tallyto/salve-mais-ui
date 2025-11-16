@@ -1,55 +1,83 @@
 <div class="container">
   <!-- Cabeçalho da página -->
-  <div class="page-header">
+  <div class="header">
     <div class="header-content">
-      <div class="page-icon">
-        <mat-icon>insights</mat-icon>
-      </div>
+      <mat-icon class="header-icon">insights</mat-icon>
       <div class="header-text">
-        <h1 class="page-title">Relatório Mensal</h1>
-        <div class="page-subtitle" *ngIf="relatorioData">
-          <mat-icon>calendar_today</mat-icon>
-          <span>{{relatorioData.mesReferencia}}</span>
+        <h2 class="page-title">Relatório Mensal</h2>
+        <div class="dashboard-date text-color-secondary" *ngIf="relatorioData">
+          <mat-icon>calendar_today</mat-icon> {{relatorioData.mesReferencia}} - Análise detalhada de suas finanças
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Formulário de seleção de mês/ano -->
-    <form [formGroup]="relatorioForm" (ngSubmit)="gerarRelatorio()" class="filtro-form">
-      <mat-form-field appearance="outline">
-        <mat-label>Ano</mat-label>
-        <mat-select formControlName="ano">
-          <mat-option *ngFor="let ano of anos" [value]="ano">
-            {{ano}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+  <!-- Filtros de Mês e Ano -->
+  <div class="filters-container">
+    <div class="filters-header">
+      <h3 class="filters-title">{{ getSelectedPeriodText() }}</h3>
+      
+      <!-- Navegação Rápida -->
+      <div class="period-navigation">
+        <button mat-icon-button matTooltip="Mês anterior" (click)="previousMonth()" [disabled]="isLoading">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Próximo mês" (click)="nextMonth()" [disabled]="isLoading">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+    </div>
 
-      <mat-form-field appearance="outline">
+    <div class="filters-row">
+      <!-- Seleção de Mês e Ano -->
+      <mat-form-field appearance="outline" class="filter-field">
         <mat-label>Mês</mat-label>
-        <mat-select formControlName="mes">
-          <mat-option *ngFor="let mes of meses" [value]="mes.value">
-            {{mes.name}}
+        <mat-select [(value)]="selectedMonth" (selectionChange)="onFilterChange()">
+          <mat-option *ngFor="let month of months" [value]="month.value">
+            {{ month.name }}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
-      <button mat-raised-button color="primary" type="submit" [disabled]="isLoading">
-        <mat-icon>search</mat-icon>
-        Gerar Relatório
-      </button>
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Ano</mat-label>
+        <mat-select [(value)]="selectedYear" (selectionChange)="onFilterChange()">
+          <mat-option *ngFor="let year of anos" [value]="year">
+            {{ year }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-      <button mat-raised-button color="accent" type="button" (click)="gerarRelatorioAtual()" [disabled]="isLoading">
-        <mat-icon>today</mat-icon>
-        Mês Atual
-      </button>
-    </form>
+      <!-- Atalhos Rápidos -->
+      <div class="quick-filters">
+        <button 
+          mat-button 
+          (click)="resetFilters()" 
+          [class.active]="isCurrentMonth()"
+          [disabled]="isLoading">
+          Hoje
+        </button>
+        <button 
+          mat-button 
+          (click)="setLastMonth()" 
+          [class.active]="isLastMonth()"
+          [disabled]="isLoading">
+          Mês Passado
+        </button>
+        <button 
+          mat-button 
+          (click)="setNextMonth()" 
+          [class.active]="isNextMonth()"
+          [disabled]="isLoading">
+          Próximo
+        </button>
+      </div>
+    </div>
   </div>
 
   <!-- Indicador de carregamento -->
-  <div *ngIf="isLoading" class="loading-container">
-    <mat-spinner></mat-spinner>
-    <p>Gerando relatório...</p>
+  <div *ngIf="isLoading" class="loading-overlay">
+    <mat-spinner diameter="50"></mat-spinner>
   </div>
 
   <!-- Conteúdo do relatório -->
