@@ -288,8 +288,13 @@
       <p>Selecione outro período ou crie uma nova fatura</p>
     </div>
 
+    <!-- Tabela oculta para garantir que matSort sempre exista -->
+    <table mat-table [dataSource]="faturas" matSort matSortActive="id" matSortDirection="desc" 
+           [style.display]="'none'">
+    </table>
+
     <div *ngIf="!isLoadingResults && faturas.length > 0" class="table-container">
-      <table mat-table [dataSource]="faturas" matSort matSortActive="id" matSortDirection="desc" class="faturas-table">
+      <table mat-table [dataSource]="faturas" class="faturas-table">
         <!-- Coluna Nome do Cartão -->
         <ng-container matColumnDef="nomeCartao">
           <th mat-header-cell *matHeaderCellDef>Cartão</th>
@@ -395,9 +400,15 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
-      
-      <mat-paginator [length]="resultsLength" [pageSizeOptions]="[5, 10, 20]" [pageSize]="10"></mat-paginator>
     </div>
+    
+    <!-- Paginator sempre visível para garantir que ViewChild funcione -->
+    <mat-paginator 
+      [length]="resultsLength" 
+      [pageSizeOptions]="[5, 10, 20]" 
+      [pageSize]="10"
+      [style.display]="isLoadingResults || faturas.length === 0 ? 'none' : 'block'">
+    </mat-paginator>
   </div>
 
   <!-- Seção de Geração Automática -->

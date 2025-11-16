@@ -67,15 +67,15 @@ export class PagamentosStatusComponent implements OnInit {
     }).subscribe({
       next: (dados) => {
         // Filtrar faturas do mês atual baseado na data de vencimento
-        const faturasMesAtual = dados.todasFaturas.filter(f => {
+        const faturasMesAtual = dados.todasFaturas.filter((f: FaturaResponseDTO) => {
           const dataVencimento = new Date(f.dataVencimento);
           return dataVencimento.getMonth() + 1 === mes && 
                  dataVencimento.getFullYear() === ano;
         });
 
         // Separar faturas pagas e pendentes (do mês atual)
-        this.statusPagamentos.faturasPagas = faturasMesAtual.filter(f => f.pago);
-        this.statusPagamentos.faturasPendentes = faturasMesAtual.filter(f => !f.pago);
+        this.statusPagamentos.faturasPagas = faturasMesAtual.filter((f: FaturaResponseDTO) => f.pago);
+        this.statusPagamentos.faturasPendentes = faturasMesAtual.filter((f: FaturaResponseDTO) => !f.pago);
 
         // Extrair o array de contas fixas do objeto Page e separar pagas e pendentes
         // As contas fixas já vêm filtradas por mês/ano do serviço
