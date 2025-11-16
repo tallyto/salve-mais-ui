@@ -2,6 +2,19 @@
 
 ## [Unreleased]
 
+## [1.18.0] - 2025-11-16
+
+### Adicionado
+
+- **Exportação de débitos em conta para Excel**
+  - Botão de exportação no componente de débitos em conta
+  - Exportação filtrada por mês e ano selecionado
+  - Arquivo Excel (.xlsx) com formatação automática
+  - Colunas: Nome, Categoria, Conta, Vencimento, Valor e Status
+  - Linha de total com soma dos valores
+  - Formatação de moeda (R$) e datas (dd/MM/yyyy)
+  - Largura de colunas ajustada automaticamente
+
 ## [1.17.0] - 2025-11-16
 
 ### Adicionado

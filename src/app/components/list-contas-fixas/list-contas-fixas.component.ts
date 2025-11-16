@@ -270,6 +270,49 @@ export class ListContasFixasComponent implements AfterViewInit {
            this.selectedYear === nextMonth.getFullYear();
   }
 
+  /**
+   * Exporta as contas fixas para Excel
+   */
+  exportarParaExcel(): void {
+    this.isLoadingResults = true;
+    
+    this.financaService.exportarParaExcel(this.selectedMonth, this.selectedYear).subscribe({
+      next: (blob) => {
+        // Criar URL para download
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        
+        // Gerar nome do arquivo
+        const filename = `debitos_em_conta_${String(this.selectedMonth).padStart(2, '0')}_${this.selectedYear}.xlsx`;
+        link.download = filename;
+        
+        // Fazer download
+        link.click();
+        
+        // Limpar
+        window.URL.revokeObjectURL(url);
+        
+        this.snackBar.open('Excel exportado com sucesso!', 'Fechar', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+        });
+        
+        this.isLoadingResults = false;
+      },
+      error: (error) => {
+        console.error('Erro ao exportar para Excel:', error);
+        this.snackBar.open('Erro ao exportar para Excel', 'Fechar', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top',
+        });
+        this.isLoadingResults = false;
+      }
+    });
+  }
+
   private refreshContasFixasList() {
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 

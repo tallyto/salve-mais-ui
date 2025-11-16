@@ -112,4 +112,24 @@ export class ContasFixasService {
       })
     );
   }
+
+  /**
+   * Exporta contas fixas para Excel
+   */
+  exportarParaExcel(mes?: number, ano?: number): Observable<Blob> {
+    let params: any = {};
+
+    if (mes !== undefined) {
+      params.mes = mes;
+    }
+
+    if (ano !== undefined) {
+      params.ano = ano;
+    }
+
+    return this.http.get(`${this.apiUrl}/exportar`, {
+      params,
+      responseType: 'blob'
+    });
+  }
 }
