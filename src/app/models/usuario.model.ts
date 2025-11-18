@@ -4,4 +4,5 @@ export interface Usuario {
   email: string;
   criadoEm: string;
   ultimoAcesso?: string;
+  tenantId?: string;
 }

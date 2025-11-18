@@ -4,7 +4,7 @@
     <button (click)="toggleSidenav()" mat-icon-button matTooltip="Menu">
       <mat-icon>menu</mat-icon>
     </button>
-    <span class="app-title">Salve Mais</span>
+    <span class="app-title">{{ appTitle }}</span>
     <span class="toolbar-item-spacer"></span>
 
     <div class="toolbar-actions">
@@ -54,7 +54,7 @@
 <!-- Toolbar simples para usuários não autenticados (sem barra de navegação) -->
 <ng-container *ngIf="!isAuthenticated">
   <mat-toolbar color="primary" class="app-toolbar">
-    <span class="app-title">Salve Mais</span>
+    <span class="app-title">{{ appTitle }}</span>
     <span class="toolbar-item-spacer"></span>
   </mat-toolbar>
 </ng-container>
@@ -161,6 +161,11 @@
         <a mat-list-item routerLink="/categoria-form" routerLinkActive="active-link">
           <mat-icon>category</mat-icon>
           <span>Categorias</span>
+        </a>
+
+        <a mat-list-item routerLink="/tenant-settings" routerLinkActive="active-link">
+          <mat-icon>business</mat-icon>
+          <span>Configurações do Tenant</span>
         </a>
       </mat-nav-list>
     </div>

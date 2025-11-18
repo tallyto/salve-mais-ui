@@ -1,0 +1,158 @@
+<div class="tenant-settings-container">
+  <h1>Configurações do Tenant</h1>
+
+  <mat-tab-group>
+    <!-- Aba de Marca -->
+    <mat-tab label="Marca">
+      <div class="tab-content">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Personalização de Marca</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <form [formGroup]="brandingForm" (ngSubmit)="saveBranding()">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Nome de Exibição</mat-label>
+                <input matInput formControlName="displayName" placeholder="Minha Empresa">
+                <mat-icon matPrefix>business</mat-icon>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>URL do Logo</mat-label>
+                <input matInput formControlName="logoUrl" placeholder="https://exemplo.com/logo.png">
+                <mat-icon matPrefix>image</mat-icon>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>URL do Favicon</mat-label>
+                <input matInput formControlName="faviconUrl" placeholder="https://exemplo.com/favicon.ico">
+                <mat-icon matPrefix>emoji_emotions</mat-icon>
+              </mat-form-field>
+
+              <div class="color-row">
+                <mat-form-field appearance="outline" class="color-field">
+                  <mat-label>Cor Primária</mat-label>
+                  <input matInput type="color" formControlName="primaryColor">
+                  <mat-error *ngIf="brandingForm.get('primaryColor')?.hasError('pattern')">
+                    Formato inválido (use #RRGGBB)
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="color-field">
+                  <mat-label>Cor Secundária</mat-label>
+                  <input matInput type="color" formControlName="secondaryColor">
+                  <mat-error *ngIf="brandingForm.get('secondaryColor')?.hasError('pattern')">
+                    Formato inválido (use #RRGGBB)
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="color-field">
+                  <mat-label>Cor de Destaque</mat-label>
+                  <input matInput type="color" formControlName="accentColor">
+                  <mat-error *ngIf="brandingForm.get('accentColor')?.hasError('pattern')">
+                    Formato inválido (use #RRGGBB)
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="actions">
+                <button mat-raised-button color="primary" type="submit" [disabled]="!brandingForm.valid || loading">
+                  <mat-icon>save</mat-icon>
+                  Salvar Marca
+                </button>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+    <!-- Aba de Configurações Regionais -->
+    <mat-tab label="Regional">
+      <div class="tab-content">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Configurações Regionais</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <form [formGroup]="regionalForm" (ngSubmit)="saveRegionalSettings()">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Fuso Horário</mat-label>
+                <mat-select formControlName="timezone">
+                  <mat-option *ngFor="let tz of timezones" [value]="tz">
+                    {{ tz }}
+                  </mat-option>
+                </mat-select>
+                <mat-icon matPrefix>schedule</mat-icon>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Idioma</mat-label>
+                <mat-select formControlName="locale">
+                  <mat-option *ngFor="let locale of locales" [value]="locale.value">
+                    {{ locale.label }}
+                  </mat-option>
+                </mat-select>
+                <mat-icon matPrefix>language</mat-icon>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Moeda</mat-label>
+                <mat-select formControlName="currencyCode">
+                  <mat-option *ngFor="let currency of currencies" [value]="currency.value">
+                    {{ currency.label }}
+                  </mat-option>
+                </mat-select>
+                <mat-icon matPrefix>attach_money</mat-icon>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Formato de Data</mat-label>
+                <input matInput formControlName="dateFormat" placeholder="dd/MM/yyyy">
+                <mat-icon matPrefix>event</mat-icon>
+              </mat-form-field>
+
+              <div class="actions">
+                <button mat-raised-button color="primary" type="submit" [disabled]="!regionalForm.valid || loading">
+                  <mat-icon>save</mat-icon>
+                  Salvar Configurações Regionais
+                </button>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+    <!-- Aba de Informações do Plano -->
+    <mat-tab label="Plano">
+      <div class="tab-content">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Informações do Plano</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="plan-info" *ngIf="tenant">
+              <div class="info-row">
+                <mat-icon>workspace_premium</mat-icon>
+                <strong>Plano Atual:</strong> {{ tenant.subscriptionPlan || 'FREE' }}
+              </div>
+              <div class="info-row" *ngIf="tenant.maxUsers">
+                <mat-icon>group</mat-icon>
+                <strong>Máximo de Usuários:</strong> {{ tenant.maxUsers }}
+              </div>
+              <div class="info-row" *ngIf="tenant.maxStorageGb">
+                <mat-icon>cloud</mat-icon>
+                <strong>Armazenamento:</strong> {{ tenant.maxStorageGb }} GB
+              </div>
+              <div class="info-row" *ngIf="tenant.trialEndDate">
+                <mat-icon>calendar_today</mat-icon>
+                <strong>Fim do Trial:</strong> {{ tenant.trialEndDate | date:'dd/MM/yyyy' }}
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

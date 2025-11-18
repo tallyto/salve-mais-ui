@@ -2,7 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Tenant, TenantCadastroDTO } from '../models/tenant.model';
+import { 
+  Tenant, 
+  TenantCadastroDTO, 
+  TenantBrandingDTO, 
+  TenantSubscriptionDTO, 
+  TenantSmtpConfigDTO, 
+  TenantRegionalSettingsDTO 
+} from '../models/tenant.model';
 
 @Injectable({ providedIn: 'root' })
 export class TenantService {
@@ -38,5 +45,31 @@ export class TenantService {
     return this.http.get<boolean>(`${this.apiUrl}/verificar-dominio`, {
       params: { dominio }
     });
+  }
+
+  // Métodos de customização do tenant
+  
+  getTenantById(id: string): Observable<Tenant> {
+    return this.http.get<Tenant>(`${this.apiUrl}/${id}`);
+  }
+
+  getTenantByDomain(domain: string): Observable<Tenant> {
+    return this.http.get<Tenant>(`${this.apiUrl}/domain/${domain}`);
+  }
+
+  updateBranding(id: string, branding: TenantBrandingDTO): Observable<Tenant> {
+    return this.http.put<Tenant>(`${this.apiUrl}/${id}/branding`, branding);
+  }
+
+  updateSubscription(id: string, subscription: TenantSubscriptionDTO): Observable<Tenant> {
+    return this.http.put<Tenant>(`${this.apiUrl}/${id}/subscription`, subscription);
+  }
+
+  updateSmtpConfig(id: string, smtpConfig: TenantSmtpConfigDTO): Observable<Tenant> {
+    return this.http.put<Tenant>(`${this.apiUrl}/${id}/smtp`, smtpConfig);
+  }
+
+  updateRegionalSettings(id: string, regionalSettings: TenantRegionalSettingsDTO): Observable<Tenant> {
+    return this.http.put<Tenant>(`${this.apiUrl}/${id}/regional-settings`, regionalSettings);
   }
 }

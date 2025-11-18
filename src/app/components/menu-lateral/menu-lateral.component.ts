@@ -6,6 +6,8 @@ import packageJson from '../../../../package.json';
 import { NotificacaoService, ResumoNotificacoes } from '../../services/notificacao.service';
 import { NotificationEventService } from '../../services/notification-event.service';
 import { UsuarioService } from '../../services/usuario.service';
+import { TenantService } from '../../services/tenant.service';
+import { getTenantIdFromToken } from '../../utils/jwt.util';
 
 @Component({
     selector: 'app-menu-lateral',
@@ -19,6 +21,7 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
   public username: string = 'Usuário';
   public userEmail: string = 'usuario@email.com';
   public appVersion: string = packageJson.version;
+  public appTitle: string = 'Salve Mais';
   public isAuthenticated: boolean = false;
   public isLargeScreen: boolean = false;
   public resumoNotificacoes: ResumoNotificacoes | null = null;
@@ -30,7 +33,8 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
     private router: Router,
     private usuarioService: UsuarioService,
     private notificacaoService: NotificacaoService,
-    private notificationEventService: NotificationEventService
+    private notificationEventService: NotificationEventService,
+    private tenantService: TenantService
   ) {
     this.checkScreenSize();
   }
@@ -48,6 +52,9 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
 
     // Tentar obter informações do usuário do localStorage (se disponível)
     this.updateUserInfo();
+
+    // Carregar tenant display name
+    this.loadTenantDisplayName();
 
     // Carregar notificações apenas no login inicial
     this.setupNotificationUpdates();
@@ -107,13 +114,16 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
     // Se o usuário estiver autenticado, atualizar as informações do usuário
     if (this.isAuthenticated) {
       this.updateUserInfo();
+      // Carregar tenant display name quando autenticar
+      this.loadTenantDisplayName();
       // Se não estava autenticado antes, carregar notificações
       if (!wasAuthenticated) {
         this.loadNotifications();
       }
     } else {
-      // Se não estiver autenticado, limpar notificações
+      // Se não estiver autenticado, limpar notificações e resetar título
       this.resumoNotificacoes = null;
+      this.appTitle = 'Salve Mais';
     }
   }
 
@@ -217,5 +227,38 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   shouldShowNotificationBadge(): boolean {
     return !!(this.resumoNotificacoes && this.resumoNotificacoes.temNotificacoes);
+  }
+
+  /**
+   * Carrega o display name do tenant a partir do token JWT
+   */
+  private loadTenantDisplayName(): void {
+    const token = localStorage.getItem('token');
+    console.log('Loading tenant display name - Token exists:', !!token);
+    
+    if (!token) {
+      this.appTitle = 'Salve Mais';
+      return;
+    }
+
+    const tenantId = getTenantIdFromToken(token);
+    console.log('TenantId from token:', tenantId);
+    
+    if (!tenantId) {
+      this.appTitle = 'Salve Mais';
+      return;
+    }
+
+    this.tenantService.getTenantById(tenantId).subscribe({
+      next: (tenant) => {
+        console.log('Tenant loaded:', tenant);
+        this.appTitle = tenant.displayName || tenant.nome || 'Salve Mais';
+        console.log('App title set to:', this.appTitle);
+      },
+      error: (error) => {
+        console.error('Error loading tenant:', error);
+        this.appTitle = 'Salve Mais';
+      }
+    });
   }
 }

@@ -1,0 +1,63 @@
+.tenant-settings-container {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1 {
+  margin-bottom: 24px;
+  color: #333;
+}
+
+.tab-content {
+  padding: 24px;
+}
+
+mat-card {
+  margin-bottom: 24px;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.color-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.color-field {
+  flex: 1;
+}
+
+.actions {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.plan-info {
+  padding: 16px 0;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-row mat-icon {
+  color: #666;
+}
+
+button mat-icon {
+  margin-right: 8px;
+}
