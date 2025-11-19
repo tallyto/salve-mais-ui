@@ -14,12 +14,12 @@ export interface Tenant {
   endereco?: string;
   ativo?: boolean;
   dataCriacao?: string;
-  
+
   // Customização de Marca
   displayName?: string;
   logoUrl?: string;
   faviconUrl?: string;
-  
+
   // Configurações de Plano
   subscriptionPlan?: SubscriptionPlan;
   maxUsers?: number;
@@ -28,7 +28,7 @@ export interface Tenant {
   subscriptionStartDate?: Date;
   subscriptionEndDate?: Date;
   enabledFeatures?: { [key: string]: boolean };
-  
+
   // Configurações Regionais
   timezone?: string;
   locale?: string;
@@ -40,6 +40,16 @@ export interface TenantCadastroDTO {
   name: string;
   domain: string;
   email: string;
+}
+
+export interface TenantBasicInfoDTO {
+  name: string;
+  email: string;
+  phoneNumber?: string;
+  address?: string;
+  displayName?: string;
+  logoUrl?: string;
+  faviconUrl?: string;
 }
 
 export interface TenantSubscriptionDTO {

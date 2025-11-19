@@ -1,0 +1,282 @@
+<div class="container">
+  <!-- Cabeçalho -->
+  <div class="header">
+    <div class="header-content">
+      <mat-icon class="header-icon">settings</mat-icon>
+      <div class="header-text">
+        <h2 class="page-title">Configurações do Tenant</h2>
+        <div class="subtitle text-color-secondary">
+          <mat-icon>business</mat-icon>
+          Gerencie as configurações da sua organização
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-spinner></mat-spinner>
+    <p>Carregando configurações...</p>
+  </div>
+
+  <!-- Conteúdo principal -->
+  <div *ngIf="!isLoading && currentTenant" class="config-content">
+    <mat-tab-group>
+
+      <!-- Aba de Marca -->
+      <mat-tab label="Marca">
+        <div class="tab-content">
+          <mat-card class="config-card">
+            <mat-card-header class="card-header">
+              <mat-icon>palette</mat-icon>
+              <mat-card-title>Personalização de Marca</mat-card-title>
+              <mat-card-subtitle>Configure a identidade visual da sua organização</mat-card-subtitle>
+            </mat-card-header>
+
+            <mat-card-content>
+              <form [formGroup]="brandingForm" class="form-container">
+                <div class="form-row">
+                  <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Nome de Exibição</mat-label>
+                    <input matInput formControlName="displayName" placeholder="Nome da sua empresa">
+                    <mat-icon matPrefix>business</mat-icon>
+                    <mat-hint>Nome exibido na interface da aplicação</mat-hint>
+                  </mat-form-field>
+                </div>
+
+                <div class="form-row">
+                  <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>URL do Logo</mat-label>
+                    <input matInput formControlName="logoUrl" placeholder="https://exemplo.com/logo.png">
+                    <mat-icon matPrefix>image</mat-icon>
+                    <mat-hint>Logo exibido na aplicação</mat-hint>
+                  </mat-form-field>
+                </div>
+
+                <div class="form-row">
+                  <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>URL do Favicon</mat-label>
+                    <input matInput formControlName="faviconUrl" placeholder="https://exemplo.com/favicon.ico">
+                    <mat-icon matPrefix>emoji_emotions</mat-icon>
+                    <mat-hint>Ícone exibido na aba do navegador</mat-hint>
+                  </mat-form-field>
+                </div>
+
+                <div class="form-actions">
+                  <button mat-raised-button color="primary" type="button"
+                          [disabled]="!brandingForm.valid || isLoading"
+                          (click)="onSubmitBranding()">
+                    <mat-icon>save</mat-icon>
+                    Salvar Marca
+                  </button>
+                </div>
+              </form>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-tab>
+
+      <!-- Aba de Assinatura -->
+      <mat-tab label="Plano">
+        <div class="tab-content">
+          <mat-card class="config-card">
+            <mat-card-header class="card-header">
+              <mat-icon>star</mat-icon>
+              <mat-card-title>Plano de Assinatura</mat-card-title>
+              <mat-card-subtitle>Configure o plano e limitações</mat-card-subtitle>
+            </mat-card-header>
+
+            <mat-card-content>
+              <form [formGroup]="subscriptionForm" (ngSubmit)="onSubmitSubscription()" class="form-container">
+                <div class="form-row">
+                  <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Plano</mat-label>
+                    <mat-select formControlName="subscriptionPlan">
+                      <mat-option *ngFor="let plan of subscriptionPlans" [value]="plan">
+                        {{ plan }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-icon matPrefix>workspace_premium</mat-icon>
+                  </mat-form-field>
+                </div>
+
+                <div class="form-row-grid">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Máximo de Usuários</mat-label>
+                    <input matInput type="number" formControlName="maxUsers" min="1">
+                    <mat-icon matPrefix>people</mat-icon>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Armazenamento (GB)</mat-label>
+                    <input matInput type="number" formControlName="maxStorageGb" min="1">
+                    <mat-icon matPrefix>storage</mat-icon>
+                  </mat-form-field>
+                </div>
+
+                <div class="form-row-grid">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Início do Trial</mat-label>
+                    <input matInput [matDatepicker]="trialStartPicker" formControlName="subscriptionStartDate">
+                    <mat-datepicker-toggle matSuffix [for]="trialStartPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #trialStartPicker></mat-datepicker>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Fim do Trial</mat-label>
+                    <input matInput [matDatepicker]="trialEndPicker" formControlName="trialEndDate">
+                    <mat-datepicker-toggle matSuffix [for]="trialEndPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #trialEndPicker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+
+                <div class="form-actions">
+                  <button mat-raised-button color="primary" type="submit"
+                          [disabled]="!subscriptionForm.valid || isLoading">
+                    <mat-icon>save</mat-icon>
+                    Salvar Plano
+                  </button>
+                </div>
+              </form>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-tab>
+
+      <!-- Aba de E-mail/SMTP -->
+      <mat-tab label="E-mail">
+        <div class="tab-content">
+          <mat-card class="config-card">
+            <mat-card-header class="card-header">
+              <mat-icon>email</mat-icon>
+              <mat-card-title>Configurações de E-mail</mat-card-title>
+              <mat-card-subtitle>Configure o servidor SMTP para envio de e-mails</mat-card-subtitle>
+            </mat-card-header>
+
+            <mat-card-content>
+              <form [formGroup]="smtpForm" (ngSubmit)="onSubmitSmtp()" class="form-container">
+                <div class="form-row-grid">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Servidor SMTP</mat-label>
+                    <input matInput formControlName="host" placeholder="smtp.gmail.com">
+                    <mat-icon matPrefix>dns</mat-icon>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Porta</mat-label>
+                    <input matInput type="number" formControlName="port" min="1" max="65535">
+                    <mat-icon matPrefix>router</mat-icon>
+                  </mat-form-field>
+                </div>
+
+                <div class="form-row">
+                  <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Usuário</mat-label>
+                    <input matInput formControlName="user" placeholder="usuario@gmail.com">
+                    <mat-icon matPrefix>person</mat-icon>
+                  </mat-form-field>
+                </div>
+
+                <div class="form-row">
+                  <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Senha</mat-label>
+                    <input matInput type="password" formControlName="password">
+                    <mat-icon matPrefix>lock</mat-icon>
+                  </mat-form-field>
+                </div>
+
+                <div class="form-row-grid">
+                  <mat-form-field appearance="outline">
+                    <mat-label>E-mail do Remetente</mat-label>
+                    <input matInput type="email" formControlName="fromEmail" placeholder="noreply@empresa.com">
+                    <mat-icon matPrefix>alternate_email</mat-icon>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Nome do Remetente</mat-label>
+                    <input matInput formControlName="fromName" placeholder="Minha Empresa">
+                    <mat-icon matPrefix>badge</mat-icon>
+                  </mat-form-field>
+                </div>
+
+                <div class="form-actions">
+                  <button mat-raised-button color="primary" type="submit"
+                          [disabled]="!smtpForm.valid || isLoading">
+                    <mat-icon>save</mat-icon>
+                    Salvar E-mail
+                  </button>
+                </div>
+              </form>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-tab>
+
+      <!-- Aba Regional -->
+      <mat-tab label="Regional">
+        <div class="tab-content">
+          <mat-card class="config-card">
+            <mat-card-header class="card-header">
+              <mat-icon>language</mat-icon>
+              <mat-card-title>Configurações Regionais</mat-card-title>
+              <mat-card-subtitle>Configure idioma, moeda e localização</mat-card-subtitle>
+            </mat-card-header>
+
+            <mat-card-content>
+              <form [formGroup]="regionalForm" (ngSubmit)="onSubmitRegional()" class="form-container">
+                <div class="form-row-grid">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Fuso Horário</mat-label>
+                    <mat-select formControlName="timezone">
+                      <mat-option *ngFor="let tz of timezones" [value]="tz.value">
+                        {{ tz.label }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-icon matPrefix>schedule</mat-icon>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Idioma</mat-label>
+                    <mat-select formControlName="locale">
+                      <mat-option *ngFor="let locale of locales" [value]="locale.value">
+                        {{ locale.label }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-icon matPrefix>translate</mat-icon>
+                  </mat-form-field>
+                </div>
+
+                <div class="form-row-grid">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Moeda</mat-label>
+                    <mat-select formControlName="currencyCode">
+                      <mat-option *ngFor="let currency of currencies" [value]="currency.value">
+                        {{ currency.label }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-icon matPrefix>attach_money</mat-icon>
+                  </mat-form-field>
+
+                  <mat-form-field appearance="outline">
+                    <mat-label>Formato de Data</mat-label>
+                    <input matInput formControlName="dateFormat" placeholder="dd/MM/yyyy">
+                    <mat-icon matPrefix>date_range</mat-icon>
+                  </mat-form-field>
+                </div>
+
+                <div class="form-actions">
+                  <button mat-raised-button color="primary" type="submit"
+                          [disabled]="!regionalForm.valid || isLoading">
+                    <mat-icon>save</mat-icon>
+                    Salvar Regional
+                  </button>
+                </div>
+              </form>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+  </div>
+</div>

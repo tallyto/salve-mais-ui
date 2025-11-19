@@ -5,12 +5,11 @@ import { environment } from '../../environments/environment';
 import { 
   Tenant, 
   TenantCadastroDTO, 
+  TenantBasicInfoDTO,
   TenantSubscriptionDTO, 
   TenantSmtpConfigDTO, 
   TenantRegionalSettingsDTO 
-} from '../models/tenant.model';
-
-@Injectable({ providedIn: 'root' })
+} from '../models/tenant.model';@Injectable({ providedIn: 'root' })
 export class TenantService {
   private readonly key = 'tenant';
   private apiUrl = environment.apiUrl + '/tenants';
@@ -47,13 +46,17 @@ export class TenantService {
   }
 
   // Métodos de customização do tenant
-  
+
   getTenantById(id: string): Observable<Tenant> {
     return this.http.get<Tenant>(`${this.apiUrl}/${id}`);
   }
 
   getTenantByDomain(domain: string): Observable<Tenant> {
     return this.http.get<Tenant>(`${this.apiUrl}/domain/${domain}`);
+  }
+
+  updateBasicInfo(id: string, basicInfo: TenantBasicInfoDTO): Observable<Tenant> {
+    return this.http.put<Tenant>(`${this.apiUrl}/${id}/basic-info`, basicInfo);
   }
 
   updateSubscription(id: string, subscription: TenantSubscriptionDTO): Observable<Tenant> {

@@ -27,6 +27,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatSortModule } from "@angular/material/sort";
 import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { BrowserModule } from '@angular/platform-browser';
@@ -73,6 +74,7 @@ import { ListTransacoesComponent } from './components/list-transacoes/list-trans
 import { CompraParceladaFormComponent } from './components/compra-parcelada-form/compra-parcelada-form.component';
 import { ListComprasParceladasComponent } from './components/list-compras-parceladas/list-compras-parceladas.component';
 import { PagamentosStatusComponent } from './components/pagamentos-status/pagamentos-status.component';
+import { TenantConfigComponent } from './components/tenant-config/tenant-config.component';
 
 @NgModule({
   declarations: [
@@ -104,7 +106,8 @@ import { PagamentosStatusComponent } from './components/pagamentos-status/pagame
     ReservaEmergenciaFormComponent,
     TransferenciaModalComponent,
     TransacaoDetalheComponent,
-    PagamentosStatusComponent
+    PagamentosStatusComponent,
+    TenantConfigComponent
   ],
   imports: [
     BrowserModule,
@@ -123,6 +126,7 @@ import { PagamentosStatusComponent } from './components/pagamentos-status/pagame
     HttpClientModule,
     MatCardModule,
     MatTableModule,
+    MatTabsModule,
     MatSidenavModule,
     MatMenuModule,
     ReactiveFormsModule,
