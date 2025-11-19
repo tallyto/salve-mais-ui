@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { ThemeService } from './services/theme.service';
-import { TenantService } from './services/tenant.service';
-import { getTenantIdFromToken } from './utils/jwt.util';
 
 @Component({
     selector: 'app-root',
@@ -43,15 +40,10 @@ export class AppComponent implements OnInit {
 
   constructor(
     private titleService: Title,
-    private router: Router,
-    private themeService: ThemeService,
-    private tenantService: TenantService
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    // Carregar tema do tenant
-    this.loadTenantTheme();
-
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe((event) => {
@@ -67,26 +59,5 @@ export class AppComponent implements OnInit {
     const route = url.split('/')[1] || 'dashboard';
     const title = this.routeTitles[route] || 'Salve Mais';
     this.titleService.setTitle(title);
-  }
-
-  private loadTenantTheme(): void {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      return;
-    }
-
-    const tenantId = getTenantIdFromToken(token);
-    if (!tenantId) {
-      return;
-    }
-
-    this.tenantService.getTenantById(tenantId).subscribe({
-      next: (tenant) => {
-        this.themeService.applyTheme(tenant);
-      },
-      error: (error) => {
-        console.error('Error loading tenant theme:', error);
-      }
-    });
   }
 }

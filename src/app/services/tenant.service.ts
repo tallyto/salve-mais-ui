@@ -5,7 +5,6 @@ import { environment } from '../../environments/environment';
 import { 
   Tenant, 
   TenantCadastroDTO, 
-  TenantBrandingDTO, 
   TenantSubscriptionDTO, 
   TenantSmtpConfigDTO, 
   TenantRegionalSettingsDTO 
@@ -55,10 +54,6 @@ export class TenantService {
 
   getTenantByDomain(domain: string): Observable<Tenant> {
     return this.http.get<Tenant>(`${this.apiUrl}/domain/${domain}`);
-  }
-
-  updateBranding(id: string, branding: TenantBrandingDTO): Observable<Tenant> {
-    return this.http.put<Tenant>(`${this.apiUrl}/${id}/branding`, branding);
   }
 
   updateSubscription(id: string, subscription: TenantSubscriptionDTO): Observable<Tenant> {

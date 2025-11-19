@@ -28,7 +28,6 @@ import { TransacaoDetalheComponent } from './components/transacao-detalhe/transa
 import { CompraParceladaFormComponent } from './components/compra-parcelada-form/compra-parcelada-form.component';
 import { ListComprasParceladasComponent } from './components/list-compras-parceladas/list-compras-parceladas.component';
 import { PagamentosStatusComponent } from './components/pagamentos-status/pagamentos-status.component';
-import { TenantSettingsComponent } from './components/tenant-settings/tenant-settings.component';
 
 
 const routes: Routes = [
@@ -62,7 +61,6 @@ const routes: Routes = [
   {path: 'reserva-emergencia', component: ReservaEmergenciaComponent, canActivate: [AuthGuard]},
   {path: 'reserva-emergencia/criar', component: ReservaEmergenciaFormComponent, canActivate: [AuthGuard]},
   {path: 'reserva-emergencia/editar/:id', component: ReservaEmergenciaFormComponent, canActivate: [AuthGuard]},
-  {path: 'tenant-settings', component: TenantSettingsComponent, canActivate: [AuthGuard]},
   {path: '**', redirectTo: 'dashboard'}
 ];
 

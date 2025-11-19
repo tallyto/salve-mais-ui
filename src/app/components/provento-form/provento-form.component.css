@@ -4,7 +4,7 @@
 }
 
 ::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
-  color: var(--primary-color);
+  color: #007bff;
 }
 
 ::ng-deep .mat-form-field-label {

@@ -19,9 +19,6 @@ export interface Tenant {
   displayName?: string;
   logoUrl?: string;
   faviconUrl?: string;
-  primaryColor?: string;
-  secondaryColor?: string;
-  accentColor?: string;
   
   // Configurações de Plano
   subscriptionPlan?: SubscriptionPlan;
@@ -43,15 +40,6 @@ export interface TenantCadastroDTO {
   name: string;
   domain: string;
   email: string;
-}
-
-export interface TenantBrandingDTO {
-  displayName?: string;
-  logoUrl?: string;
-  faviconUrl?: string;
-  primaryColor?: string;
-  secondaryColor?: string;
-  accentColor?: string;
 }
 
 export interface TenantSubscriptionDTO {
