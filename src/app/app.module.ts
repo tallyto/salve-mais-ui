@@ -75,6 +75,7 @@ import { CompraParceladaFormComponent } from './components/compra-parcelada-form
 import { ListComprasParceladasComponent } from './components/list-compras-parceladas/list-compras-parceladas.component';
 import { PagamentosStatusComponent } from './components/pagamentos-status/pagamentos-status.component';
 import { TenantConfigComponent } from './components/tenant-config/tenant-config.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -107,7 +108,8 @@ import { TenantConfigComponent } from './components/tenant-config/tenant-config.
     TransferenciaModalComponent,
     TransacaoDetalheComponent,
     PagamentosStatusComponent,
-    TenantConfigComponent
+    TenantConfigComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -118,8 +120,6 @@ import { TenantConfigComponent } from './components/tenant-config/tenant-config.
     MatToolbarModule,
     MatIconModule,
     MatListModule,
-    RouterModule,
-    MatIconModule,
     MatExpansionModule,
     MatTooltipModule,
     AppRoutingModule,

@@ -29,10 +29,12 @@ import { CompraParceladaFormComponent } from './components/compra-parcelada-form
 import { ListComprasParceladasComponent } from './components/list-compras-parceladas/list-compras-parceladas.component';
 import { PagamentosStatusComponent } from './components/pagamentos-status/pagamentos-status.component';
 import { TenantConfigComponent } from './components/tenant-config/tenant-config.component';
+import { HomeComponent } from './components/home/home.component';
 
 
 const routes: Routes = [
-  {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+  {path: '', component: HomeComponent},
+  {path: 'home', component: HomeComponent},
   {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
   {path: 'card-form', component: CartaoFormComponent, canActivate: [AuthGuard]},
   {path: 'categoria-form', component: CategoriaFormComponent, canActivate: [AuthGuard]},
