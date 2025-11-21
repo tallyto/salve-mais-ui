@@ -1,0 +1,72 @@
+<div class="content-card">
+  <div class="card-header">
+    <div class="header-title">
+      <mat-icon>list</mat-icon>
+      <h2 class="section-title">Minhas Categorias</h2>
+    </div>
+  </div>
+  <div class="table-container">
+    <table [dataSource]="dataSource" mat-table class="data-table">
+      <!-- Categoria Column -->
+      <ng-container matColumnDef="nome">
+        <th *matHeaderCellDef mat-header-cell>Nome</th>
+        <td *matCellDef="let categoria" mat-cell>
+          <div *ngIf="editingCategoria?.id !== categoria.id">{{ categoria.nome }}</div>
+          <mat-form-field *ngIf="editingCategoria?.id === categoria.id" appearance="outline" class="inline-edit-field">
+            <input matInput [(ngModel)]="editingCategoria!.nome" placeholder="Nome da categoria">
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <!-- Tipo Column -->
+      <ng-container matColumnDef="tipo">
+        <th *matHeaderCellDef mat-header-cell>Tipo</th>
+        <td *matCellDef="let categoria" mat-cell>
+          <div *ngIf="editingCategoria?.id !== categoria.id">
+            <app-categoria-type-chip [tipo]="categoria.tipo"></app-categoria-type-chip>
+          </div>
+          <mat-form-field *ngIf="editingCategoria?.id === categoria.id" appearance="outline" class="inline-edit-field">
+            <mat-select [(ngModel)]="editingCategoria!.tipo" placeholder="Tipo">
+              <mat-option value="NECESSIDADE">Necessidade (50%)</mat-option>
+              <mat-option value="DESEJO">Desejo (30%)</mat-option>
+              <mat-option value="ECONOMIA">Economia (20%)</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="acoes">
+        <th *matHeaderCellDef mat-header-cell class="text-right">Ações</th>
+        <td *matCellDef="let categoria" mat-cell class="text-right">
+          <div class="action-buttons" *ngIf="editingCategoria?.id !== categoria.id">
+            <button mat-icon-button color="primary" (click)="editarCategoria(categoria)" matTooltip="Editar">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="excluirCategoria(categoria)" matTooltip="Excluir">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+          <div class="action-buttons" *ngIf="editingCategoria?.id === categoria.id">
+            <button mat-icon-button color="primary" (click)="salvarEdicao()" matTooltip="Salvar">
+              <mat-icon>save</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="cancelarEdicao()" matTooltip="Cancelar">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+      <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+
+      <!-- Linha para quando não houver dados -->
+      <tr *matNoDataRow class="mat-row">
+        <td class="mat-cell" [attr.colspan]="displayedColumns.length" style="text-align: center; padding: 2rem; color: #999;">
+          Nenhuma categoria cadastrada
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

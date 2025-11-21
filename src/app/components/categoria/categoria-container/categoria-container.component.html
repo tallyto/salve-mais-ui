@@ -1,0 +1,29 @@
+<div class="container">
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <mat-icon class="page-icon">category</mat-icon>
+      <div class="flex-1">
+        <h1 class="page-title">Categorias</h1>
+        <p class="page-subtitle">Organize suas despesas e receitas por categorias</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Formulário -->
+  <app-categoria-form
+    [editingCategoria]="editingCategoria"
+    [isDialogMode]="false"
+    (categoriaCreated)="onCategoriaCreated($event)"
+    (categoriaUpdated)="onCategoriaUpdated($event)"
+    (formCancelled)="onFormCancelled()">
+  </app-categoria-form>
+
+  <!-- Lista de categorias -->
+  <app-categoria-list
+    [categorias]="categorias"
+    (categoriaEdit)="onCategoriaEdit($event)"
+    (categoriaDeleted)="onCategoriaDeleted($event)"
+    (categoriaUpdated)="onCategoriaUpdatedFromList($event)">
+  </app-categoria-list>
+</div>

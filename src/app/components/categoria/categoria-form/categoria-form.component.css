@@ -1,0 +1,66 @@
+/* Dialog Mode */
+mat-dialog-content {
+  min-width: 400px;
+  padding: 24px !important;
+}
+
+mat-dialog-actions {
+  padding: 16px 24px !important;
+}
+
+/* Select option borders */
+.mat-option.tipo-necessidade {
+  border-left: 4px solid #4caf50;
+}
+
+.mat-option.tipo-desejo {
+  border-left: 4px solid #ff9800;
+}
+
+.mat-option.tipo-economia {
+  border-left: 4px solid #2196f3;
+}
+
+/* Form styling */
+.form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+.form-container {
+  padding: 24px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.content-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+}
+
+.card-header {
+  padding: 24px 24px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #333;
+}

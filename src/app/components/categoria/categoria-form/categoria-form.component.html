@@ -1,0 +1,97 @@
+<!-- Modo Dialog -->
+<div *ngIf="isDialogMode">
+  <h2 mat-dialog-title class="flex align-items-center gap-2">
+    <mat-icon>category</mat-icon>
+    <span>{{ editingCategoria ? 'Editar Categoria' : 'Nova Categoria' }}</span>
+  </h2>
+
+  <mat-dialog-content>
+    <form [formGroup]="categoriaForm" id="categoriaDialogForm">
+      <div class="p-0">
+        <div class="mb-3">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Nome da Categoria</mat-label>
+            <input formControlName="nome" matInput placeholder="Ex: Alimentação, Transporte" autofocus>
+            <mat-icon matSuffix>label</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="mb-3">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Tipo da Categoria (Regra 50/30/20)</mat-label>
+            <mat-select formControlName="tipo">
+              <mat-option value="NECESSIDADE">💼 Necessidade (50%)</mat-option>
+              <mat-option value="DESEJO">🎉 Desejo (30%)</mat-option>
+              <mat-option value="ECONOMIA">💰 Economia (20%)</mat-option>
+            </mat-select>
+            <mat-icon matSuffix>pie_chart</mat-icon>
+            <mat-hint>Classifique de acordo com a regra 50/30/20</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="gap-2">
+    <button mat-button type="button" (click)="fecharDialog()">
+      <mat-icon>close</mat-icon>
+      Cancelar
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="categoriaForm.invalid"
+      (click)="salvarCategoria()"
+    >
+      <mat-icon>save</mat-icon>
+      {{ editingCategoria ? 'Atualizar' : 'Salvar' }}
+    </button>
+  </mat-dialog-actions>
+</div>
+
+<!-- Modo Página Completa -->
+<div *ngIf="!isDialogMode" class="content-card">
+  <div class="card-header">
+    <div class="header-title">
+      <mat-icon>{{ editingCategoria ? 'edit' : 'add_circle' }}</mat-icon>
+      <h2 class="section-title">{{ editingCategoria ? 'Editar Categoria' : 'Nova Categoria' }}</h2>
+    </div>
+  </div>
+  <div class="form-container">
+    <form (ngSubmit)="salvarCategoria()" [formGroup]="categoriaForm">
+      <div class="grid">
+        <div class="col-12 md:col-6 mb-3">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Nome da Categoria</mat-label>
+            <input formControlName="nome" matInput placeholder="Ex: Alimentação, Transporte" autofocus>
+            <mat-icon matPrefix>label</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="col-12 md:col-6 mb-3">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Tipo (Regra 50/30/20)</mat-label>
+            <mat-select formControlName="tipo">
+              <mat-option class="tipo-necessidade" value="NECESSIDADE">💼 Necessidade (50%)</mat-option>
+              <mat-option class="tipo-desejo" value="DESEJO">🎉 Desejo (30%)</mat-option>
+              <mat-option class="tipo-economia" value="ECONOMIA">💰 Economia (20%)</mat-option>
+            </mat-select>
+            <mat-icon matPrefix>pie_chart</mat-icon>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button mat-stroked-button type="button" (click)="cancelarEdicao()">
+          <mat-icon>{{ editingCategoria ? 'close' : 'refresh' }}</mat-icon>
+          {{ editingCategoria ? 'Cancelar' : 'Limpar' }}
+        </button>
+        <button mat-raised-button color="primary" [disabled]="categoriaForm.invalid" type="submit">
+          <mat-icon>{{ editingCategoria ? 'save' : 'add' }}</mat-icon>
+          {{ editingCategoria ? 'Atualizar' : 'Salvar' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

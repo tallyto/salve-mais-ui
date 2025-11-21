@@ -1,0 +1,24 @@
+/* Category Type Chips (50/30/20 Rule) */
+.tipo-categoria-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.tipo-necessidade {
+  background-color: #4caf50;
+  color: white;
+}
+
+.tipo-desejo {
+  background-color: #ff9800;
+  color: white;
+}
+
+.tipo-economia {
+  background-color: #2196f3;
+  color: white;
+}

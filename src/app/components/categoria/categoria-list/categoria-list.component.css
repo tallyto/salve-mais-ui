@@ -1,0 +1,66 @@
+.content-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+}
+
+.card-header {
+  padding: 24px 24px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.table-container {
+  padding: 0;
+}
+
+.data-table {
+  width: 100%;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.inline-edit-field {
+  width: 100%;
+  margin: 0;
+}
+
+.inline-edit-field .mat-mdc-form-field-wrapper {
+  padding-bottom: 0;
+}
+
+.inline-edit-field .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+.mat-mdc-table .mat-mdc-cell {
+  padding: 8px 16px;
+  vertical-align: middle;
+}
+
+.mat-mdc-table .mat-mdc-header-cell {
+  padding: 16px;
+  font-weight: 600;
+}
