@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {DashboardComponent} from "./components/dashboard/dashboard.component";
 import {CartaoFormComponent} from "./components/cartao-form/cartao-form.component";
-import {CategoriaFormComponent} from "./components/categoria-form/categoria-form.component";
 import {ProventoFormComponent} from "./components/provento-form/provento-form.component";
 import {DespesasFixasComponent} from "./components/despesas-fixas/despesas-fixas.component";
 import {DespesasRecorrentesComponent} from "./components/despesas-recorrentes/despesas-recorrentes.component";
@@ -37,7 +36,11 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
   {path: 'card-form', component: CartaoFormComponent, canActivate: [AuthGuard]},
-  {path: 'categoria-form', component: CategoriaFormComponent, canActivate: [AuthGuard]},
+  {
+    path: 'categoria-form', 
+    loadChildren: () => import('./components/categoria/categoria.module').then(m => m.CategoriaModule),
+    canActivate: [AuthGuard]
+  },
   {path: 'provento-form', component: ProventoFormComponent, canActivate: [AuthGuard]},
   {path: 'despesas-fixas', component: DespesasFixasComponent, canActivate: [AuthGuard]},
   {path: 'conta-fixa-recorrente', component: ContaFixaRecorrenteComponent, canActivate: [AuthGuard]},
