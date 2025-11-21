@@ -8,7 +8,7 @@ import {AccountService} from "../../services/account.service";
 import {Financa} from "../../models/financa.model";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDialog} from "@angular/material/dialog";
-import {CategoriaFormComponent} from "../categoria-form/categoria-form.component";
+import { CategoriaFormComponent } from '../categoria';
 import {AccountComponent} from "../account/account.component";
 
 @Component({
