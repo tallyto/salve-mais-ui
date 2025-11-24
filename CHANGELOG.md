@@ -2,6 +2,33 @@
 
 ## [Unreleased]
 
+## [1.20.0] - 2025-11-24
+
+### Adicionado
+
+- **Funcionalidade de exportação Excel do Dashboard**:
+  - Botão "Exportar Excel" no header do dashboard
+  - Integração com endpoint do backend para geração de Excel
+  - Download automático de arquivo Excel (.xlsx) formatado
+  - Arquivo com 6 abas organizadas contendo todos os dados do dashboard
+  - Nome do arquivo dinâmico baseado no período selecionado
+  - Tratamento de erros e feedback visual ao usuário
+  - Integração com filtros de mês/ano existentes
+  - Tooltip explicativo e botão desabilitado durante carregamento
+  - Substituição completa da funcionalidade CSV anterior por Excel profissional
+
+### Melhorado
+
+- Layout do header do dashboard com nova organização visual
+- CSS responsivo para botão de exportação
+- Experiência do usuário na exportação de dados
+
+## [1.19.0] - 2025-11-20
+
+### Adicionado
+
+- Melhorias gerais no dashboard e filtros
+
 ## [1.18.0] - 2025-11-16
 
 ### Adicionado

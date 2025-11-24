@@ -99,5 +99,16 @@ export class DashboardService {
     if (ano) params.ano = ano.toString();
     return this.http.get<VariationData[]>(`${this.apiUrl}/variations`, { params });
   }
+
+  exportDashboardToExcel(mes?: number, ano?: number): Observable<Blob> {
+    const params: any = {};
+    if (mes) params.mes = mes.toString();
+    if (ano) params.ano = ano.toString();
+    
+    return this.http.get(`${this.apiUrl}/export/excel`, { 
+      params,
+      responseType: 'blob'
+    });
+  }
 }
 

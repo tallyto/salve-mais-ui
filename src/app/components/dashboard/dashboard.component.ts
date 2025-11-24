@@ -710,4 +710,37 @@ export class DashboardComponent implements OnInit {
     this.loadDashboardData();
     this.loadComprasParceladas();
   }
+
+  // Método para exportar dados do dashboard para Excel
+  exportToExcel(): void {
+    if (!this.summaryData) {
+      alert('Não há dados para exportar. Aguarde o carregamento dos dados.');
+      return;
+    }
+
+    // Chama o endpoint do backend para gerar o arquivo Excel
+    this.dashboardService.exportDashboardToExcel(this.selectedMonth, this.selectedYear).subscribe({
+      next: (data: Blob) => {
+        // Criar um link temporário para download do arquivo
+        const url = window.URL.createObjectURL(data);
+        const link = document.createElement('a');
+        link.href = url;
+        
+        // Definir nome do arquivo baseado no período selecionado
+        const monthName = this.months.find(m => m.value === this.selectedMonth)?.label || '';
+        const fileName = `dashboard-financeiro-${monthName.toLowerCase()}-${this.selectedYear}.xlsx`;
+        link.download = fileName;
+        
+        // Executar o download
+        link.click();
+        
+        // Limpar o URL temporário
+        window.URL.revokeObjectURL(url);
+      },
+      error: (error) => {
+        console.error('Erro ao exportar dados:', error);
+        alert('Erro ao exportar dados. Tente novamente.');
+      }
+    });
+  }
 }
