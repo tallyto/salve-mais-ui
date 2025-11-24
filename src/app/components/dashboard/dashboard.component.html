@@ -1,27 +1,23 @@
 <div class="dashboard-container">
-  <div class="header">
+  <div class="page-header">
     <div class="header-content">
-      <div class="header-left">
-        <mat-icon class="header-icon">dashboard</mat-icon>
-        <div class="header-text">
-          <h2 class="page-title">Dashboard Financeiro</h2>
-          <div class="dashboard-date text-color-secondary">
-            <mat-icon>today</mat-icon> {{ today | date:'dd/MM/yyyy' }} - Visão geral da sua situação financeira
-          </div>
+      <mat-icon class="page-icon">dashboard</mat-icon>
+      <div class="header-text">
+        <h2 class="page-title">Dashboard Financeiro</h2>
+        <div class="page-subtitle text-color-secondary">
+          <mat-icon>today</mat-icon> {{ today | date:'dd/MM/yyyy' }} - Visão geral da sua situação financeira
         </div>
       </div>
-      <div class="header-actions">
-        <button 
-          mat-raised-button 
-          color="primary" 
-          (click)="exportToExcel()" 
-          matTooltip="Exportar dados do dashboard para Excel"
-          [disabled]="isLoading">
-          <mat-icon>file_download</mat-icon>
-          Exportar Excel
-        </button>
-      </div>
     </div>
+    <button 
+      mat-raised-button 
+      color="primary" 
+      (click)="exportToExcel()" 
+      matTooltip="Exportar dados do dashboard para Excel"
+      [disabled]="isLoading">
+      <mat-icon>file_download</mat-icon>
+      Exportar Excel
+    </button>
   </div>
 
   <!-- Filtros de Mês e Ano -->

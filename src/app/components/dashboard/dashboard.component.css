@@ -67,16 +67,18 @@
   font-weight: 500;
 }
 
-/* Header section */
-.dashboard-header {
+/* Header section - removido, agora usa page-header */
+
+/* Page Header */
+.page-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
-  background-color: var(--mat-card-background-color, #fff);
+  background-color: #fff;
   border-radius: 8px;
   padding: 16px 24px;
-  box-shadow: var(--mat-card-box-shadow, 0 1px 3px rgba(0,0,0,0.1));
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .header-content {
@@ -85,27 +87,34 @@
   gap: 16px;
 }
 
+.page-icon {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+  color: #2196F3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .header-text {
   display: flex;
   flex-direction: column;
 }
 
-.header-title {
-  display: flex;
-  align-items: center;
-}
-
 .page-title {
   margin: 0;
+  color: #333;
   font-weight: 500;
   font-size: 22px;
 }
 
-.dashboard-date {
+.page-subtitle {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-top: 8px;
+  color: #666;
 }
 
 /* Loading overlay */
