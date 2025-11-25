@@ -91,7 +91,7 @@
             <div class="form-row">
               <mat-form-field appearance="outline" class="half-width">
                 <mat-label>Valor por Parcela</mat-label>
-                <input matInput type="number" step="0.01" min="0.01" formControlName="valor" placeholder="0.00">
+                <input matInput type="text" formControlName="valor" placeholder="0.00" appCurrencyInput>
                 <span matTextPrefix>R$ </span>
                 <mat-error *ngIf="valor?.hasError('required')">Valor é obrigatório</mat-error>
                 <mat-error *ngIf="valor?.hasError('min')">Valor deve ser maior que zero</mat-error>

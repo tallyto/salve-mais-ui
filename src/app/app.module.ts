@@ -76,6 +76,7 @@ import { ListComprasParceladasComponent } from './components/list-compras-parcel
 import { PagamentosStatusComponent } from './components/pagamentos-status/pagamentos-status.component';
 import { TenantConfigComponent } from './components/tenant-config/tenant-config.component';
 import { HomeComponent } from './components/home/home.component';
+import { CurrencyInputDirective } from './directives/currency-input.directive';
 
 @NgModule({
   declarations: [
@@ -109,7 +110,8 @@ import { HomeComponent } from './components/home/home.component';
     TransacaoDetalheComponent,
     PagamentosStatusComponent,
     TenantConfigComponent,
-    HomeComponent
+    HomeComponent,
+    CurrencyInputDirective
   ],
   imports: [
     BrowserModule,

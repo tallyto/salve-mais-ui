@@ -92,7 +92,7 @@
 
                 <mat-form-field appearance="outline" class="w-100 mb-3">
                   <mat-label>Contribuição Mensal (R$)</mat-label>
-                  <input matInput type="number" formControlName="valorContribuicaoMensal" required>
+                  <input matInput type="text" formControlName="valorContribuicaoMensal" required appCurrencyInput>
                   <span matPrefix>R$ &nbsp;</span>
                   <mat-hint>Quanto você planeja depositar mensalmente</mat-hint>
                   <mat-error *ngIf="reservaForm.get('valorContribuicaoMensal')?.hasError('required')">
@@ -156,7 +156,7 @@
                     <div class="col-md-6">
                       <mat-form-field appearance="outline" class="w-100 mb-3">
                         <mat-label>Valor Inicial (R$)</mat-label>
-                        <input matInput type="number" formControlName="valorInicial" required>
+                        <input matInput type="text" formControlName="valorInicial" required appCurrencyInput>
                         <span matPrefix>R$ &nbsp;</span>
                         <mat-hint>Valor a ser transferido para iniciar sua reserva</mat-hint>
                         <mat-error *ngIf="contribuicaoForm.get('valorInicial')?.hasError('required')">

@@ -2,6 +2,30 @@
 
 ## [Unreleased]
 
+## [1.21.0] - 2025-11-25
+
+### Adicionado
+
+- **Diretiva CurrencyInput para formatação automática de valores monetários**:
+  - Nova diretiva `appCurrencyInput` para campos de valor
+  - Formatação automática com centavos ao digitar
+  - Separadores brasileiros (vírgula para decimais, ponto para milhares)
+  - Limite de 10 dígitos (até R$ 99.999.999,99)
+  - Aplicada em todos os campos de valor monetário:
+    - Fatura - Valor Total
+    - Compra Parcelada - Valor Total
+    - Conta Fixa Recorrente - Valor por Parcela
+    - Despesas Fixas - Valor
+    - Provento - Valor
+    - Reserva de Emergência - Contribuição Mensal e Valor Inicial
+    - Reserva de Emergência - Valor a adicionar
+
+### Melhorado
+
+- Experiência do usuário ao inserir valores monetários
+- Validação automática de valores dentro de limites realistas
+- Consistência na formatação de moeda em toda a aplicação
+
 ## [1.20.0] - 2025-11-24
 
 ### Adicionado

@@ -33,7 +33,7 @@
         <div class="col-12 md:col-6 mb-3">
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>Valor</mat-label>
-            <input type="number" min="0" formControlName="valor" matInput placeholder="0,00">
+            <input type="text" formControlName="valor" matInput placeholder="0,00" appCurrencyInput>
             <mat-icon matSuffix>attach_money</mat-icon>
           </mat-form-field>
         </div>
