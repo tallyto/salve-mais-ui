@@ -9,6 +9,7 @@ import { AccountComponent } from './components/account/account.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './services/auth.guard';
+import { NoAuthGuard } from './services/no-auth.guard';
 import { RecuperarSenhaComponent } from './components/recuperar-senha/recuperar-senha.component';
 import { RedefinirSenhaComponent } from './components/redefinir-senha/redefinir-senha.component';
 import { CriarUsuarioComponent } from './components/criar-usuario/criar-usuario.component';
@@ -33,8 +34,8 @@ import { AdminUsuariosComponent } from './components/admin-usuarios/admin-usuari
 
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'home', component: HomeComponent},
+  {path: '', component: HomeComponent, canActivate: [NoAuthGuard]},
+  {path: 'home', component: HomeComponent, canActivate: [NoAuthGuard]},
   {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
   {path: 'card-form', component: CartaoFormComponent, canActivate: [AuthGuard]},
   {
