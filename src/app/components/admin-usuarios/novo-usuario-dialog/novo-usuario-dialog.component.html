@@ -1,0 +1,80 @@
+<h2 mat-dialog-title>
+  <mat-icon>person_add</mat-icon>
+  Novo Usuário
+</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="usuarioForm" class="usuario-form">
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Nome Completo</mat-label>
+      <input matInput formControlName="nome" required placeholder="Digite o nome completo">
+      <mat-icon matPrefix>person</mat-icon>
+      <mat-error *ngIf="usuarioForm.get('nome')?.hasError('required') && usuarioForm.get('nome')?.touched">
+        Nome é obrigatório
+      </mat-error>
+      <mat-error *ngIf="usuarioForm.get('nome')?.hasError('minlength') && usuarioForm.get('nome')?.touched">
+        Nome deve ter pelo menos 3 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" required type="email" placeholder="Digite o email">
+      <mat-icon matPrefix>email</mat-icon>
+      <mat-error *ngIf="usuarioForm.get('email')?.hasError('required') && usuarioForm.get('email')?.touched">
+        Email é obrigatório
+      </mat-error>
+      <mat-error *ngIf="usuarioForm.get('email')?.hasError('email') && usuarioForm.get('email')?.touched">
+        Formato de email inválido
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Senha</mat-label>
+      <input matInput formControlName="senha"
+             [type]="hidePassword ? 'password' : 'text'"
+             required placeholder="Digite a senha">
+      <mat-icon matPrefix>lock</mat-icon>
+      <button mat-icon-button matSuffix type="button"
+              (click)="hidePassword = !hidePassword"
+              [attr.aria-label]="'Mostrar senha'"
+              [attr.aria-pressed]="!hidePassword">
+        <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-error *ngIf="usuarioForm.get('senha')?.hasError('required') && usuarioForm.get('senha')?.touched">
+        Senha é obrigatória
+      </mat-error>
+      <mat-error *ngIf="usuarioForm.get('senha')?.hasError('minlength') && usuarioForm.get('senha')?.touched">
+        Senha deve ter pelo menos 6 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Confirmar Senha</mat-label>
+      <input matInput formControlName="confirmarSenha"
+             [type]="hideConfirmPassword ? 'password' : 'text'"
+             required placeholder="Confirme a senha">
+      <mat-icon matPrefix>lock_outline</mat-icon>
+      <button mat-icon-button matSuffix type="button"
+              (click)="hideConfirmPassword = !hideConfirmPassword"
+              [attr.aria-label]="'Mostrar senha'"
+              [attr.aria-pressed]="!hideConfirmPassword">
+        <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-error *ngIf="usuarioForm.get('confirmarSenha')?.hasError('required') && usuarioForm.get('confirmarSenha')?.touched">
+        Confirmação de senha é obrigatória
+      </mat-error>
+      <mat-error *ngIf="usuarioForm.hasError('senhasDiferentes') && usuarioForm.get('confirmarSenha')?.touched">
+        As senhas não coincidem
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="fechar()" [disabled]="loading">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="usuarioForm.invalid || loading">
+    <mat-spinner *ngIf="loading" diameter="20" color="accent"></mat-spinner>
+    <span *ngIf="!loading">Criar Usuário</span>
+  </button>
+</mat-dialog-actions>

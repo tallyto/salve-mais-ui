@@ -6,3 +6,9 @@ export interface Usuario {
   ultimoAcesso?: string;
   tenantId?: string;
 }
+
+export interface UsuarioCriacaoAdminDTO {
+  nome: string;
+  email: string;
+  senha?: string;
+}

@@ -11,12 +11,16 @@ export class AuthInterceptor implements HttpInterceptor {
     const token = localStorage.getItem('token');
     const tenant = this.tenantService.getTenant();
     let headers: any = {};
+    
     if (token) {
       headers['Authorization'] = `Bearer ${token}`;
     }
-    if (tenant) {
+    
+    // IMPORTANTE: Só adicionar o tenant do localStorage se a requisição ainda não tiver o header
+    if (tenant && !req.headers.has('X-Private-Tenant')) {
       headers['X-Private-Tenant'] = tenant;
     }
+    
     if (Object.keys(headers).length > 0) {
       const cloned = req.clone({ setHeaders: headers });
       return next.handle(cloned);

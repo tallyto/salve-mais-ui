@@ -32,4 +32,17 @@ export class UsuarioService {
   getUsuarioLogado(): Observable<Usuario> {
     return this.http.get<Usuario>(`${this.apiUrl}/me`);
   }
+
+  // Métodos Admin
+  listarUsuarios(): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(`${this.apiUrl}/admin/listar`);
+  }
+
+  criarUsuario(usuario: { nome: string, email: string, senha: string }): Observable<Usuario> {
+    return this.http.post<Usuario>(`${this.apiUrl}/admin/criar`, usuario);
+  }
+
+  deletarUsuario(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/admin/${id}`);
+  }
 }

@@ -29,6 +29,7 @@ import { ListComprasParceladasComponent } from './components/list-compras-parcel
 import { PagamentosStatusComponent } from './components/pagamentos-status/pagamentos-status.component';
 import { TenantConfigComponent } from './components/tenant-config/tenant-config.component';
 import { HomeComponent } from './components/home/home.component';
+import { AdminUsuariosComponent } from './components/admin-usuarios/admin-usuarios.component';
 
 
 const routes: Routes = [
@@ -68,6 +69,7 @@ const routes: Routes = [
   {path: 'reserva-emergencia/criar', component: ReservaEmergenciaFormComponent, canActivate: [AuthGuard]},
   {path: 'reserva-emergencia/editar/:id', component: ReservaEmergenciaFormComponent, canActivate: [AuthGuard]},
   {path: 'tenant-config', component: TenantConfigComponent, canActivate: [AuthGuard]},
+  {path: 'admin-usuarios', component: AdminUsuariosComponent, canActivate: [AuthGuard]},
   {path: '**', redirectTo: 'dashboard'}
 ];
 

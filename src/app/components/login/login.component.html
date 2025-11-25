@@ -27,13 +27,19 @@
           <mat-error *ngIf="loginForm.get('senha')?.hasError('minlength')">A senha deve ter no mínimo 6 caracteres</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" class="form-field" *ngIf="showDomainField">
+        <mat-form-field appearance="outline" class="form-field" *ngIf="showDomainField || alterarDominioManualmente">
           <mat-label>Domínio</mat-label>
           <input matInput formControlName="dominio" required placeholder="Informe o domínio da empresa (ex: minhaempresa.com.br)">
           <mat-icon matPrefix>business</mat-icon>
           <mat-hint>Exemplo: minhaempresa.com.br</mat-hint>
-          <mat-error *ngIf="loginForm.get('dominio')?.hasError('required') && showDomainField">Domínio é obrigatório</mat-error>
+          <mat-error *ngIf="loginForm.get('dominio')?.hasError('required') && (showDomainField || alterarDominioManualmente)">Domínio é obrigatório</mat-error>
         </mat-form-field>
+
+        <div class="checkbox-row" *ngIf="dominioDetectado && !showDomainField">
+          <mat-checkbox formControlName="alterarDominio" (change)="onAlterarDominioChange()">
+            Alterar domínio (usando: {{ dominioDetectado }})
+          </mat-checkbox>
+        </div>
 
         <div class="actions-row">
           <mat-checkbox formControlName="lembrarMe" class="remember-me">Lembrar-me</mat-checkbox>

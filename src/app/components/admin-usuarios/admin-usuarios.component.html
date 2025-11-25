@@ -1,0 +1,70 @@
+<div class="admin-usuarios-container">
+  <mat-card>
+    <mat-card-header>
+      <div class="header-content">
+        <div class="header-title">
+          <mat-icon>people</mat-icon>
+          <h2>Gerenciamento de Usuários</h2>
+        </div>
+        <button mat-raised-button color="primary" (click)="abrirDialogNovoUsuario()">
+          <mat-icon>person_add</mat-icon>
+          Novo Usuário
+        </button>
+      </div>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div *ngIf="loading" class="loading-container">
+        <mat-spinner></mat-spinner>
+      </div>
+
+      <div *ngIf="!loading && usuarios.length === 0" class="empty-state">
+        <mat-icon>people_outline</mat-icon>
+        <p>Nenhum usuário encontrado</p>
+      </div>
+
+      <table *ngIf="!loading && usuarios.length > 0" mat-table [dataSource]="usuarios" class="usuarios-table">
+        <!-- Coluna Nome -->
+        <ng-container matColumnDef="nome">
+          <th mat-header-cell *matHeaderCellDef>Nome</th>
+          <td mat-cell *matCellDef="let usuario">{{ usuario.nome }}</td>
+        </ng-container>
+
+        <!-- Coluna Email -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let usuario">{{ usuario.email }}</td>
+        </ng-container>
+
+        <!-- Coluna Data de Criação -->
+        <ng-container matColumnDef="criadoEm">
+          <th mat-header-cell *matHeaderCellDef>Criado Em</th>
+          <td mat-cell *matCellDef="let usuario">{{ formatarData(usuario.criadoEm) }}</td>
+        </ng-container>
+
+        <!-- Coluna Último Acesso -->
+        <ng-container matColumnDef="ultimoAcesso">
+          <th mat-header-cell *matHeaderCellDef>Último Acesso</th>
+          <td mat-cell *matCellDef="let usuario">{{ formatarData(usuario.ultimoAcesso) }}</td>
+        </ng-container>
+
+        <!-- Coluna Ações -->
+        <ng-container matColumnDef="acoes">
+          <th mat-header-cell *matHeaderCellDef>Ações</th>
+          <td mat-cell *matCellDef="let usuario">
+            <button mat-icon-button 
+                    color="warn" 
+                    (click)="deletarUsuario(usuario)" 
+                    [disabled]="!podeDeletar(usuario)"
+                    [matTooltip]="podeDeletar(usuario) ? 'Deletar usuário' : 'Você não pode deletar sua própria conta'">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>
