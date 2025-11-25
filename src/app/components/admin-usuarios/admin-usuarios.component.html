@@ -23,7 +23,8 @@
         <p>Nenhum usuário encontrado</p>
       </div>
 
-      <table *ngIf="!loading && usuarios.length > 0" mat-table [dataSource]="usuarios" class="usuarios-table">
+      <div *ngIf="!loading && usuarios.length > 0" class="table-container">
+        <table mat-table [dataSource]="usuarios" class="usuarios-table">
         <!-- Coluna Nome -->
         <ng-container matColumnDef="nome">
           <th mat-header-cell *matHeaderCellDef>Nome</th>
@@ -64,7 +65,8 @@
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
+        </table>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>

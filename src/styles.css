@@ -227,6 +227,17 @@ body {
   display: none;
 }
 
+/* Table Responsive Wrapper */
+.table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+}
+
+.table-container table {
+  min-width: 100%;
+}
+
 /* Responsive Utilities */
 @media (max-width: 768px) {
   .page-header {
@@ -251,5 +262,15 @@ body {
 
   .form-actions button {
     width: 100%;
+  }
+
+  /* Scroll horizontal para tabelas em telas pequenas */
+  .table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .table-container table {
+    min-width: 600px;
   }
 }
