@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+## [1.30.1] - 2025-12-07
+
+### Melhorado
+
+- **Formatação Monetária Completa**:
+  - Diretiva `appCurrencyInput` aplicada em todos os campos de valores monetários
+  - Campos de Metas: valorAlvo, valorAtual
+  - Campos de Meta Progresso: valor de adição
+  - Campos de Plano de Aposentadoria: patrimonioAtual, contribuicaoMensal, rendaDesejada
+  - Formatação automática R$ 1.000,00 em tempo real
+  - Placeholders atualizados para formato brasileiro (0,00)
+
 ## [1.30.0] - 2025-12-07
 
 ### Adicionado

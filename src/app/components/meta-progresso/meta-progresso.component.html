@@ -31,7 +31,7 @@
   <form [formGroup]="progressoForm" class="progresso-form">
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Valor a Adicionar</mat-label>
-      <input matInput type="number" formControlName="valor" placeholder="0.00">
+      <input matInput type="text" formControlName="valor" placeholder="0,00" appCurrencyInput>
       <span matPrefix>R$&nbsp;</span>
       <mat-error *ngIf="progressoForm.get('valor')?.hasError('required')">
         Valor é obrigatório

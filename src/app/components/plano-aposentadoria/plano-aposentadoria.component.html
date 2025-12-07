@@ -57,7 +57,7 @@
             
             <mat-form-field appearance="outline">
               <mat-label>Patrimônio Atual</mat-label>
-              <input matInput type="number" formControlName="patrimonioAtual" placeholder="Ex: 50000">
+              <input matInput type="text" formControlName="patrimonioAtual" placeholder="Ex: 50.000,00" appCurrencyInput>
               <span matPrefix>R$&nbsp;</span>
               <mat-icon matSuffix>account_balance_wallet</mat-icon>
               <mat-error *ngIf="planoForm.get('patrimonioAtual')?.hasError('required')">
@@ -67,7 +67,7 @@
 
             <mat-form-field appearance="outline">
               <mat-label>Contribuição Mensal</mat-label>
-              <input matInput type="number" formControlName="contribuicaoMensal" placeholder="Ex: 1000">
+              <input matInput type="text" formControlName="contribuicaoMensal" placeholder="Ex: 1.000,00" appCurrencyInput>
               <span matPrefix>R$&nbsp;</span>
               <mat-icon matSuffix>savings</mat-icon>
               <mat-hint>Quanto você pretende investir mensalmente</mat-hint>
@@ -89,7 +89,7 @@
 
             <mat-form-field appearance="outline">
               <mat-label>Renda Mensal Desejada na Aposentadoria</mat-label>
-              <input matInput type="number" formControlName="rendaDesejada" placeholder="Ex: 5000">
+              <input matInput type="text" formControlName="rendaDesejada" placeholder="Ex: 5.000,00" appCurrencyInput>
               <span matPrefix>R$&nbsp;</span>
               <mat-icon matSuffix>attach_money</mat-icon>
               <mat-hint>Quanto você deseja ter de renda mensal</mat-hint>
