@@ -80,6 +80,7 @@ import { HomeComponent } from './components/home/home.component';
 import { CurrencyInputDirective } from './directives/currency-input.directive';
 import { CompraDebitoFormComponent } from './components/compra-debito-form/compra-debito-form.component';
 import { ListComprasDebitoComponent } from './components/list-compras-debito/list-compras-debito.component';
+import { ComparativoMensalComponent } from './components/comparativo-mensal/comparativo-mensal.component';
 
 @NgModule({
   declarations: [
@@ -117,7 +118,8 @@ import { ListComprasDebitoComponent } from './components/list-compras-debito/lis
     HomeComponent,
     CurrencyInputDirective,
     CompraDebitoFormComponent,
-    ListComprasDebitoComponent
+    ListComprasDebitoComponent,
+    ComparativoMensalComponent
   ],
   imports: [
     BrowserModule,

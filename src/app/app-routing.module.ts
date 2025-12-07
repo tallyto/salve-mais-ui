@@ -34,6 +34,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AdminUsuariosComponent } from './components/admin-usuarios/admin-usuarios.component';
 import { CompraDebitoFormComponent } from './components/compra-debito-form/compra-debito-form.component';
 import { ListComprasDebitoComponent } from './components/list-compras-debito/list-compras-debito.component';
+import { ComparativoMensalComponent } from './components/comparativo-mensal/comparativo-mensal.component';
 
 
 const routes: Routes = [
@@ -73,6 +74,7 @@ const routes: Routes = [
   {path: 'redefinir-senha', component: RedefinirSenhaComponent},
   {path: 'criar-usuario', component: CriarUsuarioComponent},
   {path: 'relatorio-mensal', component: RelatorioMensalComponent, canActivate: [AuthGuard]},
+  {path: 'comparativo-mensal', component: ComparativoMensalComponent, canActivate: [AuthGuard]},
   {path: 'reserva-emergencia', component: ReservaEmergenciaComponent, canActivate: [AuthGuard]},
   {path: 'reserva-emergencia/criar', component: ReservaEmergenciaFormComponent, canActivate: [AuthGuard]},
   {path: 'reserva-emergencia/editar/:id', component: ReservaEmergenciaFormComponent, canActivate: [AuthGuard]},

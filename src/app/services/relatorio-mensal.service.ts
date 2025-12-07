@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { RelatorioMensalDTO, ItemGastoFixoDTO } from '../models/relatorio-mensal.model';
+import { ComparativoMensalDTO } from '../models/comparativo-mensal.model';
 
 @Injectable({
   providedIn: 'root'
@@ -41,5 +42,25 @@ export class RelatorioMensalService {
       url += `?dataReferencia=${dataReferencia.toISOString().split('T')[0]}`;
     }
     return this.http.get<ItemGastoFixoDTO[]>(url);
+  }
+
+  /**
+   * Gera comparativo entre dois meses
+   * @param anoAnterior Ano do mês anterior
+   * @param mesAnterior Mês anterior (1-12)
+   * @param anoAtual Ano do mês atual
+   * @param mesAtual Mês atual (1-12)
+   * @returns Observable com o comparativo mensal
+   */
+  gerarComparativo(anoAnterior: number, mesAnterior: number, anoAtual: number, mesAtual: number): Observable<ComparativoMensalDTO> {
+    return this.http.get<ComparativoMensalDTO>(`${this.apiUrl}/comparativo/${anoAnterior}/${mesAnterior}/${anoAtual}/${mesAtual}`);
+  }
+
+  /**
+   * Gera comparativo entre o mês atual e o anterior
+   * @returns Observable com o comparativo mensal
+   */
+  gerarComparativoAtual(): Observable<ComparativoMensalDTO> {
+    return this.http.get<ComparativoMensalDTO>(`${this.apiUrl}/comparativo/atual`);
   }
 }

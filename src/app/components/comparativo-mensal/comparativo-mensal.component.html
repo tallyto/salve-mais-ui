@@ -1,0 +1,196 @@
+<div class="comparativo-container">
+  <!-- Header -->
+  <div class="header">
+    <h2>📊 Comparativo Mensal</h2>
+    <p class="subtitle">Compare gastos entre diferentes períodos</p>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filtros-card">
+    <div class="filtros-row">
+      <div class="filtro-group">
+        <label>Mês Anterior</label>
+        <div class="filtro-inputs">
+          <select [(ngModel)]="selectedMesAnterior" class="form-control">
+            <option *ngFor="let month of months" [value]="month.value">{{ month.label }}</option>
+          </select>
+          <select [(ngModel)]="selectedAnoAnterior" class="form-control">
+            <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filtro-group">
+        <label>Mês Atual</label>
+        <div class="filtro-inputs">
+          <select [(ngModel)]="selectedMesAtual" class="form-control">
+            <option *ngFor="let month of months" [value]="month.value">{{ month.label }}</option>
+          </select>
+          <select [(ngModel)]="selectedAnoAtual" class="form-control">
+            <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filtro-actions">
+        <button class="btn btn-primary" (click)="carregarComparativo()">
+          <i class="bi bi-search"></i> Comparar
+        </button>
+        <button class="btn btn-secondary" (click)="carregarComparativoAtual()">
+          <i class="bi bi-calendar"></i> Atual vs Anterior
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Carregando...</span>
+    </div>
+    <p>Gerando comparativo...</p>
+  </div>
+
+  <!-- Error -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Comparativo -->
+  <div *ngIf="!isLoading && comparativo" class="comparativo-content">
+    
+    <!-- Resumo Geral -->
+    <div class="resumo-card" [ngClass]="getStatusClass()">
+      <div class="resumo-header">
+        <h3>{{ getStatusIcon() }} Status Geral</h3>
+        <span class="status-badge">{{ comparativo.resumoComparativo.statusGeral }}</span>
+      </div>
+
+      <div class="resumo-grid">
+        <!-- Proventos -->
+        <div class="resumo-item">
+          <div class="resumo-label">💰 Proventos</div>
+          <div class="resumo-valores">
+            <span class="valor-anterior">{{ formatCurrency(comparativo.resumoComparativo.totalProventosAnterior) }}</span>
+            <i class="bi bi-arrow-right"></i>
+            <span class="valor-atual">{{ formatCurrency(comparativo.resumoComparativo.totalProventosAtual) }}</span>
+          </div>
+          <div class="resumo-variacao" [class.positivo]="comparativo.resumoComparativo.variacaoProventos > 0" 
+               [class.negativo]="comparativo.resumoComparativo.variacaoProventos < 0">
+            {{ formatCurrency(comparativo.resumoComparativo.variacaoProventos) }}
+            ({{ formatPercentual(comparativo.resumoComparativo.percentualProventos) }})
+          </div>
+        </div>
+
+        <!-- Despesas -->
+        <div class="resumo-item">
+          <div class="resumo-label">💸 Despesas</div>
+          <div class="resumo-valores">
+            <span class="valor-anterior">{{ formatCurrency(comparativo.resumoComparativo.totalDespesasAnterior) }}</span>
+            <i class="bi bi-arrow-right"></i>
+            <span class="valor-atual">{{ formatCurrency(comparativo.resumoComparativo.totalDespesasAtual) }}</span>
+          </div>
+          <div class="resumo-variacao" [class.positivo]="comparativo.resumoComparativo.variacaoDespesas < 0" 
+               [class.negativo]="comparativo.resumoComparativo.variacaoDespesas > 0">
+            {{ formatCurrency(comparativo.resumoComparativo.variacaoDespesas) }}
+            ({{ formatPercentual(comparativo.resumoComparativo.percentualDespesas) }})
+          </div>
+        </div>
+
+        <!-- Saldo -->
+        <div class="resumo-item">
+          <div class="resumo-label">💵 Saldo Final</div>
+          <div class="resumo-valores">
+            <span class="valor-anterior">{{ formatCurrency(comparativo.resumoComparativo.saldoAnterior) }}</span>
+            <i class="bi bi-arrow-right"></i>
+            <span class="valor-atual">{{ formatCurrency(comparativo.resumoComparativo.saldoAtual) }}</span>
+          </div>
+          <div class="resumo-variacao" [class.positivo]="comparativo.resumoComparativo.variacaoSaldo > 0" 
+               [class.negativo]="comparativo.resumoComparativo.variacaoSaldo < 0">
+            {{ formatCurrency(comparativo.resumoComparativo.variacaoSaldo) }}
+            ({{ formatPercentual(comparativo.resumoComparativo.percentualSaldo) }})
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Gráfico de Categorias -->
+    <div class="chart-card">
+      <h3>📊 Comparação por Categoria (Top 10)</h3>
+      <div class="chart-container">
+        <canvas baseChart
+                [data]="barChartData"
+                [options]="barChartOptions"
+                [type]="'bar'">
+        </canvas>
+      </div>
+    </div>
+
+    <!-- Maiores Variações -->
+    <div class="variacoes-card">
+      <h3>🎯 Maiores Variações</h3>
+      <div class="variacoes-list">
+        <div *ngFor="let variacao of comparativo.maioresVariacoes" 
+             class="variacao-item" 
+             [ngClass]="getImpactoClass(variacao.impacto)">
+          <div class="variacao-info">
+            <span class="variacao-categoria">{{ variacao.categoria }}</span>
+            <span class="variacao-tipo">{{ variacao.tipo }}</span>
+          </div>
+          <div class="variacao-valores">
+            <span class="variacao-absoluta">{{ formatCurrency(variacao.variacaoAbsoluta) }}</span>
+            <span class="variacao-percentual">{{ formatPercentual(variacao.percentual) }}</span>
+          </div>
+          <div class="variacao-badge">{{ variacao.impacto }}</div>
+        </div>
+
+        <div *ngIf="comparativo.maioresVariacoes.length === 0" class="no-variacoes">
+          Nenhuma variação significativa detectada
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabela de Categorias -->
+    <div class="categorias-card">
+      <h3>📋 Detalhamento por Categoria</h3>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Categoria</th>
+              <th>{{ comparativo.mesAnterior }}</th>
+              <th>{{ comparativo.mesAtual }}</th>
+              <th>Variação</th>
+              <th>%</th>
+              <th>Tendência</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let categoria of comparativo.categorias">
+              <td>{{ getTendenciaIcon(categoria.tendencia) }}</td>
+              <td class="categoria-nome">{{ categoria.categoria }}</td>
+              <td>{{ formatCurrency(categoria.valorAnterior) }}</td>
+              <td>{{ formatCurrency(categoria.valorAtual) }}</td>
+              <td [class.positivo]="categoria.variacao < 0" [class.negativo]="categoria.variacao > 0">
+                {{ formatCurrency(categoria.variacao) }}
+              </td>
+              <td [class.positivo]="categoria.percentual < 0" [class.negativo]="categoria.percentual > 0">
+                {{ formatPercentual(categoria.percentual) }}
+              </td>
+              <td>
+                <span class="badge" 
+                      [class.badge-danger]="categoria.tendencia === 'AUMENTO'"
+                      [class.badge-success]="categoria.tendencia === 'REDUCAO'"
+                      [class.badge-secondary]="categoria.tendencia === 'ESTAVEL'">
+                  {{ categoria.tendencia }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
