@@ -2,6 +2,40 @@
 
 ## [Unreleased]
 
+## [1.28.0] - 2025-12-07
+
+### Melhorado
+
+- **Menu Lateral com Nova Organização**:
+  - Reorganização completa das seções do menu:
+    - 💰 Finanças: Contas, Receitas, Reserva de Emergência e Transações
+    - 💳 Cartões de Crédito: Cartões, Faturas, Limites e Comprovantes
+    - 📊 Despesas: Pagamentos, Fixas, Assinaturas, Parceladas e Débito
+    - 📈 Análises e Relatórios: Relatório Mensal e Regra 50/30/20
+    - ⚙️ Configurações: Categorias, Usuários, Notificações e Sistema
+  - Emojis nos cabeçalhos das seções para melhor identificação visual
+  - Ícones atualizados e mais apropriados:
+    - `account_balance_wallet` para Contas Bancárias
+    - `trending_up` para Receitas
+    - `event_repeat` para Despesas Fixas
+    - `subscriptions` para Assinaturas e Serviços
+    - `pending_actions` para Status de Pagamentos
+    - `gpp_maybe` para Limites e Alertas
+    - `bar_chart` para Relatório Mensal
+    - `label` para Categorias
+    - `notifications` para Notificações por Email
+  - Melhorias visuais no design:
+    - Barra lateral com gradiente sutil de fundo (#fafafa a #ffffff)
+    - Borda lateral colorida (3px azul) nos itens ativos
+    - Efeito hover suave com fundo translúcido
+    - Item ativo com gradiente horizontal e fonte em negrito
+    - Scrollbar customizada e discreta (6px, arredondada)
+    - Cabeçalhos de seção com fonte menor (0.7rem) e mais peso (600)
+    - Espaçamento otimizado entre itens (44px altura)
+    - Ícones com tamanho consistente (20px)
+    - Rodapé com fundo diferenciado para versão da aplicação
+  - Melhor hierarquia visual e navegação mais intuitiva
+
 ## [1.27.0] - 2025-12-07
 
 ### Adicionado

@@ -65,17 +65,23 @@
   <mat-sidenav #sidenav *ngIf="isAuthenticated" [class.mat-elevation-z4]="true" class="app-sidenav" mode="side">
     <div class="sidenav-content">
       <mat-nav-list>
+        <!-- Principal -->
         <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link">
           <mat-icon>dashboard</mat-icon>
           <span>Dashboard</span>
         </a>
 
         <mat-divider></mat-divider>
-        <div class="nav-section-header">Contas e Rendimentos</div>
+        <div class="nav-section-header">💰 Finanças</div>
 
         <a mat-list-item routerLink="/account" routerLinkActive="active-link">
-          <mat-icon>account_balance</mat-icon>
+          <mat-icon>account_balance_wallet</mat-icon>
           <span>Contas Bancárias</span>
+        </a>
+
+        <a mat-list-item routerLink="/provento-form" routerLinkActive="active-link">
+          <mat-icon>trending_up</mat-icon>
+          <span>Receitas</span>
         </a>
 
         <a mat-list-item routerLink="/reserva-emergencia" routerLinkActive="active-link">
@@ -83,26 +89,49 @@
           <span>Reserva de Emergência</span>
         </a>
 
-        <a mat-list-item routerLink="/provento-form" routerLinkActive="active-link">
-          <mat-icon>attach_money</mat-icon>
-          <span>Receitas</span>
+        <a mat-list-item routerLink="/transacoes" routerLinkActive="active-link">
+          <mat-icon>swap_horiz</mat-icon>
+          <span>Transações</span>
         </a>
 
         <mat-divider></mat-divider>
-        <div class="nav-section-header">Despesas e Pagamentos</div>
+        <div class="nav-section-header">💳 Cartões de Crédito</div>
+
+        <a mat-list-item routerLink="/card-form" routerLinkActive="active-link">
+          <mat-icon>credit_card</mat-icon>
+          <span>Meus Cartões</span>
+        </a>
+
+        <a mat-list-item routerLink="/faturas" routerLinkActive="active-link">
+          <mat-icon>receipt</mat-icon>
+          <span>Faturas</span>
+        </a>
+
+        <a mat-list-item routerLink="/cartao-limites" routerLinkActive="active-link">
+          <mat-icon>gpp_maybe</mat-icon>
+          <span>Limites e Alertas</span>
+        </a>
+
+        <a mat-list-item routerLink="/comprovantes" routerLinkActive="active-link">
+          <mat-icon>receipt_long</mat-icon>
+          <span>Comprovantes</span>
+        </a>
+
+        <mat-divider></mat-divider>
+        <div class="nav-section-header">📊 Despesas</div>
 
         <a mat-list-item routerLink="/pagamentos-status" routerLinkActive="active-link">
-          <mat-icon>payment</mat-icon>
+          <mat-icon>pending_actions</mat-icon>
           <span>Status de Pagamentos</span>
         </a>
 
         <a mat-list-item routerLink="/despesas-fixas" routerLinkActive="active-link">
-          <mat-icon>account_balance</mat-icon>
+          <mat-icon>event_repeat</mat-icon>
           <span>Despesas Fixas</span>
         </a>
 
         <a mat-list-item routerLink="/despesas-recorrentes" routerLinkActive="active-link">
-          <mat-icon>autorenew</mat-icon>
+          <mat-icon>subscriptions</mat-icon>
           <span>Assinaturas e Serviços</span>
         </a>
 
@@ -117,41 +146,10 @@
         </a>
 
         <mat-divider></mat-divider>
-        <div class="nav-section-header">Cartões de Crédito</div>
-
-        <a mat-list-item routerLink="/card-form" routerLinkActive="active-link">
-          <mat-icon>credit_card</mat-icon>
-          <span>Gerenciar Cartões</span>
-        </a>
-
-        <a mat-list-item routerLink="/cartao-limites" routerLinkActive="active-link">
-          <mat-icon>security</mat-icon>
-          <span>Limites e Alertas</span>
-        </a>
-
-        <a mat-list-item routerLink="/faturas" routerLinkActive="active-link">
-          <mat-icon>receipt</mat-icon>
-          <span>Faturas</span>
-        </a>
-
-        <a mat-list-item routerLink="/comprovantes" routerLinkActive="active-link">
-          <mat-icon>receipt_long</mat-icon>
-          <span>Comprovantes</span>
-        </a>
-
-        <mat-divider></mat-divider>
-        <div class="nav-section-header">Histórico</div>
-
-        <a mat-list-item routerLink="/transacoes" routerLinkActive="active-link">
-          <mat-icon>swap_horiz</mat-icon>
-          <span>Transações</span>
-        </a>
-
-        <mat-divider></mat-divider>
-        <div class="nav-section-header">Relatórios</div>
+        <div class="nav-section-header">📈 Análises e Relatórios</div>
 
         <a mat-list-item routerLink="/relatorio-mensal" routerLinkActive="active-link">
-          <mat-icon>assessment</mat-icon>
+          <mat-icon>bar_chart</mat-icon>
           <span>Relatório Mensal</span>
         </a>
 
@@ -161,26 +159,26 @@
         </a>
 
         <mat-divider></mat-divider>
-        <div class="nav-section-header">Configurações</div>
+        <div class="nav-section-header">⚙️ Configurações</div>
 
         <a mat-list-item routerLink="/categoria-form" routerLinkActive="active-link">
-          <mat-icon>category</mat-icon>
+          <mat-icon>label</mat-icon>
           <span>Categorias</span>
-        </a>
-
-        <a mat-list-item routerLink="/tenant-config" routerLinkActive="active-link">
-          <mat-icon>settings</mat-icon>
-          <span>Configurações do Sistema</span>
-        </a>
-
-        <a mat-list-item routerLink="/notificacoes-email-config" routerLinkActive="active-link">
-          <mat-icon>email</mat-icon>
-          <span>Notificações por Email</span>
         </a>
 
         <a mat-list-item routerLink="/admin-usuarios" routerLinkActive="active-link">
           <mat-icon>people</mat-icon>
           <span>Gerenciar Usuários</span>
+        </a>
+
+        <a mat-list-item routerLink="/notificacoes-email-config" routerLinkActive="active-link">
+          <mat-icon>notifications</mat-icon>
+          <span>Notificações por Email</span>
+        </a>
+
+        <a mat-list-item routerLink="/tenant-config" routerLinkActive="active-link">
+          <mat-icon>settings</mat-icon>
+          <span>Sistema</span>
         </a>
       </mat-nav-list>
     </div>
