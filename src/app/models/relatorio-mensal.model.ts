@@ -6,6 +6,7 @@ export interface RelatorioMensalDTO {
   receitasPendentes: ItemReceitasPendentesDTO[];
   cartoes: ItemCartaoDTO[];
   gastosFixos: ItemGastoFixoDTO[];
+  comprasDebito: ItemCompraDebitoDTO[];
   outrasDespesas: ItemOutrasDescricaoDTO[];
   saldoFinal: number;
   totalDividas: number;
@@ -16,6 +17,7 @@ export interface ResumoFinanceiroDTO {
   totalReceitasPendentes: number;
   totalCartoes: number;
   totalGastosFixos: number;
+  totalComprasDebito: number;
   totalOutrasDespesas: number;
   saldoFinal: number;
   totalDividas: number;
@@ -61,6 +63,15 @@ export interface ItemGastoFixoDTO {
   vencimento: Date;
   categoria: string;
   pago: boolean;
+}
+
+export interface ItemCompraDebitoDTO {
+  id: number;
+  descricao: string;
+  valor: number;
+  dataCompra: Date;
+  categoria: string;
+  conta: string;
 }
 
 export interface ItemOutrasDescricaoDTO {

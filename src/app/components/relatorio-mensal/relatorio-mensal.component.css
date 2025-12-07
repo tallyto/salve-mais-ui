@@ -252,6 +252,14 @@
   color: #f44336;
 }
 
+.resumo-item.compras-debito {
+  border-left-color: #e91e63;
+}
+
+.resumo-item.compras-debito mat-icon {
+  color: #e91e63;
+}
+
 .resumo-item.cartoes {
   border-left-color: #ff9800;
 }
@@ -643,6 +651,17 @@
   .card-content {
     padding: 12px;
   }
+}
+
+/* Categoria badge */
+.categoria-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  background-color: #e3f2fd;
+  color: #1976d2;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
 }
 
 /* Animações */
