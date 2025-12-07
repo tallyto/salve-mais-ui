@@ -32,6 +32,8 @@ import { PagamentosStatusComponent } from './components/pagamentos-status/pagame
 import { TenantConfigComponent } from './components/tenant-config/tenant-config.component';
 import { HomeComponent } from './components/home/home.component';
 import { AdminUsuariosComponent } from './components/admin-usuarios/admin-usuarios.component';
+import { CompraDebitoFormComponent } from './components/compra-debito-form/compra-debito-form.component';
+import { ListComprasDebitoComponent } from './components/list-compras-debito/list-compras-debito.component';
 
 
 const routes: Routes = [
@@ -62,6 +64,9 @@ const routes: Routes = [
   {path: 'compras-parceladas', component: ListComprasParceladasComponent, canActivate: [AuthGuard]},
   {path: 'compras-parceladas/nova', component: CompraParceladaFormComponent, canActivate: [AuthGuard]},
   {path: 'compras-parceladas/editar/:id', component: CompraParceladaFormComponent, canActivate: [AuthGuard]},
+  {path: 'compras-debito', component: ListComprasDebitoComponent, canActivate: [AuthGuard]},
+  {path: 'compras-debito/nova', component: CompraDebitoFormComponent, canActivate: [AuthGuard]},
+  {path: 'compras-debito/editar/:id', component: CompraDebitoFormComponent, canActivate: [AuthGuard]},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
   {path: 'recuperar-senha', component: RecuperarSenhaComponent},

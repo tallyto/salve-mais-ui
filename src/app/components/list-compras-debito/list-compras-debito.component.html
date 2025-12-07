@@ -1,0 +1,158 @@
+<div class="container">
+  <div class="header">
+    <h2>
+      <mat-icon class="title-icon">shopping_cart</mat-icon>
+      Compras em Débito
+    </h2>
+    <button mat-raised-button color="primary" (click)="novaCompra()">
+      <mat-icon>add</mat-icon>
+      Nova Compra
+    </button>
+  </div>
+
+  <!-- Filtros de Mês e Ano -->
+  <div class="filters-container">
+    <div class="filters-header">
+      <h3 class="filters-title">
+        {{ months[selectedMonth - 1].label }} / {{ selectedYear }}
+      </h3>
+      
+      <div class="period-navigation">
+        <div class="nav-buttons">
+          <button mat-icon-button matTooltip="Mês anterior" (click)="previousMonth()">
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+          <button mat-icon-button matTooltip="Próximo mês" (click)="nextMonth()">
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+        <button mat-raised-button color="accent" (click)="exportarParaExcel()" matTooltip="Exportar para Excel">
+          <mat-icon>download</mat-icon>
+          Exportar
+        </button>
+      </div>
+    </div>
+
+    <div class="filters-row">
+      <!-- Seleção de Mês e Ano -->
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Mês</mat-label>
+        <mat-select [(value)]="selectedMonth" (selectionChange)="onFilterChange()">
+          <mat-option *ngFor="let month of months" [value]="month.value">
+            {{ month.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Ano</mat-label>
+        <mat-select [(value)]="selectedYear" (selectionChange)="onFilterChange()">
+          <mat-option *ngFor="let year of years" [value]="year">
+            {{ year }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- Tabela -->
+  <div class="table-container">
+    <table [dataSource]="comprasDebito" mat-table matSort matSortDisableClear matSortDirection="desc" class="compras-table">
+
+      <!-- Nome Column -->
+      <ng-container matColumnDef="nome">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Descrição</th>
+        <td *matCellDef="let compra" mat-cell>{{ compra.nome }}</td>
+      </ng-container>
+
+      <!-- Categoria Column -->
+      <ng-container matColumnDef="categoria">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Categoria</th>
+        <td *matCellDef="let compra" mat-cell>
+          <span class="categoria-badge" *ngIf="compra.categoria">
+            {{ compra.categoria.nome }}
+          </span>
+          <span class="sem-categoria" *ngIf="!compra.categoria">
+            Sem categoria
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Data da Compra Column -->
+      <ng-container matColumnDef="dataCompra">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Data</th>
+        <td *matCellDef="let compra" mat-cell>{{ compra.dataCompra | date:'dd/MM/yyyy' }}</td>
+      </ng-container>
+
+      <!-- Valor Column -->
+      <ng-container matColumnDef="valor">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Valor</th>
+        <td *matCellDef="let compra" mat-cell class="valor-cell">
+          {{ compra.valor | currency:'BRL':'symbol':'1.2-2' }}
+        </td>
+      </ng-container>
+
+      <!-- Observações Column -->
+      <ng-container matColumnDef="observacoes">
+        <th *matHeaderCellDef mat-header-cell>Observações</th>
+        <td *matCellDef="let compra" mat-cell class="observacoes-cell">
+          <span *ngIf="compra.observacoes" [matTooltip]="compra.observacoes" matTooltipPosition="above">
+            {{ compra.observacoes.length > 30 ? (compra.observacoes | slice:0:30) + '...' : compra.observacoes }}
+          </span>
+          <span *ngIf="!compra.observacoes" class="sem-observacao">-</span>
+        </td>
+      </ng-container>
+
+      <!-- Ações Column -->
+      <ng-container matColumnDef="acoes">
+        <th *matHeaderCellDef mat-header-cell class="acoes-header">Ações</th>
+        <td *matCellDef="let compra" mat-cell class="acoes-cell">
+          <button mat-icon-button color="primary" (click)="editarCompra(compra)" matTooltip="Editar">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="excluirCompra(compra)" matTooltip="Excluir">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+      <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+
+      <!-- Linha quando não há dados -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell no-data" [attr.colspan]="displayedColumns.length">
+          <div class="no-data-content">
+            <mat-icon>shopping_cart</mat-icon>
+            <p *ngIf="!isLoadingResults">Nenhuma compra encontrada para o período selecionado</p>
+            <p *ngIf="isLoadingResults">Carregando compras...</p>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <!-- Paginação -->
+    <mat-paginator 
+      [length]="resultsLength" 
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 25, 50]"
+      showFirstLastButtons>
+    </mat-paginator>
+  </div>
+
+  <!-- Resumo -->
+  <div class="resumo-container" *ngIf="comprasDebito.length > 0">
+    <mat-card class="resumo-card">
+      <mat-card-content>
+        <div class="resumo-item">
+          <span class="resumo-label">Total de Compras:</span>
+          <span class="resumo-value">{{ comprasDebito.length }}</span>
+        </div>
+        <div class="resumo-item destaque">
+          <span class="resumo-label">Valor Total:</span>
+          <span class="resumo-value">{{ calcularTotal() | currency:'BRL':'symbol':'1.2-2' }}</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

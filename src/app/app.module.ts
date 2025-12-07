@@ -78,6 +78,8 @@ import { PagamentosStatusComponent } from './components/pagamentos-status/pagame
 import { TenantConfigComponent } from './components/tenant-config/tenant-config.component';
 import { HomeComponent } from './components/home/home.component';
 import { CurrencyInputDirective } from './directives/currency-input.directive';
+import { CompraDebitoFormComponent } from './components/compra-debito-form/compra-debito-form.component';
+import { ListComprasDebitoComponent } from './components/list-compras-debito/list-compras-debito.component';
 
 @NgModule({
   declarations: [
@@ -113,7 +115,9 @@ import { CurrencyInputDirective } from './directives/currency-input.directive';
     PagamentosStatusComponent,
     TenantConfigComponent,
     HomeComponent,
-    CurrencyInputDirective
+    CurrencyInputDirective,
+    CompraDebitoFormComponent,
+    ListComprasDebitoComponent
   ],
   imports: [
     BrowserModule,

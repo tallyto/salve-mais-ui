@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { 
-  Tenant, 
-  TenantCadastroDTO, 
+import {
+  Tenant,
+  TenantCadastroDTO,
   TenantBasicInfoDTO,
-  TenantSubscriptionDTO, 
-  TenantSmtpConfigDTO, 
-  TenantRegionalSettingsDTO 
+  TenantSubscriptionDTO,
+  TenantSmtpConfigDTO,
+  TenantRegionalSettingsDTO
 } from '../models/tenant.model';@Injectable({ providedIn: 'root' })
 export class TenantService {
   private readonly key = 'tenant';

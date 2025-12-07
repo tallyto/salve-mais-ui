@@ -2,6 +2,62 @@
 
 ## [Unreleased]
 
+## [1.27.0] - 2025-12-07
+
+### Adicionado
+
+- **Interface de Compras em Débito**:
+  - Novo componente `CompraDebitoFormComponent` para registro e edição:
+    - Formulário reativo com validações completas
+    - Campos: descrição, categoria, conta, data, valor, observações
+    - Modo criação e edição com restrições apropriadas
+    - Desabilita edição de valor, conta e data em modo edição
+    - Alertas informativos sobre débito automático
+    - Validação de saldo insuficiente
+    - Integração com directive `CurrencyInput` para formatação monetária
+  - Novo componente `ListComprasDebitoComponent` para visualização:
+    - Tabela com paginação e ordenação
+    - Filtros por mês e ano
+    - Navegação rápida entre meses (anterior/próximo)
+    - Colunas: descrição, categoria, data, valor, observações, ações
+    - Badge visual para categorias
+    - Tooltip para observações longas
+    - Card de resumo com total de compras e valor total
+    - Botão para exportar para Excel (preparado para implementação futura)
+  - Service `CompraDebitoService` com métodos:
+    - `criarCompraDebito()` - Criar nova compra
+    - `listarCompras()` - Listar com paginação e filtros
+    - `buscarCompraPorId()` - Buscar compra específica
+    - `atualizarCompraDebito()` - Atualizar compra existente
+    - `excluirCompraDebito()` - Excluir compra
+    - `listarComprasPorCategoria()` - Filtrar por categoria
+    - `calcularTotalPorPeriodo()` - Calcular totais
+  - Models TypeScript:
+    - `CompraDebito` - Interface para dados da compra
+    - `CompraDebitoInput` - Interface para criação/edição
+
+### Melhorado
+
+- **Navegação e Rotas**:
+  - Adicionada rota `/compras-debito` para listagem
+  - Adicionada rota `/compras-debito/nova` para criação
+  - Adicionada rota `/compras-debito/editar/:id` para edição
+  - Item de menu "Compras em Débito" com ícone `point_of_sale`
+- **Experiência do Usuário**:
+  - Mensagens de sucesso/erro com snackbar
+  - Confirmação antes de excluir compra
+  - Loading states durante operações
+  - Design consistente com Angular Material
+  - Responsividade para mobile e tablet
+  - Navegação intuitiva com botão voltar
+
+### Corrigido
+
+- Mapeamento de coluna `data_compra` no backend (PostgreSQL snake_case)
+- Sintaxe de migração PostgreSQL (BIGSERIAL ao invés de AUTO_INCREMENT)
+- Expressões de template Angular com múltiplos statements
+- Optional chaining desnecessário em acesso a arrays
+
 ## [1.26.0] - 2025-12-07
 
 ### Adicionado
