@@ -12,6 +12,8 @@ import { catchError } from 'rxjs/operators';
 import { Page } from '../../models/page.model';
 import { CompraParceladaService } from '../../services/compra-parcelada.service';
 import { CompraParcelada } from '../../models/compra-parcelada.model';
+import { CompraDebitoService } from '../../services/compra-debito.service';
+import { CompraDebito } from '../../models/compra-debito.model';
 
 interface Transaction {
   descricao: string;
@@ -77,6 +79,10 @@ export class DashboardComponent implements OnInit {
   // Dados para compras parceladas
   comprasParceladas: CompraParcelada[] = [];
   comprasParceladasCarregando: boolean = false;
+
+  // Dados para compras em débito
+  comprasDebito: CompraDebito[] = [];
+  comprasDebitoCarregando: boolean = false;
 
   // Configurações para os gráficos
   // Pie Chart (Despesas por Categoria)
@@ -189,7 +195,8 @@ export class DashboardComponent implements OnInit {
     private proventoService: ProventoService,
     private dashboardService: DashboardService,
     private gastoCartaoService: GastoCartaoService,
-    private compraParceladaService: CompraParceladaService
+    private compraParceladaService: CompraParceladaService,
+    private compraDebitoService: CompraDebitoService
   ) {
     // Inicializar filtros com mês e ano atuais
     const currentDate = new Date();
@@ -203,6 +210,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.loadDashboardData();
     this.loadComprasParceladas();
+    this.loadComprasDebito();
   }
 
   loadDashboardData(): void {
@@ -291,6 +299,22 @@ export class DashboardComponent implements OnInit {
       error: (err) => {
         this.comprasParceladas = [];
         this.comprasParceladasCarregando = false;
+      }
+    });
+  }
+
+  // Carrega as compras em débito recentes
+  loadComprasDebito(): void {
+    this.comprasDebitoCarregando = true;
+    // Busca as 5 compras em débito mais recentes do mês atual
+    this.compraDebitoService.listarCompras(0, 5, this.selectedMonth, this.selectedYear).subscribe({
+      next: (result) => {
+        this.comprasDebito = result.content;
+        this.comprasDebitoCarregando = false;
+      },
+      error: (err) => {
+        this.comprasDebito = [];
+        this.comprasDebitoCarregando = false;
       }
     });
   }
@@ -709,6 +733,7 @@ export class DashboardComponent implements OnInit {
   onFilterChange(): void {
     this.loadDashboardData();
     this.loadComprasParceladas();
+    this.loadComprasDebito();
   }
 
   // Método para exportar dados do dashboard para Excel

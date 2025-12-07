@@ -673,4 +673,46 @@
       </div>
     </div>
   </div>
+
+  <!-- Compras em Débito Recentes -->
+  <div class="section-header mb-3" *ngIf="comprasDebito && comprasDebito.length">
+    <h2>Compras em Débito do Mês</h2>
+  </div>
+  <div class="grid mb-4" *ngIf="comprasDebito && comprasDebito.length">
+    <div class="col-12">
+      <div class="data-card">
+        <table class="table table-striped w-full">
+          <thead>
+            <tr>
+              <th>Descrição</th>
+              <th>Categoria</th>
+              <th>Data</th>
+              <th>Valor</th>
+              <th>Observações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let compra of comprasDebito">
+              <td>{{ compra.nome }}</td>
+              <td>
+                <span class="badge badge-info" *ngIf="compra.categoria">{{ compra.categoria.nome }}</span>
+                <span class="text-muted" *ngIf="!compra.categoria">Sem categoria</span>
+              </td>
+              <td>{{ compra.dataCompra | date:'dd/MM/yyyy' }}</td>
+              <td class="text-danger">{{ compra.valor | currency:'BRL':'symbol':'1.2-2' }}</td>
+              <td>
+                <span *ngIf="compra.observacoes" [matTooltip]="compra.observacoes">
+                  {{ compra.observacoes.length > 30 ? (compra.observacoes | slice:0:30) + '...' : compra.observacoes }}
+                </span>
+                <span *ngIf="!compra.observacoes" class="text-muted">-</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="text-right mt-2">
+          <a routerLink="/compras-debito" class="small-link">Ver todas as compras em débito</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
