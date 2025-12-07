@@ -67,6 +67,74 @@
   font-weight: 500;
 }
 
+/* Quick Actions Section */
+.quick-actions-container {
+  margin-bottom: 24px;
+  padding: 20px;
+  background-color: var(--mat-card-background-color, #ffffff);
+  border-radius: 8px;
+  box-shadow: var(--mat-card-box-shadow, 0 1px 3px rgba(0,0,0,0.1));
+}
+
+.quick-actions-container .section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 16px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.quick-actions-container .section-title mat-icon {
+  color: #ff9800;
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.quick-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.quick-actions-grid button {
+  height: 48px;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.quick-actions-grid button mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.quick-actions-grid button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Responsive adjustments for quick actions */
+@media (max-width: 768px) {
+  .quick-actions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .quick-actions-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* Header section - removido, agora usa page-header */
 
 /* Page Header */

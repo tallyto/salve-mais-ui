@@ -80,6 +80,40 @@
     </div>
   </div>
 
+  <!-- Botões Rápidos -->
+  <div class="quick-actions-container">
+    <h3 class="section-title">
+      <mat-icon>bolt</mat-icon>
+      Ações Rápidas
+    </h3>
+    <div class="quick-actions-grid">
+      <button mat-raised-button color="primary" routerLink="/despesas-fixas">
+        <mat-icon>add</mat-icon>
+        Nova Despesa Fixa
+      </button>
+      <button mat-raised-button color="primary" routerLink="/provento-form">
+        <mat-icon>add</mat-icon>
+        Nova Receita
+      </button>
+      <button mat-raised-button color="primary" routerLink="/compras-parceladas">
+        <mat-icon>shopping_cart</mat-icon>
+        Compra Parcelada
+      </button>
+      <button mat-raised-button color="primary" routerLink="/faturas">
+        <mat-icon>receipt</mat-icon>
+        Pagar Fatura
+      </button>
+      <button mat-raised-button color="accent" routerLink="/transacoes">
+        <mat-icon>swap_horiz</mat-icon>
+        Ver Transações
+      </button>
+      <button mat-raised-button color="accent" routerLink="/relatorio-mensal">
+        <mat-icon>assessment</mat-icon>
+        Relatório Mensal
+      </button>
+    </div>
+  </div>
+
   <!-- Loading Indicator -->
   <div *ngIf="isLoading" class="loading-overlay">
     <mat-spinner diameter="50"></mat-spinner>

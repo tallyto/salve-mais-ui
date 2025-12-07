@@ -2,6 +2,35 @@
 
 ## [Unreleased]
 
+## [1.26.0] - 2025-12-07
+
+### Adicionado
+
+- **Botões Rápidos no Dashboard**:
+  - Nova seção "Ações Rápidas" com 6 botões de acesso direto:
+    - Nova Despesa Fixa
+    - Nova Receita
+    - Compra Parcelada
+    - Pagar Fatura
+    - Ver Transações
+    - Relatório Mensal
+  - Grid responsivo (6 colunas desktop, 2 tablet, 1 mobile)
+  - Hover effect com elevação dos botões
+  - Ícones intuitivos para cada ação
+  - CSS otimizado com transições suaves
+
+### Melhorado
+
+- **Nomenclatura do Menu Lateral** - Nomes mais intuitivos e claros:
+  - "Débitos em Conta" → "Despesas Fixas"
+  - "Gastos Recorrentes no Cartão" → "Assinaturas e Serviços"
+  - "Proventos" → "Receitas"
+- **Ícones do Menu**:
+  - Receitas: `trending_up` → `attach_money` (mais representativo)
+  - Assinaturas: `credit_card` → `autorenew` (indica recorrência)
+- Experiência do usuário com acesso mais rápido às funcionalidades principais
+- Navegação mais intuitiva com termos do dia a dia
+
 ## [1.25.0] - 2025-12-07
 
 ### Adicionado
