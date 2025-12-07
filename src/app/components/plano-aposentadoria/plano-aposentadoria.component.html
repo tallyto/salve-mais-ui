@@ -1,0 +1,182 @@
+<div class="plano-aposentadoria-container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>elderly</mat-icon>
+        Plano de Aposentadoria
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="planoForm" (ngSubmit)="salvar()">
+        <div class="form-grid">
+          <!-- Dados Pessoais -->
+          <div class="section">
+            <h3>Dados Pessoais</h3>
+            
+            <mat-form-field appearance="outline">
+              <mat-label>Idade Atual</mat-label>
+              <input matInput type="number" formControlName="idadeAtual" placeholder="Ex: 30">
+              <mat-icon matSuffix>cake</mat-icon>
+              <mat-error *ngIf="planoForm.get('idadeAtual')?.hasError('required')">
+                Idade atual é obrigatória
+              </mat-error>
+              <mat-error *ngIf="planoForm.get('idadeAtual')?.hasError('min')">
+                Idade mínima é 18 anos
+              </mat-error>
+              <mat-error *ngIf="planoForm.get('idadeAtual')?.hasError('max')">
+                Idade máxima é 100 anos
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Idade Desejada para Aposentadoria</mat-label>
+              <input matInput type="number" formControlName="idadeAposentadoria" placeholder="Ex: 65">
+              <mat-icon matSuffix>event</mat-icon>
+              <mat-hint *ngIf="calcularAnosRestantes() > 0">
+                Faltam {{ calcularAnosRestantes() }} anos
+              </mat-hint>
+              <mat-error *ngIf="planoForm.get('idadeAposentadoria')?.hasError('required')">
+                Idade de aposentadoria é obrigatória
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Expectativa de Vida</mat-label>
+              <input matInput type="number" formControlName="expectativaVida" placeholder="Ex: 85">
+              <mat-icon matSuffix>timeline</mat-icon>
+              <mat-error *ngIf="planoForm.get('expectativaVida')?.hasError('required')">
+                Expectativa de vida é obrigatória
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Dados Financeiros -->
+          <div class="section">
+            <h3>Dados Financeiros</h3>
+            
+            <mat-form-field appearance="outline">
+              <mat-label>Patrimônio Atual</mat-label>
+              <input matInput type="number" formControlName="patrimonioAtual" placeholder="Ex: 50000">
+              <span matPrefix>R$&nbsp;</span>
+              <mat-icon matSuffix>account_balance_wallet</mat-icon>
+              <mat-error *ngIf="planoForm.get('patrimonioAtual')?.hasError('required')">
+                Patrimônio atual é obrigatório
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Contribuição Mensal</mat-label>
+              <input matInput type="number" formControlName="contribuicaoMensal" placeholder="Ex: 1000">
+              <span matPrefix>R$&nbsp;</span>
+              <mat-icon matSuffix>savings</mat-icon>
+              <mat-hint>Quanto você pretende investir mensalmente</mat-hint>
+              <mat-error *ngIf="planoForm.get('contribuicaoMensal')?.hasError('required')">
+                Contribuição mensal é obrigatória
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Taxa de Retorno Anual (%)</mat-label>
+              <input matInput type="number" formControlName="taxaRetornoAnual" placeholder="Ex: 8.5" step="0.1">
+              <span matSuffix>%</span>
+              <mat-icon matSuffix>trending_up</mat-icon>
+              <mat-hint>Rentabilidade esperada dos investimentos</mat-hint>
+              <mat-error *ngIf="planoForm.get('taxaRetornoAnual')?.hasError('required')">
+                Taxa de retorno é obrigatória
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Renda Mensal Desejada na Aposentadoria</mat-label>
+              <input matInput type="number" formControlName="rendaDesejada" placeholder="Ex: 5000">
+              <span matPrefix>R$&nbsp;</span>
+              <mat-icon matSuffix>attach_money</mat-icon>
+              <mat-hint>Quanto você deseja ter de renda mensal</mat-hint>
+              <mat-error *ngIf="planoForm.get('rendaDesejada')?.hasError('required')">
+                Renda mensal desejada é obrigatória
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Inflação Estimada (% ao ano)</mat-label>
+              <input matInput type="number" formControlName="inflacaoEstimada" placeholder="Ex: 3.5" step="0.1">
+              <span matSuffix>%</span>
+              <mat-icon matSuffix>trending_down</mat-icon>
+              <mat-hint>Estimativa de inflação anual</mat-hint>
+              <mat-error *ngIf="planoForm.get('inflacaoEstimada')?.hasError('required')">
+                Inflação estimada é obrigatória
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Projeções (se plano existe) -->
+        <div class="projecoes" *ngIf="plano">
+          <h3>Projeções</h3>
+          <div class="projecoes-grid">
+            <mat-card class="projecao-card" *ngIf="plano.patrimonioProjetado">
+              <mat-card-content>
+                <div class="projecao-label">Patrimônio Projetado</div>
+                <div class="projecao-valor">{{ formatarMoeda(plano.patrimonioProjetado) }}</div>
+                <mat-icon>account_balance</mat-icon>
+              </mat-card-content>
+            </mat-card>
+
+            <mat-card class="projecao-card" *ngIf="plano.patrimonioNecessario">
+              <mat-card-content>
+                <div class="projecao-label">Patrimônio Necessário</div>
+                <div class="projecao-valor">{{ formatarMoeda(plano.patrimonioNecessario) }}</div>
+                <mat-icon>flag</mat-icon>
+              </mat-card-content>
+            </mat-card>
+
+            <mat-card class="projecao-card" *ngIf="plano.anosParaAposentadoria">
+              <mat-card-content>
+                <div class="projecao-label">Anos para Aposentadoria</div>
+                <div class="projecao-valor">{{ plano.anosParaAposentadoria }} anos</div>
+                <mat-icon>event</mat-icon>
+              </mat-card-content>
+            </mat-card>
+
+            <mat-card class="projecao-card" *ngIf="plano.deficitSuperavit !== undefined">
+              <mat-card-content>
+                <div class="projecao-label">{{ plano.deficitSuperavit >= 0 ? 'Superávit' : 'Déficit' }}</div>
+                <div class="projecao-valor">{{ formatarMoeda(Math.abs(plano.deficitSuperavit)) }}</div>
+                <mat-icon>{{ plano.deficitSuperavit >= 0 ? 'trending_up' : 'trending_down' }}</mat-icon>
+              </mat-card-content>
+            </mat-card>
+          </div>
+
+          <div class="status-plano" *ngIf="plano.deficitSuperavit !== undefined">
+            <mat-card [class.sucesso]="plano.deficitSuperavit >= 0" [class.atencao]="plano.deficitSuperavit < 0">
+              <mat-card-content>
+                <mat-icon>{{ plano.deficitSuperavit >= 0 ? 'check_circle' : 'warning' }}</mat-icon>
+                <div class="status-text">
+                  <strong *ngIf="plano.deficitSuperavit >= 0">Objetivo alcançado!</strong>
+                  <strong *ngIf="plano.deficitSuperavit < 0">Atenção: Objetivo não alcançado</strong>
+                  <p *ngIf="plano.deficitSuperavit >= 0">
+                    Suas projeções indicam que você conseguirá atingir seu objetivo de aposentadoria.
+                  </p>
+                  <p *ngIf="plano.deficitSuperavit < 0">
+                    Considere aumentar suas contribuições mensais ou a taxa de retorno para alcançar seu objetivo.
+                  </p>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+
+        <!-- Botões -->
+        <div class="form-actions">
+          <button mat-raised-button color="primary" type="submit" [disabled]="loading">
+            <mat-icon>{{ isEditing ? 'save' : 'add' }}</mat-icon>
+            {{ isEditing ? 'Atualizar' : 'Criar' }} Plano
+          </button>
+        </div>
+      </form>
+
+      <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,85 @@
+.container {
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.filter-card {
+  margin-bottom: 20px;
+}
+
+.table-container {
+  position: relative;
+  min-height: 300px;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+}
+
+table {
+  width: 100%;
+}
+
+.meta-nome {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.progress-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 150px;
+}
+
+.progress-text {
+  min-width: 40px;
+  font-weight: 500;
+}
+
+.dias-restantes {
+  color: #666;
+  font-size: 0.85em;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.85em;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.status-concluida {
+  background-color: #4caf50;
+  color: white;
+}
+
+.status-andamento {
+  background-color: #2196f3;
+  color: white;
+}
+
+.status-pausada {
+  background-color: #ff9800;
+  color: white;
+}
+
+.status-cancelada {
+  background-color: #f44336;
+  color: white;
+}
+
+mat-form-field {
+  width: 200px;
+}

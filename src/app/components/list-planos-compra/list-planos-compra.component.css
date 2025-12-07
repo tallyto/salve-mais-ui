@@ -1,0 +1,113 @@
+.container {
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.filter-card {
+  margin-bottom: 20px;
+}
+
+.table-container {
+  position: relative;
+  min-height: 300px;
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+}
+
+table {
+  width: 100%;
+}
+
+.valor-final {
+  display: block;
+  font-size: 0.85em;
+  color: #f44336;
+}
+
+.progress-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 150px;
+}
+
+.progress-text {
+  min-width: 40px;
+  font-weight: 500;
+}
+
+.tipo-badge {
+  font-size: 0.85em;
+  color: #666;
+}
+
+.parcelas-info {
+  font-size: 0.85em;
+  color: #2196f3;
+  font-weight: 500;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.85em;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.status-concluido {
+  background-color: #4caf50;
+  color: white;
+}
+
+.status-andamento {
+  background-color: #2196f3;
+  color: white;
+}
+
+.status-planejado {
+  background-color: #ff9800;
+  color: white;
+}
+
+.status-cancelado {
+  background-color: #f44336;
+  color: white;
+}
+
+.prioridade-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.85em;
+  font-weight: 500;
+}
+
+.prioridade-alta {
+  background-color: #f44336;
+  color: white;
+}
+
+.prioridade-media {
+  background-color: #ff9800;
+  color: white;
+}
+
+.prioridade-baixa {
+  background-color: #4caf50;
+  color: white;
+}
+
+mat-form-field {
+  width: 200px;
+}

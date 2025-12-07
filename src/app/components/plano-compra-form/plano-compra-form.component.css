@@ -1,0 +1,52 @@
+.plano-form {
+  padding: 20px 0;
+}
+
+.form-row {
+  margin-bottom: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.two-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.calculo-info {
+  margin: 20px 0;
+}
+
+.info-card {
+  background-color: #e3f2fd;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.info-item .label {
+  font-weight: 500;
+  color: #1976d2;
+}
+
+.info-item .valor {
+  font-size: 1.2em;
+  font-weight: 600;
+  color: #0d47a1;
+}
+
+mat-dialog-content {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+mat-dialog-actions {
+  padding: 16px 0 0 0;
+}

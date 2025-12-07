@@ -1,0 +1,126 @@
+<div class="container">
+  <div class="header">
+    <h2>Planos de Compra</h2>
+    <button mat-raised-button color="primary" (click)="abrirFormulario()">
+      <mat-icon>add_shopping_cart</mat-icon>
+      Novo Plano
+    </button>
+  </div>
+
+  <mat-card class="filter-card">
+    <mat-card-content>
+      <mat-form-field appearance="outline">
+        <mat-label>Filtrar por Status</mat-label>
+        <mat-select [(value)]="statusFilter" (selectionChange)="filtrarPorStatus()">
+          <mat-option value="TODOS">Todos</mat-option>
+          <mat-option value="PLANEJADO">Planejados</mat-option>
+          <mat-option value="EM_ANDAMENTO">Em Andamento</mat-option>
+          <mat-option value="CONCLUIDO">Concluídos</mat-option>
+          <mat-option value="CANCELADO">Cancelados</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="table-container">
+    <div *ngIf="isLoading" class="loading-spinner">
+      <mat-spinner></mat-spinner>
+    </div>
+
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" *ngIf="!isLoading">
+      <!-- Nome Column -->
+      <ng-container matColumnDef="nome">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
+        <td mat-cell *matCellDef="let plano">{{ plano.nome }}</td>
+      </ng-container>
+
+      <!-- Valor Total Column -->
+      <ng-container matColumnDef="valorTotal">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Valor Total</th>
+        <td mat-cell *matCellDef="let plano">
+          {{ plano.valorTotal | currency:'BRL' }}
+          <span *ngIf="plano.valorFinal && plano.valorFinal > plano.valorTotal" class="valor-final">
+            (Final: {{ plano.valorFinal | currency:'BRL' }})
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Valor Economizado Column -->
+      <ng-container matColumnDef="valorEconomizado">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Economizado</th>
+        <td mat-cell *matCellDef="let plano">{{ plano.valorEconomizado | currency:'BRL' }}</td>
+      </ng-container>
+
+      <!-- Progresso Column -->
+      <ng-container matColumnDef="progresso">
+        <th mat-header-cell *matHeaderCellDef>Progresso</th>
+        <td mat-cell *matCellDef="let plano">
+          <div class="progress-container">
+            <mat-progress-bar 
+              mode="determinate" 
+              [value]="calcularPercentual(plano)"
+              [color]="getProgressColor(calcularPercentual(plano))">
+            </mat-progress-bar>
+            <span class="progress-text">{{ calcularPercentual(plano) | number:'1.0-0' }}%</span>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Tipo Pagamento Column -->
+      <ng-container matColumnDef="tipoCompra">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Tipo</th>
+        <td mat-cell *matCellDef="let plano">
+          <span class="tipo-badge">{{ plano.tipoCompra }}</span>
+          <div *ngIf="plano.numeroParcelas" class="parcelas-info">
+            {{ plano.numeroParcelas }}x {{ plano.valorParcela | currency:'BRL' }}
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Prioridade Column -->
+      <ng-container matColumnDef="prioridade">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Prioridade</th>
+        <td mat-cell *matCellDef="let plano">
+          <span class="prioridade-badge" [ngClass]="getPrioridadeClass(plano.prioridade)">
+            {{ getPrioridadeLabel(plano.prioridade) }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+        <td mat-cell *matCellDef="let plano">
+          <span class="status-badge" [ngClass]="getStatusClass(plano.status)">
+            {{ plano.status }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Ações Column -->
+      <ng-container matColumnDef="acoes">
+        <th mat-header-cell *matHeaderCellDef>Ações</th>
+        <td mat-cell *matCellDef="let plano">
+          <button mat-icon-button color="accent" (click)="abrirFormulario(plano)" matTooltip="Editar">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="excluir(plano)" matTooltip="Excluir">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="8">Nenhum plano de compra encontrado</td>
+      </tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" 
+                   showFirstLastButtons
+                   *ngIf="!isLoading">
+    </mat-paginator>
+  </div>
+</div>

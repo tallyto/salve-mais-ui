@@ -1,0 +1,145 @@
+<h2 mat-dialog-title>{{ data ? 'Editar Plano de Compra' : 'Novo Plano de Compra' }}</h2>
+
+<mat-dialog-content>
+  <form [formGroup]="planoForm" class="plano-form">
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Nome do Plano</mat-label>
+        <input matInput formControlName="nome" placeholder="Ex: Notebook novo">
+        <mat-error *ngIf="planoForm.get('nome')?.hasError('required')">
+          Nome é obrigatório
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Descrição</mat-label>
+        <textarea matInput formControlName="descricao" rows="2" 
+                  placeholder="Descreva o que deseja comprar..."></textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row two-columns">
+      <mat-form-field appearance="outline">
+        <mat-label>Tipo de Pagamento</mat-label>
+        <mat-select formControlName="tipoCompra">
+          <mat-option *ngFor="let tipo of tipoOptions" [value]="tipo">
+            {{ tipo }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Valor Total</mat-label>
+        <input matInput type="text" formControlName="valorTotal" placeholder="0,00"
+               appCurrencyInput
+               matTooltip="Valor total do item que deseja comprar"
+               matTooltipPosition="above">
+        <span matPrefix>R$&nbsp;</span>
+        <mat-error *ngIf="planoForm.get('valorTotal')?.hasError('required')">
+          Valor é obrigatório
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row two-columns">
+      <mat-form-field appearance="outline">
+        <mat-label>Valor Economizado</mat-label>
+        <input matInput type="text" formControlName="valorEconomizado" placeholder="0,00"
+               appCurrencyInput
+               matTooltip="Quanto você já guardou para esta compra"
+               matTooltipPosition="above">
+        <span matPrefix>R$&nbsp;</span>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Valor de Entrada</mat-label>
+        <input matInput type="text" formControlName="valorEntrada" placeholder="0,00"
+               appCurrencyInput
+               matTooltip="Valor que será pago como entrada/sinal"
+               matTooltipPosition="above">
+        <span matPrefix>R$&nbsp;</span>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row two-columns" *ngIf="mostrarParcelas">
+      <mat-form-field appearance="outline">
+        <mat-label>Número de Parcelas</mat-label>
+        <input matInput type="number" formControlName="numeroParcelas" placeholder="12"
+               matTooltip="Em quantas parcelas será dividido o pagamento"
+               matTooltipPosition="above">
+        <mat-error *ngIf="planoForm.get('numeroParcelas')?.hasError('required')">
+          Número de parcelas é obrigatório
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" *ngIf="mostrarJuros">
+        <mat-label>Taxa de Juros (%)</mat-label>
+        <input matInput type="number" formControlName="taxaJuros" placeholder="2.5"
+               matTooltip="Taxa de juros mensal aplicada ao parcelamento"
+               matTooltipPosition="above">
+        <span matSuffix>%</span>
+        <mat-error *ngIf="planoForm.get('taxaJuros')?.hasError('required')">
+          Taxa de juros é obrigatória
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="calculo-info" *ngIf="mostrarParcelas && planoForm.get('numeroParcelas')?.value > 0">
+      <mat-card class="info-card">
+        <mat-card-content>
+          <div class="info-item">
+            <span class="label">Valor da Parcela:</span>
+            <span class="valor">{{ calcularValorParcela() | currency:'BRL' }}</span>
+          </div>
+          <div class="info-item" *ngIf="mostrarJuros">
+            <span class="label">Valor Total com Juros:</span>
+            <span class="valor">
+              {{ (calcularValorParcela() * planoForm.get('numeroParcelas')?.value) + (planoForm.get('valorEntrada')?.value || 0) | currency:'BRL' }}
+            </span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="form-row two-columns">
+      <mat-form-field appearance="outline">
+        <mat-label>Categoria</mat-label>
+        <input matInput formControlName="categoria" placeholder="Ex: Eletrônicos">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Data Prevista</mat-label>
+        <input matInput type="date" formControlName="dataPrevista">
+      </mat-form-field>
+    </div>
+
+    <div class="form-row two-columns">
+      <mat-form-field appearance="outline">
+        <mat-label>Prioridade</mat-label>
+        <mat-select formControlName="prioridade">
+          <mat-option *ngFor="let prioridade of prioridadeOptions" [value]="prioridade.value">
+            {{ prioridade.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status">
+          <mat-option *ngFor="let status of statusOptions" [value]="status">
+            {{ status }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancelar()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="salvar()" [disabled]="!planoForm.valid">
+    {{ data ? 'Atualizar' : 'Criar' }}
+  </button>
+</mat-dialog-actions>

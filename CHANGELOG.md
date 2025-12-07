@@ -2,6 +2,91 @@
 
 ## [Unreleased]
 
+## [1.30.0] - 2025-12-07
+
+### Adicionado
+
+- **Módulo de Planejamento Financeiro Completo**:
+  - 🎯 **Metas Financeiras**:
+    - Criação e gerenciamento de metas com valores alvo e prazos
+    - 8 ícones personalizados (foguete, casa, carro, avião, etc.)
+    - 8 cores para categorização visual
+    - Barra de progresso com atualização incremental
+    - Cálculo automático de dias restantes e percentual concluído
+    - Filtros por status (Em Andamento, Concluída, Pausada, Cancelada)
+    - Tabela com paginação e ordenação
+  
+  - 🛋️ **Planos de Compra**:
+    - Planejamento de compras com diferentes tipos de pagamento
+    - Tipos: À Vista, Parcelado sem Juros, Parcelado com Juros, Financiamento
+    - Cálculo automático de parcelas usando fórmula Price
+    - Controle de valor economizado com barra de progresso
+    - Sistema de prioridades (Alta, Média, Baixa)
+    - Gerenciamento de entrada e taxa de juros
+    - Exibição de valor final e total de juros
+    - Tooltips explicativos em campos monetários
+  
+  - 👴 **Plano de Aposentadoria**:
+    - Formulário completo com dados pessoais e financeiros
+    - Cálculo de anos restantes até aposentadoria
+    - Projeções de patrimônio necessário e projetado
+    - Análise de déficit/superávit
+    - Indicadores visuais de sucesso do planejamento
+    - Campo de inflação estimada
+  
+  - 📊 **Dashboard de Planejamento**:
+    - Visão geral com estatísticas de metas e planos
+    - Cards com totais, concluídos e em andamento
+    - Grid de metas ativas com barras de progresso
+    - Lista dos principais planos de compra
+    - Navegação rápida para detalhes
+
+- **Nova Seção no Menu Lateral**:
+  - "🎯 Planejamento Financeiro" com 4 submenus
+  - Visão Geral (dashboard)
+  - Metas Financeiras
+  - Planos de Compra
+  - Plano de Aposentadoria
+
+- **Melhorias na UX**:
+  - Diretiva de formatação monetária (appCurrencyInput) aplicada em campos de valor
+  - Tooltips explicativos em todos os campos monetários
+  - Diálogos modais para criação/edição de metas e planos
+  - Diálogo específico para atualização de progresso de metas
+  - Badges coloridos para status e prioridades
+  - Layout responsivo em todos os componentes
+
+### Backend
+
+- **Novas Entidades e Serviços**:
+  - `Meta` - Gerenciamento de metas financeiras
+  - `PlanoCompra` - Planejamento de compras com cálculos automáticos
+  - `PlanoAposentadoria` - Planejamento de aposentadoria
+  - Campo `valorEconomizado` adicionado em PlanoCompra
+  - Métodos de cálculo: percentual economizado, juros total, valor final
+
+- **Migrations**:
+  - V25: Tabelas de planejamento financeiro (metas, planos_compra, plano_aposentadoria)
+  - V26: Adição de coluna valor_economizado em planos_compra
+
+- **Remoção de Multi-tenancy**:
+  - Removido campo tenantId de todas as entidades de planejamento
+  - Removida entidade FundoEmergencia
+  - Simplificação da arquitetura
+
+### Corrigido
+
+- Erro de compilação no `@HostListener` do menu lateral
+- Alinhamento entre nomes de campos do frontend e backend (tipoCompra vs tipoPagamento)
+- Cálculo de progresso de planos de compra agora funciona corretamente
+- Campo `rendaDesejada` renomeado corretamente no formulário de aposentadoria
+
+### Documentado
+
+- README completo dos componentes de planejamento financeiro
+- Guia de uso e integração dos novos módulos
+- Exemplos de uso de cada componente
+
 ## [1.29.0] - 2025-12-07
 
 ### Adicionado

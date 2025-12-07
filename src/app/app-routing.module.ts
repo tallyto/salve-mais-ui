@@ -35,6 +35,10 @@ import { AdminUsuariosComponent } from './components/admin-usuarios/admin-usuari
 import { CompraDebitoFormComponent } from './components/compra-debito-form/compra-debito-form.component';
 import { ListComprasDebitoComponent } from './components/list-compras-debito/list-compras-debito.component';
 import { ComparativoMensalComponent } from './components/comparativo-mensal/comparativo-mensal.component';
+import { PlanejamentoFinanceiroComponent } from './components/planejamento-financeiro/planejamento-financeiro.component';
+import { ListMetasComponent } from './components/list-metas/list-metas.component';
+import { ListPlanosCompraComponent } from './components/list-planos-compra/list-planos-compra.component';
+import { PlanoAposentadoriaComponent } from './components/plano-aposentadoria/plano-aposentadoria.component';
 
 
 const routes: Routes = [
@@ -75,6 +79,10 @@ const routes: Routes = [
   {path: 'criar-usuario', component: CriarUsuarioComponent},
   {path: 'relatorio-mensal', component: RelatorioMensalComponent, canActivate: [AuthGuard]},
   {path: 'comparativo-mensal', component: ComparativoMensalComponent, canActivate: [AuthGuard]},
+  {path: 'planejamento', component: PlanejamentoFinanceiroComponent, canActivate: [AuthGuard]},
+  {path: 'metas', component: ListMetasComponent, canActivate: [AuthGuard]},
+  {path: 'planos-compra', component: ListPlanosCompraComponent, canActivate: [AuthGuard]},
+  {path: 'plano-aposentadoria', component: PlanoAposentadoriaComponent, canActivate: [AuthGuard]},
   {path: 'reserva-emergencia', component: ReservaEmergenciaComponent, canActivate: [AuthGuard]},
   {path: 'reserva-emergencia/criar', component: ReservaEmergenciaFormComponent, canActivate: [AuthGuard]},
   {path: 'reserva-emergencia/editar/:id', component: ReservaEmergenciaFormComponent, canActivate: [AuthGuard]},
