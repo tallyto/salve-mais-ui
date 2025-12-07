@@ -38,6 +38,14 @@
 
 ### Melhorado
 
+- **Dashboard integrado com Compras em Débito**:
+  - Seção "Compras em Débito do Mês" exibe compras do período selecionado
+  - Tabela com descrição, categoria, data, valor e observações
+  - Badge visual para categorias e tooltip para observações longas
+  - Link para navegar para listagem completa
+  - Atualiza automaticamente ao mudar mês/ano nos filtros
+  - Gráficos (pizza, barras, linha) incluem compras débito nos cálculos
+  - Resumo financeiro considera compras débito nas despesas mensais
 - **Navegação e Rotas**:
   - Adicionada rota `/compras-debito` para listagem
   - Adicionada rota `/compras-debito/nova` para criação
