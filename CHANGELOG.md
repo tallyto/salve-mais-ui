@@ -2,6 +2,43 @@
 
 ## [Unreleased]
 
+## [1.25.0] - 2025-12-07
+
+### Adicionado
+
+- **Interface de Configuração de Notificações por Email**:
+  - Novo componente `NotificacoesEmailConfigComponent` completo:
+    - Formulário reativo com toggle ativo/inativo
+    - Seletor de horário com 9 opções mais comuns (6h-22h)
+    - Preview visual do email que será enviado
+    - Status badge com indicador visual (Ativo/Inativo/Não Configurado)
+    - Botão "Enviar Teste" para validar configurações
+    - Botões de ação: Salvar, Enviar Teste, Recarregar, Desabilitar
+  - Service `NotificacaoEmailService` com métodos:
+    - `obterConfiguracao()` - Buscar configuração atual
+    - `salvarConfiguracao()` - Criar/atualizar configuração
+    - `desabilitarNotificacao()` - Desativar envio
+    - `enviarNotificacaoTeste()` - Testar envio imediato
+  - Integração completa com menu lateral (seção Configurações)
+  - Rota protegida: `/notificacoes-email-config`
+  - CSS responsivo com mais de 300 linhas de estilo profissional
+  - Cards informativos explicando funcionamento
+  - Feedback visual com loading states e mensagens de sucesso/erro
+
+### Melhorado
+
+- Sistema de notificações expandido com novos tipos
+- Template de email com informações mais detalhadas
+- Experiência do usuário com validações e hints
+- Tratamento de erros específicos (404, validação, etc.)
+
+### Modificado
+
+- Horários disponíveis reduzidos de 24 para 9 opções mais práticas:
+  - Manhã: 06:00, 07:00, 08:00 (Recomendado), 09:00
+  - Tarde: 12:00, 14:00, 18:00
+  - Noite: 20:00, 22:00
+
 ## [1.21.0] - 2025-11-25
 
 ### Adicionado

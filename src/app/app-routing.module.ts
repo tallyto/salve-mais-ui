@@ -18,6 +18,7 @@ import { FaturaFormComponent } from './components/fatura-form/fatura-form.compon
 import { CartaoLimitesComponent } from './components/cartao-limites/cartao-limites.component';
 import { ContaFixaRecorrenteComponent } from './components/conta-fixa-recorrente/conta-fixa-recorrente.component';
 import { NotificacoesComponent } from './components/notificacoes/notificacoes.component';
+import { NotificacoesEmailConfigComponent } from './components/notificacoes-email-config/notificacoes-email-config.component';
 import { MinhaContaComponent } from './components/minha-conta/minha-conta.component';
 import { ReservaEmergenciaComponent } from './components/reserva-emergencia/reserva-emergencia.component';
 import { ReservaEmergenciaFormComponent } from './components/reserva-emergencia-form/reserva-emergencia-form.component';
@@ -50,6 +51,7 @@ const routes: Routes = [
   {path: 'faturas', component: FaturaFormComponent, canActivate: [AuthGuard]},
   {path: 'cartao-limites', component: CartaoLimitesComponent, canActivate: [AuthGuard]},
   {path: 'notificacoes', component: NotificacoesComponent, canActivate: [AuthGuard]},
+  {path: 'notificacoes-email-config', component: NotificacoesEmailConfigComponent, canActivate: [AuthGuard]},
   {path: 'pagamentos-status', component: PagamentosStatusComponent, canActivate: [AuthGuard]},
   {path: 'account', component: AccountComponent, canActivate: [AuthGuard]},
   {path: 'minha-conta', component: MinhaContaComponent, canActivate: [AuthGuard]},

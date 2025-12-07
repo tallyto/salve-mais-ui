@@ -1,0 +1,196 @@
+<div class="email-config-container">
+  <div class="header">
+    <div class="header-content">
+      <mat-icon class="header-icon">email</mat-icon>
+      <div class="header-text">
+        <h2>Configurar Notificações por Email</h2>
+        <p class="header-description">Configure o envio automático de notificações diárias por email</p>
+      </div>
+    </div>
+    <div class="status-badge" [class]="getStatusColor()">
+      <mat-icon>{{ configExistente?.ativo ? 'check_circle' : 'cancel' }}</mat-icon>
+      <span>{{ getStatusText() }}</span>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>Carregando configuração...</p>
+  </div>
+
+  <!-- Formulário -->
+  <div *ngIf="!loading">
+    <!-- Card de informação -->
+    <mat-card class="info-card">
+      <mat-card-content>
+        <div class="info-content">
+          <mat-icon class="info-icon">info</mat-icon>
+          <div class="info-text">
+            <h3>Como funciona?</h3>
+            <p>
+              Quando ativado, você receberá um email diário no horário escolhido contendo um resumo de todas as suas 
+              notificações pendentes, incluindo contas e faturas atrasadas ou próximas ao vencimento.
+            </p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Card de configuração -->
+    <mat-card class="config-card">
+      <mat-card-header>
+        <mat-icon mat-card-avatar>settings</mat-icon>
+        <mat-card-title>Configurações</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <form [formGroup]="configForm" (ngSubmit)="salvar()">
+          <!-- Status Ativo/Inativo -->
+          <div class="form-section">
+            <h4>Status da Notificação</h4>
+            <mat-slide-toggle 
+              formControlName="ativo"
+              color="primary"
+              class="toggle-field">
+              <span class="toggle-label">
+                {{ ativoControl?.value ? 'Notificações Habilitadas' : 'Notificações Desabilitadas' }}
+              </span>
+            </mat-slide-toggle>
+            <p class="field-hint">
+              <mat-icon class="hint-icon">lightbulb</mat-icon>
+              {{ ativoControl?.value ? 
+                'Você receberá emails diários no horário configurado' : 
+                'Ative para começar a receber emails diários' }}
+            </p>
+          </div>
+
+          <mat-divider></mat-divider>
+
+          <!-- Horário -->
+          <div class="form-section">
+            <h4>Horário de Envio</h4>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Selecione o horário</mat-label>
+              <mat-icon matPrefix>schedule</mat-icon>
+              <mat-select formControlName="horario">
+                <mat-option *ngFor="let horario of horariosDisponiveis" [value]="horario.value">
+                  {{ horario.label }}
+                </mat-option>
+              </mat-select>
+              <mat-hint>O email será enviado diariamente neste horário</mat-hint>
+            </mat-form-field>
+          </div>
+
+          <!-- Resumo da configuração -->
+          <div class="config-summary" *ngIf="ativoControl?.value">
+            <mat-icon>schedule_send</mat-icon>
+            <div class="summary-text">
+              <strong>Resumo:</strong> 
+              Você receberá emails diários às 
+              <strong>{{ horarioControl?.value | slice:0:5 }}</strong>
+              com um resumo de suas notificações pendentes.
+            </div>
+          </div>
+
+          <!-- Ações -->
+          <div class="actions">
+            <button 
+              mat-raised-button 
+              color="primary" 
+              type="submit"
+              [disabled]="saving || configForm.invalid">
+              <mat-icon>{{ saving ? 'hourglass_empty' : 'save' }}</mat-icon>
+              {{ saving ? 'Salvando...' : 'Salvar Configuração' }}
+            </button>
+
+            <button 
+              mat-raised-button 
+              color="accent"
+              type="button"
+              (click)="enviarNotificacaoTeste()"
+              [disabled]="sendingTest || !configExistente">
+              <mat-icon>{{ sendingTest ? 'hourglass_empty' : 'send' }}</mat-icon>
+              {{ sendingTest ? 'Enviando...' : 'Enviar Teste' }}
+            </button>
+
+            <button 
+              mat-stroked-button 
+              type="button"
+              (click)="carregarConfiguracao()"
+              [disabled]="saving || loading">
+              <mat-icon>refresh</mat-icon>
+              Recarregar
+            </button>
+
+            <button 
+              mat-stroked-button 
+              color="warn"
+              type="button"
+              (click)="desabilitar()"
+              [disabled]="saving || !configExistente || !configExistente.ativo">
+              <mat-icon>notifications_off</mat-icon>
+              Desabilitar
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Card de preview do email -->
+    <mat-card class="preview-card" *ngIf="ativoControl?.value">
+      <mat-card-header>
+        <mat-icon mat-card-avatar>email</mat-icon>
+        <mat-card-title>Preview do Email</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="email-preview">
+          <div class="email-header-preview">
+            <strong>De:</strong> Salve Mais &lt;noreply&#64;salvemais.com&gt;<br>
+            <strong>Para:</strong> Seu email cadastrado<br>
+            <strong>Assunto:</strong> Salve Mais - Resumo Diário de Notificações
+          </div>
+          
+          <mat-divider></mat-divider>
+
+          <div class="email-body-preview">
+            <h3>📊 Resumo de Notificações</h3>
+            <p>Você possui notificações pendentes que requerem sua atenção:</p>
+            
+            <div class="notification-example">
+              <div class="notification-item critical">
+                <mat-icon>warning</mat-icon>
+                <div>
+                  <strong>Críticas:</strong> 2 notificações<br>
+                  <small>Requerem atenção imediata</small>
+                </div>
+              </div>
+              
+              <div class="notification-item high">
+                <mat-icon>priority_high</mat-icon>
+                <div>
+                  <strong>Alta Prioridade:</strong> 3 notificações<br>
+                  <small>Atenção necessária</small>
+                </div>
+              </div>
+
+              <div class="notification-item info">
+                <mat-icon>account_balance</mat-icon>
+                <div>
+                  <strong>Contas Atrasadas:</strong> 2<br>
+                  <small>Pendentes de pagamento</small>
+                </div>
+              </div>
+            </div>
+
+            <p class="email-footer">
+              <mat-icon>computer</mat-icon>
+              Acesse o sistema para ver mais detalhes e tomar as ações necessárias.
+            </p>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -70,6 +70,7 @@ import { AuthInterceptor } from './services/auth.interceptor';
 import { MinhaContaComponent } from './components/minha-conta/minha-conta.component';
 import { NotificacoesWidgetComponent } from './components/notificacoes-widget/notificacoes-widget.component';
 import { NotificacoesComponent } from './components/notificacoes/notificacoes.component';
+import { NotificacoesEmailConfigComponent } from './components/notificacoes-email-config/notificacoes-email-config.component';
 import { ListTransacoesComponent } from './components/list-transacoes/list-transacoes.component';
 import { CompraParceladaFormComponent } from './components/compra-parcelada-form/compra-parcelada-form.component';
 import { ListComprasParceladasComponent } from './components/list-compras-parceladas/list-compras-parceladas.component';
@@ -100,6 +101,7 @@ import { CurrencyInputDirective } from './directives/currency-input.directive';
     FaturaFormComponent,
     PagamentoFaturaModalComponent,
     NotificacoesComponent,
+    NotificacoesEmailConfigComponent,
     ContaFixaRecorrenteComponent,
     MinhaContaComponent,
     ComprovantesDialogComponent,
