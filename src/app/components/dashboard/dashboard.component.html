@@ -9,15 +9,82 @@
         </div>
       </div>
     </div>
-    <button 
-      mat-raised-button 
-      color="primary" 
-      (click)="exportToExcel()" 
-      matTooltip="Exportar dados do dashboard para Excel"
-      [disabled]="isLoading">
-      <mat-icon>file_download</mat-icon>
-      Exportar Excel
-    </button>
+    
+    <div class="header-actions">
+      <!-- Ações Rápidas -->
+      <button 
+        mat-button 
+        [matMenuTriggerFor]="quickActionsMenu"
+        class="header-action-btn"
+        matTooltip="Ações Rápidas">
+        <mat-icon>add_circle</mat-icon>
+        <span class="btn-text">Nova</span>
+        <mat-icon class="dropdown-icon">arrow_drop_down</mat-icon>
+      </button>
+      
+      <mat-menu #quickActionsMenu="matMenu">
+        <button mat-menu-item routerLink="/provento-form">
+          <mat-icon class="menu-icon income-color">trending_up</mat-icon>
+          <span>Nova Receita</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item routerLink="/despesas-fixas">
+          <mat-icon class="menu-icon expense-color">event_repeat</mat-icon>
+          <span>Despesa Fixa</span>
+        </button>
+        <button mat-menu-item routerLink="/compras-debito">
+          <mat-icon class="menu-icon expense-color">point_of_sale</mat-icon>
+          <span>Compra em Débito</span>
+        </button>
+        <button mat-menu-item routerLink="/compras-parceladas">
+          <mat-icon class="menu-icon expense-color">shopping_cart</mat-icon>
+          <span>Compra Parcelada</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item routerLink="/faturas">
+          <mat-icon class="menu-icon card-color">receipt</mat-icon>
+          <span>Pagar Fatura</span>
+        </button>
+      </mat-menu>
+
+      <!-- Consultas -->
+      <button 
+        mat-button 
+        [matMenuTriggerFor]="reportsMenu"
+        class="header-action-btn"
+        matTooltip="Consultas e Relatórios">
+        <mat-icon>visibility</mat-icon>
+        <span class="btn-text">Consultar</span>
+        <mat-icon class="dropdown-icon">arrow_drop_down</mat-icon>
+      </button>
+      
+      <mat-menu #reportsMenu="matMenu">
+        <button mat-menu-item routerLink="/transacoes">
+          <mat-icon class="menu-icon">swap_horiz</mat-icon>
+          <span>Transações</span>
+        </button>
+        <button mat-menu-item routerLink="/relatorio-mensal">
+          <mat-icon class="menu-icon">bar_chart</mat-icon>
+          <span>Relatório Mensal</span>
+        </button>
+        <button mat-menu-item routerLink="/budget-rule">
+          <mat-icon class="menu-icon">pie_chart</mat-icon>
+          <span>Regra 50/30/20</span>
+        </button>
+      </mat-menu>
+
+      <!-- Exportar -->
+      <button 
+        mat-raised-button 
+        color="primary" 
+        (click)="exportToExcel()" 
+        matTooltip="Exportar dados do dashboard para Excel"
+        [disabled]="isLoading"
+        class="export-btn">
+        <mat-icon>file_download</mat-icon>
+        <span class="btn-text">Exportar</span>
+      </button>
+    </div>
   </div>
 
   <!-- Filtros de Mês e Ano -->
@@ -77,40 +144,6 @@
           Próximo
         </button>
       </div>
-    </div>
-  </div>
-
-  <!-- Botões Rápidos -->
-  <div class="quick-actions-container">
-    <h3 class="section-title">
-      <mat-icon>bolt</mat-icon>
-      Ações Rápidas
-    </h3>
-    <div class="quick-actions-grid">
-      <button mat-raised-button color="primary" routerLink="/despesas-fixas">
-        <mat-icon>add</mat-icon>
-        Nova Despesa Fixa
-      </button>
-      <button mat-raised-button color="primary" routerLink="/provento-form">
-        <mat-icon>add</mat-icon>
-        Nova Receita
-      </button>
-      <button mat-raised-button color="primary" routerLink="/compras-parceladas">
-        <mat-icon>shopping_cart</mat-icon>
-        Compra Parcelada
-      </button>
-      <button mat-raised-button color="primary" routerLink="/faturas">
-        <mat-icon>receipt</mat-icon>
-        Pagar Fatura
-      </button>
-      <button mat-raised-button color="accent" routerLink="/transacoes">
-        <mat-icon>swap_horiz</mat-icon>
-        Ver Transações
-      </button>
-      <button mat-raised-button color="accent" routerLink="/relatorio-mensal">
-        <mat-icon>assessment</mat-icon>
-        Relatório Mensal
-      </button>
     </div>
   </div>
 

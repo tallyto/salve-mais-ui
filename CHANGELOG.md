@@ -2,6 +2,36 @@
 
 ## [Unreleased]
 
+## [1.29.0] - 2025-12-07
+
+### Adicionado
+
+- **Dashboard com Ações Rápidas no Header**:
+  - Botão "Nova" com dropdown contendo:
+    - 💰 Nova Receita (com ícone verde)
+    - 📊 Despesa Fixa (com ícone vermelho)
+    - 📊 Compra em Débito (com ícone vermelho) - NOVO
+    - 📊 Compra Parcelada (com ícone vermelho)
+    - 💳 Pagar Fatura (com ícone azul)
+  - Botão "Consultar" com dropdown contendo:
+    - Transações
+    - Relatório Mensal
+    - Regra 50/30/20
+  - Botão "Exportar" destacado para exportação de dados
+  - Ícones coloridos nos itens do menu (verde, vermelho, azul)
+  - Separadores visuais entre grupos de ações
+  - Layout responsivo que adapta em dispositivos móveis
+
+### Melhorado
+
+- **Interface do Dashboard Mais Limpa**:
+  - Removida seção de "Ações Rápidas" do corpo do dashboard
+  - Todas as ações centralizadas nos dropdowns do header
+  - Mais espaço para visualização de dados financeiros
+  - Navegação mais intuitiva e profissional
+  - Header responsivo com adaptação automática em telas pequenas
+  - Textos dos botões ocultados em mobile, mantendo apenas ícones
+
 ## [1.28.0] - 2025-12-07
 
 ### Melhorado
