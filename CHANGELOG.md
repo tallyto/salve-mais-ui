@@ -2,6 +2,33 @@
 
 ## [Unreleased]
 
+## [1.31.0] - 2025-12-11
+
+### Adicionado
+
+- **Melhorias em Compras Parceladas**:
+  - Novo filtro "Status" com opções:
+    - Todas - Exibe todas as compras
+    - Apenas Pendentes - Exibe apenas compras com parcelas não pagas
+  - Campo de filtro com ícone `pending_actions`
+  - Grid de filtros ajustado para 4 colunas (cartão, categoria, status, ações)
+
+### Melhorado
+
+- **Ordenação e Performance**:
+  - Compras parceladas agora são exibidas com as mais recentes primeiro
+  - Filtros processados no backend (cartão, categoria, status pendente)
+  - Service atualizado para enviar parâmetros ao backend:
+    - `cartaoId`, `categoriaId`, `apenasPendentes`
+    - Parâmetro `sort=dataCompra,desc` para ordenação automática
+  - Busca textual mantida local para complementar filtros do backend
+  - Performance melhorada: não busca mais 1000 registros de uma vez
+  - Paginação real com dados filtrados no banco de dados
+
+- **Interface**:
+  - Layout de filtros mais equilibrado
+  - Melhor organização visual dos campos de seleção
+
 ## [1.30.1] - 2025-12-07
 
 ### Melhorado

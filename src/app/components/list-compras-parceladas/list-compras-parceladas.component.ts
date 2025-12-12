@@ -60,6 +60,7 @@ export class ListComprasParceladasComponent implements OnInit {
   filtroCartaoId: number | null = null;
   filtroCategoriaId: number | null = null;
   buscaTexto: string = '';
+  filtroApenasPendentes: boolean = false;
 
   constructor(
     private compraParceladaService: CompraParceladaService,
@@ -99,44 +100,29 @@ export class ListComprasParceladasComponent implements OnInit {
   loadCompras(): void {
     this.loading = true;
 
-    // Busca todas as compras (com paginação grande o suficiente)
-    // TODO: Implementar filtros no backend para melhor performance
-    this.compraParceladaService.listar(0, 1000).subscribe({
+    // Usa a API com filtros no backend
+    this.compraParceladaService.listar(
+      this.page, 
+      this.size,
+      this.filtroCartaoId,
+      this.filtroCategoriaId,
+      this.filtroApenasPendentes
+    ).subscribe({
       next: (response) => {
-        // Armazena todas as compras
-        this.todasCompras = response.content;
-
-        // Aplica filtros
-        let comprasFiltradas = this.todasCompras;
-
-        // Aplicar busca textual
+        this.compras = response.content;
+        this.totalElements = response.totalElements;
+        this.totalPages = response.totalPages;
+        
+        // Aplicar busca textual local (já que o backend não tem esse filtro)
         if (this.buscaTexto && this.buscaTexto.trim() !== '') {
           const termo = this.buscaTexto.toLowerCase().trim();
-          comprasFiltradas = comprasFiltradas.filter(c => 
+          this.compras = this.compras.filter(c => 
             c.descricao.toLowerCase().includes(termo) ||
             c.categoriaNome?.toLowerCase().includes(termo) ||
             c.cartaoNome?.toLowerCase().includes(termo)
           );
+          this.totalElements = this.compras.length;
         }
-
-        // Aplicar filtro de cartão
-        if (this.filtroCartaoId) {
-          comprasFiltradas = comprasFiltradas.filter(c => c.cartaoId === this.filtroCartaoId);
-        }
-
-        // Aplicar filtro de categoria
-        if (this.filtroCategoriaId) {
-          comprasFiltradas = comprasFiltradas.filter(c => c.categoriaId === this.filtroCategoriaId);
-        }
-
-        // Calcula paginação
-        this.totalElements = comprasFiltradas.length;
-        this.totalPages = Math.ceil(comprasFiltradas.length / this.size);
-
-        // Aplica paginação manual
-        const inicio = this.page * this.size;
-        const fim = inicio + this.size;
-        this.compras = comprasFiltradas.slice(inicio, fim);
 
         this.loading = false;
       },
@@ -156,6 +142,7 @@ export class ListComprasParceladasComponent implements OnInit {
     this.filtroCartaoId = null;
     this.filtroCategoriaId = null;
     this.buscaTexto = '';
+    this.filtroApenasPendentes = false;
     this.page = 0;
     this.loadCompras();
   }

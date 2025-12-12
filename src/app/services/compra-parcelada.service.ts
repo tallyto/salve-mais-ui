@@ -25,14 +25,34 @@ export class CompraParceladaService {
   }
 
   /**
-   * Lista todas as compras parceladas com paginação
+   * Lista todas as compras parceladas com paginação e filtros
    */
-  listar(page: number = 0, size: number = 10): Observable<ComprasParceladasPaginadas> {
+  listar(
+    page: number = 0, 
+    size: number = 10,
+    cartaoId?: number | null,
+    categoriaId?: number | null,
+    apenasPendentes?: boolean
+  ): Observable<ComprasParceladasPaginadas> {
     console.log('🔧 Service: listar() chamado com page:', page, 'size:', size);
     console.log('🔧 Service: URL:', this.apiUrl);
-    const params = new HttpParams()
+    
+    let params = new HttpParams()
       .set('page', page.toString())
-      .set('size', size.toString());
+      .set('size', size.toString())
+      .set('sort', 'dataCompra,desc'); // Ordenar por data mais recente
+    
+    // Adiciona filtros se fornecidos
+    if (cartaoId) {
+      params = params.set('cartaoId', cartaoId.toString());
+    }
+    if (categoriaId) {
+      params = params.set('categoriaId', categoriaId.toString());
+    }
+    if (apenasPendentes !== undefined) {
+      params = params.set('apenasPendentes', apenasPendentes.toString());
+    }
+    
     console.log('🔧 Service: Params:', params.toString());
     return this.http.get<ComprasParceladasPaginadas>(this.apiUrl, { params });
   }

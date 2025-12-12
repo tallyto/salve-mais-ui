@@ -45,7 +45,7 @@
 
       <!-- Filtros de Seleção -->
       <div class="grid">
-        <div class="col-12 md:col-4">
+        <div class="col-12 md:col-3">
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>Cartão</mat-label>
             <mat-select [(ngModel)]="filtroCartaoId">
@@ -58,7 +58,7 @@
           </mat-form-field>
         </div>
 
-        <div class="col-12 md:col-4">
+        <div class="col-12 md:col-3">
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>Categoria</mat-label>
             <mat-select [(ngModel)]="filtroCategoriaId">
@@ -71,7 +71,18 @@
           </mat-form-field>
         </div>
 
-        <div class="col-12 md:col-4 filter-actions">
+        <div class="col-12 md:col-3">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Status</mat-label>
+            <mat-select [(ngModel)]="filtroApenasPendentes">
+              <mat-option [value]="false">Todas</mat-option>
+              <mat-option [value]="true">Apenas Pendentes</mat-option>
+            </mat-select>
+            <mat-icon matPrefix>pending_actions</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="col-12 md:col-3 filter-actions">
           <button mat-raised-button color="primary" (click)="aplicarFiltros()" class="w-full mb-2">
             <mat-icon>search</mat-icon>
             Aplicar Filtros
