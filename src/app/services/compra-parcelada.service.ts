@@ -34,9 +34,6 @@ export class CompraParceladaService {
     categoriaId?: number | null,
     apenasPendentes?: boolean
   ): Observable<ComprasParceladasPaginadas> {
-    console.log('🔧 Service: listar() chamado com page:', page, 'size:', size);
-    console.log('🔧 Service: URL:', this.apiUrl);
-    
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString())
@@ -53,7 +50,6 @@ export class CompraParceladaService {
       params = params.set('apenasPendentes', apenasPendentes.toString());
     }
     
-    console.log('🔧 Service: Params:', params.toString());
     return this.http.get<ComprasParceladasPaginadas>(this.apiUrl, { params });
   }
 

@@ -14,6 +14,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { CompraParceladaService } from '../../services/compra-parcelada.service';
 import { CategoriaService } from '../../services/categoria.service';
 import { CartaoService } from '../../services/cartao.service';
@@ -39,7 +40,8 @@ import { Cartao } from '../../models/cartao.model';
     MatProgressSpinnerModule,
     MatSelectModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatSnackBarModule
   ],
   templateUrl: './list-compras-parceladas.component.html',
   styleUrls: ['./list-compras-parceladas.component.css']
@@ -66,7 +68,8 @@ export class ListComprasParceladasComponent implements OnInit {
     private compraParceladaService: CompraParceladaService,
     private categoriaService: CategoriaService,
     private cartaoService: CartaoService,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -80,8 +83,12 @@ export class ListComprasParceladasComponent implements OnInit {
       next: (categorias: Categoria[]) => {
         this.categorias = categorias;
       },
-      error: (error: any) => {
-        console.error('Erro ao carregar categorias:', error);
+      error: () => {
+        this.snackBar.open('Erro ao carregar categorias', 'Fechar', {
+          duration: 3000,
+          horizontalPosition: 'end',
+          verticalPosition: 'top'
+        });
       }
     });
   }
@@ -91,8 +98,12 @@ export class ListComprasParceladasComponent implements OnInit {
       next: (cartoes: Cartao[]) => {
         this.cartoes = cartoes;
       },
-      error: (error: any) => {
-        console.error('Erro ao carregar cartões:', error);
+      error: () => {
+        this.snackBar.open('Erro ao carregar cartões', 'Fechar', {
+          duration: 3000,
+          horizontalPosition: 'end',
+          verticalPosition: 'top'
+        });
       }
     });
   }
@@ -126,8 +137,12 @@ export class ListComprasParceladasComponent implements OnInit {
 
         this.loading = false;
       },
-      error: (error: any) => {
-        console.error('Erro ao carregar compras parceladas:', error);
+      error: () => {
+        this.snackBar.open('Erro ao carregar compras parceladas', 'Fechar', {
+          duration: 3000,
+          horizontalPosition: 'end',
+          verticalPosition: 'top'
+        });
         this.loading = false;
       }
     });
@@ -169,9 +184,12 @@ export class ListComprasParceladasComponent implements OnInit {
         next: (parcelaAtualizada) => {
           parcela.paga = parcelaAtualizada.paga;
         },
-        error: (error: any) => {
-          console.error('Erro ao marcar parcela como paga:', error);
-          alert('Erro ao marcar parcela como paga');
+        error: () => {
+          this.snackBar.open('Erro ao marcar parcela como paga', 'Fechar', {
+            duration: 3000,
+            horizontalPosition: 'end',
+            verticalPosition: 'top'
+          });
         }
       });
     } else {
@@ -179,9 +197,12 @@ export class ListComprasParceladasComponent implements OnInit {
         next: (parcelaAtualizada) => {
           parcela.paga = parcelaAtualizada.paga;
         },
-        error: (error: any) => {
-          console.error('Erro ao desmarcar parcela:', error);
-          alert('Erro ao desmarcar parcela');
+        error: () => {
+          this.snackBar.open('Erro ao desmarcar parcela', 'Fechar', {
+            duration: 3000,
+            horizontalPosition: 'end',
+            verticalPosition: 'top'
+          });
         }
       });
     }
@@ -193,9 +214,12 @@ export class ListComprasParceladasComponent implements OnInit {
         next: () => {
           parcela.paga = false;
         },
-        error: (error: any) => {
-          console.error('Erro ao desmarcar parcela:', error);
-          alert('Erro ao desmarcar parcela como paga');
+        error: () => {
+          this.snackBar.open('Erro ao desmarcar parcela', 'Fechar', {
+            duration: 3000,
+            horizontalPosition: 'end',
+            verticalPosition: 'top'
+          });
         }
       });
     } else {
@@ -203,9 +227,12 @@ export class ListComprasParceladasComponent implements OnInit {
         next: () => {
           parcela.paga = true;
         },
-        error: (error: any) => {
-          console.error('Erro ao marcar parcela:', error);
-          alert('Erro ao marcar parcela como paga');
+        error: () => {
+          this.snackBar.open('Erro ao marcar parcela como paga', 'Fechar', {
+            duration: 3000,
+            horizontalPosition: 'end',
+            verticalPosition: 'top'
+          });
         }
       });
     }
@@ -215,12 +242,19 @@ export class ListComprasParceladasComponent implements OnInit {
     if (confirm(`Deseja realmente excluir a compra "${compra.descricao}"? Todas as parcelas serão excluídas.`)) {
       this.compraParceladaService.excluir(compra.id).subscribe({
         next: () => {
-          alert('Compra parcelada excluída com sucesso!');
+          this.snackBar.open('Compra parcelada excluída com sucesso!', 'Fechar', {
+            duration: 3000,
+            horizontalPosition: 'end',
+            verticalPosition: 'top'
+          });
           this.loadCompras();
         },
-        error: (error: any) => {
-          console.error('Erro ao excluir compra:', error);
-          alert('Erro ao excluir compra parcelada');
+        error: () => {
+          this.snackBar.open('Erro ao excluir compra parcelada', 'Fechar', {
+            duration: 3000,
+            horizontalPosition: 'end',
+            verticalPosition: 'top'
+          });
         }
       });
     }
