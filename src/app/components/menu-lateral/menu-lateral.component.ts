@@ -159,6 +159,10 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('userInfo');
+    
+    // Limpar o tenant atual da sessão, mas manter o tenant lembrado se existir
+    this.tenantService.clearCurrentTenant();
+    
     this.isAuthenticated = false;
     this.resumoNotificacoes = null;
     this.router.navigate(['/login']);

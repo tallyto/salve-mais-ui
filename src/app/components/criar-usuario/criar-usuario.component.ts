@@ -51,7 +51,7 @@ export class CriarUsuarioComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Verificar se há um tenant no localStorage
+    // Verificar se há um tenant atual na sessão
     this.tenantDominio = this.tenantService.getTenant();
     if (!this.tenantDominio) {
       this.router.navigate(['/register']);

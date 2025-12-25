@@ -99,25 +99,24 @@ export class LoginComponent {
       if (!isPublicDomain) {
         this.dominioDetectado = emailDomain;
         this.loginForm.patchValue({ dominio: emailDomain });
-        // NÃO salvar no localStorage aqui - apenas detectar
-        // this.tenantService.setTenant(emailDomain); 
+        // NÃO salvar no sessionStorage aqui - apenas detectar
         this.showDomainField = false; // Não mostrar por padrão
       } else {
-        // Se for domínio público, verificamos se já existe um tenant salvo
-        const savedTenant = this.tenantService.getTenant();
-        if (savedTenant && !this.loginForm.get('dominio')?.value) {
-          this.dominioDetectado = savedTenant;
-          this.loginForm.patchValue({ dominio: savedTenant });
+        // Se for domínio público, verificamos se já existe um tenant lembrado
+        const rememberedTenant = this.tenantService.getRememberedTenant();
+        if (rememberedTenant && !this.loginForm.get('dominio')?.value) {
+          this.dominioDetectado = rememberedTenant;
+          this.loginForm.patchValue({ dominio: rememberedTenant });
         }
         this.showDomainField = true; // Sempre mostrar para domínios públicos
         this.loginForm.get('dominio')?.setValidators([Validators.required]);
       }
     } else {
-      // Se não houver domínio no email, verificar se existe um tenant salvo
-      const savedTenant = this.tenantService.getTenant();
-      if (savedTenant) {
-        this.dominioDetectado = savedTenant;
-        this.loginForm.patchValue({ dominio: savedTenant });
+      // Se não houver domínio no email, verificar se existe um tenant lembrado
+      const rememberedTenant = this.tenantService.getRememberedTenant();
+      if (rememberedTenant) {
+        this.dominioDetectado = rememberedTenant;
+        this.loginForm.patchValue({ dominio: rememberedTenant });
       }
       this.showDomainField = true;
       this.loginForm.get('dominio')?.setValidators([Validators.required]);
@@ -195,9 +194,9 @@ export class LoginComponent {
       tenant = dominio || '';
     }
 
-    // Se ainda não temos um tenant, verificar se existe um salvo no localStorage
+    // Se ainda não temos um tenant, verificar se existe um tenant lembrado
     if (!tenant) {
-      tenant = this.tenantService.getTenant() || '';
+      tenant = this.tenantService.getRememberedTenant() || '';
     }
 
     // Se não temos um tenant, mostrar erro
@@ -210,11 +209,14 @@ export class LoginComponent {
       return;
     }
 
-    // Salvar email se "lembrarMe" estiver marcado
+    // Gerenciar credenciais lembradas
     if (lembrarMe) {
       localStorage.setItem('rememberedEmail', email);
+      // Se "lembrar-me" estiver marcado, salvar o tenant para uso posterior
+      this.tenantService.rememberTenant(tenant);
     } else {
       localStorage.removeItem('rememberedEmail');
+      // Não limpar o tenant lembrado aqui, pois pode ser usado por outros usuários
     }
 
     this.authService.login({ email, senha }, tenant).subscribe({
@@ -222,7 +224,7 @@ export class LoginComponent {
         if (res && res.token) {
           localStorage.setItem('token', res.token);
 
-          // Salvar o tenant para uso futuro
+          // Definir o tenant atual na sessão
           this.tenantService.setTenant(tenant);
 
           this.snackBar.open('Login realizado com sucesso!', 'Fechar', {
