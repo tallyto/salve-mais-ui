@@ -62,4 +62,17 @@ export class AuthService {
       headers
     });
   }
+
+  logout(): void {
+    // Remove o token do localStorage
+    localStorage.removeItem('token');
+    // Remove informações do tenant se houver
+    localStorage.removeItem('tenant');
+    // Remove qualquer outro dado de sessão
+    localStorage.removeItem('user');
+  }
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('token');
+  }
 }
