@@ -1,5 +1,17 @@
 # Instruções para IA - Custom Software Management (CSM)
 
+## Políticas de Desenvolvimento
+
+### Gestão de Branches
+**IMPORTANTE**: NUNCA fazer commits diretamente na branch `master`. Sempre seguir o fluxo:
+1. Criar nova branch a partir da master: `git checkout -b feature/nome-da-feature`
+2. Fazer commits na nova branch
+3. Criar Pull Request para review
+4. Após aprovação, merge para master
+
+### Timezone da Aplicação
+A aplicação utiliza timezone **America/Sao_Paulo** (UTC-3/UTC-2 com horário de verão) para consistência com o backend.
+
 ## Contexto do Projeto
 Este é um sistema de gestão financeira multi-tenant desenvolvido em Angular (frontend) e Spring Boot (backend). O sistema possui autenticação baseada em JWT e isolamento de dados por tenant.
 
