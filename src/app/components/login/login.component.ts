@@ -1,5 +1,5 @@
 import { isTokenExpired } from '../../utils/jwt.util';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { TenantService } from '../../services/tenant.service';
 
@@ -32,7 +32,7 @@ import { TenantService } from '../../services/tenant.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   errorMessage: string = '';
   tenant: string = '';
@@ -45,6 +45,7 @@ export class LoginComponent {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
+    private route: ActivatedRoute,
     private snackBar: MatSnackBar,
     private tenantService: TenantService
   ) {
@@ -68,6 +69,17 @@ export class LoginComponent {
     } else if (token && isTokenExpired(token)) {
       localStorage.removeItem('token');
     }
+
+    // Verificar se o usuário foi redirecionado por erro de autenticação
+    this.route.queryParams.subscribe(params => {
+      if (params['sessionExpired'] === 'true') {
+        this.snackBar.open('Sua sessão expirou. Por favor, faça login novamente.', 'Fechar', {
+          duration: 5000,
+          verticalPosition: 'top',
+          panelClass: 'snackbar-warning'
+        });
+      }
+    });
   }
 
   restoreCredentials() {
