@@ -1,17 +1,15 @@
-# 💰 Salve Mais UI
+# 💰 Salve Mais - Frontend
 
-![Angular](https://img.shields.io/badge/angular-%23DD0031.svg?style=flat&logo=angular&logoColor=white)
+![Angular](https://img.shields.io/badge/Angular-17-DD0031?style=flat&logo=angular&logoColor=white)
 ![Angular Material](https://img.shields.io/badge/Angular%20Material-009688?style=flat&logo=angular&logoColor=white)
-![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=flat&logo=typescript&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-Sistema web para gestão financeira pessoal desenvolvido em Angular com Material Design.
+**Interface web moderna para sistema de gestão financeira pessoal desenvolvida em Angular com Material Design**
 
-## 📋 Sobre o Projeto
+Aplicação SPA (Single Page Application) com interface intuitiva e responsiva, oferecendo controle completo sobre finanças pessoais com dashboards interativos, gráficos em tempo real e gestão multi-tenant.
 
-O **Salve Mais** é uma aplicação completa para controle financeiro pessoal que permite gerenciar receitas, despesas, cartões de crédito, compras parceladas e muito mais. Com interface moderna e intuitiva, oferece visualizações detalhadas através de gráficos e dashboards.
-
-## ✨ Principais Funcionalidades
+## � Principais Funcionalidades
 
 ### 💳 Gestão de Cartões e Faturas
 - Cadastro e gerenciamento de cartões de crédito
