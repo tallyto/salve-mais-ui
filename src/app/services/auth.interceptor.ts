@@ -34,14 +34,8 @@ export class AuthInterceptor implements HttpInterceptor {
     
     return next.handle(clonedRequest).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 403) {
-          // Token inválido ou expirado - fazer logout automático
-          console.warn('Token inválido (403) - redirecionando para login');
-          this.authService.logout();
-          this.router.navigate(['/login'], { 
-            queryParams: { sessionExpired: 'true' }
-          });
-        }
+        // Removido tratamento automático de 403 que estava impedindo recuperação de senha
+        // O tratamento de erro deve ser feito nos componentes específicos
         return throwError(() => error);
       })
     );
