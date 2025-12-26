@@ -44,13 +44,22 @@ export class AuthService {
     return this.http.post(environment.apiUrl + '/auth/recuperar-senha', data, { headers });
   }
 
-  redefinirSenha(token: string, novaSenha: string) {
-    return this.http.post<any>(environment.apiUrl + '/auth/redefinir-senha', { token, novaSenha });
+  redefinirSenha(token: string, novaSenha: string, domain?: string) {
+    let headers = new HttpHeaders();
+    if (domain) {
+      headers = headers.set('X-Private-Tenant', domain);
+    }
+    return this.http.post<any>(environment.apiUrl + '/auth/redefinir-senha', { token, novaSenha }, { headers });
   }
 
-  verificarToken(token: string): Observable<any> {
+  verificarToken(token: string, domain?: string): Observable<any> {
+    let headers = new HttpHeaders();
+    if (domain) {
+      headers = headers.set('X-Private-Tenant', domain);
+    }
     return this.http.get<any>(environment.apiUrl + '/auth/verificar-token', {
-      params: { token }
+      params: { token },
+      headers
     });
   }
 }

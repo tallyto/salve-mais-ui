@@ -13,6 +13,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class RedefinirSenhaComponent implements OnInit {
   redefinirForm: FormGroup;
   token: string = '';
+  domain: string = '';
   loading = false;
   hidePassword = true;
   hideConfirmPassword = true;
@@ -34,10 +35,11 @@ export class RedefinirSenhaComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.token = params['token'] || '';
+      this.domain = params['domain'] || '';
 
       // Verificar se o token é válido
       if (this.token) {
-        this.authService.verificarToken(this.token).subscribe({
+        this.authService.verificarToken(this.token, this.domain).subscribe({
           next: () => {
             this.tokenValido = true;
           },
@@ -70,7 +72,7 @@ export class RedefinirSenhaComponent implements OnInit {
 
     this.loading = true;
 
-    this.authService.redefinirSenha(this.token, this.redefinirForm.value.novaSenha)
+    this.authService.redefinirSenha(this.token, this.redefinirForm.value.novaSenha, this.domain)
       .subscribe({
         next: () => {
           this.snackBar.open('Senha redefinida com sucesso!', 'Fechar', {

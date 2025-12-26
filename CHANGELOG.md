@@ -2,6 +2,28 @@
 
 ## [Unreleased]
 
+## [1.32.0] - 2025-12-26
+
+### Adicionado
+
+- **Recuperação de Senha com Tenant**:
+  - Componente de redefinição de senha agora extrai `domain` da URL
+  - Header `X-Private-Tenant` automaticamente adicionado nas requisições de redefinição
+  - Suporte para multi-tenant no processo de recuperação de senha
+  - Validação de token com contexto de tenant
+
+### Melhorado
+
+- **AuthService**:
+  - Métodos `redefinirSenha()` e `verificarToken()` agora aceitam parâmetro `domain`
+  - Header de tenant aplicado automaticamente quando domínio é fornecido
+  - Melhor isolamento de dados por tenant
+
+- **UX/UI**:
+  - Tratamento aprimorado de erros de autenticação
+  - Mensagens mais claras para usuários em caso de token inválido
+  - Redirecionamento automático para login após redefinição bem-sucedida
+
 ## [1.31.0] - 2025-12-11
 
 ### Adicionado
