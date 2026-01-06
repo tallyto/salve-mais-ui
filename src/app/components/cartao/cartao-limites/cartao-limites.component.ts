@@ -12,8 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatChipsModule } from '@angular/material/chips';
 
-import { CartaoService } from '../../../services/cartao.service';
-import { Cartao, CartaoLimiteDTO, CartaoLimiteStatusDTO } from '../../../models/cartao.model';
+import { CartaoService } from '@services/cartao.service';
+import { Cartao, CartaoLimiteDTO, CartaoLimiteStatusDTO } from '@models/cartao.model';
 
 @Component({
   selector: 'app-cartao-limites',

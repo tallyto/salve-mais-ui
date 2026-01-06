@@ -7,8 +7,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
-import { Anexo, UrlDownload } from '../../../models/anexo.model';
-import { AnexoService } from '../../../services/anexo.service';
+import { Anexo, UrlDownload } from '@models/anexo.model';
+import { AnexoService } from '@services/anexo.service';
 
 @Component({
     selector: 'app-comprovantes-dialog',
