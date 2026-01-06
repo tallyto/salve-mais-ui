@@ -312,7 +312,30 @@ export class RelatorioMensalComponent implements OnInit {
       return;
     }
 
-    this.relatorioService.exportarRelatorioParaExcel(this.selectedYear, this.selectedMonth);
-    this.snackBar.open('Relatório exportado com sucesso!', 'Fechar', { duration: 3000 });
+    this.relatorioService.exportarRelatorioParaExcel(this.selectedYear, this.selectedMonth).subscribe({
+      next: (data: Blob) => {
+        // Criar um link temporário para download do arquivo
+        const url = window.URL.createObjectURL(data);
+        const link = document.createElement('a');
+        link.href = url;
+        
+        // Definir nome do arquivo baseado no período selecionado
+        const fileName = `relatorio-mensal-${this.selectedMonth.toString().padStart(2, '0')}-${this.selectedYear}.xlsx`;
+        link.download = fileName;
+        
+        // Adicionar ao DOM, disparar clique e remover
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Liberar a URL do blob
+        window.URL.revokeObjectURL(url);
+        
+        this.snackBar.open('Relatório exportado com sucesso!', 'Fechar', { duration: 3000 });
+      },
+      error: (error) => {
+        this.snackBar.open('Erro ao exportar relatório. Tente novamente.', 'Fechar', { duration: 5000 });
+      }
+    });
   }
 }
