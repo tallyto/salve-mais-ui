@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Anexo, UrlDownload } from '../../models/anexo.model';
-import { AnexoService } from '../../services/anexo.service';
+import { Anexo, UrlDownload } from '../../../models/anexo.model';
+import { AnexoService } from '../../../services/anexo.service';
 
 @Component({
   selector: 'app-comprovantes-list',
