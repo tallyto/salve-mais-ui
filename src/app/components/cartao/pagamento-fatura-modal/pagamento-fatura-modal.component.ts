@@ -10,10 +10,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { FaturaService } from '../../../services/fatura.service';
-import { AccountService } from '../../../services/account.service';
-import { Account } from '../../../models/account.model';
-import { FaturaResponseDTO } from '../../../models/fatura.model';
+import { FaturaService } from '@services/fatura.service';
+import { AccountService } from '@services/account.service';
+import { Account } from '@models/account.model';
+import { FaturaResponseDTO } from '@models/fatura.model';
 
 @Component({
     selector: 'app-pagamento-fatura-modal',

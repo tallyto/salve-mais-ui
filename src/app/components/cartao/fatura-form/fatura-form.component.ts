@@ -19,10 +19,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { merge, of as observableOf, startWith, switchMap, catchError, map } from 'rxjs';
-import { FaturaService } from '../../../services/fatura.service';
-import { CartaoService } from '../../../services/cartao.service';
-import { FaturaManualDTO, FaturaResponseDTO, FaturaPreviewDTO } from '../../../models/fatura.model';
-import { Cartao } from '../../../models/cartao.model';
+import { FaturaService } from '@services/fatura.service';
+import { CartaoService } from '@services/cartao.service';
+import { FaturaManualDTO, FaturaResponseDTO, FaturaPreviewDTO } from '@models/fatura.model';
+import { Cartao } from '@models/cartao.model';
 import { PagamentoFaturaModalComponent } from '../pagamento-fatura-modal/pagamento-fatura-modal.component';
 
 interface MonthOption {
