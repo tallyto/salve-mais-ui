@@ -81,13 +81,6 @@ import { CurrencyInputDirective } from './directives/currency-input.directive';
 import { CompraDebitoFormComponent } from './components/compra-debito-form/compra-debito-form.component';
 import { ListComprasDebitoComponent } from './components/list-compras-debito/list-compras-debito.component';
 import { ComparativoMensalComponent } from './components/comparativo-mensal/comparativo-mensal.component';
-import { PlanejamentoFinanceiroComponent } from './components/planejamento-financeiro/planejamento-financeiro.component';
-import { ListMetasComponent } from './components/list-metas/list-metas.component';
-import { MetaFormComponent } from './components/meta-form/meta-form.component';
-import { MetaProgressoComponent } from './components/meta-progresso/meta-progresso.component';
-import { ListPlanosCompraComponent } from './components/list-planos-compra/list-planos-compra.component';
-import { PlanoCompraFormComponent } from './components/plano-compra-form/plano-compra-form.component';
-import { PlanoAposentadoriaComponent } from './components/plano-aposentadoria/plano-aposentadoria.component';
 
 @NgModule({
   declarations: [
@@ -126,14 +119,7 @@ import { PlanoAposentadoriaComponent } from './components/plano-aposentadoria/pl
     CurrencyInputDirective,
     CompraDebitoFormComponent,
     ListComprasDebitoComponent,
-    ComparativoMensalComponent,
-    PlanejamentoFinanceiroComponent,
-    ListMetasComponent,
-    MetaFormComponent,
-    MetaProgressoComponent,
-    ListPlanosCompraComponent,
-    PlanoCompraFormComponent,
-    PlanoAposentadoriaComponent
+    ComparativoMensalComponent
   ],
   imports: [
     BrowserModule,

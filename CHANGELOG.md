@@ -2,6 +2,24 @@
 
 ## [Unreleased]
 
+## [1.33.0] - 2026-01-06
+
+### Removido
+
+- **Remoção do Módulo de Planejamento Financeiro**:
+  - Removidas seção "Planejamento Financeiro" do menu lateral
+  - Removidos componentes: `planejamento-financeiro`, `list-metas`, `meta-form`, `meta-progresso`
+  - Removidos componentes: `list-planos-compra`, `plano-compra-form`, `plano-aposentadoria`
+  - Removidas rotas: `/planejamento`, `/metas`, `/planos-compra`, `/plano-aposentadoria`
+  - Removidos serviços: `MetaService`, `PlanoCompraService`, `PlanoAposentadoriaService`
+  - Removidos modelos: `Meta`, `PlanoCompra`, `PlanoAposentadoria`
+
+### Simplificação
+
+- Aplicação agora focada em gerenciamento de contas, compras e cartões de crédito
+- Redução de complexidade e peso da aplicação
+- Menu lateral mais limpo e intuitivo
+
 ## [1.32.0] - 2025-12-26
 
 ### Adicionado
