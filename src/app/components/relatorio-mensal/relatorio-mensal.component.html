@@ -10,6 +10,18 @@
         </div>
       </div>
     </div>
+    
+    <!-- Botão de Exportação -->
+    <button 
+      mat-raised-button 
+      color="primary" 
+      (click)="exportarRelatorioParaExcel()" 
+      matTooltip="Exportar relatório mensal para Excel"
+      [disabled]="isLoading || !relatorioData"
+      class="export-btn">
+      <mat-icon>file_download</mat-icon>
+      <span class="btn-text">Exportar</span>
+    </button>
   </div>
 
   <!-- Filtros de Mês e Ano -->

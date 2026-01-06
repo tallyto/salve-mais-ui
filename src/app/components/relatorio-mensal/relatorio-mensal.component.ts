@@ -302,4 +302,17 @@ export class RelatorioMensalComponent implements OnInit {
   onFilterChange(): void {
     this.gerarRelatorio();
   }
+
+  /**
+   * Exporta o relatório mensal para Excel
+   */
+  exportarRelatorioParaExcel(): void {
+    if (!this.relatorioData) {
+      this.snackBar.open('Não há dados para exportar. Aguarde o carregamento dos dados.', 'Fechar', { duration: 5000 });
+      return;
+    }
+
+    this.relatorioService.exportarRelatorioParaExcel(this.selectedYear, this.selectedMonth);
+    this.snackBar.open('Relatório exportado com sucesso!', 'Fechar', { duration: 3000 });
+  }
 }

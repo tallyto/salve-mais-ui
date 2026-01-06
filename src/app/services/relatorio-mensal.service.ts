@@ -63,4 +63,19 @@ export class RelatorioMensalService {
   gerarComparativoAtual(): Observable<ComparativoMensalDTO> {
     return this.http.get<ComparativoMensalDTO>(`${this.apiUrl}/comparativo/atual`);
   }
+
+  /**
+   * Exporta o relatório mensal para Excel
+   * @param ano Ano do relatório
+   * @param mes Mês do relatório (1-12)
+   */
+  exportarRelatorioParaExcel(ano: number, mes: number): void {
+    const url = `${this.apiUrl}/export/excel/${ano}/${mes}`;
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `relatorio-mensal-${mes.toString().padStart(2, '0')}-${ano}.xlsx`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
 }
