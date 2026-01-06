@@ -14,14 +14,14 @@ export class AppComponent implements OnInit {
 
   private routeTitles: { [key: string]: string } = {
     'dashboard': 'Dashboard - Salve Mais',
-    'card-form': 'Gerenciar Cartões - Salve Mais',
+    'cartao/form': 'Gerenciar Cartões - Salve Mais',
     'categoria-form': 'Gerenciar Categorias - Salve Mais',
     'provento-form': 'Gerenciar Proventos - Salve Mais',
     'despesas-fixas': 'Débitos em Conta - Salve Mais',
     'conta-fixa-recorrente': 'Contas Fixas Recorrentes - Salve Mais',
     'despesas-recorrentes': 'Gastos Recorrentes no Cartão - Salve Mais',
-    'faturas': 'Faturas - Salve Mais',
-    'cartao-limites': 'Limites e Alertas - Salve Mais',
+    'cartao/faturas': 'Faturas - Salve Mais',
+    'cartao/limites': 'Limites e Alertas - Salve Mais',
     'notificacoes': 'Notificações - Salve Mais',
     'account': 'Contas Bancárias - Salve Mais',
     'minha-conta': 'Minha Conta - Salve Mais',

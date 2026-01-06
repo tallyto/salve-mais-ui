@@ -62,7 +62,7 @@ export class NotificacoesComponent implements OnInit {
     if (notificacao.tipoEntidade === 'CONTA_FIXA') {
       this.router.navigate(['/despesas-fixas']);
     } else if (notificacao.tipoEntidade === 'FATURA') {
-      this.router.navigate(['/faturas']);
+      this.router.navigate(['/cartao/faturas']);
     }
   }
 
