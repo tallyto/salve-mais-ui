@@ -61,7 +61,7 @@ import { CartaoLimiteStatusDTO } from '../../models/cartao.model';
         </ng-template>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button color="primary" routerLink="/cartao-limites">
+        <button mat-button color="primary" routerLink="/cartao/limites">
           Ver Detalhes
         </button>
       </mat-card-actions>

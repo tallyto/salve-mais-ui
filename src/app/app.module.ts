@@ -37,23 +37,6 @@ import { NgChartsModule } from 'ng2-charts';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AccountComponent } from './components/account/account.component';
-import { CartaoLimitesComponent } from './components/cartao-limites/cartao-limites.component';
-import { ComprovantesDialogComponent } from './components/comprovantes-dialog/comprovantes-dialog.component';
-import { ComprovantesListComponent } from './components/comprovantes-list/comprovantes-list.component';
-import { ContaFixaRecorrenteComponent } from './components/conta-fixa-recorrente/conta-fixa-recorrente.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { DespesasFixasComponent } from "./components/despesas-fixas/despesas-fixas.component";
-import { DespesasRecorrentesComponent } from './components/despesas-recorrentes/despesas-recorrentes.component';
-import { ExpensePieChartComponent } from './components/expense-pie-chart/expense-pie-chart.component';
-import { FaturaFormComponent } from './components/fatura-form/fatura-form.component';
-import { IncomeExpenseChartComponent } from './components/income-expense-chart/income-expense-chart.component';
-import { ListAccountsComponent } from './components/list-accounts/list-accounts.component';
-import { ListContasFixasComponent } from './components/list-contas-fixas/list-contas-fixas.component';
-import { ListDespesasRecorrentesComponent } from './components/list-despesas-recorrentes/list-despesas-recorrentes.component';
-import { ListProventosComponent } from './components/list-proventos/list-proventos.component';
-import { LoginComponent } from './components/login/login.component';
-import { MenuLateralComponent } from './components/menu-lateral/menu-lateral.component';
-import { PagamentoFaturaModalComponent } from './components/pagamento-fatura-modal/pagamento-fatura-modal.component';
 import { ProventoFormComponent } from './components/provento-form/provento-form.component';
 import { RedefinirSenhaComponent } from './components/redefinir-senha/redefinir-senha.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -66,6 +49,18 @@ import { SpendingTrendChartComponent } from './components/spending-trend-chart/s
 import { TransacaoDetalheComponent } from './components/transacao-detalhe/transacao-detalhe.component';
 import { TransferenciaModalComponent } from './components/transferencia-modal/transferencia-modal.component';
 import { AuthInterceptor } from './services/auth.interceptor';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DespesasFixasComponent } from "./components/despesas-fixas/despesas-fixas.component";
+import { DespesasRecorrentesComponent } from './components/despesas-recorrentes/despesas-recorrentes.component';
+import { ExpensePieChartComponent } from './components/expense-pie-chart/expense-pie-chart.component';
+import { IncomeExpenseChartComponent } from './components/income-expense-chart/income-expense-chart.component';
+import { ListAccountsComponent } from './components/list-accounts/list-accounts.component';
+import { ListContasFixasComponent } from './components/list-contas-fixas/list-contas-fixas.component';
+import { ListDespesasRecorrentesComponent } from './components/list-despesas-recorrentes/list-despesas-recorrentes.component';
+import { ListProventosComponent } from './components/list-proventos/list-proventos.component';
+import { MenuLateralComponent } from './components/menu-lateral/menu-lateral.component';
+import { ContaFixaRecorrenteComponent } from './components/conta-fixa-recorrente/conta-fixa-recorrente.component';
+import { LoginComponent } from './components/login/login.component';
 
 import { MinhaContaComponent } from './components/minha-conta/minha-conta.component';
 import { NotificacoesWidgetComponent } from './components/notificacoes-widget/notificacoes-widget.component';
@@ -101,14 +96,10 @@ import { ComparativoMensalComponent } from './components/comparativo-mensal/comp
     RedefinirSenhaComponent,
     ConfirmDialogComponent,
     RelatorioMensalComponent,
-    FaturaFormComponent,
-    PagamentoFaturaModalComponent,
     NotificacoesComponent,
     NotificacoesEmailConfigComponent,
     ContaFixaRecorrenteComponent,
     MinhaContaComponent,
-    ComprovantesDialogComponent,
-    ComprovantesListComponent,
     ReservaEmergenciaComponent,
     ReservaEmergenciaFormComponent,
     TransferenciaModalComponent,
@@ -155,12 +146,11 @@ import { ComparativoMensalComponent } from './components/comparativo-mensal/comp
     MatSortModule,
     NgChartsModule,
     MatSlideToggleModule,
-    RegisterComponent, // Importa o componente standalone
-    LoginComponent,
     MatDialogModule,
     MatChipsModule,
+    RegisterComponent, // Importa o componente standalone
+    LoginComponent, // Importa o componente standalone
     LimiteAlertasWidgetComponent, // Importa o widget standalone
-    CartaoLimitesComponent, // Importa o componente standalone
     NotificacoesWidgetComponent, // Importa o widget de notificações standalone
     ListTransacoesComponent, // Importa o componente de listagem de transações standalone
     CompraParceladaFormComponent, // Importa o componente de formulário de compras parceladas standalone

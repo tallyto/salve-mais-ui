@@ -21,7 +21,7 @@ import { Categoria } from '../../models/categoria.model';
 import { Cartao } from '../../models/cartao.model';
 import { CompraParceladaRequest } from '../../models/compra-parcelada.model';
 import { CategoriaFormComponent } from '../categoria';
-import { CartaoFormComponent } from '../cartao-form/cartao-form.component';
+import { CartaoFormComponent } from '../cartao/cartao-form/cartao-form.component';
 
 @Component({
   selector: 'app-compra-parcelada-form',

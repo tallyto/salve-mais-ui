@@ -1,14 +1,28 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { merge, of as observableOf, startWith, switchMap, catchError, map } from 'rxjs';
-import { FaturaService } from '../../services/fatura.service';
-import { CartaoService } from '../../services/cartao.service';
-import { FaturaManualDTO, FaturaResponseDTO, FaturaPreviewDTO } from '../../models/fatura.model';
-import { Cartao } from '../../models/cartao.model';
+import { FaturaService } from '../../../services/fatura.service';
+import { CartaoService } from '../../../services/cartao.service';
+import { FaturaManualDTO, FaturaResponseDTO, FaturaPreviewDTO } from '../../../models/fatura.model';
+import { Cartao } from '../../../models/cartao.model';
 import { PagamentoFaturaModalComponent } from '../pagamento-fatura-modal/pagamento-fatura-modal.component';
 
 interface MonthOption {
@@ -20,7 +34,29 @@ interface MonthOption {
     selector: 'app-fatura-form',
     templateUrl: './fatura-form.component.html',
     styleUrls: ['./fatura-form.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        FormsModule,
+        MatSnackBarModule,
+        MatDialogModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatTableModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatSelectModule,
+        MatCardModule,
+        MatIconModule,
+        MatProgressBarModule,
+        MatChipsModule,
+        MatTooltipModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatProgressSpinnerModule
+    ]
 })
 export class FaturaFormComponent implements OnInit, AfterViewInit {
   faturaForm: FormGroup;

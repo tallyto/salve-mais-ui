@@ -1,17 +1,38 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { FaturaService } from '../../services/fatura.service';
-import { AccountService } from '../../services/account.service';
-import { Account } from '../../models/account.model';
-import { FaturaResponseDTO } from '../../models/fatura.model';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FaturaService } from '../../../services/fatura.service';
+import { AccountService } from '../../../services/account.service';
+import { Account } from '../../../models/account.model';
+import { FaturaResponseDTO } from '../../../models/fatura.model';
 
 @Component({
     selector: 'app-pagamento-fatura-modal',
     templateUrl: './pagamento-fatura-modal.component.html',
     styleUrls: ['./pagamento-fatura-modal.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        MatDialogModule,
+        MatSnackBarModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatSelectModule,
+        MatIconModule,
+        MatProgressBarModule,
+        MatProgressSpinnerModule
+    ]
 })
 export class PagamentoFaturaModalComponent implements OnInit {
   pagamentoForm: FormGroup;

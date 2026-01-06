@@ -12,8 +12,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { CartaoService } from "../../services/cartao.service";
-import { Cartao } from "../../models/cartao.model";
+import { CartaoService } from "../../../services/cartao.service";
+import { Cartao } from "../../../models/cartao.model";
 
 @Component({
   selector: 'app-cartao-form',

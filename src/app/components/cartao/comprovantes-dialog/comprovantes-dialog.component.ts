@@ -1,14 +1,30 @@
 import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Anexo, UrlDownload } from '../../models/anexo.model';
-import { AnexoService } from '../../services/anexo.service';
+import { CommonModule } from '@angular/common';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
+import { Anexo, UrlDownload } from '../../../models/anexo.model';
+import { AnexoService } from '../../../services/anexo.service';
 
 @Component({
     selector: 'app-comprovantes-dialog',
     templateUrl: './comprovantes-dialog.component.html',
     styleUrls: ['./comprovantes-dialog.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [
+        CommonModule,
+        MatDialogModule,
+        MatSnackBarModule,
+        MatButtonModule,
+        MatIconModule,
+        MatProgressBarModule,
+        MatListModule,
+        MatDividerModule
+    ]
 })
 export class ComprovantesDialogComponent {
   anexos: Anexo[] = [];
