@@ -7,7 +7,7 @@ import { catchError, map, merge, of as observableOf, startWith, switchMap } from
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ComprovantesDialogComponent } from '../comprovantes-dialog/comprovantes-dialog.component';
+import { ComprovantesDialogComponent } from '../cartao/comprovantes-dialog/comprovantes-dialog.component';
 
 interface MonthOption {
   value: number;
