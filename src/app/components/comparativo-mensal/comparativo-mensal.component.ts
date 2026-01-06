@@ -106,7 +106,6 @@ export class ComparativoMensalComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Erro ao carregar comparativo:', error);
         this.errorMessage = 'Erro ao carregar comparativo mensal';
         this.isLoading = false;
       }
@@ -132,7 +131,6 @@ export class ComparativoMensalComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Erro ao carregar comparativo:', error);
         this.errorMessage = 'Erro ao carregar comparativo mensal';
         this.isLoading = false;
       }

@@ -70,7 +70,6 @@ export class CompraDebitoFormComponent implements OnInit {
         this.categorias = categorias;
       },
       error: (error) => {
-        console.error('Erro ao carregar categorias:', error);
         this.mostrarMensagem('Erro ao carregar categorias', 'error');
       }
     });
@@ -82,7 +81,6 @@ export class CompraDebitoFormComponent implements OnInit {
         this.contas = response.content;
       },
       error: (error) => {
-        console.error('Erro ao carregar contas:', error);
         this.mostrarMensagem('Erro ao carregar contas', 'error');
       }
     });
@@ -105,7 +103,6 @@ export class CompraDebitoFormComponent implements OnInit {
         this.compraDebitoForm.get('dataCompra')?.disable();
       },
       error: (error) => {
-        console.error('Erro ao carregar compra:', error);
         this.mostrarMensagem('Erro ao carregar compra', 'error');
         this.router.navigate(['/compras-debito']);
       }
@@ -142,7 +139,6 @@ export class CompraDebitoFormComponent implements OnInit {
         },
         error: (error) => {
           this.loading = false;
-          console.error('Erro ao atualizar compra:', error);
           this.tratarErro(error);
         }
       });
@@ -161,7 +157,6 @@ export class CompraDebitoFormComponent implements OnInit {
         },
         error: (error) => {
           this.loading = false;
-          console.error('Erro ao registrar compra:', error);
           this.tratarErro(error);
         }
       });

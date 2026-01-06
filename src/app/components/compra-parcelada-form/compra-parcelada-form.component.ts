@@ -103,7 +103,6 @@ export class CompraParceladaFormComponent implements OnInit {
         this.loading = false;
       },
       error: (error) => {
-        console.error('Erro ao carregar compra parcelada:', error);
         this.snackBar.open('Erro ao carregar compra parcelada', 'Fechar', {
           duration: 3000,
           horizontalPosition: 'end',
@@ -183,10 +182,8 @@ export class CompraParceladaFormComponent implements OnInit {
     this.categoriaService.listarCategorias().subscribe({
       next: (categorias: Categoria[]) => {
         this.categorias = categorias;
-        console.log('Categorias carregadas:', categorias);
       },
       error: (error: any) => {
-        console.error('Erro ao carregar categorias:', error);
       }
     });
   }
@@ -197,7 +194,6 @@ export class CompraParceladaFormComponent implements OnInit {
         this.cartoes = cartoes;
       },
       error: (error: any) => {
-        console.error('Erro ao carregar cartões:', error);
       }
     });
   }
@@ -235,7 +231,6 @@ export class CompraParceladaFormComponent implements OnInit {
       // Modo de edição
       this.compraParceladaService.atualizar(this.compraId, request).subscribe({
         next: (response) => {
-          console.log('Compra parcelada atualizada:', response);
           this.snackBar.open('Compra parcelada atualizada com sucesso!', 'Fechar', {
             duration: 3000,
             horizontalPosition: 'end',
@@ -244,7 +239,6 @@ export class CompraParceladaFormComponent implements OnInit {
           this.router.navigate(['/compras-parceladas']);
         },
         error: (error) => {
-          console.error('Erro ao atualizar compra parcelada:', error);
           this.errorMessage = error.error?.message || 'Erro ao atualizar compra parcelada';
           this.loading = false;
         }
@@ -253,7 +247,6 @@ export class CompraParceladaFormComponent implements OnInit {
       // Modo de criação
       this.compraParceladaService.criar(request).subscribe({
         next: (response) => {
-          console.log('Compra parcelada criada:', response);
           this.snackBar.open(`Compra parcelada criada com sucesso! ${this.parcelasRestantes} parcelas de R$ ${this.valorParcela.toFixed(2)}`, 'Fechar', {
             duration: 3000,
             horizontalPosition: 'end',
@@ -262,7 +255,6 @@ export class CompraParceladaFormComponent implements OnInit {
           this.router.navigate(['/compras-parceladas']);
         },
         error: (error) => {
-          console.error('Erro ao criar compra parcelada:', error);
           this.errorMessage = error.error?.message || 'Erro ao criar compra parcelada';
           this.loading = false;
         }

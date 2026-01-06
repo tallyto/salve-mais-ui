@@ -75,7 +75,6 @@ export class TenantService {
   }
 
   cadastrarTenant(data: TenantCadastroDTO): Observable<Tenant> {
-    console.log('Cadastrando tenant:', data);
     return this.http.post<Tenant>(`${this.apiUrl}/cadastro`, data);
   }
 

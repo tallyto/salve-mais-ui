@@ -143,7 +143,6 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
             if (parsedInfo.name) this.username = parsedInfo.name;
             if (parsedInfo.email) this.userEmail = parsedInfo.email;
           } catch (e) {
-            console.error('Erro ao processar informações do usuário', e);
           }
         }
       }
@@ -238,7 +237,6 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
    */
   private loadTenantDisplayName(): void {
     const token = localStorage.getItem('token');
-    console.log('Loading tenant display name - Token exists:', !!token);
     
     if (!token) {
       this.appTitle = 'Salve Mais';
@@ -246,7 +244,6 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     const tenantId = getTenantIdFromToken(token);
-    console.log('TenantId from token:', tenantId);
     
     if (!tenantId) {
       this.appTitle = 'Salve Mais';
@@ -255,12 +252,9 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.tenantService.getTenantById(tenantId).subscribe({
       next: (tenant) => {
-        console.log('Tenant loaded:', tenant);
         this.appTitle = tenant.displayName || tenant.nome || 'Salve Mais';
-        console.log('App title set to:', this.appTitle);
       },
       error: (error) => {
-        console.error('Error loading tenant:', error);
         this.appTitle = 'Salve Mais';
       }
     });

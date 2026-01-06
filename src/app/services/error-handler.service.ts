@@ -52,7 +52,6 @@ export class ErrorHandlerService {
     }
 
     // Loga o erro detalhado para diagnóstico
-    console.error('Erro HTTP:', error);
 
     return errorMessage;
   }

@@ -167,7 +167,6 @@ export class BudgetRuleComponent implements OnInit {
           this.loading = false;
         },
         error: (err) => {
-          console.error('Erro ao carregar dados da regra 50/30/20:', err);
           this.error = true;
           this.loading = false;
         }

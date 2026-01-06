@@ -265,7 +265,6 @@ export class NotificacoesWidgetComponent implements OnInit {
         this.loading = false;
       },
       error: (error) => {
-        console.error('Erro ao carregar resumo de notificações:', error);
         this.loading = false;
       }
     });

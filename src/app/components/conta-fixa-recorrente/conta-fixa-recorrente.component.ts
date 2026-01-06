@@ -73,7 +73,6 @@ export class ContaFixaRecorrenteComponent implements OnInit {
         this.categorias = categorias;
       },
       error: (error) => {
-        console.error('Erro ao carregar categorias:', error);
         this.mostrarMensagem('Erro ao carregar categorias', 'error');
       }
     });
@@ -85,7 +84,6 @@ export class ContaFixaRecorrenteComponent implements OnInit {
         this.contas = response.content;
       },
       error: (error) => {
-        console.error('Erro ao carregar contas:', error);
         this.mostrarMensagem('Erro ao carregar contas', 'error');
       }
     });
@@ -127,7 +125,6 @@ export class ContaFixaRecorrenteComponent implements OnInit {
       },
       error: (error) => {
         this.loading = false;
-        console.error('Erro ao criar contas recorrentes:', error);
         
         let mensagemErro = 'Erro ao criar contas recorrentes';
         if (error.error?.message) {

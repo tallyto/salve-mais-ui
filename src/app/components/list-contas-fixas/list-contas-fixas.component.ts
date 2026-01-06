@@ -128,7 +128,6 @@ export class ListContasFixasComponent implements AfterViewInit {
           this.refreshContasFixasList();
         },
         error: (error) => {
-          console.error('Erro ao atualizar despesa:', error);
           this.snackBar.open('Erro ao atualizar despesa', 'Fechar', {
             duration: 3000,
             horizontalPosition: 'right',
@@ -151,7 +150,6 @@ export class ListContasFixasComponent implements AfterViewInit {
           this.refreshContasFixasList();
         },
         error: (error: any) => {
-          console.error('Erro ao excluir despesa:', error);
           this.snackBar.open('Erro ao excluir despesa', 'Fechar', {
             duration: 3000,
             horizontalPosition: 'right',
@@ -302,7 +300,6 @@ export class ListContasFixasComponent implements AfterViewInit {
         this.isLoadingResults = false;
       },
       error: (error) => {
-        console.error('Erro ao exportar para Excel:', error);
         this.snackBar.open('Erro ao exportar para Excel', 'Fechar', {
           duration: 3000,
           horizontalPosition: 'right',
@@ -390,7 +387,6 @@ export class ListContasFixasComponent implements AfterViewInit {
           this.refreshContasFixasList();
         },
         error: (error) => {
-          console.error('Erro ao pagar conta:', error);
           let errorMessage = 'Erro ao realizar o pagamento';
           
           if (error.error && typeof error.error === 'string') {
@@ -434,7 +430,6 @@ export class ListContasFixasComponent implements AfterViewInit {
           this.refreshContasFixasList();
         },
         error: (error) => {
-          console.error('Erro ao recriar despesa:', error);
           let errorMessage = 'Erro ao recriar despesa';
           
           if (error.error && typeof error.error === 'string') {

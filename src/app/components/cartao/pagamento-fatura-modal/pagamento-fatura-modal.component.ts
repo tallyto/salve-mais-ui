@@ -64,7 +64,6 @@ export class PagamentoFaturaModalComponent implements OnInit {
         this.loading = false;
       },
       error: (error) => {
-        console.error('Erro ao carregar contas:', error);
         this.snackBar.open('Erro ao carregar contas', 'Fechar', { duration: 3000 });
         this.loading = false;
       }
@@ -82,7 +81,6 @@ export class PagamentoFaturaModalComponent implements OnInit {
           this.dialogRef.close(true);
         },
         error: (error) => {
-          console.error('Erro ao pagar fatura:', error);
           const mensagem = error.error?.message || 'Erro ao pagar fatura';
           this.snackBar.open(mensagem, 'Fechar', { duration: 5000 });
           this.loading = false;

@@ -100,7 +100,6 @@ export class ListTransacoesComponent implements OnInit {
           this.loading = false;
         },
         error => {
-          console.error('Erro ao carregar transações', error);
           this.loading = false;
           this.snackBar.open('Erro ao carregar transações', 'Fechar', {
             duration: 3000
@@ -115,7 +114,6 @@ export class ListTransacoesComponent implements OnInit {
         this.contas = contas;
       },
       (error: any) => {
-        console.error('Erro ao carregar contas', error);
       }
     );
   }
@@ -126,7 +124,6 @@ export class ListTransacoesComponent implements OnInit {
         this.categorias = categorias;
       },
       error => {
-        console.error('Erro ao carregar categorias', error);
       }
     );
   }
@@ -309,7 +306,6 @@ export class ListTransacoesComponent implements OnInit {
             this.snackBar.open('Transação excluída com sucesso', 'Fechar', { duration: 3000 });
           },
           error: (err) => {
-            console.error('Erro ao excluir transação', err);
             this.snackBar.open('Erro ao excluir transação', 'Fechar', { duration: 3000 });
             this.loading = false;
           }

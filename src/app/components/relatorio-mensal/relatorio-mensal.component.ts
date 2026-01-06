@@ -80,7 +80,6 @@ export class RelatorioMensalComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Erro ao gerar relatório atual:', error);
         this.showError('Erro ao gerar relatório atual');
         this.isLoading = false;
       }
@@ -99,7 +98,6 @@ export class RelatorioMensalComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Erro ao gerar relatório:', error);
         this.showError('Erro ao gerar relatório');
         this.isLoading = false;
       }
@@ -117,7 +115,6 @@ export class RelatorioMensalComponent implements OnInit {
         this.isLoadingContas = false;
       },
       error: (error) => {
-        console.error('Erro ao carregar contas vencidas:', error);
         this.showError('Erro ao carregar contas vencidas');
         this.isLoadingContas = false;
       }

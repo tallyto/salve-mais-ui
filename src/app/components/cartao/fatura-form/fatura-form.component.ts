@@ -255,7 +255,6 @@ export class FaturaFormComponent implements OnInit, AfterViewInit {
         this.cartoes = cartoes;
       },
       error: (error) => {
-        console.error('Erro ao carregar cartões:', error);
         this.snackBar.open('Erro ao carregar cartões', 'Fechar', { duration: 3000 });
       }
     });
@@ -289,7 +288,6 @@ export class FaturaFormComponent implements OnInit, AfterViewInit {
           this.loading = false;
         },
         error: (error) => {
-          console.error('Erro ao criar fatura:', error);
           this.snackBar.open('Erro ao criar fatura', 'Fechar', { duration: 3000 });
           this.loading = false;
         }
@@ -324,7 +322,6 @@ export class FaturaFormComponent implements OnInit, AfterViewInit {
         this.carregarFaturas();
       },
       error: (error) => {
-        console.error('Erro ao marcar fatura como paga:', error);
         this.snackBar.open('Erro ao marcar fatura como paga', 'Fechar', { duration: 3000 });
       }
     });
@@ -338,7 +335,6 @@ export class FaturaFormComponent implements OnInit, AfterViewInit {
           this.carregarFaturas();
         },
         error: (error) => {
-          console.error('Erro ao excluir fatura:', error);
           this.snackBar.open('Erro ao excluir fatura', 'Fechar', { duration: 3000 });
         }
       });
@@ -352,7 +348,6 @@ export class FaturaFormComponent implements OnInit, AfterViewInit {
         this.carregarFaturas();
       },
       error: (error) => {
-        console.error('Erro ao gerar fatura automática:', error);
         this.snackBar.open('Erro ao gerar fatura automática', 'Fechar', { duration: 3000 });
       }
     });
@@ -408,7 +403,6 @@ export class FaturaFormComponent implements OnInit, AfterViewInit {
           this.loadingPreview = false;
         },
         error: (error) => {
-          console.error('Erro ao buscar preview:', error);
           this.snackBar.open('Erro ao buscar preview da fatura', 'Fechar', { duration: 3000 });
           this.loadingPreview = false;
         }
@@ -432,7 +426,6 @@ export class FaturaFormComponent implements OnInit, AfterViewInit {
         this.loading = false;
       },
       error: (error: any) => {
-        console.error('Erro ao gerar fatura:', error);
         this.snackBar.open('Erro ao gerar fatura', 'Fechar', { duration: 3000 });
         this.loading = false;
       }

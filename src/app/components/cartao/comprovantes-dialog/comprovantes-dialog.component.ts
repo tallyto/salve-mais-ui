@@ -46,7 +46,6 @@ export class ComprovantesDialogComponent {
         this.anexos = anexos;
       },
       error: (err) => {
-        console.error('Erro ao carregar anexos:', err);
         this.snackBar.open('Erro ao carregar comprovantes', 'Fechar', {
           duration: 3000,
           horizontalPosition: 'right',
@@ -92,7 +91,6 @@ export class ComprovantesDialogComponent {
       },
       error: (err) => {
         this.isUploading = false;
-        console.error('Erro ao fazer upload:', err);
         this.snackBar.open('Erro ao fazer upload do comprovante', 'Fechar', {
           duration: 3000,
           horizontalPosition: 'right',
@@ -109,7 +107,6 @@ export class ComprovantesDialogComponent {
         window.open(urlDownload.url, '_blank');
       },
       error: (err) => {
-        console.error('Erro ao obter URL de download:', err);
         this.snackBar.open('Erro ao gerar link para download', 'Fechar', {
           duration: 3000,
           horizontalPosition: 'right',
@@ -131,7 +128,6 @@ export class ComprovantesDialogComponent {
           this.carregarAnexos();
         },
         error: (err) => {
-          console.error('Erro ao remover anexo:', err);
           this.snackBar.open('Erro ao remover comprovante', 'Fechar', {
             duration: 3000,
             horizontalPosition: 'right',

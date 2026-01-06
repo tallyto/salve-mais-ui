@@ -78,7 +78,6 @@ export class CartaoLimitesComponent implements OnInit {
         this.statusLimites = status;
       },
       error: (error) => {
-        console.error('Erro ao carregar status dos limites:', error);
       }
     });
   }
@@ -89,7 +88,6 @@ export class CartaoLimitesComponent implements OnInit {
         this.alertas = alertas;
       },
       error: (error) => {
-        console.error('Erro ao carregar alertas:', error);
       }
     });
   }

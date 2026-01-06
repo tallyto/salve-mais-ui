@@ -54,7 +54,6 @@ export class AdminUsuariosComponent implements OnInit {
         this.usuarioLogado = usuario;
       },
       error: (err) => {
-        console.error('Erro ao carregar usuário logado:', err);
       }
     });
   }
@@ -67,7 +66,6 @@ export class AdminUsuariosComponent implements OnInit {
         this.loading = false;
       },
       error: (err) => {
-        console.error('Erro ao carregar usuários:', err);
         this.snackBar.open('Erro ao carregar usuários', 'Fechar', { duration: 3000 });
         this.loading = false;
       }
@@ -104,7 +102,6 @@ export class AdminUsuariosComponent implements OnInit {
           this.carregarUsuarios();
         },
         error: (err) => {
-          console.error('Erro ao deletar usuário:', err);
           const errorMessage = err.error || 'Erro ao deletar usuário';
           this.snackBar.open(errorMessage, 'Fechar', { duration: 3000 });
         }

@@ -221,7 +221,6 @@ export class LimiteAlertasWidgetComponent implements OnInit {
         this.alertas = alertas;
       },
       error: (error) => {
-        console.error('Erro ao carregar alertas de limite:', error);
       }
     });
   }

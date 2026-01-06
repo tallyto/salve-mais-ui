@@ -40,7 +40,6 @@ export class NotificacoesComponent implements OnInit {
         this.loading = false;
       },
       error: (error) => {
-        console.error('Erro ao carregar notificações:', error);
         this.snackBar.open('Erro ao carregar notificações', 'Fechar', { duration: 3000 });
         this.loading = false;
       }

@@ -122,7 +122,6 @@ export class DespesasRecorrentesComponent implements OnInit {
         });
       },
       error: (error) => {
-        console.error('Erro ao salvar gasto recorrente:', error);
         let errorMessage = 'Erro ao salvar gasto recorrente';
 
         // Verificar se é erro de limite excedido

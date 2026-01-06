@@ -100,7 +100,6 @@ export class DespesasFixasComponent implements OnInit {
         });
       },
       error: (error: any) => {
-        console.error('Erro ao salvar despesa:', error);
         this.snackBar.open('Erro ao salvar despesa', 'Fechar', {
           duration: 3000,
           horizontalPosition: 'right',

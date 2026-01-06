@@ -130,7 +130,6 @@ export class ListComprasDebitoComponent implements AfterViewInit {
           this.refreshList();
         },
         error: (error) => {
-          console.error('Erro ao excluir compra:', error);
           this.snackBar.open('Erro ao excluir compra', 'Fechar', {
             duration: 3000,
             horizontalPosition: 'right',

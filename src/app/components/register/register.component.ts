@@ -121,7 +121,6 @@ export class RegisterComponent implements OnInit {
 
         // Salvar o domínio no localStorage para uso posterior no login
         if (response && response.dominio) {
-          console.log('Salvando domínio no localStorage:', response.dominio);
           this.tenantService.setTenant(response.dominio);
         }
 

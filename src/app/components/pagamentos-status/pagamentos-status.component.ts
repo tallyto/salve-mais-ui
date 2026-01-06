@@ -91,7 +91,6 @@ export class PagamentosStatusComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Erro ao carregar dados:', error);
         this.showError('Erro ao carregar dados de pagamentos');
         this.isLoading = false;
       }

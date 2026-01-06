@@ -68,7 +68,6 @@ export class NovoUsuarioDialogComponent {
         this.dialogRef.close(true);
       },
       error: (err) => {
-        console.error('Erro ao criar usuário:', err);
         const errorMessage = err.error?.message || 'Erro ao criar usuário';
         this.snackBar.open(errorMessage, 'Fechar', { duration: 3000 });
         this.loading = false;

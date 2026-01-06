@@ -91,7 +91,6 @@ export class ListProventosComponent implements AfterViewInit {
             this.refreshProventosList();
           },
           error: (err: any) => {
-            console.error('Erro ao excluir provento:', err);
             alert('Erro ao excluir provento: ' + (err.error?.message || 'Erro desconhecido'));
           }
         });

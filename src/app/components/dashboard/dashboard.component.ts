@@ -254,7 +254,6 @@ export class DashboardComponent implements OnInit {
         );
       },
       error: (error) => {
-        console.error('Erro ao carregar dados do dashboard:', error);
         this.isLoading = false;
 
         // Em caso de erro, tenta carregar pelo menos os dados básicos
@@ -278,7 +277,6 @@ export class DashboardComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Erro ao carregar dados básicos:', error);
         this.isLoading = false;
       }
     });
@@ -763,7 +761,6 @@ export class DashboardComponent implements OnInit {
         window.URL.revokeObjectURL(url);
       },
       error: (error) => {
-        console.error('Erro ao exportar dados:', error);
         alert('Erro ao exportar dados. Tente novamente.');
       }
     });

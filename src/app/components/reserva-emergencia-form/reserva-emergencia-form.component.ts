@@ -131,7 +131,6 @@ export class ReservaEmergenciaFormComponent implements OnInit {
           this.router.navigate(['/reserva-emergencia']);
         },
         error: (err) => {
-          console.error('Erro ao atualizar reserva:', err);
           this.snackBar.open('Erro ao atualizar reserva.', 'Fechar', { duration: 5000 });
           this.loading = false;
         }
@@ -155,14 +154,12 @@ export class ReservaEmergenciaFormComponent implements OnInit {
                 this.router.navigate(['/reserva-emergencia']);
               },
               error: (transferError) => {
-                console.error('Erro ao fazer contribuição inicial:', transferError);
                 this.snackBar.open('Reserva criada, mas houve erro na contribuição inicial.', 'Fechar', { duration: 5000 });
                 this.router.navigate(['/reserva-emergencia']);
               }
             });
           },
           error: (createError) => {
-            console.error('Erro ao criar reserva:', createError);
             this.snackBar.open('Erro ao criar reserva.', 'Fechar', { duration: 5000 });
             this.loading = false;
           }
@@ -175,7 +172,6 @@ export class ReservaEmergenciaFormComponent implements OnInit {
             this.router.navigate(['/reserva-emergencia']);
           },
           error: (err) => {
-            console.error('Erro ao criar reserva:', err);
             this.snackBar.open('Erro ao criar reserva.', 'Fechar', { duration: 5000 });
             this.loading = false;
           }

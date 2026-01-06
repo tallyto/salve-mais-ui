@@ -228,7 +228,6 @@ export class ListDespesasRecorrentesComponent implements AfterViewInit {
           this.refreshGastosRecorrentesList();
         },
         error: (error: any) => {
-          console.error('Erro ao excluir gasto:', error);
           this.snackBar.open('Erro ao excluir gasto', 'Fechar', {
             duration: 3000,
             horizontalPosition: 'right',

@@ -55,7 +55,6 @@ export class NotificacoesEmailConfigComponent implements OnInit {
     if (domain) {
       this.tenantDomain = domain;
     } else {
-      console.error('Domínio do tenant não encontrado');
       this.snackBar.open('Erro ao obter informações do tenant', 'Fechar', { duration: 3000 });
     }
   }
@@ -74,7 +73,6 @@ export class NotificacoesEmailConfigComponent implements OnInit {
         this.loading = false;
       },
       error: (error: any) => {
-        console.error('Erro ao carregar configuração:', error);
         this.loading = false;
         // Se não há configuração, não é um erro crítico
         if (error.status !== 404) {
@@ -106,7 +104,6 @@ export class NotificacoesEmailConfigComponent implements OnInit {
         this.snackBar.open('Configuração salva com sucesso!', 'Fechar', { duration: 3000 });
       },
       error: (error: any) => {
-        console.error('Erro ao salvar configuração:', error);
         this.saving = false;
         this.snackBar.open('Erro ao salvar configuração', 'Fechar', { duration: 3000 });
       }
@@ -130,7 +127,6 @@ export class NotificacoesEmailConfigComponent implements OnInit {
         this.snackBar.open('Notificações por email desabilitadas', 'Fechar', { duration: 3000 });
       },
       error: (error: any) => {
-        console.error('Erro ao desabilitar:', error);
         this.saving = false;
         this.snackBar.open('Erro ao desabilitar notificações', 'Fechar', { duration: 3000 });
       }
@@ -170,7 +166,6 @@ export class NotificacoesEmailConfigComponent implements OnInit {
         });
       },
       error: (error: any) => {
-        console.error('Erro ao enviar notificação de teste:', error);
         this.sendingTest = false;
         const mensagem = error.status === 404 
           ? 'Configure as notificações antes de enviar um teste' 

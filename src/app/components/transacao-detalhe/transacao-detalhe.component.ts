@@ -48,7 +48,6 @@ export class TransacaoDetalheComponent implements OnInit {
         this.loading = false;
       },
       error: (err) => {
-        console.error('Erro ao carregar transação:', err);
         this.error = true;
         this.loading = false;
         this.snackBar.open(

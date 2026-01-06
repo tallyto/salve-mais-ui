@@ -120,7 +120,6 @@ export class TenantConfigComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Erro ao carregar tenant:', error);
         this.showError('Erro ao carregar configurações do tenant');
         this.isLoading = false;
       }
@@ -169,7 +168,6 @@ export class TenantConfigComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Erro ao atualizar assinatura:', error);
         this.showError('Erro ao atualizar configurações de assinatura');
         this.isLoading = false;
       }
@@ -191,7 +189,6 @@ export class TenantConfigComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Erro ao atualizar SMTP:', error);
         this.showError('Erro ao atualizar configurações de e-mail');
         this.isLoading = false;
       }
@@ -213,7 +210,6 @@ export class TenantConfigComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Erro ao atualizar informações básicas:', error);
         this.showError('Erro ao atualizar informações básicas. Tente novamente.');
         this.isLoading = false;
       }
@@ -235,7 +231,6 @@ export class TenantConfigComponent implements OnInit {
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Erro ao atualizar configurações regionais:', error);
         this.showError('Erro ao atualizar configurações regionais');
         this.isLoading = false;
       }
