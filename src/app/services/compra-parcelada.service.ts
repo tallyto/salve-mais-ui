@@ -32,7 +32,8 @@ export class CompraParceladaService {
     size: number = 10,
     cartaoId?: number | null,
     categoriaId?: number | null,
-    apenasPendentes?: boolean
+    apenasPendentes?: boolean,
+    incluirArquivadas?: boolean
   ): Observable<ComprasParceladasPaginadas> {
     let params = new HttpParams()
       .set('page', page.toString())
@@ -48,6 +49,9 @@ export class CompraParceladaService {
     }
     if (apenasPendentes !== undefined) {
       params = params.set('apenasPendentes', apenasPendentes.toString());
+    }
+    if (incluirArquivadas !== undefined && incluirArquivadas) {
+      params = params.set('incluirArquivadas', 'true');
     }
     
     return this.http.get<ComprasParceladasPaginadas>(this.apiUrl, { params });

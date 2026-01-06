@@ -63,6 +63,7 @@ export class ListComprasParceladasComponent implements OnInit {
   filtroCategoriaId: number | null = null;
   buscaTexto: string = '';
   filtroApenasPendentes: boolean = false;
+  mostrarArquivadas: boolean = false;
 
   constructor(
     private compraParceladaService: CompraParceladaService,
@@ -117,7 +118,8 @@ export class ListComprasParceladasComponent implements OnInit {
       this.size,
       this.filtroCartaoId,
       this.filtroCategoriaId,
-      this.filtroApenasPendentes
+      this.filtroApenasPendentes,
+      this.mostrarArquivadas
     ).subscribe({
       next: (response) => {
         this.compras = response.content;
@@ -153,11 +155,25 @@ export class ListComprasParceladasComponent implements OnInit {
     this.loadCompras();
   }
 
+  /**
+   * Aplicar busca em tempo real sem resetar página
+   */
+  atualizarBusca(): void {
+    if (this.buscaTexto === '') {
+      // Se limpar o campo, recarrega com filtros
+      this.aplicarFiltros();
+    } else {
+      // Se está digitando, filtra localmente
+      this.loadCompras();
+    }
+  }
+
   limparFiltros(): void {
     this.filtroCartaoId = null;
     this.filtroCategoriaId = null;
     this.buscaTexto = '';
     this.filtroApenasPendentes = false;
+    this.mostrarArquivadas = false;
     this.page = 0;
     this.loadCompras();
   }

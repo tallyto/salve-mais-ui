@@ -29,6 +29,7 @@
           <input 
             matInput 
             [(ngModel)]="buscaTexto"
+            (keyup)="atualizarBusca()"
             (keyup.enter)="aplicarFiltros()"
             placeholder="Digite para buscar...">
           <mat-icon matPrefix>search</mat-icon>
@@ -36,7 +37,7 @@
             mat-icon-button 
             matSuffix 
             *ngIf="buscaTexto" 
-            (click)="buscaTexto = ''; aplicarFiltros()"
+            (click)="buscaTexto = ''; atualizarBusca()"
             matTooltip="Limpar busca">
             <mat-icon>clear</mat-icon>
           </button>
@@ -79,6 +80,17 @@
               <mat-option [value]="true">Apenas Pendentes</mat-option>
             </mat-select>
             <mat-icon matPrefix>pending_actions</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="col-12 md:col-3">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Arquivo</mat-label>
+            <mat-select [(ngModel)]="mostrarArquivadas">
+              <mat-option [value]="false">Ativas</mat-option>
+              <mat-option [value]="true">Arquivadas</mat-option>
+            </mat-select>
+            <mat-icon matPrefix>archive</mat-icon>
           </mat-form-field>
         </div>
 
