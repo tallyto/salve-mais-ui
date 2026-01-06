@@ -113,6 +113,20 @@ export class CompraParceladaService {
   }
 
   /**
+   * Arquiva uma compra parcelada
+   */
+  arquivar(id: number): Observable<CompraParcelada> {
+    return this.http.patch<CompraParcelada>(`${this.apiUrl}/${id}/arquivar`, {});
+  }
+
+  /**
+   * Desarchiva uma compra parcelada
+   */
+  desarquivar(id: number): Observable<CompraParcelada> {
+    return this.http.patch<CompraParcelada>(`${this.apiUrl}/${id}/desarquivar`, {});
+  }
+
+  /**
    * Lista parcelas não pagas de um cartão
    */
   listarParcelasNaoPagas(cartaoId: number): Observable<Parcela[]> {

@@ -134,13 +134,26 @@
           <div class="compra-title-section">
             <mat-icon class="title-icon">receipt</mat-icon>
             <div class="title-text">
-              <h3 class="compra-titulo">{{ compra.descricao }}</h3>
+              <h3 class="compra-titulo">
+                {{ compra.descricao }}
+                <mat-chip *ngIf="compra.arquivado" class="arquivado-badge" disabled>
+                  <mat-icon>archive</mat-icon>
+                  Arquivado
+                </mat-chip>
+              </h3>
               <p class="compra-data-badge">{{ formatarData(compra.dataCompra) }}</p>
             </div>
           </div>
           <div class="action-buttons">
             <button mat-icon-button color="primary" (click)="editar(compra.id)" matTooltip="Editar">
               <mat-icon>edit</mat-icon>
+            </button>
+            <button 
+              mat-icon-button 
+              [color]="compra.arquivado ? 'accent' : 'primary'" 
+              (click)="compra.arquivado ? desarquivarCompra(compra) : arquivarCompra(compra)"
+              [matTooltip]="compra.arquivado ? 'Desarquivar' : 'Arquivar'">
+              <mat-icon>{{ compra.arquivado ? 'unarchive' : 'archive' }}</mat-icon>
             </button>
             <button mat-icon-button color="warn" (click)="excluir(compra.id)" matTooltip="Excluir">
               <mat-icon>delete</mat-icon>

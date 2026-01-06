@@ -15,6 +15,7 @@ export interface CompraParcelada {
   parcelasRestantes?: number;
   valorParcela?: number;
   parcelas?: Parcela[];
+  arquivado?: boolean;
 }
 
 export interface CompraParceladaRequest {

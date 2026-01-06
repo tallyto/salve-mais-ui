@@ -331,4 +331,52 @@ export class ListComprasParceladasComponent implements OnInit {
 
     return dataStr;
   }
+
+  /**
+   * Arquiva uma compra parcelada
+   */
+  arquivarCompra(compra: CompraParcelada): void {
+    if (confirm(`Tem certeza que deseja arquivar "${compra.descricao}"?`)) {
+      this.compraParceladaService.arquivar(compra.id).subscribe({
+        next: () => {
+          this.snackBar.open('Compra parcelada arquivada com sucesso', 'Fechar', {
+            duration: 3000,
+            horizontalPosition: 'end',
+            verticalPosition: 'top'
+          });
+          this.loadCompras();
+        },
+        error: () => {
+          this.snackBar.open('Erro ao arquivar compra parcelada', 'Fechar', {
+            duration: 3000,
+            horizontalPosition: 'end',
+            verticalPosition: 'top'
+          });
+        }
+      });
+    }
+  }
+
+  /**
+   * Desarchiva uma compra parcelada
+   */
+  desarquivarCompra(compra: CompraParcelada): void {
+    this.compraParceladaService.desarquivar(compra.id).subscribe({
+      next: () => {
+        this.snackBar.open('Compra parcelada desarchivada com sucesso', 'Fechar', {
+          duration: 3000,
+          horizontalPosition: 'end',
+          verticalPosition: 'top'
+        });
+        this.loadCompras();
+      },
+      error: () => {
+        this.snackBar.open('Erro ao desarquivar compra parcelada', 'Fechar', {
+          duration: 3000,
+          horizontalPosition: 'end',
+          verticalPosition: 'top'
+        });
+      }
+    });
+  }
 }
