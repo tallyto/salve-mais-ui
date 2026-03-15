@@ -64,7 +64,9 @@
             <div class="form-row">
               <mat-form-field appearance="outline" class="half-width">
                 <mat-label>Data da Compra</mat-label>
-                <input matInput type="date" formControlName="dataCompra">
+                <input matInput [matDatepicker]="pickerDataCompra" formControlName="dataCompra" readonly>
+                <mat-datepicker-toggle matSuffix [for]="pickerDataCompra"></mat-datepicker-toggle>
+                <mat-datepicker #pickerDataCompra></mat-datepicker>
                 <mat-error *ngIf="dataCompra?.hasError('required')">Data da compra é obrigatória</mat-error>
                 <mat-hint *ngIf="isEditing">Não é possível alterar a data</mat-hint>
               </mat-form-field>
