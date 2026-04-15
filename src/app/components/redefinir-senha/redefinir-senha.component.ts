@@ -39,7 +39,7 @@ export class RedefinirSenhaComponent implements OnInit {
 
       // Verificar se o token é válido
       if (this.token) {
-        this.authService.verificarToken(this.token, this.domain).subscribe({
+        this.authService.verificarToken(this.token).subscribe({
           next: () => {
             this.tokenValido = true;
           },
@@ -72,7 +72,7 @@ export class RedefinirSenhaComponent implements OnInit {
 
     this.loading = true;
 
-    this.authService.redefinirSenha(this.token, this.redefinirForm.value.novaSenha, this.domain)
+    this.authService.redefinirSenha(this.token, this.redefinirForm.value.novaSenha)
       .subscribe({
         next: () => {
           this.snackBar.open('Senha redefinida com sucesso!', 'Fechar', {

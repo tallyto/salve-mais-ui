@@ -71,10 +71,9 @@ export class RecuperarSenhaComponent {
     }
 
     const { email, dominio } = this.recuperarForm.value;
-    const tenant = dominio || (email.split('@')[1] || '');
 
     this.isSubmitting = true;
-    this.authService.recuperarSenha({ email }, tenant)
+    this.authService.recuperarSenha({ email })
       .pipe(
         finalize(() => this.isSubmitting = false)
       )

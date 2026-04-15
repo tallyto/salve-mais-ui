@@ -231,7 +231,7 @@ export class LoginComponent implements OnInit {
       // Não limpar o tenant lembrado aqui, pois pode ser usado por outros usuários
     }
 
-    this.authService.login({ email, senha }, tenant).subscribe({
+    this.authService.login({ email, senha }).subscribe({
       next: (res) => {
         if (res && res.token) {
           localStorage.setItem('token', res.token);

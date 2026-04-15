@@ -20,46 +20,25 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  register(data: UsuarioCadastroDTO, tenant?: string): Observable<any> {
-    let headers = new HttpHeaders();
-    if (tenant) {
-      headers = headers.set('X-Private-Tenant', tenant);
-    }
-    return this.http.post(this.apiUrl, data, { headers });
+  register(data: UsuarioCadastroDTO): Observable<any> {
+    return this.http.post(this.apiUrl, data);
   }
 
-  login(data: LoginDTO, tenant?: string): Observable<any> {
-    let headers = new HttpHeaders();
-    if (tenant) {
-      headers = headers.set('X-Private-Tenant', tenant);
-    }
-    return this.http.post(environment.apiUrl + '/auth/login', data, { headers });
+  login(data: LoginDTO): Observable<any> {
+    return this.http.post(environment.apiUrl + '/auth/login', data);
   }
 
-  recuperarSenha(data: { email: string }, tenant?: string): Observable<any> {
-    let headers = new HttpHeaders();
-    if (tenant) {
-      headers = headers.set('X-Private-Tenant', tenant);
-    }
-    return this.http.post(environment.apiUrl + '/auth/recuperar-senha', data, { headers });
+  recuperarSenha(data: { email: string }): Observable<any> {
+    return this.http.post(environment.apiUrl + '/auth/recuperar-senha', data);
   }
 
-  redefinirSenha(token: string, novaSenha: string, domain?: string) {
-    let headers = new HttpHeaders();
-    if (domain) {
-      headers = headers.set('X-Private-Tenant', domain);
-    }
-    return this.http.post<any>(environment.apiUrl + '/auth/redefinir-senha', { token, novaSenha }, { headers });
+  redefinirSenha(token: string, novaSenha: string) {
+    return this.http.post<any>(environment.apiUrl + '/auth/redefinir-senha', { token, novaSenha });
   }
 
-  verificarToken(token: string, domain?: string): Observable<any> {
-    let headers = new HttpHeaders();
-    if (domain) {
-      headers = headers.set('X-Private-Tenant', domain);
-    }
+  verificarToken(token: string): Observable<any> {
     return this.http.get<any>(environment.apiUrl + '/auth/verificar-token', {
-      params: { token },
-      headers
+      params: { token }
     });
   }
 

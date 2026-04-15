@@ -74,10 +74,7 @@ export class CriarUsuarioComponent implements OnInit {
     this.loading = true;
     const { nome, email, senha } = this.userForm.value;
 
-    // Garantir que tenantDominio não seja null
-    const tenantDominio = this.tenantDominio || undefined;
-
-    this.authService.register({ nome, email, senha }, tenantDominio).subscribe({
+    this.authService.register({ nome, email, senha }).subscribe({
       next: () => {
         this.successMessage = 'Usuário criado com sucesso!';
         this.errorMessage = '';
