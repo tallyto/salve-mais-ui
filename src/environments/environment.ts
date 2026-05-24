@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://salvemais.tallyto.com/api'
+  apiUrl: 'https://api.salvemais.tallyto.com/api'
 };
