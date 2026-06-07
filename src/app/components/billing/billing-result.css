@@ -1,0 +1,38 @@
+.billing-result-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+}
+
+.billing-result-card {
+  text-align: center;
+  padding: 48px;
+  max-width: 480px;
+}
+
+.result-icon {
+  font-size: 64px;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 16px;
+}
+
+.icon-success {
+  color: #2e7d32;
+}
+
+.icon-warn {
+  color: #ef6c00;
+}
+
+.result-title {
+  margin: 0 0 8px;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.result-message {
+  color: rgba(0, 0, 0, 0.6);
+  margin-bottom: 24px;
+}

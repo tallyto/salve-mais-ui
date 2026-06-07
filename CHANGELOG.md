@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+## [1.35.0] - 2026-06-06
+
+### Adicionado
+
+- **Fase 4 da produtização SaaS — Billing no frontend**:
+  - `BillingInterceptor`: exibe toast persistente ao receber HTTP 402, com ação "Regularizar" que leva para `/billing`
+  - Tela `/billing` ("Plano & Cobrança"): status da assinatura (TRIAL/ATIVO/INADIMPLENTE/CANCELADO), countdown do trial, uso do plano (usuários/transações/armazenamento) com barras de progresso, cards dos planos disponíveis com ação de assinar/trocar de plano e cancelamento de assinatura
+  - Páginas de retorno do checkout Stripe: `/billing/sucesso` e `/billing/cancelado`
+  - `BillingService` (Angular) consumindo `GET /api/billing/status`, `GET /api/billing/planos`, `POST /api/billing/assinar` e `DELETE /api/billing/cancelar`
+  - Modelos `BillingStatus` e `Plano`
+  - Link "Plano & Cobrança" no menu lateral
+
 ## [1.33.0] - 2026-01-06
 
 ### Removido

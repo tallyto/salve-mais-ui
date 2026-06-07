@@ -31,6 +31,9 @@ import { AdminUsuariosComponent } from './components/admin-usuarios/admin-usuari
 import { CompraDebitoFormComponent } from './components/compra-debito-form/compra-debito-form.component';
 import { ListComprasDebitoComponent } from './components/list-compras-debito/list-compras-debito.component';
 import { ComparativoMensalComponent } from './components/comparativo-mensal/comparativo-mensal.component';
+import { BillingComponent } from './components/billing/billing.component';
+import { BillingSucessoComponent } from './components/billing/billing-sucesso/billing-sucesso.component';
+import { BillingCanceladoComponent } from './components/billing/billing-cancelado/billing-cancelado.component';
 
 
 const routes: Routes = [
@@ -75,6 +78,9 @@ const routes: Routes = [
   {path: 'reserva-emergencia', component: ReservaEmergenciaComponent, canActivate: [AuthGuard]},
   {path: 'reserva-emergencia/criar', component: ReservaEmergenciaFormComponent, canActivate: [AuthGuard]},
   {path: 'reserva-emergencia/editar/:id', component: ReservaEmergenciaFormComponent, canActivate: [AuthGuard]},
+  {path: 'billing', component: BillingComponent, canActivate: [AuthGuard]},
+  {path: 'billing/sucesso', component: BillingSucessoComponent, canActivate: [AuthGuard]},
+  {path: 'billing/cancelado', component: BillingCanceladoComponent, canActivate: [AuthGuard]},
   {path: 'tenant-config', component: TenantConfigComponent, canActivate: [AuthGuard]},
   {path: 'admin-usuarios', component: AdminUsuariosComponent, canActivate: [AuthGuard]},
   {path: '**', redirectTo: 'dashboard'}

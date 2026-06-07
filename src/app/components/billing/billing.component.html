@@ -1,0 +1,139 @@
+<div class="billing-container">
+
+  <div class="header">
+    <h1 class="page-title">Plano &amp; Cobrança</h1>
+    <p class="page-subtitle">Gerencie sua assinatura e acompanhe o uso do sistema.</p>
+  </div>
+
+  <!-- Banners de status -->
+  <div *ngIf="isTrial && diasRestantes >= 0" class="status-banner banner-info">
+    <mat-icon>info</mat-icon>
+    <span>Período de teste: <b>{{ diasRestantes }}</b> dia(s) restante(s). Assine um plano para continuar usando após o trial.</span>
+  </div>
+
+  <div *ngIf="isTrial && diasRestantes < 0" class="status-banner banner-warn">
+    <mat-icon>warning</mat-icon>
+    <span>Seu período de teste expirou. Assine um plano para continuar usando o sistema.</span>
+  </div>
+
+  <div *ngIf="isInadimplente" class="status-banner banner-error">
+    <mat-icon>error</mat-icon>
+    <span>Pagamento pendente. Atualize sua assinatura para restabelecer o acesso completo.</span>
+  </div>
+
+  <!-- Plano atual + quotas -->
+  <mat-card *ngIf="hasSubscription" class="current-plan-card">
+    <div class="current-plan-header">
+      <div>
+        <h3 class="current-plan-name">{{ billingStatus?.nomePlano }}</h3>
+        <span class="current-plan-meta">
+          {{ billingStatus?.precoMensal | currency:'BRL' }}/mês
+          <ng-container *ngIf="!cancelamentoAgendado && billingStatus?.subscriptionEndDate">
+            · próxima cobrança em {{ billingStatus?.subscriptionEndDate | date:'dd/MM/yyyy' }}
+          </ng-container>
+          <ng-container *ngIf="cancelamentoAgendado">
+            · acesso até {{ cancelamentoAgendado | date:'dd/MM/yyyy' }}
+          </ng-container>
+        </span>
+      </div>
+
+      <div class="current-plan-actions">
+        <mat-chip-listbox *ngIf="cancelamentoAgendado">
+          <mat-chip-option [selectable]="false" color="warn" selected>
+            <mat-icon matChipAvatar>schedule</mat-icon>
+            Cancelamento agendado
+          </mat-chip-option>
+        </mat-chip-listbox>
+
+        <button *ngIf="!cancelamentoAgendado"
+                mat-stroked-button
+                color="warn"
+                [disabled]="cancelando"
+                (click)="confirmarCancelamento()">
+          <mat-icon>close</mat-icon>
+          Cancelar assinatura
+        </button>
+      </div>
+    </div>
+
+    <div class="quotas-grid">
+      <div class="quota-item" *ngIf="billingStatus?.maxUsuarios">
+        <div class="quota-label-row">
+          <span class="quota-label"><mat-icon>group</mat-icon> Usuários</span>
+          <span class="quota-value">{{ billingStatus?.usuariosAtivos }} / {{ billingStatus?.maxUsuarios }}</span>
+        </div>
+        <mat-progress-bar mode="determinate"
+                          [value]="quotaPercent(billingStatus?.usuariosAtivos ?? null, billingStatus?.maxUsuarios ?? null)"
+                          [color]="quotaColor(quotaPercent(billingStatus?.usuariosAtivos ?? null, billingStatus?.maxUsuarios ?? null))">
+        </mat-progress-bar>
+      </div>
+
+      <div class="quota-item" *ngIf="billingStatus?.maxTransacoesMes">
+        <div class="quota-label-row">
+          <span class="quota-label"><mat-icon>swap_horiz</mat-icon> Transações este mês</span>
+          <span class="quota-value">{{ billingStatus?.transacoesMes }} / {{ billingStatus?.maxTransacoesMes }}</span>
+        </div>
+        <mat-progress-bar mode="determinate"
+                          [value]="quotaPercent(billingStatus?.transacoesMes ?? null, billingStatus?.maxTransacoesMes ?? null)"
+                          [color]="quotaColor(quotaPercent(billingStatus?.transacoesMes ?? null, billingStatus?.maxTransacoesMes ?? null))">
+        </mat-progress-bar>
+      </div>
+
+      <div class="quota-item" *ngIf="billingStatus?.maxStorageGb">
+        <div class="quota-label-row">
+          <span class="quota-label"><mat-icon>storage</mat-icon> Armazenamento</span>
+          <span class="quota-value">{{ billingStatus?.maxStorageGb }} GB inclusos</span>
+        </div>
+        <mat-progress-bar mode="determinate" [value]="0" color="primary"></mat-progress-bar>
+      </div>
+    </div>
+  </mat-card>
+
+  <!-- Cards de planos -->
+  <h3 class="section-title" *ngIf="!loading">
+    {{ hasSubscription ? 'Mudar de plano' : 'Escolha um plano' }}
+  </h3>
+
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+
+  <div *ngIf="!loading" class="plans-grid">
+    <mat-card *ngFor="let plano of planos" class="plan-card" [class.plan-card-active]="isCurrentPlan(plano)">
+      <div class="plan-header">
+        <h3 class="plan-name">{{ plano.nome }}</h3>
+        <div class="plan-price">
+          <span class="price-value">{{ plano.precoMensal | currency:'BRL' }}</span>
+          <span class="price-period">/mês</span>
+        </div>
+      </div>
+
+      <p class="plan-description">{{ plano.descricao }}</p>
+
+      <ul class="plan-features">
+        <li><mat-icon>group</mat-icon> Até {{ plano.maxUsuarios }} usuário(s)</li>
+        <li *ngIf="plano.maxTransacoesMes"><mat-icon>swap_horiz</mat-icon> Até {{ plano.maxTransacoesMes }} transações/mês</li>
+        <li *ngIf="plano.maxStorageGb"><mat-icon>storage</mat-icon> {{ plano.maxStorageGb }} GB de armazenamento</li>
+      </ul>
+
+      <button *ngIf="!isCurrentPlan(plano)"
+              mat-raised-button
+              color="primary"
+              class="plan-action-button"
+              [disabled]="assinando"
+              (click)="assinar(plano.id)">
+        {{ hasSubscription ? 'Trocar para este plano' : 'Assinar' }}
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+
+      <div *ngIf="isCurrentPlan(plano)" class="plan-active-badge">
+        <mat-icon>check</mat-icon> Plano Ativo
+      </div>
+    </mat-card>
+
+    <div *ngIf="planos.length === 0" class="empty-state">
+      <mat-icon>info</mat-icon>
+      <p>Nenhum plano disponível no momento.</p>
+    </div>
+  </div>
+</div>

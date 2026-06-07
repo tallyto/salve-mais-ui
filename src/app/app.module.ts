@@ -49,6 +49,10 @@ import { SpendingTrendChartComponent } from './components/spending-trend-chart/s
 import { TransacaoDetalheComponent } from './components/transacao-detalhe/transacao-detalhe.component';
 import { TransferenciaModalComponent } from './components/transferencia-modal/transferencia-modal.component';
 import { AuthInterceptor } from './services/auth.interceptor';
+import { BillingInterceptor } from './services/billing.interceptor';
+import { BillingComponent } from './components/billing/billing.component';
+import { BillingSucessoComponent } from './components/billing/billing-sucesso/billing-sucesso.component';
+import { BillingCanceladoComponent } from './components/billing/billing-cancelado/billing-cancelado.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DespesasFixasComponent } from "./components/despesas-fixas/despesas-fixas.component";
 import { DespesasRecorrentesComponent } from './components/despesas-recorrentes/despesas-recorrentes.component';
@@ -110,7 +114,10 @@ import { ComparativoMensalComponent } from './components/comparativo-mensal/comp
     CurrencyInputDirective,
     CompraDebitoFormComponent,
     ListComprasDebitoComponent,
-    ComparativoMensalComponent
+    ComparativoMensalComponent,
+    BillingComponent,
+    BillingSucessoComponent,
+    BillingCanceladoComponent
   ],
   imports: [
     BrowserModule,
@@ -159,6 +166,7 @@ import { ComparativoMensalComponent } from './components/comparativo-mensal/comp
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: BillingInterceptor, multi: true },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     provideHttpClient(withInterceptorsFromDi())
   ],
