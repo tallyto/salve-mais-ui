@@ -31,6 +31,13 @@ interface Transaction {
   };
 }
 
+interface QuickAction {
+  route: string;
+  icon: string;
+  label: string;
+  colorClass: string;
+}
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -45,6 +52,17 @@ export class DashboardComponent implements OnInit {
   totalDespesas: number = 0;
   isLoading: boolean = true;
   today: Date = new Date();
+
+  quickActions: QuickAction[] = [
+    { route: '/provento-form', icon: 'trending_up', label: 'Nova Receita', colorClass: 'income-color' },
+    { route: '/despesas-fixas', icon: 'event_repeat', label: 'Despesa Fixa', colorClass: 'expense-color' },
+    { route: '/compras-debito', icon: 'point_of_sale', label: 'Compra Débito', colorClass: 'expense-color' },
+    { route: '/compras-parceladas', icon: 'shopping_cart', label: 'Compra Parcelada', colorClass: 'expense-color' },
+    { route: '/cartao/faturas', icon: 'receipt', label: 'Pagar Fatura', colorClass: 'card-color' },
+    { route: '/transacoes', icon: 'swap_horiz', label: 'Transações', colorClass: 'neutral-color' },
+    { route: '/relatorio-mensal', icon: 'bar_chart', label: 'Relatório', colorClass: 'neutral-color' },
+    { route: '/budget-rule', icon: 'pie_chart', label: 'Regra 50/30/20', colorClass: 'neutral-color' }
+  ];
 
   // Filtros de mês e ano
   selectedMonth: number;
@@ -194,6 +212,16 @@ export class DashboardComponent implements OnInit {
     this.loadDashboardData();
     this.loadComprasParceladas();
     this.loadComprasDebito();
+  }
+
+  getSaudacao(): string {
+    const hora = new Date().getHours();
+    if (hora < 12) {
+      return 'Bom dia';
+    } else if (hora < 18) {
+      return 'Boa tarde';
+    }
+    return 'Boa noite';
   }
 
   loadDashboardData(): void {

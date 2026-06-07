@@ -107,22 +107,81 @@
   margin-left: 4px;
 }
 
-/* Menu items (Ações Rápidas / Consultar) */
-.menu-icon {
-  margin-right: 12px;
-  color: rgba(0, 0, 0, 0.6);
+/* Quick actions bar */
+.quick-actions-bar {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 4px 4px 16px;
+  margin-bottom: 16px;
+  scrollbar-width: thin;
 }
 
-.income-color {
-  color: #4caf50 !important;
+.quick-action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+  width: 92px;
+  padding: 12px 8px;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
 }
 
-.expense-color {
-  color: #f44336 !important;
+.quick-action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 }
 
-.card-color {
-  color: #2196f3 !important;
+.quick-action-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: rgba(33, 150, 243, 0.12);
+  color: #2196f3;
+}
+
+.quick-action-icon mat-icon {
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
+}
+
+.quick-action-icon.income-color {
+  background-color: rgba(76, 175, 80, 0.12);
+  color: #4caf50;
+}
+
+.quick-action-icon.expense-color {
+  background-color: rgba(244, 67, 54, 0.12);
+  color: #f44336;
+}
+
+.quick-action-icon.card-color {
+  background-color: rgba(33, 150, 243, 0.12);
+  color: #2196f3;
+}
+
+.quick-action-icon.neutral-color {
+  background-color: rgba(0, 0, 0, 0.06);
+  color: #616161;
+}
+
+.quick-action-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #555;
+  text-align: center;
+  line-height: 1.2;
 }
 
 /* Filters section */
@@ -141,6 +200,29 @@
   transform: translateY(-3px);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 }
+
+/* Accent colors (substituem estilos inline para top border e ícones) */
+.accent-green { border-top-color: #4caf50; }
+.accent-red { border-top-color: #f44336; }
+.accent-orange { border-top-color: #ff9800; }
+.accent-purple { border-top-color: #9c27b0; }
+.accent-blue { border-top-color: #2196f3; }
+
+.icon-green { background-color: rgba(76, 175, 80, 0.1); color: #4caf50; }
+.icon-red { background-color: rgba(244, 67, 54, 0.1); color: #f44336; }
+.icon-orange { background-color: rgba(255, 152, 0, 0.1); color: #ff9800; }
+.icon-purple { background-color: rgba(156, 39, 176, 0.1); color: #9c27b0; }
+.icon-blue { background-color: rgba(33, 150, 243, 0.1); color: #2196f3; }
+
+.title-icon-accent {
+  margin-right: 8px;
+}
+
+.title-icon-accent.icon-green { color: #4caf50; background-color: transparent; }
+.title-icon-accent.icon-red { color: #f44336; background-color: transparent; }
+.title-icon-accent.icon-orange { color: #ff9800; background-color: transparent; }
+.title-icon-accent.icon-purple { color: #9c27b0; background-color: transparent; }
+.title-icon-accent.icon-blue { color: #2196f3; background-color: transparent; }
 
 .summary-card .card-icon {
   display: flex;
@@ -456,7 +538,6 @@
     width: 100%;
   }
 
-  .header-action-btn,
   .export-btn {
     flex: 1;
   }
@@ -465,27 +546,14 @@
     display: none;
   }
 
-  .header-action-btn .dropdown-icon {
-    margin-left: 0;
-  }
-
   .data-card .card-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
   }
 
-  .health-summary {
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    text-align: center;
-  }
-
   .transaction-table th,
-  .transaction-table td,
-  .variation-table th,
-  .variation-table td {
+  .transaction-table td {
     padding: 8px;
     font-size: 13px;
   }
@@ -493,33 +561,9 @@
   .transaction-description {
     gap: 8px;
   }
-
-  .variation-table {
-    font-size: 12px;
-  }
-
-  .metric-info {
-    gap: 8px;
-  }
-
-  .metric-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
-  }
-
-  .trend-indicator {
-    width: 28px;
-    height: 28px;
-  }
 }
 
 @media (max-width: 480px) {
-  .variation-table th:nth-child(3),
-  .variation-table td:nth-child(3) {
-    display: none;
-  }
-
   .transaction-table th:nth-child(2),
   .transaction-table td:nth-child(2),
   .transaction-table th:nth-child(3),

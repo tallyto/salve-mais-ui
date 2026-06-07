@@ -74,6 +74,28 @@ import { NotificacaoService, ResumoNotificacoes } from '../../services/notificac
               <span class="notificacao-desc">Pendentes de pagamento</span>
             </div>
           </div>
+
+          <div class="alerta-item proximas" *ngIf="resumo && resumo.contasProximasVencimento > 0">
+            <div class="alerta-header">
+              <mat-icon class="status-icon">schedule</mat-icon>
+              <span class="notificacao-titulo">Contas a Vencer</span>
+            </div>
+            <div class="notificacao-info">
+              <span class="count-badge">{{ resumo.contasProximasVencimento }}</span>
+              <span class="notificacao-desc">Vencimento nos próximos dias</span>
+            </div>
+          </div>
+
+          <div class="alerta-item proximas" *ngIf="resumo && resumo.faturasProximasVencimento > 0">
+            <div class="alerta-header">
+              <mat-icon class="status-icon">schedule</mat-icon>
+              <span class="notificacao-titulo">Faturas a Vencer</span>
+            </div>
+            <div class="notificacao-info">
+              <span class="count-badge">{{ resumo.faturasProximasVencimento }}</span>
+              <span class="notificacao-desc">Vencimento nos próximos dias</span>
+            </div>
+          </div>
         </div>
 
         <ng-template #nenhumaNotificacao>
@@ -161,6 +183,11 @@ import { NotificacaoService, ResumoNotificacoes } from '../../services/notificac
     .alerta-item.atrasadas {
       background-color: #fff8e1;
       border-color: #ff9800;
+    }
+
+    .alerta-item.proximas {
+      background-color: #e3f2fd;
+      border-color: #1976d2;
     }
 
     .alerta-header {

@@ -14,6 +14,13 @@ export class AccountComponent {
   public accountForm: FormGroup;
   public isDialogMode: boolean = false;
 
+  public tiposConta = [
+    { value: 'CORRENTE', label: 'Conta Corrente', icon: 'account_balance' },
+    { value: 'POUPANCA', label: 'Poupança', icon: 'savings' },
+    { value: 'INVESTIMENTO', label: 'Investimento', icon: 'trending_up' },
+    { value: 'RESERVA_EMERGENCIA', label: 'Reserva de Emergência', icon: 'shield' }
+  ];
+
   constructor(
     private formBuilder: FormBuilder,
     private accountService: AccountService,
@@ -25,8 +32,16 @@ export class AccountComponent {
       this.accountForm = this.formBuilder.group({
         id: [null],
         titular: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(100)]],
+        tipo: ['CORRENTE', Validators.required],
+        descricao: ['', Validators.maxLength(255)],
+        taxaRendimento: [null, [Validators.min(0), Validators.max(100)]],
       })
     }
+
+  // A taxa de rendimento só faz sentido para contas que rendem juros
+  mostrarTaxaRendimento(): boolean {
+    return this.accountForm.get('tipo')?.value !== 'CORRENTE';
+  }
 
   createAccount() {
     if (this.accountForm.valid) {

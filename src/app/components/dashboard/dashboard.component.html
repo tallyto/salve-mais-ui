@@ -3,81 +3,19 @@
     <div class="header-content">
       <mat-icon class="page-icon">dashboard</mat-icon>
       <div class="header-text">
-        <h2 class="page-title">Dashboard Financeiro</h2>
+        <h2 class="page-title">{{ getSaudacao() }}</h2>
         <div class="page-subtitle text-color-secondary">
-          <mat-icon>today</mat-icon> {{ today | date:'dd/MM/yyyy' }} - Visão geral da sua situação financeira
+          <mat-icon>today</mat-icon> {{ today | date:"EEEE, d 'de' MMMM" : '' : 'pt-BR' | titlecase }}
         </div>
       </div>
     </div>
     
     <div class="header-actions">
-      <!-- Ações Rápidas -->
-      <button 
-        mat-button 
-        [matMenuTriggerFor]="quickActionsMenu"
-        class="header-action-btn"
-        matTooltip="Ações Rápidas">
-        <mat-icon>add_circle</mat-icon>
-        <span class="btn-text">Nova</span>
-        <mat-icon class="dropdown-icon">arrow_drop_down</mat-icon>
-      </button>
-      
-      <mat-menu #quickActionsMenu="matMenu">
-        <button mat-menu-item routerLink="/provento-form">
-          <mat-icon class="menu-icon income-color">trending_up</mat-icon>
-          <span>Nova Receita</span>
-        </button>
-        <mat-divider></mat-divider>
-        <button mat-menu-item routerLink="/despesas-fixas">
-          <mat-icon class="menu-icon expense-color">event_repeat</mat-icon>
-          <span>Despesa Fixa</span>
-        </button>
-        <button mat-menu-item routerLink="/compras-debito">
-          <mat-icon class="menu-icon expense-color">point_of_sale</mat-icon>
-          <span>Compra em Débito</span>
-        </button>
-        <button mat-menu-item routerLink="/compras-parceladas">
-          <mat-icon class="menu-icon expense-color">shopping_cart</mat-icon>
-          <span>Compra Parcelada</span>
-        </button>
-        <mat-divider></mat-divider>
-        <button mat-menu-item routerLink="/cartao/faturas">
-          <mat-icon class="menu-icon card-color">receipt</mat-icon>
-          <span>Pagar Fatura</span>
-        </button>
-      </mat-menu>
-
-      <!-- Consultas -->
-      <button 
-        mat-button 
-        [matMenuTriggerFor]="reportsMenu"
-        class="header-action-btn"
-        matTooltip="Consultas e Relatórios">
-        <mat-icon>visibility</mat-icon>
-        <span class="btn-text">Consultar</span>
-        <mat-icon class="dropdown-icon">arrow_drop_down</mat-icon>
-      </button>
-      
-      <mat-menu #reportsMenu="matMenu">
-        <button mat-menu-item routerLink="/transacoes">
-          <mat-icon class="menu-icon">swap_horiz</mat-icon>
-          <span>Transações</span>
-        </button>
-        <button mat-menu-item routerLink="/relatorio-mensal">
-          <mat-icon class="menu-icon">bar_chart</mat-icon>
-          <span>Relatório Mensal</span>
-        </button>
-        <button mat-menu-item routerLink="/budget-rule">
-          <mat-icon class="menu-icon">pie_chart</mat-icon>
-          <span>Regra 50/30/20</span>
-        </button>
-      </mat-menu>
-
       <!-- Exportar -->
-      <button 
-        mat-raised-button 
-        color="primary" 
-        (click)="exportToExcel()" 
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="exportToExcel()"
         matTooltip="Exportar dados do dashboard para Excel"
         [disabled]="isLoading"
         class="export-btn">
@@ -85,6 +23,19 @@
         <span class="btn-text">Exportar</span>
       </button>
     </div>
+  </div>
+
+  <!-- Ações Rápidas -->
+  <div class="quick-actions-bar">
+    <a *ngFor="let action of quickActions"
+       [routerLink]="action.route"
+       class="quick-action-btn"
+       [matTooltip]="action.label">
+      <div class="quick-action-icon" [ngClass]="action.colorClass">
+        <mat-icon>{{ action.icon }}</mat-icon>
+      </div>
+      <span class="quick-action-label">{{ action.label }}</span>
+    </a>
   </div>
 
   <!-- Filtros de Mês e Ano -->
@@ -102,8 +53,8 @@
   <!-- Financial Summary -->
   <div class="grid mb-4">
     <div class="col-12 md:col-6 lg:col-3 mb-3">
-      <div class="summary-card" style="border-top-color: #4caf50;">
-        <div class="card-icon" style="background-color: rgba(76, 175, 80, 0.1); color: #4caf50;">
+      <div class="summary-card accent-green">
+        <div class="card-icon icon-green">
           <mat-icon>account_balance_wallet</mat-icon>
         </div>
         <div class="summary-label">Saldo Total</div>
@@ -120,8 +71,8 @@
     </div>
 
     <div class="col-12 md:col-6 lg:col-3 mb-3">
-      <div class="summary-card" style="border-top-color: #4caf50;">
-        <div class="card-icon" style="background-color: rgba(76, 175, 80, 0.1); color: #4caf50;">
+      <div class="summary-card accent-green">
+        <div class="card-icon icon-green">
           <mat-icon>trending_up</mat-icon>
         </div>
         <div class="summary-label">Receitas do Mês</div>
@@ -135,8 +86,8 @@
     </div>
 
     <div class="col-12 md:col-6 lg:col-3 mb-3">
-      <div class="summary-card" style="border-top-color: #f44336;">
-        <div class="card-icon" style="background-color: rgba(244, 67, 54, 0.1); color: #f44336;">
+      <div class="summary-card accent-red">
+        <div class="card-icon icon-red">
           <mat-icon>trending_down</mat-icon>
         </div>
         <div class="summary-label">Despesas do Mês</div>
@@ -150,8 +101,8 @@
     </div>
 
     <div class="col-12 md:col-6 lg:col-3 mb-3">
-      <div class="summary-card" style="border-top-color: #ff9800;">
-        <div class="card-icon" style="background-color: rgba(255, 152, 0, 0.1); color: #ff9800;">
+      <div class="summary-card accent-orange">
+        <div class="card-icon icon-orange">
           <mat-icon>savings</mat-icon>
         </div>
         <div class="summary-label">Reserva de Emergência</div>
@@ -179,8 +130,8 @@
   <!-- Accounts Summary -->
   <div class="grid mb-4">
     <div class="col-12 md:col-6 lg:col-3 mb-3">
-      <div class="summary-card" style="border-top-color: #9c27b0;">
-        <div class="card-icon" style="background-color: rgba(156, 39, 176, 0.1); color: #9c27b0;">
+      <div class="summary-card accent-purple">
+        <div class="card-icon icon-purple">
           <mat-icon>account_balance</mat-icon>
         </div>
         <div class="summary-label">Contas Bancárias</div>
@@ -200,8 +151,8 @@
   </div>
   <div class="grid mb-4" *ngIf="summaryData && summaryData.parcelasResumo">
     <div class="col-12 md:col-6 lg:col-3 mb-3">
-      <div class="summary-card" style="border-top-color: #2196f3;">
-        <div class="card-icon" style="background-color: rgba(33, 150, 243, 0.1); color: #2196f3;">
+      <div class="summary-card accent-blue">
+        <div class="card-icon icon-blue">
           <mat-icon>shopping_cart</mat-icon>
         </div>
         <div class="summary-label">Parcelas Ativas</div>
@@ -215,8 +166,8 @@
     </div>
 
     <div class="col-12 md:col-6 lg:col-3 mb-3">
-      <div class="summary-card" style="border-top-color: #4caf50;">
-        <div class="card-icon" style="background-color: rgba(76, 175, 80, 0.1); color: #4caf50;">
+      <div class="summary-card accent-green">
+        <div class="card-icon icon-green">
           <mat-icon>check_circle</mat-icon>
         </div>
         <div class="summary-label">Pagas no Mês</div>
@@ -230,8 +181,8 @@
     </div>
 
     <div class="col-12 md:col-6 lg:col-3 mb-3">
-      <div class="summary-card" style="border-top-color: #ff9800;">
-        <div class="card-icon" style="background-color: rgba(255, 152, 0, 0.1); color: #ff9800;">
+      <div class="summary-card accent-orange">
+        <div class="card-icon icon-orange">
           <mat-icon>pending</mat-icon>
         </div>
         <div class="summary-label">Pendentes no Mês</div>
@@ -245,8 +196,8 @@
     </div>
 
     <div class="col-12 md:col-6 lg:col-3 mb-3">
-      <div class="summary-card" style="border-top-color: #9c27b0;">
-        <div class="card-icon" style="background-color: rgba(156, 39, 176, 0.1); color: #9c27b0;">
+      <div class="summary-card accent-purple">
+        <div class="card-icon icon-purple">
           <mat-icon>payment</mat-icon>
         </div>
         <div class="summary-label">Total do Mês</div>
@@ -267,10 +218,10 @@
   <div class="grid mt-4 mb-4">
     <!-- Expenses by Category Chart -->
     <div class="col-12 lg:col-4 p-2 mb-3">
-      <div class="data-card h-full" style="border-top-color: #f44336;">
+      <div class="data-card h-full accent-red">
         <div class="card-header">
           <div class="header-title">
-            <mat-icon style="color: #f44336; margin-right: 8px;">pie_chart</mat-icon>
+            <mat-icon class="title-icon-accent icon-red">pie_chart</mat-icon>
             <h2 class="section-title m-0">Despesas por Categoria</h2>
           </div>
         </div>
@@ -290,10 +241,10 @@
 
     <!-- Income vs Expenses Chart -->
     <div class="col-12 lg:col-4 p-2 mb-3">
-      <div class="data-card h-full" style="border-top-color: #4caf50;">
+      <div class="data-card h-full accent-green">
         <div class="card-header">
           <div class="header-title">
-            <mat-icon style="color: #4caf50; margin-right: 8px;">bar_chart</mat-icon>
+            <mat-icon class="title-icon-accent icon-green">bar_chart</mat-icon>
             <h2 class="section-title m-0">Receitas vs Despesas</h2>
           </div>
         </div>
@@ -313,10 +264,10 @@
 
     <!-- Monthly Trend Chart -->
     <div class="col-12 lg:col-4 p-2 mb-3">
-      <div class="data-card h-full" style="border-top-color: #2196f3;">
+      <div class="data-card h-full accent-blue">
         <div class="card-header">
           <div class="header-title">
-            <mat-icon style="color: #2196f3; margin-right: 8px;">trending_up</mat-icon>
+            <mat-icon class="title-icon-accent icon-blue">trending_up</mat-icon>
             <h2 class="section-title m-0">Tendência Mensal</h2>
           </div>
         </div>
@@ -350,10 +301,10 @@
     <h2>Variação Mensal</h2>
   </div>
   <div class="col-12 mt-3 p-2 mb-4">
-    <div class="data-card" style="border-top-color: #ff9800;">
+    <div class="data-card accent-orange">
       <div class="card-header">
         <div class="header-title">
-          <mat-icon style="color: #ff9800; margin-right: 8px;">compare_arrows</mat-icon>
+          <mat-icon class="title-icon-accent icon-orange">compare_arrows</mat-icon>
           <h2 class="section-title m-0">Comparativo com o Mês Anterior</h2>
         </div>
       </div>
@@ -368,10 +319,10 @@
     <h2>Compras no Cartão</h2>
   </div>
   <div class="col-12 mt-3 p-2">
-    <div class="data-card" style="border-top-color: #9c27b0;">
+    <div class="data-card accent-purple">
       <div class="card-header">
         <div class="header-title">
-          <mat-icon style="color: #9c27b0; margin-right: 8px;">credit_card</mat-icon>
+          <mat-icon class="title-icon-accent icon-purple">credit_card</mat-icon>
           <h2 class="section-title m-0">Últimas Compras</h2>
         </div>
         <span class="text-color-secondary">Últimos 5 lançamentos</span>
@@ -439,10 +390,10 @@
     </div>
 
     <div class="col-12 lg:col-6 p-2 mb-3">
-      <div class="data-card h-full" style="border-top-color: #2196f3;">
+      <div class="data-card h-full accent-blue">
         <div class="card-header">
           <div class="header-title">
-            <mat-icon style="color: #2196f3; margin-right: 8px;">account_balance</mat-icon>
+            <mat-icon class="title-icon-accent icon-blue">account_balance</mat-icon>
             <h2 class="section-title m-0">Resumo de Contas</h2>
           </div>
         </div>

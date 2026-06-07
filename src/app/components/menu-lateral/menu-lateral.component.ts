@@ -3,11 +3,9 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
 import packageJson from '../../../../package.json';
-import { NotificacaoService, ResumoNotificacoes } from '../../services/notificacao.service';
+import { ResumoNotificacoes } from '../../services/notificacao.service';
 import { NotificationEventService } from '../../services/notification-event.service';
-import { UsuarioService } from '../../services/usuario.service';
-import { TenantService } from '../../services/tenant.service';
-import { getTenantIdFromToken } from '../../utils/jwt.util';
+import { MenuInfoService } from '../../services/menu-info.service';
 
 export interface MenuItem {
   route: string;
@@ -39,7 +37,8 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
   public isLargeScreen: boolean = false;
   public resumoNotificacoes: ResumoNotificacoes | null = null;
 
-  public expandedSections = new Set<string>();
+  // Seções abertas por padrão; o usuário pode recolher manualmente via toggleSection
+  public expandedSections = new Set<string>(['financas', 'cartoes', 'despesas', 'analises', 'configuracoes']);
 
   public menuSections: MenuSection[] = [
     {
@@ -105,10 +104,8 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
     private router: Router,
-    private usuarioService: UsuarioService,
-    private notificacaoService: NotificacaoService,
-    private notificationEventService: NotificationEventService,
-    private tenantService: TenantService
+    private menuInfoService: MenuInfoService,
+    private notificationEventService: NotificationEventService
   ) {
     this.checkScreenSize();
   }
@@ -206,23 +203,10 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private updateUserInfo(): void {
-    // Busca do backend o nome e email reais do usuário autenticado
-    this.usuarioService.getUsuarioLogado().subscribe({
-      next: (user) => {
-        this.username = user.nome;
-        this.userEmail = user.email;
-      },
-      error: () => {
-        // fallback para localStorage se falhar
-        const userInfo = localStorage.getItem('userInfo');
-        if (userInfo) {
-          try {
-            const parsedInfo = JSON.parse(userInfo);
-            if (parsedInfo.name) this.username = parsedInfo.name;
-            if (parsedInfo.email) this.userEmail = parsedInfo.email;
-          } catch (e) {
-          }
-        }
+    this.menuInfoService.carregarInfoUsuario().subscribe(info => {
+      if (info) {
+        this.username = info.nome;
+        this.userEmail = info.email;
       }
     });
   }
@@ -264,7 +248,7 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
     localStorage.removeItem('userInfo');
     
     // Limpar o tenant atual da sessão, mas manter o tenant lembrado se existir
-    this.tenantService.clearCurrentTenant();
+    this.menuInfoService.limparTenantAtual();
     
     this.isAuthenticated = false;
     this.resumoNotificacoes = null;
@@ -303,14 +287,8 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
    * Carrega o resumo das notificações
    */
   private loadNotifications(): void {
-    this.notificacaoService.obterResumoNotificacoes().subscribe({
-      next: (resumo) => {
-        this.resumoNotificacoes = resumo;
-      },
-      error: () => {
-        // Em caso de erro, limpar o resumo
-        this.resumoNotificacoes = null;
-      }
+    this.menuInfoService.carregarResumoNotificacoes().subscribe(resumo => {
+      this.resumoNotificacoes = resumo;
     });
   }
 
@@ -318,49 +296,22 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
    * Retorna o texto para exibir no badge de notificações
    */
   getNotificationBadgeText(): string {
-    if (!this.resumoNotificacoes || !this.resumoNotificacoes.temNotificacoes) {
-      return '';
-    }
-
-    if (this.resumoNotificacoes.totalNotificacoes > 99) {
-      return '99+';
-    }
-
-    return this.resumoNotificacoes.totalNotificacoes.toString();
+    return this.menuInfoService.getNotificationBadgeText(this.resumoNotificacoes);
   }
 
   /**
    * Verifica se deve exibir o badge de notificações
    */
   shouldShowNotificationBadge(): boolean {
-    return !!(this.resumoNotificacoes && this.resumoNotificacoes.temNotificacoes);
+    return this.menuInfoService.shouldShowNotificationBadge(this.resumoNotificacoes);
   }
 
   /**
    * Carrega o display name do tenant a partir do token JWT
    */
   private loadTenantDisplayName(): void {
-    const token = localStorage.getItem('token');
-    
-    if (!token) {
-      this.appTitle = 'Salve Mais';
-      return;
-    }
-
-    const tenantId = getTenantIdFromToken(token);
-    
-    if (!tenantId) {
-      this.appTitle = 'Salve Mais';
-      return;
-    }
-
-    this.tenantService.getTenantById(tenantId).subscribe({
-      next: (tenant) => {
-        this.appTitle = tenant.displayName || tenant.nome || 'Salve Mais';
-      },
-      error: (error) => {
-        this.appTitle = 'Salve Mais';
-      }
+    this.menuInfoService.carregarTituloTenant().subscribe(titulo => {
+      this.appTitle = titulo;
     });
   }
 }

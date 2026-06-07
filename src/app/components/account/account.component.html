@@ -15,6 +15,37 @@
             <mat-icon matSuffix>person</mat-icon>
           </mat-form-field>
         </div>
+
+        <div class="mb-3">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Tipo de conta</mat-label>
+            <mat-select formControlName="tipo">
+              <mat-option *ngFor="let tipo of tiposConta" [value]="tipo.value">
+                <mat-icon class="tipo-option-icon">{{ tipo.icon }}</mat-icon> {{ tipo.label }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matSuffix>category</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="mb-3" *ngIf="mostrarTaxaRendimento()">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Taxa de rendimento anual (%)</mat-label>
+            <input autocomplete="off" formControlName="taxaRendimento" matInput type="number" step="0.01" min="0" max="100" placeholder="Ex: 13.25">
+            <mat-icon matSuffix>percent</mat-icon>
+            <mat-error *ngIf="accountForm.get('taxaRendimento')?.hasError('min') || accountForm.get('taxaRendimento')?.hasError('max')">
+              Informe um valor entre 0 e 100
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="mb-3">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Descrição (opcional)</mat-label>
+            <input autocomplete="off" formControlName="descricao" matInput placeholder="Ex: Conta para reserva de viagem">
+            <mat-icon matSuffix>description</mat-icon>
+          </mat-form-field>
+        </div>
       </div>
     </form>
   </mat-dialog-content>
@@ -62,17 +93,48 @@
 
     <form (ngSubmit)="createAccount()" [formGroup]="accountForm" class="account-form">
       <div class="grid">
-        <div class="col-12">
+        <div class="col-12 md:col-6">
           <mat-form-field appearance="outline" class="w-full">
             <mat-label>Nome do titular</mat-label>
             <input autocomplete="off" formControlName="titular" matInput placeholder="Ex: Maria da Silva">
             <mat-icon matSuffix>person</mat-icon>
           </mat-form-field>
         </div>
+
+        <div class="col-12 md:col-6">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Tipo de conta</mat-label>
+            <mat-select formControlName="tipo">
+              <mat-option *ngFor="let tipo of tiposConta" [value]="tipo.value">
+                <mat-icon class="tipo-option-icon">{{ tipo.icon }}</mat-icon> {{ tipo.label }}
+              </mat-option>
+            </mat-select>
+            <mat-icon matSuffix>category</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <div class="col-12 md:col-6" *ngIf="mostrarTaxaRendimento()">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Taxa de rendimento anual (%)</mat-label>
+            <input autocomplete="off" formControlName="taxaRendimento" matInput type="number" step="0.01" min="0" max="100" placeholder="Ex: 13.25">
+            <mat-icon matSuffix>percent</mat-icon>
+            <mat-error *ngIf="accountForm.get('taxaRendimento')?.hasError('min') || accountForm.get('taxaRendimento')?.hasError('max')">
+              Informe um valor entre 0 e 100
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="col-12" [ngClass]="mostrarTaxaRendimento() ? 'md:col-6' : ''">
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Descrição (opcional)</mat-label>
+            <input autocomplete="off" formControlName="descricao" matInput placeholder="Ex: Conta para reserva de viagem">
+            <mat-icon matSuffix>description</mat-icon>
+          </mat-form-field>
+        </div>
       </div>
 
       <div class="form-actions flex justify-content-end gap-2">
-        <button mat-stroked-button type="button" class="text-color-secondary">
+        <button mat-stroked-button type="button" class="text-color-secondary" (click)="resetForm()">
           <mat-icon>cancel</mat-icon> Cancelar
         </button>
         <button mat-raised-button color="primary" [disabled]="accountForm.invalid" type="submit" class="min-w-min">

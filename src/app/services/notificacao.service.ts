@@ -19,6 +19,8 @@ export interface ResumoNotificacoes {
   notificacoesAltas: number;
   contasAtrasadas: number;
   faturasAtrasadas: number;
+  contasProximasVencimento: number;
+  faturasProximasVencimento: number;
   temNotificacoes: boolean;
 }
 

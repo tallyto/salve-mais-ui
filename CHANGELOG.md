@@ -2,6 +2,29 @@
 
 ## [Unreleased]
 
+## [1.37.0] - 2026-06-07
+
+### Adicionado
+
+- **Dashboard**: barra de ações rápidas substituindo os menus dropdown ("Ações Rápidas"/"Consultas") por botões diretos para as operações mais usadas (Nova Receita, Despesa Fixa, Compra Débito/Parcelada, Pagar Fatura, Transações, Relatório, Regra 50/30/20)
+- **Dashboard**: saudação personalizada por horário do dia ("Bom dia"/"Boa tarde"/"Boa noite") no cabeçalho
+- **Notificações**: widget agora exibe também os alertas de "Contas a Vencer" e "Faturas a Vencer"
+- **Contas bancárias**: formulário ampliado com campos de tipo de conta, descrição e taxa de rendimento (oculto para contas correntes)
+
+### Melhorias
+
+- **Menu lateral**: seções agora iniciam expandidas por padrão
+- **Dashboard**: estilos inline substituídos por classes CSS semânticas (`.accent-*`, `.icon-*`) para um visual mais consistente e profissional
+
+### Corrigido
+
+- **Faturas**: removido o botão de excluir fatura paga (a exclusão de faturas pagas é sempre bloqueada pelo backend, o botão não fazia sentido)
+- **Notificações**: corrigido o widget que não exibia alertas de contas/faturas próximas do vencimento (resumo do backend não contabilizava esses tipos — ver changelog do backend v1.21.1)
+
+### Refatoração
+
+- **Menu lateral**: lógica de carregamento de dados (informações do usuário, nome de exibição do tenant, resumo de notificações) extraída para o novo `MenuInfoService`, deixando o componente focado na UI
+
 ## [1.36.0] - 2026-06-07
 
 ### Melhorias
