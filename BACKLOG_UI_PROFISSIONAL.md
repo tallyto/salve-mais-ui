@@ -32,11 +32,11 @@ com azul (`#2196f3`). Isso gera inconsistência entre componentes Material
 
 ## 2. Login / autenticação — alta prioridade (primeira impressão)
 
-- [ ] Repaginar tela de login (`login`) com visual mais moderno (split screen,
+- [x] Repaginar tela de login (`login`) com visual mais moderno (split screen,
       ilustração ou gradiente de marca, formulário mais leve)
-- [ ] Aplicar o mesmo tratamento em cadastro (`register`), recuperação de senha
+- [x] Aplicar o mesmo tratamento em cadastro (`register`), recuperação de senha
       (`recuperar-senha`) e redefinição (`redefinir-senha`)
-- [ ] Garantir estados de erro/loading consistentes nesses formulários
+- [x] Garantir estados de erro/loading consistentes nesses formulários
 
 ## 3. Navegação e layout geral — alta prioridade
 

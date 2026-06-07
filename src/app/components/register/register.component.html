@@ -1,11 +1,26 @@
 <div class="register-container">
-  <mat-card class="register-card">
-    <div class="register-header">
-      <div class="logo-container">
+  <section class="brand-panel" aria-label="Salve Mais">
+    <div class="brand-content">
+      <div class="logo-mark">
         <img src="assets/images/logo.svg" alt="Salve Mais" class="logo">
       </div>
-      <h2 *ngIf="mode === 'register'">Cadastro de Tenant</h2>
-      <h2 *ngIf="mode === 'confirm'">Confirmação de Tenant</h2>
+      <p class="eyebrow">Comece com estrutura</p>
+      <h1>Crie seu ambiente financeiro com dados separados e acesso seguro.</h1>
+      <p class="brand-copy">
+        O tenant organiza usuarios, contas e relatorios para a sua empresa trabalhar com mais clareza desde o primeiro acesso.
+      </p>
+    </div>
+  </section>
+
+  <mat-card class="register-card">
+    <div class="form-header">
+      <img src="assets/images/logo.svg" alt="" class="form-logo">
+      <div>
+        <p class="eyebrow" *ngIf="mode === 'register'">Novo ambiente</p>
+        <p class="eyebrow" *ngIf="mode === 'confirm'">Quase pronto</p>
+        <h2 *ngIf="mode === 'register'">Cadastro de tenant</h2>
+        <h2 *ngIf="mode === 'confirm'">Confirmacao de tenant</h2>
+      </div>
     </div>
 
     <div class="register-content">
@@ -86,9 +101,9 @@
             {{ loading ? 'Processando...' : 'Cadastrar Tenant' }}
           </button>
 
-          <a (click)="backToLogin()" class="back-to-login">
+          <button mat-button type="button" (click)="backToLogin()" class="back-to-login">
             <mat-icon>arrow_back</mat-icon> Voltar para o login
-          </a>
+          </button>
         </form>
       </ng-container>
 
@@ -116,9 +131,9 @@
             <p class="redirect-text">Você será redirecionado em alguns segundos...</p>
           </div>
 
-          <a (click)="backToLogin()" class="back-to-login" *ngIf="!confirmacaoSucesso">
+          <button mat-button type="button" (click)="backToLogin()" class="back-to-login" *ngIf="!confirmacaoSucesso">
             <mat-icon>arrow_back</mat-icon> Voltar para o login
-          </a>
+          </button>
         </div>
       </ng-container>
 

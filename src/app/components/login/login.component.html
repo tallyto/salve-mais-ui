@@ -1,12 +1,42 @@
 <div class="login-container">
-  <mat-card class="login-card">
-    <div class="login-header">
-      <div class="logo-container">
+  <section class="brand-panel" aria-label="Salve Mais">
+    <div class="brand-content">
+      <div class="logo-mark">
         <img src="assets/images/logo.svg" alt="Salve Mais" class="logo">
       </div>
-      <h2>Salve Mais</h2>
+      <p class="eyebrow">Gestao financeira inteligente</p>
+      <h1>Organize, acompanhe e decida melhor sobre o dinheiro da sua empresa.</h1>
+      <p class="brand-copy">
+        Uma experiencia simples para controlar contas, cartoes, receitas e relatorios em um unico lugar.
+      </p>
+
+      <div class="brand-metrics">
+        <div>
+          <strong>360</strong>
+          <span>visao completa</span>
+        </div>
+        <div>
+          <strong>24h</strong>
+          <span>dados acessiveis</span>
+        </div>
+        <div>
+          <strong>+foco</strong>
+          <span>menos retrabalho</span>
+        </div>
+      </div>
     </div>
+  </section>
+
+  <mat-card class="login-card">
     <div class="login-content">
+      <div class="form-header">
+        <img src="assets/images/logo.svg" alt="" class="form-logo">
+        <div>
+          <p class="eyebrow">Bem-vindo de volta</p>
+          <h2>Entrar no Salve Mais</h2>
+        </div>
+      </div>
+
       <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="login-form">
         <mat-form-field appearance="outline" class="form-field">
           <mat-label>Email</mat-label>
@@ -32,12 +62,15 @@
           <a routerLink="/recuperar-senha" class="forgot-password">Esqueceu a senha?</a>
         </div>
 
-        <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid" class="submit-button">
-          <mat-icon>login</mat-icon> Entrar
+        <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid || loading" class="submit-button">
+          <mat-icon *ngIf="!loading">login</mat-icon>
+          <mat-spinner *ngIf="loading" diameter="24" color="accent"></mat-spinner>
+          {{ loading ? 'Entrando...' : 'Entrar' }}
         </button>
 
-        <div class="error-container">
-          <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
+        <div class="error-container" *ngIf="errorMessage">
+          <mat-icon>error</mat-icon>
+          <span>{{ errorMessage }}</span>
         </div>
 
         <div class="register-link">

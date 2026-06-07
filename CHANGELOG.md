@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+## [1.39.0] - 2026-06-07
+
+### Melhorias
+
+- **Autenticação**: telas de login, cadastro de tenant, recuperação de senha e redefinição de senha repaginadas com layout split screen, painel de marca, cards refinados e linguagem visual alinhada ao novo padrão fintech
+- **UX de formulários públicos**: estados de loading/erro padronizados nas telas de autenticação, incluindo spinner no login e mensagens visuais mais consistentes
+- **Responsividade**: telas públicas ajustadas para desktop e mobile, preservando formulário compacto em telas menores
+
 ## [1.38.0] - 2026-06-07
 
 ### Melhorias

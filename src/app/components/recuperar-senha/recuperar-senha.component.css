@@ -1,55 +1,104 @@
 .recuperar-container {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(380px, 0.9fr);
   align-items: center;
-  height: 100%; /* Usar 100% em vez de 100vh */
+  gap: clamp(32px, 5vw, 72px);
+  min-height: 100%;
   width: 100%;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  position: absolute; /* Posicionamento absoluto */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 0; /* Abaixo da barra de navegação */
+  padding: clamp(24px, 4vw, 56px);
+  background:
+    radial-gradient(circle at 16% 16%, rgba(var(--primary-color-rgb), 0.16), transparent 30%),
+    linear-gradient(135deg, #f8fafc 0%, #eef2ff 48%, #f7f5ff 100%);
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.brand-panel {
+  display: flex;
+  align-items: center;
+}
+
+.brand-content {
+  max-width: 600px;
+}
+
+.logo-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 74px;
+  height: 74px;
+  margin-bottom: 32px;
+  border-radius: 24px;
+  background: var(--surface-color);
+  box-shadow: var(--shadow-md);
+}
+
+.logo {
+  width: 52px;
+  height: 52px;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: var(--primary-color);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+}
+
+.brand-content h1 {
+  margin: 0;
+  color: var(--text-color);
+  font-size: clamp(2.1rem, 4vw, 4.2rem);
+  line-height: 1.04;
+  font-weight: 700;
+}
+
+.brand-copy {
+  max-width: 520px;
+  margin: 24px 0 0;
+  color: var(--text-secondary);
+  font-size: var(--font-size-lg);
+  line-height: 1.65;
 }
 
 .recuperar-card {
   width: 100%;
-  max-width: 450px;
-  border-radius: var(--radius-md);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  max-width: 460px;
+  justify-self: center;
+  border: 1px solid rgba(var(--primary-color-rgb), 0.12);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.16);
   overflow: hidden;
   padding: 0;
-  max-height: 90%; /* Limitar altura do card em relação ao container */
-  overflow-y: auto; /* Permitir scroll apenas dentro do card se necessário */
   z-index: 1;
 }
 
-.recuperar-header {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
-  color: white;
-  padding: 24px;
-  text-align: center;
-}
-
-.logo-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 16px;
-}
-
-.logo {
-  width: 80px;
-  height: 80px;
-}
-
-.recuperar-header h2 {
-  margin: 0;
-  font-weight: 500;
-}
-
 .recuperar-content {
-  padding: 24px;
+  padding: clamp(28px, 4vw, 40px);
+}
+
+.form-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 26px;
+}
+
+.form-logo {
+  width: 46px;
+  height: 46px;
+}
+
+.form-header h2 {
+  margin: 0;
+  color: var(--text-color);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
 }
 
 .recuperar-form {
@@ -59,32 +108,32 @@
 
 .form-field {
   width: 100%;
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 }
 
 .info-text {
-  margin: 16px 0;
-  color: #555;
-  font-size: 14px;
-  text-align: center;
-  line-height: 1.5;
+  margin: 0 0 24px;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  line-height: 1.6;
 }
 
 .submit-button {
   width: 100%;
-  height: 44px;
-  font-size: 16px;
-  margin-bottom: 16px;
+  height: 48px;
+  margin: 2px 0 14px;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-md);
 }
 
 .back-to-login {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 16px;
-  text-decoration: none;
+  margin-top: 12px;
   color: var(--primary-color);
-  font-size: 14px;
+  font-size: var(--font-size-sm);
+  text-decoration: none;
 }
 
 .back-to-login:hover {
@@ -92,13 +141,27 @@
 }
 
 .back-to-login mat-icon {
-  font-size: 16px;
-  height: 16px;
-  width: 16px;
   margin-right: 4px;
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+}
+
+@media (max-width: 960px) {
+  .recuperar-container {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-panel {
+    display: none;
+  }
 }
 
 @media (max-width: 599px) {
+  .recuperar-container {
+    padding: 16px;
+  }
+
   .recuperar-card {
     max-width: 100%;
   }

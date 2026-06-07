@@ -8,10 +8,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -26,6 +28,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
     MatSnackBarModule,
     MatIconModule,
     MatCheckboxModule,
+    MatProgressSpinnerModule,
     RouterModule
   ],
   templateUrl: './login.component.html',
@@ -35,6 +38,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   errorMessage: string = '';
   hidePassword: boolean = true;
+  loading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -118,7 +122,10 @@ export class LoginComponent implements OnInit {
       localStorage.removeItem('rememberedEmail');
     }
 
-    this.authService.login({ email, senha }).subscribe({
+    this.loading = true;
+    this.authService.login({ email, senha }).pipe(
+      finalize(() => this.loading = false)
+    ).subscribe({
       next: (res) => {
         if (res && res.token) {
           localStorage.setItem('token', res.token);
