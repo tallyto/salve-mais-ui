@@ -173,12 +173,47 @@ body {
   padding: 1.5rem;
 }
 
+/* Modern Form Surface */
+.mat-mdc-form-field {
+  --mdc-outlined-text-field-outline-color: var(--border-color);
+  --mdc-outlined-text-field-hover-outline-color: var(--primary-border);
+  --mdc-outlined-text-field-focus-outline-color: var(--primary-color);
+  --mdc-outlined-text-field-label-text-color: var(--text-secondary);
+  --mdc-outlined-text-field-input-text-color: var(--text-color);
+}
+
+.mat-mdc-form-field-icon-suffix,
+.mat-mdc-form-field-icon-prefix {
+  color: var(--text-secondary);
+}
+
+.mat-mdc-form-field.mat-focused .mat-mdc-form-field-icon-suffix,
+.mat-mdc-form-field.mat-focused .mat-mdc-form-field-icon-prefix {
+  color: var(--primary-color);
+}
+
+.mat-mdc-text-field-wrapper {
+  border-radius: var(--radius-sm) !important;
+  background: var(--surface-color);
+}
+
+.mat-mdc-form-field-hint,
+.mat-mdc-form-field-error {
+  font-size: var(--font-size-xs);
+}
+
 /* Form Actions */
 .form-actions {
   display: flex;
   justify-content: flex-end;
   gap: 0.75rem;
   margin-top: 1.5rem;
+}
+
+.form-actions button {
+  min-height: 42px;
+  border-radius: var(--radius-sm);
+  font-weight: var(--font-weight-semibold);
 }
 
 /* Table Styles */

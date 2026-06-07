@@ -1,66 +1,123 @@
 .container {
-  max-width: 1000px;
+  max-width: 1040px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 24px;
 }
 
-.header {
+.form-hero {
   display: flex;
   align-items: center;
+  gap: 14px;
   margin-bottom: 24px;
-  gap: 16px;
+  padding: 22px 24px;
+  border: 1px solid rgba(239, 68, 68, 0.16);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(var(--primary-color-rgb), 0.05)),
+    var(--surface-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.header h2,
+.header p {
+  margin: 0;
 }
 
 .header h2 {
-  margin: 0;
-  color: #333;
-  font-weight: 500;
+  color: var(--text-color);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+}
+
+.header p {
+  margin-top: 6px;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.header-kicker {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--danger-color);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
 }
 
 .back-button {
-  color: #666;
+  color: var(--text-secondary);
+  background: var(--background-color);
 }
 
 .content {
-  margin-top: 24px;
+  margin-top: 0;
 }
 
-/* Formulário */
-mat-card {
-  margin-bottom: 24px;
+.form-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: var(--danger-color);
 }
 
 .title-icon {
   margin-right: 8px;
-  color: var(--primary-dark);
+  color: var(--danger-color);
+}
+
+mat-card-header {
+  padding: 22px 24px 14px;
+  border-bottom: 1px solid var(--border-color);
+  background: linear-gradient(180deg, #fff, var(--background-color));
+}
+
+mat-card-title {
+  color: var(--text-color);
+  font-weight: var(--font-weight-semibold);
+}
+
+mat-card-subtitle {
+  color: var(--text-secondary);
+}
+
+mat-card-content {
+  padding: 24px;
 }
 
 .form-section {
-  margin-bottom: 32px;
+  margin-bottom: 28px;
 }
 
 .section-title {
   display: flex;
   align-items: center;
-  color: #666;
-  font-size: 16px;
-  font-weight: 500;
-  margin-bottom: 16px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid #e0e0e0;
+  gap: 8px;
+  margin: 0 0 18px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-color);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
 }
 
 .section-title mat-icon {
-  margin-right: 8px;
-  font-size: 20px;
-  color: var(--primary-dark);
+  color: var(--danger-color);
 }
 
 .form-row {
   display: flex;
+  align-items: flex-start;
   gap: 16px;
   margin-bottom: 16px;
-  align-items: flex-start;
 }
 
 .full-width {
@@ -71,46 +128,44 @@ mat-card {
   flex: 1;
 }
 
-/* Alerta */
 .alert-section {
-  background-color: var(--primary-light);
-  border: 1px solid var(--primary-border);
-  border-radius: var(--radius-sm);
-  padding: 16px;
-  margin-bottom: 24px;
   display: flex;
   align-items: flex-start;
   gap: 12px;
+  margin-bottom: 24px;
+  padding: 16px;
+  border: 1px solid var(--primary-border);
+  border-radius: var(--radius-md);
+  color: var(--text-color);
+  background: var(--primary-light);
 }
 
 .alert-section.warning {
-  background-color: #fff3e0;
-  border-color: #ffb74d;
+  border-color: rgba(245, 158, 11, 0.38);
+  background: var(--warning-light);
 }
 
 .alert-icon {
-  color: var(--primary-dark);
   flex-shrink: 0;
+  color: var(--primary-color);
 }
 
 .alert-section.warning .alert-icon {
-  color: #f57c00;
+  color: var(--warning-color);
 }
 
 .alert-content {
-  flex: 1;
-  line-height: 1.6;
-  color: #555;
+  color: var(--text-secondary);
+  line-height: 1.55;
 }
 
 .alert-content strong {
-  color: #333;
+  color: var(--text-color);
 }
 
-/* Ações do Card */
 mat-card-actions {
-  padding: 16px;
-  margin-top: 16px;
+  padding: 0 24px 24px;
+  gap: 10px;
 }
 
 .button-spinner {
@@ -118,8 +173,11 @@ mat-card-actions {
   margin-right: 8px;
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
+  .container {
+    padding: 16px;
+  }
+
   .form-row {
     flex-direction: column;
   }
@@ -127,29 +185,4 @@ mat-card-actions {
   .half-width {
     width: 100%;
   }
-
-  .container {
-    padding: 12px;
-  }
-}
-
-/* Validação de formulário */
-mat-form-field.ng-invalid.ng-touched {
-  margin-bottom: 8px;
-}
-
-/* Estilo para campos desabilitados */
-mat-form-field.mat-form-field-disabled {
-  opacity: 0.7;
-}
-
-/* Snackbar customizado */
-::ng-deep .success-snackbar {
-  background-color: #4caf50 !important;
-  color: white !important;
-}
-
-::ng-deep .error-snackbar {
-  background-color: #f44336 !important;
-  color: white !important;
 }

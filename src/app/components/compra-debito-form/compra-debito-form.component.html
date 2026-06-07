@@ -1,13 +1,17 @@
-<div class="container">
-  <div class="header">
+<div class="container form-page">
+  <div class="header form-hero">
     <button mat-icon-button (click)="voltarParaListagem()" class="back-button">
       <mat-icon>arrow_back</mat-icon>
     </button>
-    <h2>{{ isEditing ? 'Editar' : 'Nova' }} Compra em Débito</h2>
+    <div>
+      <span class="header-kicker">Débito</span>
+      <h2>{{ isEditing ? 'Editar' : 'Nova' }} Compra em Débito</h2>
+      <p>{{ isEditing ? 'Atualize as informações permitidas desta compra.' : 'Registre uma compra debitada imediatamente da conta.' }}</p>
+    </div>
   </div>
 
   <div class="content">
-    <mat-card>
+    <mat-card class="form-card">
       <mat-card-header>
         <mat-card-title>
           <mat-icon class="title-icon">shopping_cart</mat-icon>

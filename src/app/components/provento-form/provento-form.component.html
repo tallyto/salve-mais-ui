@@ -1,8 +1,11 @@
-<div class="provento-container p-3 mx-auto">
-  <div class="header mb-4">
+<div class="provento-container form-page p-3 mx-auto">
+  <div class="header form-hero mb-4">
     <div class="header-content">
-      <mat-icon class="header-icon">payments</mat-icon>
+      <div class="header-icon">
+        <mat-icon>payments</mat-icon>
+      </div>
       <div class="header-text">
+        <span class="header-kicker">Receitas</span>
         <h2 class="page-title">Gerenciamento de Receitas</h2>
         <div class="provento-subtitle text-color-secondary">
           <mat-icon>attach_money</mat-icon> Registre e controle suas receitas
@@ -11,10 +14,12 @@
     </div>
   </div>
 
-  <div class="provento-card p-4 mb-4 shadow-1">
+  <div class="provento-card form-card p-4 mb-4 shadow-1">
     <div class="card-header mb-4">
       <div class="header-title">
-        <mat-icon style="color: #4caf50; margin-right: 8px;">add_circle</mat-icon>
+        <span class="section-icon success">
+          <mat-icon>add_circle</mat-icon>
+        </span>
         <h2 class="section-title m-0 mb-1">Cadastrar Provento</h2>
       </div>
       <div class="text-color-secondary text-sm">Registre um novo recebimento ou receita</div>
@@ -69,15 +74,16 @@
     </form>
   </div>
 
-  <div class="proventos-list-card data-card shadow-1">
+  <div class="proventos-list-card data-card form-card shadow-1">
     <div class="card-header">
       <div class="header-title">
-        <mat-icon style="color: #4caf50; margin-right: 8px;">list</mat-icon>
+        <span class="section-icon success">
+          <mat-icon>list</mat-icon>
+        </span>
         <h2 class="section-title m-0">Seus Proventos</h2>
       </div>
     </div>
     <app-list-proventos></app-list-proventos>
   </div>
 </div>
-
 

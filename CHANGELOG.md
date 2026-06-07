@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [1.42.0] - 2026-06-07
+
+### Melhorias
+
+- **Formulários**: telas de contas, receitas, compra em débito e compra parcelada repaginadas com headers mais claros, cards modernos, seções visuais consistentes e campos Material alinhados à paleta global
+- **Dashboard**: visual simplificado com menos cores nas bordas, hero mais limpo, indicadores principais reorganizados e ações rápidas reposicionadas para facilitar a leitura inicial
+
 ## [1.41.0] - 2026-06-07
 
 ### Adicionado

@@ -6,7 +6,7 @@ Frontend Angular do Salve Mais, uma plataforma de gestao financeira pessoal e
 multi-tenant para controlar receitas, despesas, contas, cartoes, faturas,
 compras parceladas, notificacoes, billing e relatorios.
 
-Versao atual: `1.41.0`
+Versao atual: `1.42.0`
 
 ## Stack
 

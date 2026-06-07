@@ -38,27 +38,6 @@
     </div>
   </section>
 
-  <!-- Ações Rápidas -->
-  <section class="quick-actions-panel">
-    <div class="section-heading compact">
-      <div>
-        <span class="section-kicker">Atalhos</span>
-        <h2>Ações rápidas</h2>
-      </div>
-    </div>
-    <div class="quick-actions-bar">
-    <a *ngFor="let action of quickActions"
-       [routerLink]="action.route"
-       class="quick-action-btn"
-       [matTooltip]="action.label">
-      <div class="quick-action-icon" [ngClass]="action.colorClass">
-        <mat-icon>{{ action.icon }}</mat-icon>
-      </div>
-      <span class="quick-action-label">{{ action.label }}</span>
-    </a>
-    </div>
-  </section>
-
   <!-- Filtros de Mês e Ano -->
   <app-month-year-filter
     [month]="selectedMonth"
@@ -122,15 +101,32 @@
     </div>
 
     <div class="col-12 md:col-6 lg:col-3 mb-3">
-      <div class="summary-card accent-orange">
-        <div class="card-icon icon-orange">
-          <mat-icon>savings</mat-icon>
+      <div class="summary-card accent-purple">
+        <div class="card-icon icon-purple">
+          <mat-icon>account_balance</mat-icon>
         </div>
+        <div class="summary-label">Contas Bancárias</div>
+        <div class="summary-value">{{ accounts.length }}</div>
+        <div class="text-color-secondary">
+          <small>
+            {{ accounts.length > 0 ? (totalSaldo / accounts.length | currency:'BRL':'symbol':'1.0-0') + ' média' : 'Nenhuma conta' }}
+          </small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="insight-row">
+    <div class="insight-card">
+      <div class="card-icon icon-orange">
+        <mat-icon>savings</mat-icon>
+      </div>
+      <div>
         <div class="summary-label">Reserva de Emergência</div>
-        <div class="summary-value" *ngIf="summaryData && summaryData.reservaEmergencia && summaryData.reservaEmergencia.saldoAtual !== undefined">
+        <div class="insight-value" *ngIf="summaryData && summaryData.reservaEmergencia && summaryData.reservaEmergencia.saldoAtual !== undefined">
           {{ summaryData.reservaEmergencia.saldoAtual | currency:'BRL':'symbol':'1.2-2' }}
         </div>
-        <div class="summary-value" *ngIf="!summaryData || !summaryData.temReservaEmergencia || !summaryData.reservaEmergencia">
+        <div class="insight-value" *ngIf="!summaryData || !summaryData.temReservaEmergencia || !summaryData.reservaEmergencia">
           Não configurada
         </div>
         <div class="text-color-secondary" *ngIf="summaryData && summaryData.reservaEmergencia && summaryData.reservaEmergencia.percentualConcluido !== undefined">
@@ -148,21 +144,24 @@
     </div>
   </section>
 
-  <!-- Accounts Summary -->
-  <section class="summary-grid compact-grid">
-    <div class="col-12 md:col-6 lg:col-3 mb-3">
-      <div class="summary-card accent-purple">
-        <div class="card-icon icon-purple">
-          <mat-icon>account_balance</mat-icon>
-        </div>
-        <div class="summary-label">Contas Bancárias</div>
-        <div class="summary-value">{{ accounts.length }}</div>
-        <div class="text-color-secondary">
-          <small>
-            {{ accounts.length > 0 ? (totalSaldo / accounts.length | currency:'BRL':'symbol':'1.0-0') + ' média' : 'Nenhuma conta' }}
-          </small>
-        </div>
+  <!-- Ações Rápidas -->
+  <section class="quick-actions-panel">
+    <div class="section-heading compact">
+      <div>
+        <span class="section-kicker">Atalhos</span>
+        <h2>Ações rápidas</h2>
       </div>
+    </div>
+    <div class="quick-actions-bar">
+      <a *ngFor="let action of quickActions"
+         [routerLink]="action.route"
+         class="quick-action-btn"
+         [matTooltip]="action.label">
+        <div class="quick-action-icon" [ngClass]="action.colorClass">
+          <mat-icon>{{ action.icon }}</mat-icon>
+        </div>
+        <span class="quick-action-label">{{ action.label }}</span>
+      </a>
     </div>
   </section>
 

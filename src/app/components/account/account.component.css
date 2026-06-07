@@ -1,28 +1,20 @@
-/* Estilos específicos que complementam o PrimeFlex */
-::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
-  color: rgba(0, 0, 0, 0.12);
-}
-
-::ng-deep .mat-form-field-label {
-  color: rgba(0, 0, 0, 0.6);
-}
-
 .account-container {
-  padding: 24px;
   max-width: 1200px;
   margin: 0 auto;
+  padding: 24px;
 }
 
-/* Header */
-.header {
+.form-hero {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   margin-bottom: 24px;
-  background-color: #fff;
-  border-radius: var(--radius-sm);
-  padding: 16px 24px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  padding: 22px 24px;
+  border: 1px solid rgba(var(--primary-color-rgb), 0.16);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(135deg, rgba(var(--primary-color-rgb), 0.1), rgba(124, 58, 237, 0.06)),
+    var(--surface-color);
+  box-shadow: var(--shadow-sm);
 }
 
 .header-content {
@@ -31,14 +23,26 @@
   gap: 16px;
 }
 
-.header-icon {
-  font-size: 32px;
-  width: 32px;
-  height: 32px;
-  color: var(--primary-color);
-  display: flex;
+.header-icon,
+.section-icon {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex: 0 0 auto;
+  border-radius: var(--radius-sm);
+}
+
+.header-icon {
+  width: 52px;
+  height: 52px;
+  color: var(--primary-color);
+  background: var(--primary-light);
+}
+
+.header-icon mat-icon {
+  width: 28px;
+  height: 28px;
+  font-size: 28px;
 }
 
 .header-text {
@@ -46,84 +50,116 @@
   flex-direction: column;
 }
 
+.header-kicker {
+  margin-bottom: 4px;
+  color: var(--primary-color);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+}
+
 .page-title {
   margin: 0;
-  color: #333;
-  font-weight: 500;
-  font-size: 22px;
+  color: var(--text-color);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
 }
 
 .account-subtitle {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-top: 8px;
-  color: #666;
+  margin-top: 6px;
+  color: var(--text-secondary);
 }
 
-/* Card styles */
-.account-card, .accounts-list-card {
-  background-color: white;
-  border-radius: var(--radius-sm);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+.form-card {
+  position: relative;
   overflow: hidden;
-  height: 100%;
-  border-top: 3px solid var(--primary-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  background: var(--surface-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: var(--primary-color);
 }
 
 .card-header {
-  padding: 16px 20px;
-  border-bottom: 1px solid #eee;
   display: flex;
   flex-direction: column;
+  padding: 0 0 18px;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .header-title {
   display: flex;
   align-items: center;
+  gap: 10px;
   margin-bottom: 4px;
 }
 
-.section-title {
-  font-size: 18px;
-  font-weight: 500;
-  color: #333;
+.section-icon {
+  width: 34px;
+  height: 34px;
 }
 
-/* Form styles */
+.section-icon.primary {
+  color: var(--primary-color);
+  background: var(--primary-light);
+}
+
+.section-icon.success {
+  color: var(--success-color);
+  background: var(--success-light);
+}
+
+.section-title {
+  color: var(--text-color);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+}
+
 .account-form {
-  padding: 8px 0;
+  padding-top: 8px;
 }
 
 .tipo-option-icon {
   vertical-align: middle;
   margin-right: 8px;
+  color: var(--text-secondary);
   font-size: 20px;
   width: 20px;
   height: 20px;
-  color: #666;
 }
 
 .form-actions {
-  margin-top: 16px;
+  margin-top: 20px;
 }
 
-/* Utility classes */
 .positive {
-  color: #4caf50 !important;
+  color: var(--success-color) !important;
 }
 
 .negative {
-  color: #f44336 !important;
+  color: var(--danger-color) !important;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .account-container {
     padding: 16px;
   }
 
-  .header {
-    padding: 12px 16px;
+  .form-hero {
+    padding: 18px;
+  }
+
+  .header-content {
+    align-items: flex-start;
   }
 }

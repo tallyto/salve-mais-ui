@@ -1,10 +1,13 @@
-<div class="p-4">
-  <mat-card>
-    <mat-card-header class="bg-primary">
-      <mat-card-title class="flex align-items-center text-white">
+<div class="compra-parcelada-page p-4">
+  <mat-card class="form-card">
+    <mat-card-header class="form-card-header">
+      <mat-card-title class="flex align-items-center">
         <mat-icon class="mr-2">credit_card</mat-icon>
         {{ isEditMode ? 'Editar Compra Parcelada' : 'Nova Compra Parcelada' }}
       </mat-card-title>
+      <mat-card-subtitle>
+        Informe os dados da compra e acompanhe a prévia das parcelas antes de salvar.
+      </mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content class="p-4">
