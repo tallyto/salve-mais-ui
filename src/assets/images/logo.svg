@@ -1,25 +1,34 @@
-<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
-  <title id="title">Salve Mais</title>
-  <desc id="desc">Logo Salve Mais com monograma S e sinal de mais integrado.</desc>
+<svg width="1200" height="420" viewBox="0 0 1200 420" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Logo Salve Mais</title>
+  <desc id="desc">Logo para aplicativo de gestão financeira com símbolo de escudo, check e sinal de mais.</desc>
+
   <defs>
-    <linearGradient id="bg" x1="30" y1="24" x2="172" y2="178" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#2563EB"/>
-      <stop offset="0.55" stop-color="#1D4ED8"/>
-      <stop offset="1" stop-color="#7C3AED"/>
+    <linearGradient id="brandGradient" x1="130" y1="55" x2="330" y2="345" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#19C37D"/>
+      <stop offset="1" stop-color="#0A7C66"/>
     </linearGradient>
-    <linearGradient id="sFill" x1="60" y1="48" x2="132" y2="152" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#FFFFFF"/>
-      <stop offset="1" stop-color="#DBEAFE"/>
-    </linearGradient>
+    <filter id="softShadow" x="50" y="35" width="330" height="350" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#063B32" flood-opacity="0.20"/>
+    </filter>
   </defs>
 
-  <rect x="24" y="24" width="152" height="152" rx="42" fill="url(#bg)"/>
+  <!-- Icon -->
+  <g filter="url(#softShadow)">
+    <path d="M215 54L335 104V194C335 271 286 333 215 363C144 333 95 271 95 194V104L215 54Z" fill="url(#brandGradient)"/>
+    <path d="M215 77L313 118V194C313 258 273 309 215 337C157 309 117 258 117 194V118L215 77Z" stroke="white" stroke-opacity="0.35" stroke-width="10"/>
+  </g>
 
-  <path d="M128 58H88C70.9 58 58 68.4 58 83C58 96.7 68.2 104.2 84.6 107.4L111 112.6C122.4 114.8 128 119.4 128 127.4C128 136.4 120 142 106.8 142H67" stroke="url(#sFill)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M126 58C139.8 58 151 69.2 151 83V88H146C139.9 88 135 83.1 135 77V73H131C124.9 73 120 68.1 120 62V58H126Z" fill="#FFFFFF"/>
-  <path d="M136 68V83" stroke="#2563EB" stroke-width="6" stroke-linecap="round"/>
-  <path d="M128.5 75.5H143.5" stroke="#2563EB" stroke-width="6" stroke-linecap="round"/>
+  <!-- Check mark -->
+  <path d="M158 206L197 245L280 157" stroke="white" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>
 
-  <path d="M64 130C79.6 147.2 108.8 153 130 139" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" opacity="0.28"/>
-  <path d="M58 50H91" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" opacity="0.18"/>
+  <!-- Plus sign -->
+  <circle cx="292" cy="280" r="54" fill="#F8B400"/>
+  <path d="M292 252V308M264 280H320" stroke="white" stroke-width="18" stroke-linecap="round"/>
+
+  <!-- Wordmark -->
+  <text x="420" y="194" font-family="Inter, Montserrat, Arial, sans-serif" font-size="92" font-weight="800" letter-spacing="-3" fill="#063B32">Salve</text>
+  <text x="420" y="294" font-family="Inter, Montserrat, Arial, sans-serif" font-size="92" font-weight="800" letter-spacing="-3" fill="#19A974">Mais</text>
+
+  <!-- Tagline -->
+  <text x="425" y="340" font-family="Inter, Montserrat, Arial, sans-serif" font-size="28" font-weight="500" letter-spacing="0.5" fill="#52736B">gestão financeira simples</text>
 </svg>
