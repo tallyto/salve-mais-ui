@@ -393,6 +393,14 @@
                 <mat-icon>check_circle</mat-icon>
                 Paga
               </span>
+
+              <button mat-icon-button
+                      *ngIf="fatura.pago && !fatura.contaPagamentoId"
+                      (click)="excluirFatura(fatura.id)"
+                      matTooltip="Excluir fatura paga sem débito em conta"
+                      color="warn">
+                <mat-icon>delete</mat-icon>
+              </button>
             </div>
           </td>
         </ng-container>
