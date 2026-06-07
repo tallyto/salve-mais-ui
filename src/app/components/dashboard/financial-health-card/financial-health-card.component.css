@@ -1,11 +1,11 @@
 .data-card {
   background-color: #fff;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   height: 100%;
   transition: box-shadow 0.2s ease;
-  border-top: 3px solid #2196f3;
+  border-top: 3px solid var(--primary-color);
 }
 
 .data-card:hover {
@@ -174,13 +174,13 @@
   display: flex;
   gap: 16px;
   padding: 16px;
-  background-color: rgba(33, 150, 243, 0.05);
-  border-radius: 8px;
-  border-left: 4px solid #1976d2;
+  background-color: rgba(var(--primary-color-rgb), 0.05);
+  border-radius: var(--radius-sm);
+  border-left: 4px solid var(--primary-dark);
 }
 
 .financial-tip mat-icon {
-  color: #1976d2;
+  color: var(--primary-dark);
   font-size: 24px;
   width: 24px;
   height: 24px;

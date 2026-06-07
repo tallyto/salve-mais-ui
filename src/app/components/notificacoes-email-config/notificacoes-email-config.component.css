@@ -11,7 +11,7 @@
   align-items: center;
   margin-bottom: 24px;
   background-color: #fff;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   padding: 24px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
@@ -26,7 +26,7 @@
   font-size: 36px;
   width: 36px;
   height: 36px;
-  color: #1976d2;
+  color: var(--primary-dark);
 }
 
 .header-text h2 {
@@ -53,8 +53,8 @@
 }
 
 .status-badge.primary {
-  background-color: #e3f2fd;
-  color: #1976d2;
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
 }
 
 .status-badge.warn {
@@ -221,7 +221,7 @@ mat-divider {
 /* Email Preview */
 .email-preview {
   border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   overflow: hidden;
 }
 
@@ -261,7 +261,7 @@ mat-divider {
   align-items: center;
   gap: 12px;
   padding: 12px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   border-left: 4px solid;
 }
 
@@ -284,12 +284,12 @@ mat-divider {
 }
 
 .notification-item.info {
-  background-color: #e3f2fd;
-  border-color: #1976d2;
+  background-color: var(--primary-light);
+  border-color: var(--primary-dark);
 }
 
 .notification-item.info mat-icon {
-  color: #1976d2;
+  color: var(--primary-dark);
 }
 
 .notification-item mat-icon {
@@ -320,7 +320,7 @@ mat-divider {
 }
 
 .email-footer mat-icon {
-  color: #1976d2;
+  color: var(--primary-dark);
 }
 
 /* Responsive */

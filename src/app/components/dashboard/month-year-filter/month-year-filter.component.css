@@ -1,7 +1,7 @@
 .filters-container {
   padding: 20px;
   background-color: #fff;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   margin-bottom: 24px;
 }
@@ -22,7 +22,7 @@
 .period-navigation {
   display: flex;
   gap: 4px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   padding: 2px;
 }
 
@@ -42,7 +42,7 @@
   display: flex;
   gap: 8px;
   margin-left: auto;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   padding: 4px;
 }
 
@@ -50,11 +50,11 @@
   font-size: 13px;
   min-width: 70px;
   padding: 0 12px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
 }
 
 .quick-filters .mat-mdc-button.active {
-  background-color: #1976d2;
+  background-color: var(--primary-dark);
   color: #fff;
   font-weight: 500;
 }

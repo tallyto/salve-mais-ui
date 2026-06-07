@@ -24,13 +24,13 @@
   align-items: center;
   gap: 12px;
   padding: 12px 16px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   margin-bottom: 16px;
 }
 
 .banner-info {
-  background-color: #e3f2fd;
-  color: #0d47a1;
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
 }
 
 .banner-warn {
@@ -130,7 +130,7 @@
 }
 
 .plan-card-active {
-  border-color: #1976d2;
+  border-color: var(--primary-dark);
 }
 
 .plan-header {
@@ -197,7 +197,7 @@
   justify-content: center;
   gap: 6px;
   padding: 8px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   background-color: #e8f5e9;
   color: #2e7d32;
   font-weight: 600;

@@ -9,7 +9,7 @@
 }
 
 .bg-blue-50 {
-  background-color: #e3f2fd !important;
+  background-color: var(--primary-light) !important;
 }
 
 .bg-red-50 {

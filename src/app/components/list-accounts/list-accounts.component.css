@@ -35,7 +35,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   padding: 4px 12px;
   font-size: 12px;
   font-weight: 500;
@@ -44,8 +44,8 @@
 }
 
 .badge-primary {
-  background-color: #e3f2fd;
-  color: #1976d2;
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
 }
 
 .badge-success {
@@ -103,7 +103,7 @@
 
 /* Table styles */
 .table-container {
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   overflow: hidden;
 }
 
@@ -154,7 +154,7 @@ table.mat-table {
   width: 48px;
   height: 48px;
   margin-bottom: 16px;
-  color: #2196f3;
+  color: var(--primary-color);
   opacity: 0.6;
 }
 

@@ -6,7 +6,7 @@
 /* Filtros */
 .filter-card {
   background: white;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 1.5rem;
   overflow: hidden;
@@ -65,7 +65,7 @@
 .results-info {
   background: #f5f5f5;
   padding: 0.75rem 1.25rem;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   margin-bottom: 1rem;
 }
 
@@ -83,7 +83,7 @@
 /* Compra Card */
 .compra-card {
   background: white;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   margin-bottom: 1.25rem;
   transition: all 0.3s ease;
@@ -159,7 +159,7 @@
   gap: 0.75rem;
   padding: 1rem;
   background: #f9f9f9;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   border-left: 3px solid #667eea;
   transition: all 0.2s ease;
 }
@@ -218,7 +218,7 @@
   margin-top: 1.25rem;
   padding: 1rem;
   background: #f5f5f5;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
 }
 
 .parcelas-title {

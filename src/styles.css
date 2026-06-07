@@ -1,5 +1,53 @@
 /* You can add global styles to this file, and also import other style files */
 
+/* ===========================
+   PALETA DE MARCA — estilo fintech/corporativo
+   Variáveis usadas em todo o app para manter consistência visual
+   =========================== */
+:root {
+  --primary-color: #2563eb;
+  --primary-color-rgb: 37, 99, 235;
+  --primary-dark: #1d4ed8;
+  --primary-light: #dbeafe;
+  --primary-border: #93c5fd;
+  --accent-color: #7c3aed;
+  --accent-light: #ede9fe;
+
+  --success-color: #10b981;
+  --success-light: #d1fae5;
+  --danger-color: #ef4444;
+  --danger-light: #fee2e2;
+  --warning-color: #f59e0b;
+  --warning-light: #fef3c7;
+  --info-color: #0ea5e9;
+  --info-light: #e0f2fe;
+
+  --text-color: #1e293b;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+
+  --surface-color: #ffffff;
+  --background-color: #f8fafc;
+  --border-color: #e2e8f0;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.08);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.1);
+
+  --font-family: Roboto, "Helvetica Neue", sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.5rem;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+}
+
 html,
 body {
   height: 100%;
@@ -14,12 +62,12 @@ html,
 body,
 .mat-sidenav-content,
 app-root {
-  background-color: #f9fafc !important;
-  /* Azul claro suave - transmite confiança e tranquilidade */
+  background-color: var(--background-color) !important;
+  /* Cinza-azulado suave - transmite confiança e tranquilidade */
 }
 
 body {
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: var(--font-family);
   position: fixed;
   /* Fixa o body para evitar scroll */
   width: 100%;
@@ -55,10 +103,10 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
-  background-color: #fff;
-  border-radius: 8px;
+  background-color: var(--surface-color);
+  border-radius: var(--radius-md);
   padding: 1rem 1.5rem;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: var(--shadow-sm);
 }
 
 .page-header .header-content {
@@ -75,29 +123,29 @@ body {
 }
 
 .page-header .page-title {
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
   margin: 0;
-  color: #333;
+  color: var(--text-color);
 }
 
 .page-header .page-subtitle {
-  font-size: 0.875rem;
-  color: #666;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
   margin-top: 0.25rem;
 }
 
 /* Content Cards - Padrão do sistema */
 .content-card {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background: var(--surface-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
   margin-bottom: 1.5rem;
 }
 
 .card-header {
   padding: 1rem 1.5rem;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .card-header .header-title {
@@ -107,10 +155,10 @@ body {
 }
 
 .card-header .section-title {
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
   margin: 0;
-  color: #333;
+  color: var(--text-color);
 }
 
 .card-header .section-title mat-icon {
@@ -143,21 +191,21 @@ body {
 }
 
 .data-table th {
-  background: #f5f5f5;
-  color: #666;
-  font-weight: 600;
-  font-size: 0.8125rem;
+  background: var(--background-color);
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-xs);
   padding: 0.75rem 1.5rem;
 }
 
 .data-table td {
   padding: 1rem 1.5rem;
-  color: #333;
-  font-size: 0.875rem;
+  color: var(--text-color);
+  font-size: var(--font-size-sm);
 }
 
 .data-table tr:hover {
-  background: #fafafa;
+  background: var(--primary-light);
 }
 
 /* Action Buttons */
@@ -171,7 +219,7 @@ body {
 .empty-state {
   text-align: center;
   padding: 3rem 1.5rem;
-  color: #999;
+  color: var(--text-muted);
 }
 
 .empty-state mat-icon {
@@ -183,16 +231,16 @@ body {
 }
 
 .empty-state h3 {
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
   margin: 0 0 0.5rem 0;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 .empty-state p {
-  font-size: 0.875rem;
+  font-size: var(--font-size-sm);
   margin: 0 0 1rem 0;
-  color: #999;
+  color: var(--text-muted);
 }
 
 /* Loading State */
@@ -209,13 +257,13 @@ body {
 }
 
 .info-label {
-  font-weight: 600;
-  color: #666;
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
   margin-right: 0.5rem;
 }
 
 .info-value {
-  color: #333;
+  color: var(--text-color);
 }
 
 /* Edit Field Inline */

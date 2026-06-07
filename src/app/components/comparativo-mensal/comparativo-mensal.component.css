@@ -65,7 +65,7 @@
 
 .btn {
   padding: 10px 20px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-weight: 500;
   border: none;
   cursor: pointer;
@@ -172,7 +172,7 @@
 .resumo-item {
   padding: 20px;
   background: #f8f9fa;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   border: 1px solid #e9ecef;
 }
 
@@ -264,7 +264,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 15px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   border-left: 4px solid #95a5a6;
 }
 
@@ -388,7 +388,7 @@
 
 .badge {
   padding: 5px 10px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   font-size: 0.8rem;
   font-weight: 600;
 }

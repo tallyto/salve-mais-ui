@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+## [1.38.0] - 2026-06-07
+
+### Melhorias
+
+- **Tema global**: nova paleta de marca "fintech" definida como variáveis CSS em `:root` (cores primária/destaque, semânticas de sucesso/alerta/erro, neutros, raio de borda, sombras e escala tipográfica) e tema do Angular Material trocado de `deeppurple-amber` para `indigo-pink`, mais próximo da nova identidade visual
+- **Consistência visual**: hex-codes de azul espalhados (`#2196f3`, `#1976d2`, `#1565c0`, `#0d47a1`, `#e3f2fd`, `#90caf9`) substituídos pelas novas variáveis CSS em ~26 componentes; gradientes das telas de autenticação (login, cadastro, recuperar/redefinir senha) alinhados à paleta da marca
+- **Border-radius**: valores divergentes (6px/8px/12px/16px) padronizados via `--radius-sm`/`--radius-md`/`--radius-lg`
+- **Tipografia**: família, pesos e escala de tamanhos centralizados em variáveis CSS e aplicados ao padrão global (`page-header`, `content-card`, `data-table`, `empty-state`)
+
 ## [1.37.0] - 2026-06-07
 
 ### Adicionado

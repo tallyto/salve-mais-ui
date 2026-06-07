@@ -34,7 +34,7 @@ mat-card {
 
 .title-icon {
   margin-right: 8px;
-  color: #1976d2;
+  color: var(--primary-dark);
 }
 
 .form-section {
@@ -55,7 +55,7 @@ mat-card {
 .section-title mat-icon {
   margin-right: 8px;
   font-size: 20px;
-  color: #1976d2;
+  color: var(--primary-dark);
 }
 
 .form-row {
@@ -77,7 +77,7 @@ mat-card {
 .summary-card {
   background-color: #f8f9fa;
   border: 1px solid #e9ecef;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   padding: 20px;
   margin-top: 16px;
 }
@@ -109,7 +109,7 @@ mat-card {
 }
 
 .summary-value.highlight {
-  color: #1976d2;
+  color: var(--primary-dark);
   font-size: 18px;
 }
 
@@ -136,7 +136,7 @@ mat-card {
 }
 
 .help-step-icon {
-  color: #1976d2;
+  color: var(--primary-dark);
   font-size: 24px;
   margin-top: 4px;
 }
@@ -178,7 +178,7 @@ mat-card {
 }
 
 .help-examples strong {
-  color: #1976d2;
+  color: var(--primary-dark);
 }
 
 /* Botões */

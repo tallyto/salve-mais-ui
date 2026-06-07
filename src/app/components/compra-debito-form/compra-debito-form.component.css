@@ -32,7 +32,7 @@ mat-card {
 
 .title-icon {
   margin-right: 8px;
-  color: #1976d2;
+  color: var(--primary-dark);
 }
 
 .form-section {
@@ -53,7 +53,7 @@ mat-card {
 .section-title mat-icon {
   margin-right: 8px;
   font-size: 20px;
-  color: #1976d2;
+  color: var(--primary-dark);
 }
 
 .form-row {
@@ -73,9 +73,9 @@ mat-card {
 
 /* Alerta */
 .alert-section {
-  background-color: #e3f2fd;
-  border: 1px solid #90caf9;
-  border-radius: 8px;
+  background-color: var(--primary-light);
+  border: 1px solid var(--primary-border);
+  border-radius: var(--radius-sm);
   padding: 16px;
   margin-bottom: 24px;
   display: flex;
@@ -89,7 +89,7 @@ mat-card {
 }
 
 .alert-icon {
-  color: #1976d2;
+  color: var(--primary-dark);
   flex-shrink: 0;
 }
 

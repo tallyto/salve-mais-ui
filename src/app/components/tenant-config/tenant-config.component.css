@@ -67,7 +67,7 @@
 /* Tab content */
 .config-content {
   background: white;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   overflow: hidden;
 }
@@ -79,7 +79,7 @@
 /* Card styles */
 .config-card {
   margin-bottom: 24px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
@@ -236,7 +236,7 @@
   align-items: center;
   gap: 4px;
   padding: 4px 8px;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   font-size: 0.75rem;
   font-weight: 500;
 }
@@ -258,7 +258,7 @@
 
 /* Info boxes */
 .info-box {
-  background-color: #e3f2fd;
+  background-color: var(--primary-light);
   border: 1px solid #bbdefb;
   border-radius: 4px;
   padding: 12px;
@@ -266,7 +266,7 @@
 }
 
 .info-box mat-icon {
-  color: #1976d2;
+  color: var(--primary-dark);
   margin-right: 8px;
 }
 

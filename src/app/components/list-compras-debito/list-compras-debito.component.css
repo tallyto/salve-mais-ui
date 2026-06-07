@@ -21,7 +21,7 @@
 }
 
 .title-icon {
-  color: #1976d2;
+  color: var(--primary-dark);
   font-size: 32px;
   width: 32px;
   height: 32px;
@@ -30,7 +30,7 @@
 /* Filtros */
 .filters-container {
   background: white;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   padding: 20px;
   margin-bottom: 24px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -75,7 +75,7 @@
 /* Tabela */
 .table-container {
   background: white;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   margin-bottom: 24px;
@@ -96,10 +96,10 @@
 }
 
 .categoria-badge {
-  background-color: #e3f2fd;
-  color: #1976d2;
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
   padding: 4px 12px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   font-size: 12px;
   font-weight: 500;
 }

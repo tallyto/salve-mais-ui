@@ -3,7 +3,7 @@
   display: inline-flex;
   align-items: center;
   padding: 4px 12px;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   font-size: 12px;
   font-weight: 500;
 }
@@ -19,6 +19,6 @@
 }
 
 .tipo-economia {
-  background-color: #2196f3;
+  background-color: var(--primary-color);
   color: white;
 }

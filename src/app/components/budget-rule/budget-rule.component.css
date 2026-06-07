@@ -48,7 +48,7 @@ canvas.chartjs-render-monitor {
 
 .progress-fill {
   height: 100%;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   transition: width 1s ease-out;
 }
 
@@ -81,7 +81,7 @@ canvas.chartjs-render-monitor {
 
 .explanation-card .card,
 .grid .card {
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   overflow: hidden;
 }
 
@@ -217,7 +217,7 @@ canvas.chartjs-render-monitor {
 
 /* Estilos para detalhes das categorias */
 .detail-card {
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -229,7 +229,7 @@ canvas.chartjs-render-monitor {
 
 .percentage-badge {
   padding: 4px 8px;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   font-size: 0.75rem;
   font-weight: 600;
 }
@@ -296,7 +296,7 @@ canvas.chartjs-render-monitor {
 }
 
 .progress-economia {
-  background-color: #2196f3 !important; /* Azul para economia */
+  background-color: var(--primary-color) !important; /* Azul para economia */
 }
 
 .progress {
