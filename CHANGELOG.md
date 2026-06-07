@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [1.40.0] - 2026-06-07
+
+### Melhorias
+
+- **Menu lateral**: navegacao repaginada com marca no topo, hierarquia visual mais clara, estados ativos alinhados a paleta global e area de usuario/versao no rodape
+- **Topbar**: acoes de notificacao e perfil refinadas, com avatar por iniciais e melhor comportamento responsivo
+
 ## [1.39.1] - 2026-06-07
 
 ### Documentacao

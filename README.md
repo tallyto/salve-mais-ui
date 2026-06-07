@@ -4,7 +4,7 @@ Frontend Angular do Salve Mais, uma plataforma de gestao financeira pessoal e
 multi-tenant para controlar receitas, despesas, contas, cartoes, faturas,
 compras parceladas, notificacoes, billing e relatorios.
 
-Versao atual: `1.39.1`
+Versao atual: `1.40.0`
 
 ## Stack
 
@@ -164,10 +164,11 @@ Concluido:
 - Tema global: paleta, tipografia, radius, sombras e troca gradual de cores
   antigas para variaveis CSS.
 - Telas publicas: login, cadastro de tenant, recuperacao e redefinicao de senha.
+- Menu lateral: marca, hierarquia visual, estados ativos e area de usuario no
+  rodape.
 
 Proximos focos sugeridos:
 
-- Revisar `menu-lateral`: hierarquia, item ativo, espacamento e area de usuario.
 - Avaliar topbar fixa com breadcrumb, busca rapida e avatar.
 - Padronizar `page-header` nas telas que ainda usam variacoes proprias.
 - Evoluir listagens/CRUDs: contas, cartoes, transacoes, despesas, compras,

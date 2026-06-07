@@ -1,32 +1,33 @@
 <!-- Toolbar para usuários autenticados -->
 <ng-container *ngIf="isAuthenticated">
   <mat-toolbar color="primary" class="app-toolbar">
-    <button (click)="toggleSidenav()" mat-icon-button matTooltip="Menu">
+    <button (click)="toggleSidenav()" mat-icon-button matTooltip="Menu" class="toolbar-icon-button">
       <mat-icon>menu</mat-icon>
     </button>
-    <span class="app-title">{{ appTitle }}</span>
+    <div class="toolbar-brand">
+      <span class="app-title">{{ appTitle }}</span>
+    </div>
     <span class="toolbar-item-spacer"></span>
 
     <div class="toolbar-actions">
-      <button mat-icon-button matTooltip="Notificações" routerLink="/notificacoes">
+      <button mat-icon-button matTooltip="Notificações" routerLink="/notificacoes" class="toolbar-icon-button">
         <mat-icon [matBadge]="getNotificationBadgeText()"
                   [matBadgeHidden]="!shouldShowNotificationBadge()"
                   matBadgeColor="warn"
                   matBadgeSize="small">notifications</mat-icon>
       </button>
 
-      <!-- Tenant selector será adicionado posteriormente -->
-
       <button [matMenuTriggerFor]="userAccountMenu" mat-button class="user-profile-button">
         <div class="user-profile">
-          <mat-icon class="user-avatar">account_circle</mat-icon>
+          <span class="user-avatar">{{ getUserInitials() }}</span>
           <span class="username">{{ username }}</span>
+          <mat-icon class="profile-chevron">expand_more</mat-icon>
         </div>
       </button>
 
       <mat-menu #userAccountMenu [overlapTrigger]="false" yPosition="below" class="user-menu">
         <div class="user-menu-header">
-          <mat-icon>account_circle</mat-icon>
+          <span class="user-avatar menu-avatar">{{ getUserInitials() }}</span>
           <div class="user-info">
             <p class="user-name">{{ username }}</p>
             <p class="user-email">{{ userEmail }}</p>
@@ -54,7 +55,7 @@
 <!-- Toolbar simples para usuários não autenticados (sem barra de navegação) -->
 <ng-container *ngIf="!isAuthenticated">
   <mat-toolbar color="primary" class="app-toolbar">
-    <span class="app-title">{{ appTitle }}</span>
+    <span class="app-title">Salve Mais</span>
     <span class="toolbar-item-spacer"></span>
   </mat-toolbar>
 </ng-container>
@@ -62,16 +63,24 @@
 <!-- Container principal -->
 <mat-sidenav-container class="app-container">
   <!-- Menu lateral (apenas para usuários autenticados) -->
-  <mat-sidenav #sidenav *ngIf="isAuthenticated" [class.mat-elevation-z4]="true" class="app-sidenav" mode="side">
-    <div class="sidenav-content">
-      <mat-nav-list>
-        <!-- Principal -->
-        <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link">
-          <mat-icon>dashboard</mat-icon>
-          <span>Dashboard</span>
-        </a>
+  <mat-sidenav #sidenav *ngIf="isAuthenticated" class="app-sidenav" [mode]="isLargeScreen ? 'side' : 'over'">
+    <div class="sidenav-header">
+      <div class="brand-lockup">
+        <img src="assets/images/logo.svg" alt="Salve Mais" class="brand-logo">
+        <div class="brand-text">
+          <strong>Salve Mais</strong>
+          <span>{{ appTitle }}</span>
+        </div>
+      </div>
+    </div>
 
-        <mat-divider></mat-divider>
+    <div class="sidenav-content">
+      <mat-nav-list class="primary-nav">
+        <!-- Principal -->
+        <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="nav-link dashboard-link">
+          <mat-icon class="nav-icon">dashboard</mat-icon>
+          <span class="nav-label">Dashboard</span>
+        </a>
 
         <!-- Seções colapsáveis -->
         <div *ngFor="let section of menuSections" class="nav-section">
@@ -86,18 +95,23 @@
           </button>
 
           <div class="nav-section-items" [class.collapsed]="!isSectionExpanded(section.id)">
-            <a *ngFor="let item of section.items" mat-list-item [routerLink]="item.route" routerLinkActive="active-link">
-              <mat-icon>{{ item.icon }}</mat-icon>
-              <span>{{ item.label }}</span>
+            <a *ngFor="let item of section.items" mat-list-item [routerLink]="item.route" routerLinkActive="active-link" class="nav-link">
+              <mat-icon class="nav-icon">{{ item.icon }}</mat-icon>
+              <span class="nav-label">{{ item.label }}</span>
             </a>
           </div>
-
-          <mat-divider></mat-divider>
         </div>
       </mat-nav-list>
     </div>
 
     <div class="sidenav-footer">
+      <div class="footer-user">
+        <span class="user-avatar">{{ getUserInitials() }}</span>
+        <div class="footer-user-info">
+          <strong>{{ username }}</strong>
+          <span>{{ userEmail }}</span>
+        </div>
+      </div>
       <div class="app-version">v{{ appVersion }}</div>
     </div>
   </mat-sidenav>

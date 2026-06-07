@@ -306,6 +306,23 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.menuInfoService.shouldShowNotificationBadge(this.resumoNotificacoes);
   }
 
+  getUserInitials(): string {
+    const nameParts = this.username
+      .split(' ')
+      .map(part => part.trim())
+      .filter(Boolean);
+
+    if (nameParts.length === 0) {
+      return 'US';
+    }
+
+    const initials = nameParts.length === 1
+      ? nameParts[0].slice(0, 2)
+      : `${nameParts[0][0]}${nameParts[nameParts.length - 1][0]}`;
+
+    return initials.toUpperCase();
+  }
+
   /**
    * Carrega o display name do tenant a partir do token JWT
    */
