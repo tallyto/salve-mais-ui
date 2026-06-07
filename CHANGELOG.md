@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [1.39.1] - 2026-06-07
+
+### Documentacao
+
+- **Centralizacao de Markdown**: informacoes de arquitetura, instrucoes de desenvolvimento e backlog visual consolidadas no `README.md`; documentos redundantes removidos para reduzir duplicidade
+
 ## [1.39.0] - 2026-06-07
 
 ### Melhorias

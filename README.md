@@ -1,208 +1,195 @@
-# 💰 Salve Mais UI
+# Salve Mais UI
 
-![Angular](https://img.shields.io/badge/angular-%23DD0031.svg?style=flat&logo=angular&logoColor=white)
-![Angular Material](https://img.shields.io/badge/Angular%20Material-009688?style=flat&logo=angular&logoColor=white)
-![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=flat&logo=typescript&logoColor=white)
-![License](https://img.shields.io/badge/license-MIT-green)
+Frontend Angular do Salve Mais, uma plataforma de gestao financeira pessoal e
+multi-tenant para controlar receitas, despesas, contas, cartoes, faturas,
+compras parceladas, notificacoes, billing e relatorios.
 
-Sistema web para gestão financeira pessoal desenvolvido em Angular com Material Design.
+Versao atual: `1.39.1`
 
-## 📋 Sobre o Projeto
+## Stack
 
-O **Salve Mais** é uma aplicação completa para controle financeiro pessoal que permite gerenciar receitas, despesas, cartões de crédito, compras parceladas e muito mais. Com interface moderna e intuitiva, oferece visualizações detalhadas através de gráficos e dashboards.
+- Angular 19
+- Angular Material
+- TypeScript
+- Chart.js / ng2-charts
+- RxJS
+- PrimeFlex
 
-## ✨ Principais Funcionalidades
+## Funcionalidades
 
-### 💳 Gestão de Cartões e Faturas
-- Cadastro e gerenciamento de cartões de crédito
-- Geração automática de faturas baseadas em compras
-- Preview de faturas antes da geração
-- Controle de limites e uso de cartão
-- Filtros por período (mês/ano) com paginação
-- Exportação de dados para Excel
+- Dashboard financeiro mensal com indicadores, graficos e comparativos.
+- Gestao de contas bancarias, receitas, despesas fixas e recorrentes.
+- Cartoes de credito, faturas, compras no credito/debito e compras parceladas.
+- Categorias, transacoes, comprovantes, reserva de emergencia e relatorios.
+- Notificacoes de vencimentos e configuracao de notificacoes por email.
+- Autenticacao JWT, recuperacao/redefinicao de senha e fluxo multi-tenant.
+- Billing SaaS com status de assinatura, planos e retorno de checkout.
 
-### 📊 Dashboard Interativo
-- Resumo financeiro mensal (saldo, receitas, despesas)
-- Gráficos de despesas por categoria
-- Gráfico de receitas vs despesas
-- Análise de variação mensal
-- Filtros de período personalizáveis
-
-### 💵 Controle de Despesas
-- **Débitos em Conta**: Despesas fixas e recorrentes
-- **Compras Parceladas**: Controle completo de parcelas
-- **Compras de Cartão**: Gestão de compras à vista e parceladas
-- Categorização de despesas
-- Status de pagamento
-- Anexação de comprovantes
-
-### 📈 Análises e Relatórios
-- Status de pagamentos consolidado
-- Notificações de vencimentos
-- Histórico de transações
-- Exportação para Excel
-- Visualização por período
-
-## 🚀 Tecnologias Utilizadas
-
-- **Framework**: Angular 18+
-- **UI/UX**: Angular Material
-- **Linguagem**: TypeScript
-- **Gráficos**: Chart.js
-- **HTTP Client**: RxJS
-- **Autenticação**: JWT
-- **Build**: Angular CLI
-
-## 📦 Requisitos
-
-- Node.js >= 18
-- npm >= 9
-- Angular CLI >= 18
-
-## 🔧 Instalação
+## Como Rodar
 
 ```bash
-# Clone o repositório
-git clone https://github.com/tallyto/salve-mais-ui.git
-
-# Acesse o diretório
-cd salve-mais-ui
-
-# Instale as dependências
 npm install
-```
-
-## 🎯 Executando o Projeto
-
-### Desenvolvimento
-```bash
-# Servidor de desenvolvimento
 npm start
-# ou
-ng serve
-
-# Acesse: http://localhost:4200
 ```
 
-### Ambiente Local
+O comando `npm start` executa `ng serve --configuration=development` e usa
+`src/environments/environment.ts`, que aponta para:
+
+```text
+https://api.salvemais.tallyto.com/api
+```
+
+Para usar a configuracao local:
+
 ```bash
-# Com configuração local
 npm run local
-
-# Acesse: http://localhost:4200
 ```
 
-### Build de Produção
-```bash
-# Build otimizado
-ng build --configuration production
+Esse comando usa `src/environments/environment.local.ts`.
 
-# Arquivos gerados em: dist/
-```
-
-## 📜 Scripts Disponíveis
+## Scripts
 
 ```bash
-npm start          # Inicia servidor de desenvolvimento
-npm run local      # Inicia com configuração local
-npm test           # Executa testes unitários
-npm run build      # Build de produção
-npm run watch      # Build em modo watch
-```
-
-## 🗂️ Estrutura do Projeto
-
-```
-salve-mais-ui/
-├── src/
-│   ├── app/
-│   │   ├── components/        # Componentes da aplicação
-│   │   │   ├── dashboard/     # Dashboard principal
-│   │   │   ├── fatura-form/   # Gestão de faturas
-│   │   │   ├── cartao-form/   # Gestão de cartões
-│   │   │   ├── compra-parcelada-form/
-│   │   │   └── ...
-│   │   ├── models/            # Interfaces e modelos
-│   │   ├── services/          # Serviços HTTP
-│   │   ├── shared/            # Componentes compartilhados
-│   │   └── utils/             # Utilitários
-│   ├── assets/                # Recursos estáticos
-│   ├── environments/          # Configurações de ambiente
-│   └── styles.css             # Estilos globais
-├── doc/                       # Documentação técnica
-└── package.json
-```
-
-## ⚙️ Configuração
-
-### Ambientes
-
-O projeto possui três ambientes configurados:
-
-- **Development** (`environment.ts`): Desenvolvimento local
-- **Local** (`environment.local.ts`): Backend local na porta 8080
-- **Production** (`environment.prod.ts`): Produção
-
-Edite os arquivos em `src/environments/` para configurar as URLs da API.
-
-### Backend
-
-Certifique-se de que o backend esteja rodando:
-- **Desenvolvimento**: `http://localhost:8080/api`
-- **Produção**: Configure a URL em `environment.prod.ts`
-
-Repositório do backend: [salve-mais](https://github.com/tallyto/salve-mais)
-
-## 🧪 Testes
-
-```bash
-# Testes unitários
+npm start       # servidor de desenvolvimento
+npm run local   # servidor usando environment.local.ts
+npm run build   # build de producao
+npm run build:dev
+npm run watch
 npm test
-
-# Testes com coverage
-ng test --code-coverage
 ```
 
-## 📝 Changelog
+Build validado no ambiente atual:
 
-Veja o arquivo [CHANGELOG.md](CHANGELOG.md) para histórico detalhado de versões.
+```bash
+./node_modules/.bin/ng build
+```
 
-**Versão atual**: 1.18.0
+## Ambientes
 
-## 🛠️ Extensões Recomendadas (VS Code)
+- `environment.ts`: desenvolvimento apontando para API remota.
+- `environment.local.ts`: configuracao local.
+- `environment.prod.ts`: producao em `https://salvemais.tallyto.com/api`.
 
-- Angular Language Service (`angular.ng-template`)
-- Angular Snippets (`johnpapa.angular2`)
-- EditorConfig for VS Code
-- Prettier - Code formatter
-- ESLint
-- Angular Console
+Backend:
 
-## 🤝 Contribuindo
+- Repositorio: `https://github.com/tallyto/salve-mais`
+- Projeto local esperado: `/home/tallyto/projetos/salve-mais`
 
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`)
-3. Commit suas mudanças (`git commit -m 'feat: adiciona nova feature'`)
-4. Push para a branch (`git push origin feature/nova-feature`)
-5. Abra um Pull Request
+## Estrutura
 
-## 📄 Licença
+```text
+src/app/
+├── app.module.ts
+├── app-routing.module.ts
+├── components/
+│   ├── dashboard/
+│   ├── menu-lateral/
+│   ├── login/
+│   ├── register/
+│   ├── billing/
+│   ├── cartao/
+│   ├── categoria/
+│   └── shared/
+├── services/
+├── models/
+├── directives/
+├── utils/
+└── environments/
+```
 
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+A maior parte do app ainda e carregada via `app.module.ts`. Features maiores
+devem preferir modulos lazy-loaded, seguindo o padrao ja usado em `cartao` e
+`categoria`.
 
-## 👨‍💻 Autor
+## Autenticacao e Multi-Tenant
 
-**Tallyto Rodrigues**
+- `AuthService` centraliza login, registro, recuperacao e redefinicao de senha.
+- O token JWT e salvo em `localStorage` com a chave `token`.
+- `AuthGuard` e `NoAuthGuard` validam rotas protegidas/publicas.
+- `AuthInterceptor` injeta `Authorization: Bearer <token>` nas requisicoes.
+- `BillingInterceptor` trata HTTP 402 e direciona o usuario para `/billing`.
+- O tenant vem no JWT no uso normal do app.
+- Em fluxos sensiveis, como redefinicao de senha, o dominio pode ser extraido da
+  URL e enviado no header `X-Private-Tenant`.
 
-- GitHub: [@tallyto](https://github.com/tallyto)
+## Padroes de UI
 
-## 🔗 Links Relacionados
+O visual atual segue uma linha fintech/bancaria. CSS novo deve reutilizar as
+variaveis globais em `src/styles.css`, evitando hex-codes soltos para cores de
+marca, raio, tipografia e sombras.
 
-- [Backend - Salve Mais API](https://github.com/tallyto/salve-mais)
-- [Angular Documentation](https://angular.io/docs)
-- [Angular Material](https://material.angular.io)
+Variaveis principais:
 
----
+```text
+--primary-color
+--primary-color-rgb
+--primary-dark
+--primary-light
+--accent-color
+--success-color
+--danger-color
+--warning-color
+--info-color
+--text-color
+--text-secondary
+--surface-color
+--background-color
+--border-color
+--radius-sm
+--radius-md
+--radius-lg
+--shadow-sm
+--shadow-md
+```
 
-Desenvolvido com ❤️ usando Angular
+Classes globais de tela:
 
+- `.page-header`
+- `.content-card`
+- `.card-header`
+- `.section-title`
+- `.data-table`
+- `.empty-state`
+- `.loading-state`
+- `.form-container`
+- `.form-actions`
+
+Use o dashboard e as telas publicas de autenticacao como referencia para o
+padrao visual mais recente.
+
+## Roadmap de UI
+
+Concluido:
+
+- Tema global: paleta, tipografia, radius, sombras e troca gradual de cores
+  antigas para variaveis CSS.
+- Telas publicas: login, cadastro de tenant, recuperacao e redefinicao de senha.
+
+Proximos focos sugeridos:
+
+- Revisar `menu-lateral`: hierarquia, item ativo, espacamento e area de usuario.
+- Avaliar topbar fixa com breadcrumb, busca rapida e avatar.
+- Padronizar `page-header` nas telas que ainda usam variacoes proprias.
+- Evoluir listagens/CRUDs: contas, cartoes, transacoes, despesas, compras,
+  receitas, categorias, reserva, relatorios, pagamentos, notificacoes e admin.
+- Padronizar tabelas, badges, dialogs, empty states e responsividade mobile.
+
+## Workflow de Desenvolvimento
+
+1. Fazer a alteracao em escopo pequeno.
+2. Validar com build e, quando possivel, no navegador.
+3. Atualizar `CHANGELOG.md`.
+4. Incrementar `package.json` e `package-lock.json` quando a mudanca for
+   versionavel.
+5. Criar commit descritivo.
+6. Fazer push para o GitHub.
+
+## Changelog
+
+O historico de versoes fica somente em [CHANGELOG.md](CHANGELOG.md).
+
+## Links
+
+- Backend: `https://github.com/tallyto/salve-mais`
+- Angular: `https://angular.dev`
+- Angular Material: `https://material.angular.dev`
