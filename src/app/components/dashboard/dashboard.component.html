@@ -1,17 +1,30 @@
 <div class="dashboard-container">
-  <div class="page-header">
-    <div class="header-content">
-      <mat-icon class="page-icon">dashboard</mat-icon>
-      <div class="header-text">
-        <h2 class="page-title">{{ getSaudacao() }}</h2>
-        <div class="page-subtitle text-color-secondary">
-          <mat-icon>today</mat-icon> {{ today | date:"EEEE, d 'de' MMMM" : '' : 'pt-BR' | titlecase }}
+  <section class="dashboard-hero">
+    <div class="hero-content">
+      <div class="hero-copy">
+        <span class="hero-eyebrow">Painel financeiro</span>
+        <h1>{{ getSaudacao() }}</h1>
+        <p>
+          {{ today | date:"EEEE, d 'de' MMMM" : '' : 'pt-BR' | titlecase }}
+          · acompanhe o mês, aja rápido e mantenha o controle das suas contas.
+        </p>
+      </div>
+
+      <div class="hero-kpis">
+        <div class="hero-kpi">
+          <span>Resultado do mês</span>
+          <strong [ngClass]="{'positive': getResultadoMensal() >= 0, 'negative': getResultadoMensal() < 0}">
+            {{ getResultadoMensal() | currency:'BRL':'symbol':'1.2-2' }}
+          </strong>
+        </div>
+        <div class="hero-kpi">
+          <span>Receita usada</span>
+          <strong>{{ getExpenseRatio() | number:'1.0-0' }}%</strong>
         </div>
       </div>
     </div>
-    
-    <div class="header-actions">
-      <!-- Exportar -->
+
+    <div class="hero-actions">
       <button
         mat-raised-button
         color="primary"
@@ -23,10 +36,17 @@
         <span class="btn-text">Exportar</span>
       </button>
     </div>
-  </div>
+  </section>
 
   <!-- Ações Rápidas -->
-  <div class="quick-actions-bar">
+  <section class="quick-actions-panel">
+    <div class="section-heading compact">
+      <div>
+        <span class="section-kicker">Atalhos</span>
+        <h2>Ações rápidas</h2>
+      </div>
+    </div>
+    <div class="quick-actions-bar">
     <a *ngFor="let action of quickActions"
        [routerLink]="action.route"
        class="quick-action-btn"
@@ -36,7 +56,8 @@
       </div>
       <span class="quick-action-label">{{ action.label }}</span>
     </a>
-  </div>
+    </div>
+  </section>
 
   <!-- Filtros de Mês e Ano -->
   <app-month-year-filter
@@ -51,7 +72,7 @@
   </div>
 
   <!-- Financial Summary -->
-  <div class="grid mb-4">
+  <section class="summary-grid">
     <div class="col-12 md:col-6 lg:col-3 mb-3">
       <div class="summary-card accent-green">
         <div class="card-icon icon-green">
@@ -79,7 +100,7 @@
         <div class="summary-value positive">{{ totalReceitas | currency:'BRL':'symbol':'1.2-2' }}</div>
         <div class="text-color-secondary" *ngIf="monthlyTrendData && monthlyTrendData.length > 1">
           <small>
-            {{ totalReceitas / totalDespesas | number:'1.1-1' }}x das despesas
+            {{ getIncomeExpenseRatio() | number:'1.1-1' }}x das despesas
           </small>
         </div>
       </div>
@@ -94,7 +115,7 @@
         <div class="summary-value negative">{{ totalDespesas | currency:'BRL':'symbol':'1.2-2' }}</div>
         <div class="text-color-secondary" *ngIf="summaryData">
           <small>
-            {{ (totalDespesas / totalReceitas) * 100 | number:'1.1-1' }}% da receita
+            {{ getExpenseRatio() | number:'1.1-1' }}% da receita
           </small>
         </div>
       </div>
@@ -125,10 +146,10 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
   <!-- Accounts Summary -->
-  <div class="grid mb-4">
+  <section class="summary-grid compact-grid">
     <div class="col-12 md:col-6 lg:col-3 mb-3">
       <div class="summary-card accent-purple">
         <div class="card-icon icon-purple">
@@ -143,11 +164,14 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
   <!-- Parcelas Summary -->
-  <div class="section-header mb-3" *ngIf="summaryData && summaryData.parcelasResumo">
-    <h2>Compras Parceladas</h2>
+  <div class="section-heading" *ngIf="summaryData && summaryData.parcelasResumo">
+    <div>
+      <span class="section-kicker">Compromissos</span>
+      <h2>Compras parceladas</h2>
+    </div>
   </div>
   <div class="grid mb-4" *ngIf="summaryData && summaryData.parcelasResumo">
     <div class="col-12 md:col-6 lg:col-3 mb-3">
@@ -212,8 +236,11 @@
   </div>
 
   <!-- Charts Section -->
-  <div class="section-header mb-3">
-    <h2>Análise Financeira</h2>
+  <div class="section-heading">
+    <div>
+      <span class="section-kicker">Leitura do período</span>
+      <h2>Análise financeira</h2>
+    </div>
   </div>
   <div class="grid mt-4 mb-4">
     <!-- Expenses by Category Chart -->
@@ -297,8 +324,11 @@
   </div>
 
   <!-- Variation Table Section -->
-  <div class="section-header mb-3">
-    <h2>Variação Mensal</h2>
+  <div class="section-heading">
+    <div>
+      <span class="section-kicker">Tendência</span>
+      <h2>Variação mensal</h2>
+    </div>
   </div>
   <div class="col-12 mt-3 p-2 mb-4">
     <div class="data-card accent-orange">
@@ -315,8 +345,11 @@
   </div>
 
   <!-- Card Purchases -->
-  <div class="section-header mb-3">
-    <h2>Compras no Cartão</h2>
+  <div class="section-heading">
+    <div>
+      <span class="section-kicker">Cartões</span>
+      <h2>Compras no cartão</h2>
+    </div>
   </div>
   <div class="col-12 mt-3 p-2">
     <div class="data-card accent-purple">
@@ -376,8 +409,11 @@
   </div>
 
   <!-- Financial Health Indicators -->
-  <div class="section-header mb-3">
-    <h2>Saúde Financeira e Contas</h2>
+  <div class="section-heading">
+    <div>
+      <span class="section-kicker">Diagnóstico</span>
+      <h2>Saúde financeira e contas</h2>
+    </div>
   </div>
   <div class="grid mt-3">
     <div class="col-12 lg:col-6 p-2 mb-3">
@@ -418,8 +454,11 @@
   </div>
 
   <!-- Compras Parceladas Detalhadas -->
-  <div class="section-header mb-3" *ngIf="comprasParceladas && comprasParceladas.length">
-    <h2>Compras Parceladas Ativas</h2>
+  <div class="section-heading" *ngIf="comprasParceladas && comprasParceladas.length">
+    <div>
+      <span class="section-kicker">Em andamento</span>
+      <h2>Compras parceladas ativas</h2>
+    </div>
   </div>
   <div class="grid mb-4" *ngIf="comprasParceladas && comprasParceladas.length">
     <div class="col-12">
@@ -464,8 +503,11 @@
   </div>
 
   <!-- Compras em Débito Recentes -->
-  <div class="section-header mb-3" *ngIf="comprasDebito && comprasDebito.length">
-    <h2>Compras em Débito do Mês</h2>
+  <div class="section-heading" *ngIf="comprasDebito && comprasDebito.length">
+    <div>
+      <span class="section-kicker">Débito</span>
+      <h2>Compras em débito do mês</h2>
+    </div>
   </div>
   <div class="grid mb-4" *ngIf="comprasDebito && comprasDebito.length">
     <div class="col-12">

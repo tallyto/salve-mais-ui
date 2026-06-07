@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+## [1.41.0] - 2026-06-07
+
+### Adicionado
+
+- **Branding**: nova imagem institucional `brand-hero-v1.png` adicionada ao projeto e exibida no topo do `README.md`
+- **Logo**: marca vetorial do Salve Mais redesenhada com símbolo financeiro em forma de `S` e sinal de `+`, alinhada à paleta azul/violeta da plataforma
+
+### Melhorias
+
+- **Dashboard**: topo repaginado com hero operacional, KPIs de resultado/uso da receita, ações rápidas em painel, cards e tabelas com visual mais refinado e cores alinhadas à paleta global
+- **Gráficos**: cores de receitas, despesas e categorias ajustadas para a identidade visual atual
+
 ## [1.40.0] - 2026-06-07
 
 ### Melhorias

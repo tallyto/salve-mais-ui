@@ -224,6 +224,26 @@ export class DashboardComponent implements OnInit {
     return 'Boa noite';
   }
 
+  getResultadoMensal(): number {
+    return this.totalReceitas - this.totalDespesas;
+  }
+
+  getExpenseRatio(): number {
+    if (!this.totalReceitas) {
+      return this.totalDespesas > 0 ? 100 : 0;
+    }
+
+    return (this.totalDespesas / this.totalReceitas) * 100;
+  }
+
+  getIncomeExpenseRatio(): number {
+    if (!this.totalDespesas) {
+      return this.totalReceitas > 0 ? this.totalReceitas : 0;
+    }
+
+    return this.totalReceitas / this.totalDespesas;
+  }
+
   loadDashboardData(): void {
     this.isLoading = true;
 
@@ -356,13 +376,13 @@ export class DashboardComponent implements OnInit {
         datasets: [{
           data: data,
           backgroundColor: [
-            'rgba(54, 162, 235, 0.8)',
-            'rgba(255, 99, 132, 0.8)',
-            'rgba(255, 206, 86, 0.8)',
-            'rgba(75, 192, 192, 0.8)',
-            'rgba(153, 102, 255, 0.8)',
-            'rgba(255, 159, 64, 0.8)',
-            'rgba(199, 199, 199, 0.8)'
+            'rgba(37, 99, 235, 0.86)',
+            'rgba(239, 68, 68, 0.86)',
+            'rgba(245, 158, 11, 0.86)',
+            'rgba(16, 185, 129, 0.86)',
+            'rgba(124, 58, 237, 0.86)',
+            'rgba(14, 165, 233, 0.86)',
+            'rgba(100, 116, 139, 0.72)'
           ]
         }]
       };
@@ -378,12 +398,12 @@ export class DashboardComponent implements OnInit {
           {
             label: 'Receitas',
             data: [this.summaryData.receitasMes],
-            backgroundColor: 'rgba(75, 192, 192, 0.8)',
+            backgroundColor: 'rgba(16, 185, 129, 0.82)',
           },
           {
             label: 'Despesas',
             data: [this.summaryData.despesasMes],
-            backgroundColor: 'rgba(255, 99, 132, 0.8)',
+            backgroundColor: 'rgba(239, 68, 68, 0.82)',
           }
         ]
       };
@@ -412,8 +432,8 @@ export class DashboardComponent implements OnInit {
           {
             label: 'Receitas',
             data: receitasData,
-            borderColor: 'rgba(75, 192, 192, 1)',
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(16, 185, 129, 1)',
+            backgroundColor: 'rgba(16, 185, 129, 0.16)',
             borderWidth: 2,
             tension: 0.4,
             fill: true
@@ -421,8 +441,8 @@ export class DashboardComponent implements OnInit {
           {
             label: 'Despesas',
             data: despesasData,
-            borderColor: 'rgba(255, 99, 132, 1)',
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(239, 68, 68, 1)',
+            backgroundColor: 'rgba(239, 68, 68, 0.14)',
             borderWidth: 2,
             tension: 0.4,
             fill: true

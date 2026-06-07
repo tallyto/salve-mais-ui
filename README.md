@@ -1,10 +1,12 @@
 # Salve Mais UI
 
+![Salve Mais UI](src/assets/images/brand-hero-v1.png)
+
 Frontend Angular do Salve Mais, uma plataforma de gestao financeira pessoal e
 multi-tenant para controlar receitas, despesas, contas, cartoes, faturas,
 compras parceladas, notificacoes, billing e relatorios.
 
-Versao atual: `1.40.0`
+Versao atual: `1.41.0`
 
 ## Stack
 
