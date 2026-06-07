@@ -1,168 +1,31 @@
-/* Filtros */
-.filters-container {
-  padding: 20px;
-  background-color: #ffffff;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.filters-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.filters-title {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 600;
-  color: #333;
-}
-
-.period-navigation {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.period-navigation .nav-buttons {
-  display: flex;
-  gap: 4px;
-  border: 1px solid #e0e0e0;
-  border-radius: var(--radius-sm);
-  padding: 2px;
-}
-
-.period-navigation button {
-  color: #666;
-}
-
-.period-navigation button:hover {
-  background-color: #f5f5f5;
-}
-
-.filters-row {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
 .filter-field {
-  min-width: 140px;
   max-width: 180px;
 }
 
-.quick-filters {
-  display: flex;
-  gap: 8px;
-  margin-left: auto;
-  border: 1px solid #e0e0e0;
-  border-radius: var(--radius-sm);
-  padding: 4px;
-}
-
-.quick-filters button {
-  font-size: 13px;
-  color: #666;
-  min-width: 70px;
-  padding: 0 12px;
-  border-radius: var(--radius-sm);
-  transition: all 0.2s ease;
-}
-
-.quick-filters button:hover {
-  background-color: #f5f5f5;
-  color: #333;
-}
-
-.quick-filters button.active {
-  background-color: var(--primary-dark);
-  color: white;
-  font-weight: 500;
-}
-
-/* Tabela */
-.table-container {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-.expense-table {
-  width: 100%;
-}
-
-.expense-table th.mat-header-cell {
-  background-color: #f5f5f5;
-  color: #424242;
-  font-weight: 500;
-  padding: 12px 16px;
-}
-
-.expense-table td.mat-cell {
-  padding: 12px 16px;
-  border-bottom: 1px solid #e0e0e0;
-}
-
 .expense-value {
-  font-weight: 500;
+  font-weight: var(--font-weight-semibold);
 }
 
 .expense-value.unpaid {
-  color: #f44336;
+  color: #b91c1c;
 }
 
 .expense-value.paid {
-  color: #4caf50;
-}
-
-.status-badge {
-  padding: 4px 8px;
-  border-radius: var(--radius-lg);
-  font-size: 12px;
-  font-weight: 500;
-  display: inline-block;
+  color: #047857;
 }
 
 .status-paid {
-  background-color: #e8f5e9;
-  color: #2e7d32;
+  background: var(--success-light);
+  color: #047857;
 }
 
 .status-pending {
-  background-color: #ffebee;
-  color: #c62828;
-}
-
-.action-buttons {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 8px;
+  background: var(--warning-light);
+  color: #b45309;
 }
 
 .text-warn {
-  color: #f44336;
-}
-
-/* Estado vazio */
-.empty-state {
-  padding: 40px 16px;
-  text-align: center;
-  color: #757575;
-}
-
-.empty-state mat-icon {
-  font-size: 48px;
-  height: 48px;
-  width: 48px;
-  margin-bottom: 16px;
-  color: #bdbdbd;
-}
-
-.empty-state p {
-  margin: 4px 0;
-  font-size: 14px;
+  color: var(--danger-color);
 }
 
 .text-center {
@@ -173,79 +36,29 @@
   text-align: right;
 }
 
-/* Estilos para o botão de pagamento */
 button[disabled] {
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: not-allowed;
 }
 
-/* Responsividade */
-@media screen and (max-width: 768px) {
-  .filters-container {
-    padding: 16px;
-  }
-
+@media (max-width: 768px) {
   .filters-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
   }
 
-  .filters-title {
-    font-size: 18px;
-  }
-
-  .period-navigation {
-    align-self: stretch;
-    justify-content: center;
-  }
-
-  .filters-row {
-    flex-direction: column;
-    align-items: stretch;
+  .period-navigation,
+  .filters-row,
+  .filter-field,
+  .quick-filters {
+    width: 100%;
   }
 
   .filter-field {
     max-width: none;
-    width: 100%;
   }
 
   .quick-filters {
-    width: 100%;
     margin-left: 0;
-    justify-content: stretch;
-  }
-
-  .quick-filters button {
-    flex: 1;
-    min-width: 0;
-    font-size: 12px;
-    padding: 0 8px;
-  }
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .p-3 {
-    padding: 0.75rem !important;
-  }
-
-  .table-container table {
-    min-width: 600px; /* Smaller minimum width on mobile */
-  }
-
-  /* Make action buttons smaller on mobile */
-  .action-buttons {
-    gap: 4px;
-  }
-  
-  .action-buttons button {
-    padding: 6px !important;
-  }
-
-  .action-buttons mat-icon {
-    font-size: 18px !important;
-    width: 18px !important;
-    height: 18px !important;
   }
 }

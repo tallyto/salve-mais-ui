@@ -63,8 +63,11 @@
 
       <!-- Linha para quando não houver dados -->
       <tr *matNoDataRow class="mat-row">
-        <td class="mat-cell" [attr.colspan]="displayedColumns.length" style="text-align: center; padding: 2rem; color: #999;">
-          Nenhuma categoria cadastrada
+        <td class="mat-cell empty-message" [attr.colspan]="displayedColumns.length">
+          <div class="empty-state">
+            <mat-icon>category</mat-icon>
+            <p>Nenhuma categoria cadastrada</p>
+          </div>
         </td>
       </tr>
     </table>

@@ -1,239 +1,36 @@
-.w-full {
-  width: 100%;
-}
-
 .card-content {
   padding: 0;
 }
 
-.action-buttons {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.text-color-secondary {
-  color: rgba(0, 0, 0, 0.6);
-}
-
-.text-xl {
-  font-size: 1.25rem;
-}
-
-.text-sm {
-  font-size: 0.875rem;
-}
-
-.font-medium {
-  font-weight: 500;
-}
-
-.bg-gray-50 {
-  background-color: #fafafa;
-}
-
-.surface-border {
-  border-color: #dee2e6;
-}
-
-.border-bottom-1 {
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-}
-
-.border-300 {
-  border-color: #dee2e6;
-}
-
 .positive {
-  color: #4caf50;
+  color: #047857;
 }
 
-.negative {
-  color: #f44336;
-}
-
-/* Table styles */
-.table-container {
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-}
-
-table.mat-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.mat-table th {
-  text-align: left;
-  padding: 12px 16px;
-  font-weight: 500;
-  color: #555;
-  border-bottom: 1px solid #eee;
-  background-color: #f9f9f9;
-}
-
-.mat-table td {
-  padding: 12px 16px;
-  border-bottom: 1px solid #eee;
-  color: #333;
-}
-
-/* Hover effect on rows */
-.mat-row:hover {
-  background-color: rgba(0, 0, 0, 0.02);
-}
-
-::ng-deep .mat-paginator {
-  background: transparent !important;
-}
-
-::ng-deep .mat-sort-header-arrow {
-  color: rgba(0, 0, 0, 0.54);
-}
-
-/* Empty state */
-.empty-state {
-  padding: 32px 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #666;
-}
-
-.empty-icon {
-  font-size: 48px;
-  width: 48px;
-  height: 48px;
-  margin-bottom: 16px;
-  color: #4caf50;
-  opacity: 0.6;
-}
-
-.empty-message {
-  font-size: 16px;
-  text-align: center;
-  max-width: 300px;
-  margin: 0 auto;
-}
-
-/* Provento description */
 .provento-description {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 0.75rem;
+  min-width: 0;
 }
 
 .provento-icon {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background-color: rgba(76, 175, 80, 0.1);
-  color: #4caf50;
+  width: 2rem;
+  height: 2rem;
+  flex: 0 0 2rem;
+  border-radius: 999px;
+  background: var(--success-light);
+  color: #047857;
 }
 
-.text-green-600 {
-  color: #16a34a;
+.provento-icon mat-icon {
+  font-size: 1.125rem;
+  width: 1.125rem;
+  height: 1.125rem;
 }
 
-.text-right {
-  text-align: right;
-}
-
-.bg-gray-50 {
-  background-color: #fafafa;
-}
-
-.border-bottom-1 {
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-}
-
-.border-300 {
-  border-color: #dee2e6;
-}
-
-.surface-border {
-  border-color: #dee2e6;
-}
-
-::ng-deep .mat-paginator {
-  background: transparent !important;
-}
-
-::ng-deep .mat-sort-header-arrow {
-  color: rgba(0, 0, 0, 0.54);
-}
-
-/* Hover effect on rows */
-.mat-row:hover {
-  background-color: rgba(0, 0, 0, 0.02);
-}
-
-.provento-list-container {
-  background-color: #fff;
-  border-radius: var(--radius-sm);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
-  margin-bottom: 1.5rem;
-}
-
-.list-header {
-  padding: 1.5rem 1.5rem 1rem;
-  border-bottom: 1px solid #f0f0f0;
-}
-
-.table-container {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-  border-radius: 4px;
-}
-
-/* Ensure table has minimum width on small screens */
-.table-container table {
-  min-width: 600px; /* Minimum width to prevent cramping */
-}
-
-/* Style scrollbar for better UX */
-.table-container::-webkit-scrollbar {
-  height: 6px;
-}
-
-.table-container::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 3px;
-}
-
-.table-container::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
-  border-radius: 3px;
-}
-
-.table-container::-webkit-scrollbar-thumb:hover {
-  background: #a1a1a1;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .p-3 {
-    padding: 0.75rem !important;
-  }
-
-  .table-container table {
-    min-width: 500px; /* Smaller minimum width on mobile */
-  }
-
-  /* Make action buttons smaller on mobile */
-  .action-buttons button {
-    padding: 6px !important;
-  }
-
-  .action-buttons mat-icon {
-    font-size: 18px !important;
-    width: 18px !important;
-    height: 18px !important;
-  }
+.empty-icon {
+  color: #047857;
 }

@@ -1,6 +1,6 @@
 <div class="card-content p-3">
-  <div class="table-container overflow-x-auto">
-    <table [dataSource]="accounts" mat-table matSort matSortActive="id" matSortDisableClear matSortDirection="desc" class="w-full min-w-max">
+  <div class="table-container">
+    <table [dataSource]="accounts" mat-table matSort matSortActive="id" matSortDisableClear matSortDirection="desc" class="data-table list-table">
 
       <!-- Valor Column -->
       <ng-container matColumnDef="saldo">
@@ -61,8 +61,8 @@
         </td>
       </ng-container>
 
-      <tr *matHeaderRowDef="displayedColumnsProventos" mat-header-row class="bg-gray-50"></tr>
-      <tr *matRowDef="let row; columns: displayedColumnsProventos;" mat-row class="border-bottom-1 surface-border"></tr>
+      <tr *matHeaderRowDef="displayedColumnsProventos" mat-header-row></tr>
+      <tr *matRowDef="let row; columns: displayedColumnsProventos;" mat-row></tr>
     </table>
   </div>
 

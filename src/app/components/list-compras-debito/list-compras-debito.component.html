@@ -1,9 +1,12 @@
 <div class="container">
-  <div class="header">
-    <h2>
-      <mat-icon class="title-icon">shopping_cart</mat-icon>
-      Compras em Débito
-    </h2>
+  <div class="page-header">
+    <div class="header-content">
+      <mat-icon class="page-icon">shopping_cart</mat-icon>
+      <div>
+        <h1 class="page-title">Compras em Débito</h1>
+        <p class="page-subtitle">Acompanhe as compras pagas direto pela conta</p>
+      </div>
+    </div>
     <button mat-raised-button color="primary" (click)="novaCompra()">
       <mat-icon>add</mat-icon>
       Nova Compra
@@ -57,7 +60,7 @@
 
   <!-- Tabela -->
   <div class="table-container">
-    <table [dataSource]="comprasDebito" mat-table matSort matSortDisableClear matSortDirection="desc" class="compras-table">
+    <table [dataSource]="comprasDebito" mat-table matSort matSortDisableClear matSortDirection="desc" class="compras-table list-table">
 
       <!-- Nome Column -->
       <ng-container matColumnDef="nome">

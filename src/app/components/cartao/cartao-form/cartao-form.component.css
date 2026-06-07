@@ -15,30 +15,10 @@ mat-dialog-actions {
   padding: 16px 24px !important;
 }
 
-/* ===========================
-   Estilos específicos do componente
-   (Estilos comuns agora em styles.css)
-   =========================== */
-
-/* Tabela específica de cartões */
-.cards-table {
-  width: 100%;
+.edit-field {
+  margin: 0;
 }
 
-.cards-table th {
-  background: #f5f5f5;
-  color: #666;
-  font-weight: 600;
-  font-size: 0.8125rem;
-  padding: 0.75rem 1.5rem;
-}
-
-.cards-table td {
-  padding: 1rem 1.5rem;
-  color: #333;
-  font-size: 0.875rem;
-}
-
-.cards-table tr:hover {
-  background: #fafafa;
+.edit-field .mat-mdc-form-field-subscript-wrapper {
+  display: none;
 }
