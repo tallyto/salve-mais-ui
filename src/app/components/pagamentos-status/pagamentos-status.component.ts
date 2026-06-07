@@ -8,6 +8,8 @@ import { CompraParcelada, Parcela } from '../../models/compra-parcelada.model';
 import { Page } from '../../models/page.model';
 import { forkJoin } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../shared/confirm-dialog/confirm-dialog.component';
 
 interface StatusPagamentos {
   faturasPagas: FaturaResponseDTO[];
@@ -39,13 +41,15 @@ export class PagamentosStatusComponent implements OnInit {
 
   // Colunas das tabelas
   faturasColumns = ['nomeCartao', 'valor', 'vencimento', 'dataPagamento', 'status'];
+  faturasPagasColumns = ['nomeCartao', 'valor', 'vencimento', 'dataPagamento', 'status', 'acoes'];
   contasFixasColumns = ['nome', 'categoria', 'valor', 'vencimento', 'status'];
 
   constructor(
     private faturaService: FaturaService,
     private contasFixasService: ContasFixasService,
     private compraParceladaService: CompraParceladaService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -179,6 +183,47 @@ export class PagamentosStatusComponent implements OnInit {
                dataVencimento.getFullYear() === anoAtual;
       })
       .reduce((sum, p) => sum + p.valor, 0);
+  }
+
+  podeExcluirFatura(fatura: FaturaResponseDTO): boolean {
+    return fatura.pago && !fatura.contaPagamentoId;
+  }
+
+  confirmarExclusaoFatura(fatura: FaturaResponseDTO): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '420px',
+      data: {
+        title: 'Excluir fatura',
+        message: `Tem certeza que deseja excluir a fatura do cartão <b>${fatura.nomeCartao}</b> no valor de <b>R$ ${fatura.valorTotal.toFixed(2)}</b>? Essa ação não poderá ser desfeita.`,
+        confirmText: 'Excluir',
+        cancelText: 'Cancelar'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.excluirFatura(fatura);
+      }
+    });
+  }
+
+  private excluirFatura(fatura: FaturaResponseDTO): void {
+    this.faturaService.excluirFatura(fatura.id).subscribe({
+      next: () => {
+        this.showSuccess('Fatura excluída com sucesso.');
+        this.carregarDados();
+      },
+      error: () => this.showError('Erro ao excluir a fatura. Tente novamente.')
+    });
+  }
+
+  private showSuccess(message: string): void {
+    this.snackBar.open(message, 'Fechar', {
+      duration: 5000,
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      panelClass: ['success-snackbar']
+    });
   }
 
   private showError(message: string): void {

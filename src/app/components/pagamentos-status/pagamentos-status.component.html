@@ -143,8 +143,21 @@
                 </td>
               </ng-container>
 
-              <tr mat-header-row *matHeaderRowDef="faturasColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: faturasColumns;"></tr>
+              <ng-container matColumnDef="acoes">
+                <th mat-header-cell *matHeaderCellDef>Ações</th>
+                <td mat-cell *matCellDef="let fatura">
+                  <button *ngIf="podeExcluirFatura(fatura)"
+                          mat-icon-button
+                          color="warn"
+                          matTooltip="Excluir fatura paga sem débito em conta"
+                          (click)="confirmarExclusaoFatura(fatura)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="faturasPagasColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: faturasPagasColumns;"></tr>
             </table>
           </div>
         </div>
