@@ -2,6 +2,26 @@
 
 ## [Unreleased]
 
+## [1.36.0] - 2026-06-07
+
+### Melhorias
+
+- **Menu lateral**: seções colapsáveis com indicador de seção ativa, reorganização dos itens (categorias movidas para "Finanças") e expansão automática da seção correspondente à rota ativa
+- **Dashboard — visualização**:
+  - Correção do link de navegação para faturas (`/cartao/faturas`)
+  - Estados vazios para os gráficos de categorias, receitas/despesas e tendência mensal
+  - Reescrita do CSS removendo seletores duplicados/conflitantes e ajustando alturas dos gráficos
+  - `loading-overlay` agora restrito ao container do dashboard em vez de cobrir a viewport inteira
+
+### Refatoração
+
+- **Dashboard**: componente principal (780 linhas de TS / 763 de HTML) decomposto em 4 componentes standalone reutilizáveis para reduzir complexidade e facilitar manutenção:
+  - `MonthYearFilterComponent`: filtro de mês/ano com navegação
+  - `FinancialHealthCardComponent`: card de saúde financeira
+  - `ReservaEmergenciaCardComponent`: card de reserva de emergência
+  - `VariationTableComponent`: tabela de comparação com o mês anterior
+  - Métodos e propriedades movidos para os componentes correspondentes; `dashboard.component.ts` e `.css` significativamente reduzidos
+
 ## [1.35.0] - 2026-06-06
 
 ### Adicionado

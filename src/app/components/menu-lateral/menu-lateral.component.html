@@ -72,124 +72,28 @@
         </a>
 
         <mat-divider></mat-divider>
-        <div class="nav-section-header">💰 Finanças</div>
 
-        <a mat-list-item routerLink="/account" [routerLinkActive]="'active-link'">
-          <mat-icon>account_balance_wallet</mat-icon>
-          <span>Contas Bancárias</span>
-        </a>
+        <!-- Seções colapsáveis -->
+        <div *ngFor="let section of menuSections" class="nav-section">
+          <button type="button"
+                  class="nav-section-toggle"
+                  [class.section-active]="isSectionActive(section)"
+                  (click)="toggleSection(section.id)"
+                  [attr.aria-expanded]="isSectionExpanded(section.id)">
+            <mat-icon class="section-icon">{{ section.icon }}</mat-icon>
+            <span class="section-title">{{ section.title }}</span>
+            <mat-icon class="section-chevron" [class.expanded]="isSectionExpanded(section.id)">expand_more</mat-icon>
+          </button>
 
-        <a mat-list-item routerLink="/provento-form" routerLinkActive="active-link">
-          <mat-icon>trending_up</mat-icon>
-          <span>Receitas</span>
-        </a>
+          <div class="nav-section-items" [class.collapsed]="!isSectionExpanded(section.id)">
+            <a *ngFor="let item of section.items" mat-list-item [routerLink]="item.route" routerLinkActive="active-link">
+              <mat-icon>{{ item.icon }}</mat-icon>
+              <span>{{ item.label }}</span>
+            </a>
+          </div>
 
-        <a mat-list-item routerLink="/reserva-emergencia" routerLinkActive="active-link">
-          <mat-icon>savings</mat-icon>
-          <span>Reserva de Emergência</span>
-        </a>
-
-        <a mat-list-item routerLink="/transacoes" routerLinkActive="active-link">
-          <mat-icon>swap_horiz</mat-icon>
-          <span>Transações</span>
-        </a>
-
-        <mat-divider></mat-divider>
-        <div class="nav-section-header">💳 Cartões de Crédito</div>
-
-        <a mat-list-item routerLink="/cartao/form" routerLinkActive="active-link">
-          <mat-icon>credit_card</mat-icon>
-          <span>Meus Cartões</span>
-        </a>
-
-        <a mat-list-item routerLink="/cartao/faturas" routerLinkActive="active-link">
-          <mat-icon>receipt</mat-icon>
-          <span>Faturas</span>
-        </a>
-
-        <a mat-list-item routerLink="/cartao/limites" routerLinkActive="active-link">
-          <mat-icon>gpp_maybe</mat-icon>
-          <span>Limites e Alertas</span>
-        </a>
-
-        <a mat-list-item routerLink="/comprovantes" routerLinkActive="active-link">
-          <mat-icon>receipt_long</mat-icon>
-          <span>Comprovantes</span>
-        </a>
-
-        <mat-divider></mat-divider>
-        <div class="nav-section-header">📊 Despesas</div>
-
-        <a mat-list-item routerLink="/pagamentos-status" routerLinkActive="active-link">
-          <mat-icon>pending_actions</mat-icon>
-          <span>Status de Pagamentos</span>
-        </a>
-
-        <a mat-list-item routerLink="/despesas-fixas" routerLinkActive="active-link">
-          <mat-icon>event_repeat</mat-icon>
-          <span>Despesas Fixas</span>
-        </a>
-
-        <a mat-list-item routerLink="/despesas-recorrentes" routerLinkActive="active-link">
-          <mat-icon>subscriptions</mat-icon>
-          <span>Assinaturas e Serviços</span>
-        </a>
-
-        <a mat-list-item routerLink="/compras-parceladas" routerLinkActive="active-link">
-          <mat-icon>shopping_cart</mat-icon>
-          <span>Compras Parceladas</span>
-        </a>
-
-        <a mat-list-item routerLink="/compras-debito" routerLinkActive="active-link">
-          <mat-icon>point_of_sale</mat-icon>
-          <span>Compras em Débito</span>
-        </a>
-
-        <mat-divider></mat-divider>
-        <div class="nav-section-header">📈 Análises e Relatórios</div>
-
-        <a mat-list-item routerLink="/relatorio-mensal" routerLinkActive="active-link">
-          <mat-icon>bar_chart</mat-icon>
-          <span>Relatório Mensal</span>
-        </a>
-
-        <a mat-list-item routerLink="/comparativo-mensal" routerLinkActive="active-link">
-          <mat-icon>compare_arrows</mat-icon>
-          <span>Comparativo Mensal</span>
-        </a>
-
-        <a mat-list-item routerLink="/budget-rule" routerLinkActive="active-link">
-          <mat-icon>pie_chart</mat-icon>
-          <span>Regra 50/30/20</span>
-        </a>
-
-        <mat-divider></mat-divider>
-        <div class="nav-section-header">⚙️ Configurações</div>
-
-        <a mat-list-item routerLink="/categoria-form" routerLinkActive="active-link">
-          <mat-icon>label</mat-icon>
-          <span>Categorias</span>
-        </a>
-
-        <a mat-list-item routerLink="/admin-usuarios" routerLinkActive="active-link">
-          <mat-icon>people</mat-icon>
-          <span>Gerenciar Usuários</span>
-        </a>
-
-        <a mat-list-item routerLink="/notificacoes-email-config" routerLinkActive="active-link">
-          <mat-icon>notifications</mat-icon>
-          <span>Notificações por Email</span>
-        </a>
-
-        <a mat-list-item routerLink="/tenant-config" routerLinkActive="active-link">
-          <mat-icon>settings</mat-icon>
-          <span>Sistema</span>
-        </a>
-
-        <a mat-list-item routerLink="/billing" routerLinkActive="active-link">
-          <mat-icon>credit_card</mat-icon>
-          <span>Plano &amp; Cobrança</span>
-        </a>
+          <mat-divider></mat-divider>
+        </div>
       </mat-nav-list>
     </div>
 

@@ -1,0 +1,46 @@
+<div class="filters-container">
+  <div class="filters-header">
+    <h3 class="filters-title">{{ getSelectedPeriodText() }}</h3>
+
+    <div class="period-navigation">
+      <button mat-icon-button matTooltip="Mês anterior" (click)="previousMonth()">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Próximo mês" (click)="nextMonth()">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="filters-row">
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Mês</mat-label>
+      <mat-select [(value)]="month" (selectionChange)="onSelectionChange()">
+        <mat-option *ngFor="let m of months" [value]="m.value">
+          {{ m.label }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Ano</mat-label>
+      <mat-select [(value)]="year" (selectionChange)="onSelectionChange()">
+        <mat-option *ngFor="let y of years" [value]="y">
+          {{ y }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="quick-filters">
+      <button mat-button (click)="resetFilters()" [class.active]="isCurrentMonth()">
+        Hoje
+      </button>
+      <button mat-button (click)="setLastMonth()" [class.active]="isLastMonth()">
+        Mês Passado
+      </button>
+      <button mat-button (click)="setNextMonth()" [class.active]="isNextMonth()">
+        Próximo
+      </button>
+    </div>
+  </div>
+</div>

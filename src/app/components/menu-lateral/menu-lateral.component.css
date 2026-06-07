@@ -117,14 +117,67 @@
   background: rgba(0, 0, 0, 0.3);
 }
 
-.nav-section-header {
-  font-size: 0.7rem;
+.nav-section-toggle {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  padding: 0 16px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.78rem;
   font-weight: 600;
-  color: rgba(0, 0, 0, 0.6);
-  padding: 12px 20px 6px;
+  color: rgba(0, 0, 0, 0.65);
   text-transform: uppercase;
-  letter-spacing: 0.8px;
-  margin-top: 4px;
+  letter-spacing: 0.6px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-section-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.nav-section-toggle.section-active {
+  color: #3f51b5;
+}
+
+.nav-section-toggle .section-icon {
+  margin-right: 12px;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.nav-section-toggle .section-title {
+  flex: 1;
+  text-align: left;
+}
+
+.nav-section-toggle .section-chevron {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  transition: transform 0.2s ease;
+}
+
+.nav-section-toggle .section-chevron.expanded {
+  transform: rotate(180deg);
+}
+
+.nav-section-items {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: 1000px;
+  transition: max-height 0.25s ease, opacity 0.2s ease;
+  opacity: 1;
+}
+
+.nav-section-items.collapsed {
+  max-height: 0;
+  opacity: 0;
 }
 
 .active-link {

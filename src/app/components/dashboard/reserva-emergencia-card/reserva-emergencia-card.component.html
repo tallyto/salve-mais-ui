@@ -1,0 +1,57 @@
+<div class="data-card h-full" style="border-top-color: #ff9800;">
+  <div class="card-header">
+    <div class="header-title">
+      <mat-icon style="color: #ff9800; margin-right: 8px;">savings</mat-icon>
+      <h2 class="section-title m-0">Reserva de Emergência</h2>
+    </div>
+  </div>
+  <div class="card-content">
+    <div *ngIf="temReserva">
+      <div class="health-summary mb-3">
+        <div class="health-status" [ngClass]="getHealthClass()">
+          <div class="health-icon">
+            <mat-icon>{{ getIcon() }}</mat-icon>
+          </div>
+          <div class="health-value">{{ getPercentual() | number:'1.1-1' }}%</div>
+        </div>
+        <div class="health-text">
+          <h3>{{ getStatus() }}</h3>
+          <p *ngIf="objetivo">Objetivo: {{ objetivo | currency:'BRL':'symbol':'1.2-2' }}</p>
+        </div>
+      </div>
+      <div class="progress-container mb-3">
+        <div class="progress-label">
+          <span>Progresso</span>
+          <span>{{ getPercentual() | number:'1.1-1' }}%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width]="getPercentual() + '%'" [ngClass]="getHealthClass()"></div>
+        </div>
+      </div>
+      <div class="financial-tip">
+        <mat-icon>lightbulb</mat-icon>
+        <div>
+          <p class="tip-title">Informações</p>
+          <p class="tip-text" *ngIf="!estaCompleta() && getTempoRestante()">
+            Faltam aproximadamente {{ getTempoRestante() }} meses para completar sua reserva.
+          </p>
+          <p class="tip-text" *ngIf="estaCompleta()">
+            Sua reserva de emergência está completa! Considere investir o excedente.
+          </p>
+          <div class="reserva-action">
+            <button mat-button color="primary" [routerLink]="['/reserva-emergencia']">
+              <mat-icon>visibility</mat-icon> Ver detalhes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!temReserva" class="text-center p-4">
+      <p class="mb-3 text-color-secondary">Você ainda não configurou sua reserva de emergência.</p>
+      <p class="mb-3">Uma reserva de emergência é fundamental para sua segurança financeira. Recomenda-se ter entre 3 a 6 meses de despesas guardados.</p>
+      <button mat-raised-button color="primary" [routerLink]="['/reserva-emergencia/criar']">
+        <mat-icon>add_circle_outline</mat-icon> Configurar reserva
+      </button>
+    </div>
+  </div>
+</div>

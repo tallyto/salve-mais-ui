@@ -9,6 +9,19 @@ import { UsuarioService } from '../../services/usuario.service';
 import { TenantService } from '../../services/tenant.service';
 import { getTenantIdFromToken } from '../../utils/jwt.util';
 
+export interface MenuItem {
+  route: string;
+  icon: string;
+  label: string;
+}
+
+export interface MenuSection {
+  id: string;
+  title: string;
+  icon: string;
+  items: MenuItem[];
+}
+
 @Component({
     selector: 'app-menu-lateral',
     templateUrl: './menu-lateral.component.html',
@@ -25,6 +38,67 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
   public isAuthenticated: boolean = false;
   public isLargeScreen: boolean = false;
   public resumoNotificacoes: ResumoNotificacoes | null = null;
+
+  public expandedSections = new Set<string>();
+
+  public menuSections: MenuSection[] = [
+    {
+      id: 'financas',
+      title: 'Finanças',
+      icon: 'account_balance_wallet',
+      items: [
+        { route: '/account', icon: 'account_balance_wallet', label: 'Contas Bancárias' },
+        { route: '/provento-form', icon: 'trending_up', label: 'Receitas' },
+        { route: '/reserva-emergencia', icon: 'savings', label: 'Reserva de Emergência' },
+        { route: '/transacoes', icon: 'swap_horiz', label: 'Transações' },
+        { route: '/categoria-form', icon: 'label', label: 'Categorias' }
+      ]
+    },
+    {
+      id: 'cartoes',
+      title: 'Cartões de Crédito',
+      icon: 'credit_card',
+      items: [
+        { route: '/cartao/form', icon: 'credit_card', label: 'Meus Cartões' },
+        { route: '/cartao/faturas', icon: 'receipt', label: 'Faturas' },
+        { route: '/cartao/limites', icon: 'gpp_maybe', label: 'Limites e Alertas' },
+        { route: '/comprovantes', icon: 'receipt_long', label: 'Comprovantes' }
+      ]
+    },
+    {
+      id: 'despesas',
+      title: 'Despesas',
+      icon: 'payments',
+      items: [
+        { route: '/pagamentos-status', icon: 'pending_actions', label: 'Status de Pagamentos' },
+        { route: '/despesas-fixas', icon: 'event_repeat', label: 'Despesas Fixas' },
+        { route: '/despesas-recorrentes', icon: 'subscriptions', label: 'Assinaturas e Serviços' },
+        { route: '/compras-parceladas', icon: 'shopping_cart', label: 'Compras Parceladas' },
+        { route: '/compras-debito', icon: 'point_of_sale', label: 'Compras em Débito' }
+      ]
+    },
+    {
+      id: 'analises',
+      title: 'Análises e Relatórios',
+      icon: 'bar_chart',
+      items: [
+        { route: '/relatorio-mensal', icon: 'bar_chart', label: 'Relatório Mensal' },
+        { route: '/comparativo-mensal', icon: 'compare_arrows', label: 'Comparativo Mensal' },
+        { route: '/budget-rule', icon: 'pie_chart', label: 'Regra 50/30/20' }
+      ]
+    },
+    {
+      id: 'configuracoes',
+      title: 'Configurações',
+      icon: 'settings',
+      items: [
+        { route: '/admin-usuarios', icon: 'people', label: 'Gerenciar Usuários' },
+        { route: '/notificacoes-email-config', icon: 'notifications', label: 'Notificações por Email' },
+        { route: '/tenant-config', icon: 'settings', label: 'Sistema' },
+        { route: '/billing', icon: 'credit_card', label: 'Plano & Cobrança' }
+      ]
+    }
+  ];
 
   private routerSubscription: Subscription | null = null;
   private notificacaoEventSubscription: Subscription | null = null;
@@ -48,6 +122,7 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
         this.checkAuthentication();
+        this.expandActiveSection();
       });
 
     // Tentar obter informações do usuário do localStorage (se disponível)
@@ -58,6 +133,9 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
 
     // Carregar notificações apenas no login inicial
     this.setupNotificationUpdates();
+
+    // Expandir a seção da rota ativa ao carregar o menu
+    this.expandActiveSection();
   }
 
   ngAfterViewInit(): void {
@@ -147,6 +225,32 @@ export class MenuLateralComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     });
+  }
+
+  toggleSection(sectionId: string): void {
+    if (this.expandedSections.has(sectionId)) {
+      this.expandedSections.delete(sectionId);
+    } else {
+      this.expandedSections.add(sectionId);
+    }
+  }
+
+  isSectionExpanded(sectionId: string): boolean {
+    return this.expandedSections.has(sectionId);
+  }
+
+  isSectionActive(section: MenuSection): boolean {
+    return section.items.some(item => this.router.url.startsWith(item.route));
+  }
+
+  /**
+   * Garante que a seção que contém a rota atual esteja sempre expandida
+   */
+  private expandActiveSection(): void {
+    const activeSection = this.menuSections.find(section => this.isSectionActive(section));
+    if (activeSection) {
+      this.expandedSections.add(activeSection.id);
+    }
   }
 
   toggleSidenav(): void {

@@ -14,6 +14,7 @@ import { CompraParceladaService } from '../../services/compra-parcelada.service'
 import { CompraParcelada } from '../../models/compra-parcelada.model';
 import { CompraDebitoService } from '../../services/compra-debito.service';
 import { CompraDebito } from '../../models/compra-debito.model';
+import { Period } from './month-year-filter/month-year-filter.component';
 
 interface Transaction {
   descricao: string;
@@ -48,21 +49,6 @@ export class DashboardComponent implements OnInit {
   // Filtros de mês e ano
   selectedMonth: number;
   selectedYear: number;
-  months: { value: number, label: string }[] = [
-    { value: 1, label: 'Janeiro' },
-    { value: 2, label: 'Fevereiro' },
-    { value: 3, label: 'Março' },
-    { value: 4, label: 'Abril' },
-    { value: 5, label: 'Maio' },
-    { value: 6, label: 'Junho' },
-    { value: 7, label: 'Julho' },
-    { value: 8, label: 'Agosto' },
-    { value: 9, label: 'Setembro' },
-    { value: 10, label: 'Outubro' },
-    { value: 11, label: 'Novembro' },
-    { value: 12, label: 'Dezembro' }
-  ];
-  years: number[] = [];
 
   // Dados do dashboard vindos da API
   summaryData: DashboardSummary | null = null;
@@ -202,9 +188,6 @@ export class DashboardComponent implements OnInit {
     const currentDate = new Date();
     this.selectedMonth = currentDate.getMonth() + 1;
     this.selectedYear = currentDate.getFullYear();
-
-    // Gerar lista de anos (últimos 3 anos até próximos 2 anos)
-    this.generateYears();
   }
 
   ngOnInit(): void {
@@ -322,8 +305,16 @@ export class DashboardComponent implements OnInit {
     this.totalReceitas = this.proventos.reduce((sum, provento) => sum + provento.valor, 0);
   }
 
-  formatarPercentual(valor: number): string {
-    return valor.toFixed(1).replace('.', ',') + '%';
+  hasCategoryData(): boolean {
+    return this.categoryData.length > 0;
+  }
+
+  hasIncomeExpenseData(): boolean {
+    return !!this.summaryData && (this.summaryData.receitasMes > 0 || this.summaryData.despesasMes > 0);
+  }
+
+  hasMonthlyTrendData(): boolean {
+    return this.monthlyTrendData.length > 0;
   }
 
   // Prepara dados para o gráfico de pizza (Despesas por Categoria)
@@ -437,118 +428,6 @@ export class DashboardComponent implements OnInit {
       .sort((a, b) => new Date(b.data).getTime() - new Date(a.data).getTime());
   }
 
-  // Métodos para indicadores de saúde financeira
-  getBalanceRatio(): number {
-    if (!this.summaryData || this.summaryData.despesasMes === 0) {
-      return 100;
-    }
-
-    // Calcula a proporção do saldo em relação às despesas mensais
-    // Limitado entre 0 e 100%
-    const ratio = (this.summaryData.saldoTotal / this.summaryData.despesasMes) * 100;
-    return Math.min(Math.max(ratio, 0), 100);
-  }
-
-  getBalanceHealthClass(): string {
-    const ratio = this.getBalanceRatio();
-    if (ratio >= 75) {
-      return 'health-excellent';
-    } else if (ratio >= 50) {
-      return 'health-good';
-    } else if (ratio >= 25) {
-      return 'health-average';
-    } else {
-      return 'health-poor';
-    }
-  }
-
-  // Métodos para a reserva de emergência
-  getReservaEmergenciaHealthClass(): string {
-    if (!this.summaryData || !this.summaryData.reservaEmergencia) {
-      return 'health-poor';
-    }
-    
-    const percentual = this.summaryData.reservaEmergencia.percentualConcluido || 0;
-    
-    if (percentual >= 75) {
-      return 'health-excellent';
-    } else if (percentual >= 50) {
-      return 'health-good';
-    } else if (percentual >= 25) {
-      return 'health-average';
-    } else {
-      return 'health-poor';
-    }
-  }
-
-  getReservaEmergenciaStatus(): string {
-    if (!this.summaryData || !this.summaryData.reservaEmergencia) {
-      return 'Não configurada';
-    }
-    
-    const percentual = this.summaryData.reservaEmergencia.percentualConcluido || 0;
-    
-    if (percentual >= 75) {
-      return 'Excelente';
-    } else if (percentual >= 50) {
-      return 'Boa';
-    } else if (percentual >= 25) {
-      return 'Em progresso';
-    } else {
-      return 'Inicial';
-    }
-  }
-
-  getReservaEmergenciaIcon(): string {
-    if (!this.summaryData || !this.summaryData.reservaEmergencia) {
-      return 'sentiment_very_dissatisfied';
-    }
-    
-    const percentual = this.summaryData.reservaEmergencia.percentualConcluido || 0;
-    
-    if (percentual >= 75) {
-      return 'sentiment_very_satisfied';
-    } else if (percentual >= 50) {
-      return 'sentiment_satisfied';
-    } else if (percentual >= 25) {
-      return 'sentiment_dissatisfied';
-    } else {
-      return 'sentiment_very_dissatisfied';
-    }
-  }
-
-  getReservaEmergenciaPercentual(): number {
-    if (!this.summaryData || !this.summaryData.reservaEmergencia || !this.summaryData.reservaEmergencia.percentualConcluido) {
-      return 0;
-    }
-    return this.summaryData.reservaEmergencia.percentualConcluido;
-  }
-
-  getReservaEmergenciaTempoRestante(): string {
-    if (!this.summaryData || !this.summaryData.reservaEmergencia || !this.summaryData.reservaEmergencia.tempoRestante) {
-      return '';
-    }
-    return this.summaryData.reservaEmergencia.tempoRestante.toString();
-  }
-
-  reservaEmergenciaEstaCompleta(): boolean {
-    return this.getReservaEmergenciaPercentual() >= 100;
-  }
-
-  getFinancialTip(): string {
-    const ratio = this.getBalanceRatio();
-
-    if (ratio >= 75) {
-      return 'Sua saúde financeira está excelente! Considere investir o excedente para fazer seu dinheiro render mais.';
-    } else if (ratio >= 50) {
-      return 'Você está em um bom caminho. Tente aumentar sua reserva de emergência para pelo menos 6 meses de despesas.';
-    } else if (ratio >= 25) {
-      return 'Atenção às suas despesas. Tente reduzir gastos não essenciais para aumentar seu saldo.';
-    } else {
-      return 'Sua situação financeira requer atenção imediata. Considere cortar despesas e aumentar sua renda.';
-    }
-  }
-
   // Gera dados mock de variação se não houver dados da API
   generateMockVariationData(): VariationData[] {
     if (!this.summaryData) return [];
@@ -614,22 +493,6 @@ export class DashboardComponent implements OnInit {
     return variations;
   }
 
-  getVariationTrendClass(trend: string): string {
-    switch (trend) {
-      case 'up': return 'trend-positive';
-      case 'down': return 'trend-negative';
-      default: return 'trend-neutral';
-    }
-  }
-
-  getVariationIcon(trend: string): string {
-    switch (trend) {
-      case 'up': return 'keyboard_arrow_up';
-      case 'down': return 'keyboard_arrow_down';
-      default: return 'remove';
-    }
-  }
-
   // Métodos auxiliares para compras parceladas
   getProximoVencimento(compra: CompraParcelada): string {
     if (!compra.parcelas || compra.parcelas.length === 0) {
@@ -654,78 +517,10 @@ export class DashboardComponent implements OnInit {
     return this.temParcelasPendentes(compra) ? 'badge-warning' : 'badge-success';
   }
 
-  // Métodos para filtros de mês e ano
-  generateYears(): void {
-    const currentYear = new Date().getFullYear();
-    this.years = [];
-    for (let i = currentYear - 3; i <= currentYear + 2; i++) {
-      this.years.push(i);
-    }
-  }
-
-  previousMonth(): void {
-    if (this.selectedMonth === 1) {
-      this.selectedMonth = 12;
-      this.selectedYear--;
-    } else {
-      this.selectedMonth--;
-    }
+  onPeriodChange(period: Period): void {
+    this.selectedMonth = period.month;
+    this.selectedYear = period.year;
     this.onFilterChange();
-  }
-
-  nextMonth(): void {
-    if (this.selectedMonth === 12) {
-      this.selectedMonth = 1;
-      this.selectedYear++;
-    } else {
-      this.selectedMonth++;
-    }
-    this.onFilterChange();
-  }
-
-  resetFilters(): void {
-    const currentDate = new Date();
-    this.selectedMonth = currentDate.getMonth() + 1;
-    this.selectedYear = currentDate.getFullYear();
-    this.onFilterChange();
-  }
-
-  setLastMonth(): void {
-    const lastMonth = new Date();
-    lastMonth.setMonth(lastMonth.getMonth() - 1);
-    this.selectedMonth = lastMonth.getMonth() + 1;
-    this.selectedYear = lastMonth.getFullYear();
-    this.onFilterChange();
-  }
-
-  setNextMonth(): void {
-    const nextMonth = new Date();
-    nextMonth.setMonth(nextMonth.getMonth() + 1);
-    this.selectedMonth = nextMonth.getMonth() + 1;
-    this.selectedYear = nextMonth.getFullYear();
-    this.onFilterChange();
-  }
-
-  isCurrentMonth(): boolean {
-    const currentDate = new Date();
-    return this.selectedMonth === currentDate.getMonth() + 1 && this.selectedYear === currentDate.getFullYear();
-  }
-
-  isLastMonth(): boolean {
-    const lastMonth = new Date();
-    lastMonth.setMonth(lastMonth.getMonth() - 1);
-    return this.selectedMonth === lastMonth.getMonth() + 1 && this.selectedYear === lastMonth.getFullYear();
-  }
-
-  isNextMonth(): boolean {
-    const nextMonth = new Date();
-    nextMonth.setMonth(nextMonth.getMonth() + 1);
-    return this.selectedMonth === nextMonth.getMonth() + 1 && this.selectedYear === nextMonth.getFullYear();
-  }
-
-  getSelectedPeriodText(): string {
-    const monthName = this.months.find(m => m.value === this.selectedMonth)?.label || '';
-    return `${monthName} de ${this.selectedYear}`;
   }
 
   onFilterChange(): void {
@@ -750,8 +545,8 @@ export class DashboardComponent implements OnInit {
         link.href = url;
         
         // Definir nome do arquivo baseado no período selecionado
-        const monthName = this.months.find(m => m.value === this.selectedMonth)?.label || '';
-        const fileName = `dashboard-financeiro-${monthName.toLowerCase()}-${this.selectedYear}.xlsx`;
+        const monthName = new Date(this.selectedYear, this.selectedMonth - 1).toLocaleString('pt-BR', { month: 'long' });
+        const fileName = `dashboard-financeiro-${monthName}-${this.selectedYear}.xlsx`;
         link.download = fileName;
         
         // Executar o download

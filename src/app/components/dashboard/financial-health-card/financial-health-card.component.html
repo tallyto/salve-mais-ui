@@ -1,0 +1,38 @@
+<div class="data-card h-full" style="border-top-color: #4caf50;">
+  <div class="card-header">
+    <div class="header-title">
+      <mat-icon style="color: #4caf50; margin-right: 8px;">health_and_safety</mat-icon>
+      <h2 class="section-title m-0">Saúde Financeira</h2>
+    </div>
+  </div>
+  <div class="card-content">
+    <div class="health-summary mb-3">
+      <div class="health-status" [ngClass]="getBalanceHealthClass()">
+        <div class="health-icon">
+          <mat-icon>{{ getHealthIcon() }}</mat-icon>
+        </div>
+        <div class="health-value">{{ formatarPercentual(getBalanceRatio()) }}</div>
+      </div>
+      <div class="health-text">
+        <h3><span>{{ getHealthLabel() }}</span></h3>
+        <p>Proporção entre saldo e despesas mensais</p>
+      </div>
+    </div>
+    <div class="progress-container mb-3">
+      <div class="progress-label">
+        <span>Saldo vs Despesas</span>
+        <span>{{ formatarPercentual(getBalanceRatio()) }}</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width]="getBalanceRatio() + '%'" [ngClass]="getBalanceHealthClass()"></div>
+      </div>
+    </div>
+    <div class="financial-tip">
+      <mat-icon>lightbulb</mat-icon>
+      <div>
+        <p class="tip-title">Dica Financeira</p>
+        <p class="tip-text">{{ getFinancialTip() }}</p>
+      </div>
+    </div>
+  </div>
+</div>

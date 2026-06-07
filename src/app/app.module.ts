@@ -68,6 +68,10 @@ import { LoginComponent } from './components/login/login.component';
 
 import { MinhaContaComponent } from './components/minha-conta/minha-conta.component';
 import { NotificacoesWidgetComponent } from './components/notificacoes-widget/notificacoes-widget.component';
+import { MonthYearFilterComponent } from './components/dashboard/month-year-filter/month-year-filter.component';
+import { FinancialHealthCardComponent } from './components/dashboard/financial-health-card/financial-health-card.component';
+import { ReservaEmergenciaCardComponent } from './components/dashboard/reserva-emergencia-card/reserva-emergencia-card.component';
+import { VariationTableComponent } from './components/dashboard/variation-table/variation-table.component';
 import { NotificacoesComponent } from './components/notificacoes/notificacoes.component';
 import { NotificacoesEmailConfigComponent } from './components/notificacoes-email-config/notificacoes-email-config.component';
 import { ListTransacoesComponent } from './components/list-transacoes/list-transacoes.component';
@@ -159,6 +163,10 @@ import { ComparativoMensalComponent } from './components/comparativo-mensal/comp
     LoginComponent, // Importa o componente standalone
     LimiteAlertasWidgetComponent, // Importa o widget standalone
     NotificacoesWidgetComponent, // Importa o widget de notificações standalone
+    MonthYearFilterComponent, // Importa o filtro de mês/ano standalone do dashboard
+    FinancialHealthCardComponent, // Importa o card de saúde financeira standalone do dashboard
+    ReservaEmergenciaCardComponent, // Importa o card de reserva de emergência standalone do dashboard
+    VariationTableComponent, // Importa a tabela de variação mensal standalone do dashboard
     ListTransacoesComponent, // Importa o componente de listagem de transações standalone
     CompraParceladaFormComponent, // Importa o componente de formulário de compras parceladas standalone
     ListComprasParceladasComponent // Importa o componente de listagem de compras parceladas standalone
