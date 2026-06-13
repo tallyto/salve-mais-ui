@@ -1,13 +1,21 @@
-<div class="dashboard-container">
+<section class="dashboard-page">
 
-  <!-- Hero -->
-  <section class="dashboard-hero">
-    <div class="hero-content">
-      <div class="hero-copy">
-        <span class="hero-eyebrow">Painel financeiro</span>
-        <h1>{{ getSaudacao() }}</h1>
-        <p>{{ today | date:"EEEE, d 'de' MMMM" : '' : 'pt-BR' | titlecase }} · acompanhe o mês, aja rápido e mantenha o controle das suas contas.</p>
+  <header class="dashboard-header">
+    <div class="dashboard-header-main">
+      <div class="title-row">
+        <span class="title-icon">
+          <mat-icon>dashboard</mat-icon>
+        </span>
+        <div class="hero-copy">
+          <p class="eyebrow">Painel financeiro</p>
+          <h1>{{ getSaudacao() }}</h1>
+        </div>
       </div>
+
+      <p>{{ today | date:"EEEE, d 'de' MMMM" : '' : 'pt-BR' | titlecase }} · acompanhe o mês, aja rápido e mantenha o controle das suas contas.</p>
+    </div>
+
+    <div class="dashboard-header-side">
       <div class="hero-kpis">
         <div class="hero-kpi">
           <span>Resultado do mês</span>
@@ -20,14 +28,13 @@
           <strong>{{ getExpenseRatio() | number:'1.0-0' }}%</strong>
         </div>
       </div>
-    </div>
-    <div class="hero-actions">
+
       <button mat-stroked-button (click)="exportToExcel()" [disabled]="isLoading" matTooltip="Exportar dados do dashboard para Excel">
         <mat-icon>file_download</mat-icon>
         <span class="btn-text">Exportar</span>
       </button>
     </div>
-  </section>
+  </header>
 
   <app-month-year-filter [month]="selectedMonth" [year]="selectedYear" (periodChange)="onPeriodChange($event)"></app-month-year-filter>
 
@@ -211,7 +218,7 @@
 
   <!-- Compras no cartão -->
   <h3 class="section-heading">Compras no cartão</h3>
-  <mat-card>
+  <mat-card class="transactions-card">
     <mat-card-header>
       <mat-card-title class="card-title-row">
         <mat-icon class="icon-purple">credit_card</mat-icon>
@@ -281,4 +288,4 @@
     </mat-card>
   </section>
 
-</div>
+</section>
