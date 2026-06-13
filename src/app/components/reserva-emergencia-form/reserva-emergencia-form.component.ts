@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Conta } from 'src/app/models/conta.model';
+import { Conta, TipoConta } from 'src/app/models/conta.model';
 import { ContaService } from 'src/app/services/conta.service';
 import { ReservaEmergenciaService } from '../../services/reserva-emergencia.service';
 
@@ -15,16 +15,12 @@ import { ReservaEmergenciaService } from '../../services/reserva-emergencia.serv
 export class ReservaEmergenciaFormComponent implements OnInit {
   reservaForm: FormGroup;
   contas: Conta[] = [];
-  contasDisponiveis: Conta[] = []; // Todas as contas disponíveis
-  contasCorrentes: Conta[] = []; // Contas para transferência
+  contasDisponiveis: Conta[] = [];
   isEditMode = false;
   reservaId: number | null = null;
   loading = false;
   calculandoObjetivo = false;
-
-  // Form para contribuição inicial
-  contribuicaoForm: FormGroup;
-  mostrarContribuicaoInicial = false;
+  simulacaoResultado: { simples: string; comRendimento: string; taxa: number } | null = null;
 
   // Opções para o multiplicador de despesas
   multiplicadoresDisponiveis = [
@@ -47,12 +43,7 @@ export class ReservaEmergenciaFormComponent implements OnInit {
       multiplicadorDespesas: [6, Validators.required],
       valorContribuicaoMensal: [null, [Validators.required, Validators.min(0.01)]],
       contaId: [null, Validators.required],
-      taxaRendimento: [13.25, [Validators.min(0), Validators.max(100)]] // Taxa Selic aproximada
-    });
-
-    this.contribuicaoForm = this.fb.group({
-      contaOrigemId: [null, Validators.required],
-      valorInicial: [null, [Validators.required, Validators.min(0.01)]]
+      taxaRendimento: [13.25, [Validators.min(0), Validators.max(100)]]
     });
   }
 
@@ -65,16 +56,13 @@ export class ReservaEmergenciaFormComponent implements OnInit {
       next: (contas) => {
         this.contas = contas;
 
-        // Disponibiliza todas as contas
-        this.contasDisponiveis = this.contas;
+        this.contasDisponiveis = this.contas.filter(c => c.tipo === TipoConta.RESERVA_EMERGENCIA);
 
-        // Todas as contas podem ser usadas para transferência
-        this.contasCorrentes = this.contas;
-
-        // Se não estiver em modo de edição e houver contas disponíveis, seleciona a primeira
+        // Em criação, prioriza conta do tipo RESERVA_EMERGENCIA; senão usa a primeira disponível
         if (!this.isEditMode && this.contasDisponiveis.length > 0) {
+          const reservaConta = this.contasDisponiveis.find(c => c.tipo === TipoConta.RESERVA_EMERGENCIA);
           this.reservaForm.patchValue({
-            contaId: this.contasDisponiveis[0].id
+            contaId: (reservaConta ?? this.contasDisponiveis[0]).id
           });
         }
 
@@ -89,7 +77,7 @@ export class ReservaEmergenciaFormComponent implements OnInit {
         }
       },
       error: (err) => {
-        this.snackBar.open('Erro ao carregar contas.', 'Fechar', { duration: 5000 });
+        this.snackBar.open(this.errMsg(err, 'Erro ao carregar contas.'), 'Fechar', { duration: 5000 });
         this.loading = false;
       }
     });
@@ -102,12 +90,12 @@ export class ReservaEmergenciaFormComponent implements OnInit {
           objetivo: reserva.objetivo,
           multiplicadorDespesas: reserva.multiplicadorDespesas,
           valorContribuicaoMensal: reserva.valorContribuicaoMensal,
-          contaId: reserva.contaId
+          contaId: reserva.conta?.id ?? reserva.contaId
         });
         this.loading = false;
       },
       error: (err) => {
-        this.snackBar.open('Erro ao carregar dados da reserva.', 'Fechar', { duration: 5000 });
+        this.snackBar.open(this.errMsg(err, 'Erro ao carregar dados da reserva.'), 'Fechar', { duration: 5000 });
         this.loading = false;
         this.router.navigate(['/reserva-emergencia']);
       }
@@ -131,52 +119,21 @@ export class ReservaEmergenciaFormComponent implements OnInit {
           this.router.navigate(['/reserva-emergencia']);
         },
         error: (err) => {
-          this.snackBar.open('Erro ao atualizar reserva.', 'Fechar', { duration: 5000 });
+          this.snackBar.open(this.errMsg(err, 'Erro ao atualizar reserva.'), 'Fechar', { duration: 5000 });
           this.loading = false;
         }
       });
     } else {
-      // Modo de criação - verifica se há contribuição inicial
-      if (this.mostrarContribuicaoInicial && this.contribuicaoForm.valid) {
-        // Primeiro, cria a reserva
-        this.reservaService.createReserva(formData).subscribe({
-          next: (reservaCriada) => {
-            const contribuicao = this.contribuicaoForm.value;
-
-            // Depois, faz a transferência inicial
-            this.reservaService.contribuirParaReserva(
-              reservaCriada.id!,
-              contribuicao.contaOrigemId,
-              contribuicao.valorInicial
-            ).subscribe({
-              next: () => {
-                this.snackBar.open('Reserva criada e contribuição inicial realizada com sucesso!', 'Fechar', { duration: 3000 });
-                this.router.navigate(['/reserva-emergencia']);
-              },
-              error: (transferError) => {
-                this.snackBar.open('Reserva criada, mas houve erro na contribuição inicial.', 'Fechar', { duration: 5000 });
-                this.router.navigate(['/reserva-emergencia']);
-              }
-            });
-          },
-          error: (createError) => {
-            this.snackBar.open('Erro ao criar reserva.', 'Fechar', { duration: 5000 });
-            this.loading = false;
-          }
-        });
-      } else {
-        // Cria a reserva sem contribuição inicial
-        this.reservaService.createReserva(formData).subscribe({
-          next: () => {
-            this.snackBar.open('Reserva criada com sucesso!', 'Fechar', { duration: 3000 });
-            this.router.navigate(['/reserva-emergencia']);
-          },
-          error: (err) => {
-            this.snackBar.open('Erro ao criar reserva.', 'Fechar', { duration: 5000 });
-            this.loading = false;
-          }
-        });
-      }
+      this.reservaService.createReserva(formData).subscribe({
+        next: () => {
+          this.snackBar.open('Reserva criada com sucesso!', 'Fechar', { duration: 3000 });
+          this.router.navigate(['/reserva-emergencia']);
+        },
+        error: (err) => {
+          this.snackBar.open(this.errMsg(err, 'Erro ao criar reserva.'), 'Fechar', { duration: 5000 });
+          this.loading = false;
+        }
+      });
     }
   }
 
@@ -195,66 +152,54 @@ export class ReservaEmergenciaFormComponent implements OnInit {
         this.calculandoObjetivo = false;
       },
       error: (err) => {
-        this.snackBar.open('Erro ao calcular objetivo.', 'Fechar', { duration: 5000 });
+        this.snackBar.open(this.errMsg(err, 'Erro ao calcular objetivo.'), 'Fechar', { duration: 5000 });
         this.calculandoObjetivo = false;
       }
     });
   }
 
   simularTempoParaCompletar(): void {
-    if (this.reservaForm.get('objetivo')?.invalid || this.reservaForm.get('valorContribuicaoMensal')?.invalid) {
+    const objetivoCtrl = this.reservaForm.get('objetivo');
+    const mensal = this.reservaForm.get('valorContribuicaoMensal');
+
+    if (objetivoCtrl?.invalid || mensal?.invalid) {
       this.snackBar.open('Defina um objetivo e uma contribuição mensal válidos primeiro.', 'Fechar', { duration: 3000 });
       return;
     }
 
-    const objetivo = this.reservaForm.get('objetivo')?.value;
-    const valorMensal = this.reservaForm.get('valorContribuicaoMensal')?.value;
-    const taxaRendimento = this.reservaForm.get('taxaRendimento')?.value;
+    const objetivo = objetivoCtrl?.value;
+    const valorMensal = mensal?.value;
+    const taxaRendimento = this.reservaForm.get('taxaRendimento')?.value ?? 0;
 
-    // Se o valorMensal for zero, exibe alerta
     if (valorMensal <= 0) {
-      this.snackBar.open('A contribuição mensal deve ser maior que zero para calcular o tempo.', 'Fechar', { duration: 3000 });
+      this.snackBar.open('A contribuição mensal deve ser maior que zero.', 'Fechar', { duration: 3000 });
       return;
     }
 
-    // Calcula meses necessários (sem considerar rendimentos)
     const mesesSimples = Math.ceil(objetivo / valorMensal);
 
-    // Calcula meses considerando rendimentos (simulação simplificada)
-    const taxaMensal = (taxaRendimento / 100) / 12; // Taxa mensal equivalente
+    const taxaMensal = (taxaRendimento / 100) / 12;
     let saldo = 0;
     let mesesComRendimento = 0;
-
-    while (saldo < objetivo && mesesComRendimento < 1000) { // Limite de 1000 meses para evitar loop infinito
+    while (saldo < objetivo && mesesComRendimento < 1000) {
       saldo = saldo * (1 + taxaMensal) + valorMensal;
       mesesComRendimento++;
     }
 
-    // Exibe resultado
-    this.snackBar.open(
-      `Tempo estimado para completar a reserva:
-      Sem rendimentos: ${mesesSimples} meses (${Math.floor(mesesSimples/12)} anos e ${mesesSimples%12} meses)
-      Com rendimentos de ${taxaRendimento}% a.a.: ${mesesComRendimento} meses (${Math.floor(mesesComRendimento/12)} anos e ${mesesComRendimento%12} meses)`,
-      'Fechar',
-      { duration: 10000 }
-    );
-  }
+    const fmt = (m: number) => `${m} meses (${Math.floor(m / 12)} anos e ${m % 12} meses)`;
 
-  toggleContribuicaoInicial(): void {
-    this.mostrarContribuicaoInicial = !this.mostrarContribuicaoInicial;
-
-    if (this.mostrarContribuicaoInicial) {
-      // Define contribuição inicial padrão como 1/3 do objetivo
-      const objetivo = this.reservaForm.get('objetivo')?.value;
-      if (objetivo) {
-        this.contribuicaoForm.patchValue({
-          valorInicial: objetivo / 3
-        });
-      }
-    }
+    this.simulacaoResultado = {
+      simples: fmt(mesesSimples),
+      comRendimento: fmt(mesesComRendimento),
+      taxa: taxaRendimento
+    };
   }
 
   cancelar(): void {
     this.router.navigate(['/reserva-emergencia']);
+  }
+
+  private errMsg(err: any, fallback: string): string {
+    return err?.error?.message ?? fallback;
   }
 }
