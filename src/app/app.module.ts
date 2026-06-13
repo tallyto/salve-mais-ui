@@ -1,6 +1,7 @@
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
+import localePt from '@angular/common/locales/pt';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatBadgeModule } from "@angular/material/badge";
 import { MatButtonModule } from "@angular/material/button";
@@ -84,6 +85,8 @@ import { CurrencyInputDirective } from './directives/currency-input.directive';
 import { CompraDebitoFormComponent } from './components/compra-debito-form/compra-debito-form.component';
 import { ListComprasDebitoComponent } from './components/list-compras-debito/list-compras-debito.component';
 import { ComparativoMensalComponent } from './components/comparativo-mensal/comparativo-mensal.component';
+
+registerLocaleData(localePt, 'pt-BR');
 
 @NgModule({
   declarations: [
@@ -172,6 +175,7 @@ import { ComparativoMensalComponent } from './components/comparativo-mensal/comp
     ListComprasParceladasComponent // Importa o componente de listagem de compras parceladas standalone
   ],
   providers: [
+    { provide: LOCALE_ID, useValue: 'pt-BR' },
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: BillingInterceptor, multi: true },
