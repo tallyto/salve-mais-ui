@@ -1,44 +1,36 @@
-.receitas-page {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 24px;
+:host {
+  display: block;
+}
+
+.income-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 14px;
 }
 
-/* Hero */
-.page-hero {
-  padding: clamp(20px, 3vw, 32px) clamp(20px, 3vw, 36px);
-  border-radius: var(--radius-lg);
-  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 55%, #6d28d9 100%);
-  color: #fff;
+.panel-heading {
+  margin-bottom: 2px;
+  padding-bottom: 0;
+  border-bottom: 0;
 }
-.hero-inner      { display: flex; align-items: center; gap: 20px; }
-.hero-icon-wrap  { display: flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: var(--radius-md); background: rgba(255,255,255,.15); flex-shrink: 0; }
-.hero-icon-wrap mat-icon { font-size: 28px; width: 28px; height: 28px; color: #fff; }
-.hero-eyebrow    { display: block; font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); text-transform: uppercase; letter-spacing: .05em; color: rgba(255,255,255,.65); margin-bottom: 4px; }
-.hero-inner h1   { margin: 0; font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 700; color: #fff; }
-.hero-inner p    { margin: 6px 0 0; font-size: var(--font-size-sm); color: rgba(255,255,255,.75); }
 
-/* Card title row */
-.card-title-row { display: flex; align-items: center; gap: 8px; font-size: var(--font-size-md) !important; }
-.icon-green     { color: var(--success-color); }
-
-/* Form 2×2 grid */
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0 16px;
-  padding-top: 8px;
+.form-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 2px;
 }
-.form-grid mat-form-field { width: 100%; }
 
-/* Remove padding do mat-card-content na listagem para a tabela ir até as bordas */
-.table-content { padding: 0 !important; }
+.income-list-panel {
+  overflow: hidden;
+}
 
-@media (max-width: 768px) {
-  .receitas-page { padding: 12px; gap: 14px; }
-  .hero-inner    { flex-direction: column; align-items: flex-start; }
-  .form-grid     { grid-template-columns: 1fr; }
+.list-heading {
+  padding: 20px 20px 16px;
+}
+
+@media (max-width: 720px) {
+  .list-heading {
+    padding: 16px;
+  }
 }

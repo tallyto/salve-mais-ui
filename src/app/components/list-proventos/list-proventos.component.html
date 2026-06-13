@@ -1,52 +1,63 @@
-<div class="card-content p-3">
-  <div class="table-container">
-    <table [dataSource]="proventos" mat-table matSort matSortActive="id" matSortDisableClear matSortDirection="desc" class="data-table list-table">
+<div class="income-table-wrap">
+  <div class="loading-bar" *ngIf="isLoadingResults">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
 
-      <!-- Nome Column -->
+  <div class="table-scroll" [class.table-empty]="!isLoadingResults && proventos.length === 0">
+    <table
+      [dataSource]="proventos"
+      mat-table
+      matSort
+      matSortActive="id"
+      matSortDisableClear
+      matSortDirection="desc"
+      class="income-table">
+
       <ng-container matColumnDef="descricao">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Descrição</th>
-        <td *matCellDef="let provento" mat-cell class="p-3">
-          <div class="provento-description">
-            <span class="provento-icon">
-              <mat-icon>paid</mat-icon>
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Descrição</th>
+        <td *matCellDef="let provento" mat-cell>
+          <div class="income-description">
+            <span class="income-icon">
+              <mat-icon>payments</mat-icon>
             </span>
-            {{ provento.descricao }}
+            <div>
+              <strong>{{ provento.descricao }}</strong>
+              <span>Receita registrada</span>
+            </div>
           </div>
         </td>
       </ng-container>
 
-      <!-- Account Column -->
       <ng-container matColumnDef="conta">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3">Conta</th>
-        <td *matCellDef="let provento" mat-cell class="p-3"> {{ provento.conta.titular }}</td>
-      </ng-container>
-
-      <!-- Data Column -->
-      <ng-container matColumnDef="data">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Data</th>
-        <td *matCellDef="let provento" mat-cell class="p-3"> {{ provento.data | date:'dd/MM/yyyy' }}</td>
-      </ng-container>
-
-      <!-- Valor Column -->
-      <ng-container matColumnDef="valor">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3 text-right"> Valor</th>
-        <td *matCellDef="let provento" mat-cell class="p-3 text-right font-medium positive">
-          {{ provento.valor | currency:'BRL':'symbol':'1.2-2' }}
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Conta</th>
+        <td *matCellDef="let provento" mat-cell>
+          <span class="muted-cell">{{ provento.conta?.titular || 'Sem conta' }}</span>
         </td>
       </ng-container>
 
-      <!-- Ações Column -->
+      <ng-container matColumnDef="data">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header>Data</th>
+        <td *matCellDef="let provento" mat-cell>
+          <span class="muted-cell">{{ provento.data | date:'dd/MM/yyyy' }}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="valor">
+        <th *matHeaderCellDef mat-header-cell mat-sort-header class="numeric-cell">Valor</th>
+        <td *matCellDef="let provento" mat-cell class="numeric-cell">
+          <strong class="income-value">+ {{ provento.valor | currency:'BRL':'symbol':'1.2-2' }}</strong>
+        </td>
+      </ng-container>
+
       <ng-container matColumnDef="acoes">
-        <th *matHeaderCellDef mat-header-cell class="p-3 text-right"> Ações</th>
-        <td *matCellDef="let provento" mat-cell class="p-3 text-right">
-          <div class="action-buttons flex justify-content-end gap-2">
-            <button mat-icon-button color="primary" matTooltip="Editar provento" (click)="onEditProvento(provento)">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" matTooltip="Excluir provento" (click)="excluirProvento(provento)">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </div>
+        <th *matHeaderCellDef mat-header-cell class="actions-cell">Ações</th>
+        <td *matCellDef="let provento" mat-cell class="actions-cell">
+          <button mat-icon-button matTooltip="Editar receita" (click)="onEditProvento(provento)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button class="danger-action" matTooltip="Excluir receita" (click)="excluirProvento(provento)">
+            <mat-icon>delete_outline</mat-icon>
+          </button>
         </td>
       </ng-container>
 
@@ -55,10 +66,17 @@
     </table>
   </div>
 
-  <mat-paginator [length]="resultsLength" [pageSizeOptions]="[5, 10, 20]" [pageSize]="10" class="border-top-0"></mat-paginator>
-
-  <div *ngIf="proventos.length === 0" class="empty-state p-5 text-center">
-    <mat-icon class="empty-icon">payments</mat-icon>
-    <p class="empty-message">Nenhum provento cadastrado. Adicione uma receita utilizando o formulário acima.</p>
+  <div *ngIf="!isLoadingResults && proventos.length === 0" class="empty-state">
+    <span class="empty-icon">
+      <mat-icon>payments</mat-icon>
+    </span>
+    <strong>Nenhuma receita cadastrada</strong>
+    <p>Use o formulário ao lado para registrar sua primeira entrada.</p>
   </div>
+
+  <mat-paginator
+    [length]="resultsLength"
+    [pageSizeOptions]="[5, 10, 20]"
+    [pageSize]="10">
+  </mat-paginator>
 </div>

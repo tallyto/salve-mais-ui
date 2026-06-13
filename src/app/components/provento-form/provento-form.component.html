@@ -1,86 +1,102 @@
-<div class="receitas-page">
-
-  <!-- Hero -->
-  <div class="page-hero">
-    <div class="hero-inner">
-      <div class="hero-icon-wrap">
-        <mat-icon>payments</mat-icon>
-      </div>
+<section class="income-page">
+  <header class="income-header">
+    <div class="title-row">
+      <span class="title-icon">
+        <mat-icon>trending_up</mat-icon>
+      </span>
       <div>
-        <span class="hero-eyebrow">Finanças pessoais</span>
-        <h1>Receitas</h1>
-        <p>Registre seus recebimentos e acompanhe o fluxo de entrada ao longo do mês.</p>
+        <p class="eyebrow">Receitas</p>
+        <h1>Entradas de dinheiro</h1>
       </div>
     </div>
-  </div>
 
-  <!-- Form card -->
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title class="card-title-row">
-        <mat-icon class="icon-green">{{ isEditing ? 'edit' : 'add_circle' }}</mat-icon>
-        {{ isEditing ? 'Editar Receita' : 'Nova Receita' }}
-      </mat-card-title>
-      <mat-card-subtitle>
-        {{ isEditing ? 'Atualize os dados da receita selecionada' : 'Registre um novo recebimento ou entrada' }}
-      </mat-card-subtitle>
-    </mat-card-header>
+    <p>
+      Registre salários, freelas, reembolsos e outras entradas. Cada receita atualiza a conta de
+      destino e aparece no histórico financeiro.
+    </p>
+  </header>
 
-    <mat-card-content>
-      <form (ngSubmit)="salvarProvento()" [formGroup]="proventoForm" class="form-grid">
+  <main class="income-layout">
+    <aside class="income-form-panel">
+      <form (ngSubmit)="salvarProvento()" [formGroup]="proventoForm" class="income-form">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">{{ isEditing ? 'Edição' : 'Novo lançamento' }}</p>
+            <h2>{{ isEditing ? 'Editar receita' : 'Cadastrar receita' }}</h2>
+          </div>
+          <span class="panel-icon">
+            <mat-icon>{{ isEditing ? 'edit' : 'add_card' }}</mat-icon>
+          </span>
+        </div>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" class="full-width">
           <mat-label>Descrição</mat-label>
           <input formControlName="descricao" matInput placeholder="Ex: Salário, freela, aluguel">
           <mat-icon matSuffix>description</mat-icon>
+          <mat-error *ngIf="proventoForm.get('descricao')?.hasError('required')">
+            Informe uma descrição
+          </mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Valor</mat-label>
-          <input type="text" formControlName="valor" matInput placeholder="0,00" appCurrencyInput>
-          <mat-icon matSuffix>attach_money</mat-icon>
-        </mat-form-field>
+        <label class="amount-field">
+          <span>Valor recebido</span>
+          <div>
+            <small>R$</small>
+            <input
+              type="text"
+              formControlName="valor"
+              placeholder="0,00"
+              appCurrencyInput>
+          </div>
+        </label>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" class="full-width">
           <mat-label>Conta de destino</mat-label>
           <mat-select formControlName="contaId">
-            <mat-option *ngFor="let conta of accounts" [value]="conta.id">{{ conta.titular }}</mat-option>
+            <mat-option *ngFor="let conta of accounts" [value]="conta.id">
+              {{ conta.titular }} · {{ conta.saldo | currency:'BRL':'symbol':'1.0-0' }}
+            </mat-option>
           </mat-select>
           <mat-icon matSuffix>account_balance</mat-icon>
+          <mat-error *ngIf="proventoForm.get('contaId')?.hasError('required')">
+            Selecione a conta de destino
+          </mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" class="full-width">
           <mat-label>Data do recebimento</mat-label>
           <input [matDatepicker]="picker" formControlName="data" matInput>
           <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="proventoForm.get('data')?.hasError('required')">
+            Informe a data
+          </mat-error>
         </mat-form-field>
 
+        <div class="form-actions">
+          <button mat-flat-button color="primary" [disabled]="proventoForm.invalid" type="submit" class="primary-action">
+            <mat-icon>{{ isEditing ? 'update' : 'save' }}</mat-icon>
+            {{ isEditing ? 'Atualizar receita' : 'Salvar receita' }}
+          </button>
+
+          <button mat-stroked-button type="button" (click)="cancelar()" class="secondary-action">
+            <mat-icon>close</mat-icon>
+            Cancelar
+          </button>
+        </div>
       </form>
-    </mat-card-content>
+    </aside>
 
-    <mat-card-actions align="end">
-      <button mat-stroked-button type="button" (click)="cancelar()">
-        <mat-icon>close</mat-icon> Cancelar
-      </button>
-      <button mat-flat-button color="primary" [disabled]="proventoForm.invalid" type="submit">
-        <mat-icon>{{ isEditing ? 'update' : 'save' }}</mat-icon>
-        {{ isEditing ? 'Atualizar' : 'Salvar receita' }}
-      </button>
-    </mat-card-actions>
-  </mat-card>
+    <section class="income-list-panel">
+      <div class="list-heading">
+        <div>
+          <p class="eyebrow">Histórico</p>
+          <h2>Receitas registradas</h2>
+        </div>
+        <span>Entradas</span>
+      </div>
 
-  <!-- List card -->
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title class="card-title-row">
-        <mat-icon class="icon-green">list</mat-icon>
-        Suas Receitas
-      </mat-card-title>
-    </mat-card-header>
-    <mat-card-content class="table-content">
       <app-list-proventos></app-list-proventos>
-    </mat-card-content>
-  </mat-card>
-
-</div>
+    </section>
+  </main>
+</section>
