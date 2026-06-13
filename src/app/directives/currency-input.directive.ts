@@ -65,19 +65,26 @@ export class CurrencyInputDirective implements OnInit {
     }
   }
 
-  private formatValue(value: number): void {
-    if (value === null || value === undefined || isNaN(value)) {
+  private formatValue(value: any): void {
+    if (value === null || value === undefined || value === '') {
       this.el.nativeElement.value = '';
       return;
     }
 
-    // Formata o valor com separadores
-    const formattedValue = this.formatCurrency(value);
-    this.el.nativeElement.value = formattedValue;
+    // Garante que seja number — patchValue do backend pode vir como string
+    const numValue = typeof value === 'number'
+      ? value
+      : Number(String(value).replace(/\./g, '').replace(',', '.'));
+
+    if (isNaN(numValue)) {
+      this.el.nativeElement.value = '';
+      return;
+    }
+
+    this.el.nativeElement.value = this.formatCurrency(numValue);
   }
 
   private formatCurrency(value: number): string {
-    // Converte para string com 2 casas decimais
     const parts = value.toFixed(2).split('.');
     
     // Adiciona separador de milhares
