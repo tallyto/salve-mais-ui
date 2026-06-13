@@ -1,147 +1,44 @@
-.provento-container {
-  max-width: 1200px;
+.receitas-page {
+  max-width: 1100px;
   margin: 0 auto;
   padding: 24px;
-}
-
-.form-hero {
-  display: flex;
-  align-items: center;
-  margin-bottom: 24px;
-  padding: 22px 24px;
-  border: 1px solid rgba(16, 185, 129, 0.18);
-  border-radius: var(--radius-lg);
-  background:
-    linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(var(--primary-color-rgb), 0.05)),
-    var(--surface-color);
-  box-shadow: var(--shadow-sm);
-}
-
-.header-content {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.header-icon,
-.section-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto;
-  border-radius: var(--radius-sm);
-}
-
-.header-icon {
-  width: 52px;
-  height: 52px;
-  color: var(--success-color);
-  background: var(--success-light);
-}
-
-.header-icon mat-icon {
-  width: 28px;
-  height: 28px;
-  font-size: 28px;
-}
-
-.header-text {
   display: flex;
   flex-direction: column;
+  gap: 20px;
 }
 
-.header-kicker {
-  margin-bottom: 4px;
-  color: var(--success-color);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-  text-transform: uppercase;
-}
-
-.page-title {
-  margin: 0;
-  color: var(--text-color);
-  font-size: var(--font-size-xl);
-  font-weight: 700;
-}
-
-.provento-subtitle {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 6px;
-  color: var(--text-secondary);
-}
-
-.form-card {
-  position: relative;
-  overflow: hidden;
-  border: 1px solid var(--border-color);
+/* Hero */
+.page-hero {
+  padding: clamp(20px, 3vw, 32px) clamp(20px, 3vw, 36px);
   border-radius: var(--radius-lg);
-  background: var(--surface-color);
-  box-shadow: var(--shadow-sm);
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 55%, #6d28d9 100%);
+  color: #fff;
 }
+.hero-inner      { display: flex; align-items: center; gap: 20px; }
+.hero-icon-wrap  { display: flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: var(--radius-md); background: rgba(255,255,255,.15); flex-shrink: 0; }
+.hero-icon-wrap mat-icon { font-size: 28px; width: 28px; height: 28px; color: #fff; }
+.hero-eyebrow    { display: block; font-size: var(--font-size-xs); font-weight: var(--font-weight-semibold); text-transform: uppercase; letter-spacing: .05em; color: rgba(255,255,255,.65); margin-bottom: 4px; }
+.hero-inner h1   { margin: 0; font-size: clamp(1.4rem, 3vw, 2rem); font-weight: 700; color: #fff; }
+.hero-inner p    { margin: 6px 0 0; font-size: var(--font-size-sm); color: rgba(255,255,255,.75); }
 
-.form-card::before {
-  content: "";
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 4px;
-  background: var(--success-color);
-}
+/* Card title row */
+.card-title-row { display: flex; align-items: center; gap: 8px; font-size: var(--font-size-md) !important; }
+.icon-green     { color: var(--success-color); }
 
-.card-header {
-  display: flex;
-  flex-direction: column;
-  padding: 0 0 18px;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.header-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 4px;
-}
-
-.section-icon {
-  width: 34px;
-  height: 34px;
-}
-
-.section-icon.success {
-  color: var(--success-color);
-  background: var(--success-light);
-}
-
-.section-title {
-  color: var(--text-color);
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-}
-
-.provento-form {
+/* Form 2×2 grid */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 16px;
   padding-top: 8px;
 }
+.form-grid mat-form-field { width: 100%; }
 
-.form-actions {
-  margin-top: 20px;
-}
-
-button[type="submit"] {
-  min-width: 150px;
-}
+/* Remove padding do mat-card-content na listagem para a tabela ir até as bordas */
+.table-content { padding: 0 !important; }
 
 @media (max-width: 768px) {
-  .provento-container {
-    padding: 16px;
-  }
-
-  .form-hero {
-    padding: 18px;
-  }
-
-  .header-content {
-    align-items: flex-start;
-  }
+  .receitas-page { padding: 12px; gap: 14px; }
+  .hero-inner    { flex-direction: column; align-items: flex-start; }
+  .form-grid     { grid-template-columns: 1fr; }
 }

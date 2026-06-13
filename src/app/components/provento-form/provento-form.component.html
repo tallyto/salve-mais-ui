@@ -1,89 +1,86 @@
-<div class="provento-container form-page p-3 mx-auto">
-  <div class="header form-hero mb-4">
-    <div class="header-content">
-      <div class="header-icon">
+<div class="receitas-page">
+
+  <!-- Hero -->
+  <div class="page-hero">
+    <div class="hero-inner">
+      <div class="hero-icon-wrap">
         <mat-icon>payments</mat-icon>
       </div>
-      <div class="header-text">
-        <span class="header-kicker">Receitas</span>
-        <h2 class="page-title">Gerenciamento de Receitas</h2>
-        <div class="provento-subtitle text-color-secondary">
-          <mat-icon>attach_money</mat-icon> Registre e controle suas receitas
-        </div>
+      <div>
+        <span class="hero-eyebrow">Finanças pessoais</span>
+        <h1>Receitas</h1>
+        <p>Registre seus recebimentos e acompanhe o fluxo de entrada ao longo do mês.</p>
       </div>
     </div>
   </div>
 
-  <div class="provento-card form-card p-4 mb-4 shadow-1">
-    <div class="card-header mb-4">
-      <div class="header-title">
-        <span class="section-icon success">
-          <mat-icon>add_circle</mat-icon>
-        </span>
-        <h2 class="section-title m-0 mb-1">Cadastrar Provento</h2>
-      </div>
-      <div class="text-color-secondary text-sm">Registre um novo recebimento ou receita</div>
-    </div>
+  <!-- Form card -->
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="card-title-row">
+        <mat-icon class="icon-green">{{ isEditing ? 'edit' : 'add_circle' }}</mat-icon>
+        {{ isEditing ? 'Editar Receita' : 'Nova Receita' }}
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{ isEditing ? 'Atualize os dados da receita selecionada' : 'Registre um novo recebimento ou entrada' }}
+      </mat-card-subtitle>
+    </mat-card-header>
 
-    <form (ngSubmit)="salvarProvento()" [formGroup]="proventoForm" class="provento-form">
-      <div class="grid">
-        <div class="col-12 md:col-6 mb-3">
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Descrição</mat-label>
-            <input formControlName="descricao" matInput placeholder="Ex: Salário, Vale Alimentação, etc.">
-            <mat-icon matSuffix>description</mat-icon>
-          </mat-form-field>
-        </div>
+    <mat-card-content>
+      <form (ngSubmit)="salvarProvento()" [formGroup]="proventoForm" class="form-grid">
 
-        <div class="col-12 md:col-6 mb-3">
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Valor</mat-label>
-            <input type="text" formControlName="valor" matInput placeholder="0,00" appCurrencyInput>
-            <mat-icon matSuffix>attach_money</mat-icon>
-          </mat-form-field>
-        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Descrição</mat-label>
+          <input formControlName="descricao" matInput placeholder="Ex: Salário, freela, aluguel">
+          <mat-icon matSuffix>description</mat-icon>
+        </mat-form-field>
 
-        <div class="col-12 md:col-6 mb-3">
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Conta</mat-label>
-            <mat-select formControlName="contaId">
-              <mat-option *ngFor="let conta of accounts" [value]="conta.id">{{conta.titular}}</mat-option>
-            </mat-select>
-            <mat-icon matSuffix>account_balance</mat-icon>
-          </mat-form-field>
-        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Valor</mat-label>
+          <input type="text" formControlName="valor" matInput placeholder="0,00" appCurrencyInput>
+          <mat-icon matSuffix>attach_money</mat-icon>
+        </mat-form-field>
 
-        <div class="col-12 md:col-6 mb-3">
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Data do recebimento</mat-label>
-            <input [matDatepicker]="picker" formControlName="data" matInput>
-            <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field>
-        </div>
-      </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Conta de destino</mat-label>
+          <mat-select formControlName="contaId">
+            <mat-option *ngFor="let conta of accounts" [value]="conta.id">{{ conta.titular }}</mat-option>
+          </mat-select>
+          <mat-icon matSuffix>account_balance</mat-icon>
+        </mat-form-field>
 
-      <div class="form-actions flex justify-content-end gap-2 mt-3">
-        <button mat-stroked-button type="button" class="text-color-secondary">
-          <mat-icon>cancel</mat-icon> Cancelar
-        </button>
-        <button mat-raised-button color="primary" [disabled]="proventoForm.invalid" type="submit">
-          <mat-icon>save</mat-icon> Salvar provento
-        </button>
-      </div>
-    </form>
-  </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Data do recebimento</mat-label>
+          <input [matDatepicker]="picker" formControlName="data" matInput>
+          <mat-datepicker-toggle [for]="picker" matIconSuffix></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
 
-  <div class="proventos-list-card data-card form-card shadow-1">
-    <div class="card-header">
-      <div class="header-title">
-        <span class="section-icon success">
-          <mat-icon>list</mat-icon>
-        </span>
-        <h2 class="section-title m-0">Seus Proventos</h2>
-      </div>
-    </div>
-    <app-list-proventos></app-list-proventos>
-  </div>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button mat-stroked-button type="button" (click)="cancelar()">
+        <mat-icon>close</mat-icon> Cancelar
+      </button>
+      <button mat-flat-button color="primary" [disabled]="proventoForm.invalid" type="submit">
+        <mat-icon>{{ isEditing ? 'update' : 'save' }}</mat-icon>
+        {{ isEditing ? 'Atualizar' : 'Salvar receita' }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <!-- List card -->
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="card-title-row">
+        <mat-icon class="icon-green">list</mat-icon>
+        Suas Receitas
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="table-content">
+      <app-list-proventos></app-list-proventos>
+    </mat-card-content>
+  </mat-card>
+
 </div>
-

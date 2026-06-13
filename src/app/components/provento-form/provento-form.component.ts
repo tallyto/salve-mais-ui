@@ -53,6 +53,14 @@ export class ProventoFormComponent implements OnInit, OnDestroy {
     });
   }
 
+  get isEditing(): boolean {
+    return !!this.proventoForm.get('id')?.value;
+  }
+
+  cancelar(): void {
+    this.proventoForm.reset();
+  }
+
   salvarProvento() {
     if (this.proventoForm.value.id) {
       this.proventoService.atualizarProvento(this.proventoForm.value).subscribe({

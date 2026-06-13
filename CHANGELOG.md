@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+## [1.47.0] - 2026-06-12
+
+### Melhorias
+
+- **Receitas**: tela reimaginada com hero gradiente, formulário em `mat-card` com grid 2×2 nativo, campos com hint text, botões `mat-flat-button`/`mat-stroked-button`; header dinâmico entre "Nova Receita" e "Editar Receita" com ícone e label adaptativos
+- **Receitas**: botão "Cancelar" conectado a `proventoForm.reset()` (antes sem ação); ícone de ação do submit adaptativo (`save` vs `update`)
+- **Listagem de receitas**: ícone do círculo verde padronizado com `var(--success-color)` e tamanho 17px; `empty-state` com layout consistente com o restante do app
+
+### Refatoração
+
+- **ProventoFormComponent**: CSS reduzido de 147 → 45 linhas (removido form-hero/form-card/section-icon duplicados); getter `isEditing` e método `cancelar()` adicionados
+
 ## [1.46.0] - 2026-06-12
 
 ### Melhorias
