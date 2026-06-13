@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { ReservaEmergencia, ReservaEmergenciaDetalhe, ReservaEmergenciaInput } from '../models/reserva-emergencia.model';
+import { HistoricoContribuicao, ReservaEmergencia, ReservaEmergenciaDetalhe, ReservaEmergenciaInput } from '../models/reserva-emergencia.model';
 
 @Injectable({
   providedIn: 'root'
@@ -51,5 +51,9 @@ export class ReservaEmergenciaService {
       contaOrigemId,
       valor
     });
+  }
+
+  getHistorico(reservaId: number): Observable<HistoricoContribuicao[]> {
+    return this.http.get<HistoricoContribuicao[]>(`${this.apiUrl}/${reservaId}/historico`);
   }
 }

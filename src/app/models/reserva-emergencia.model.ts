@@ -26,3 +26,10 @@ export interface ReservaEmergenciaInput {
   valorContribuicaoMensal: number;
   contaId: number;
 }
+
+export interface HistoricoContribuicao {
+  id: number;
+  valor: number;
+  data: string;
+  contaOrigem: string;
+}
