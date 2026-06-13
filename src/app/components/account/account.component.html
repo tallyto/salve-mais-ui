@@ -51,112 +51,114 @@
 </ng-container>
 
 <!-- Modo Página Completa -->
-<div *ngIf="!isDialogMode" class="accounts-page">
-
-  <!-- Hero -->
-  <div class="page-hero">
-    <div class="hero-inner">
-      <div class="hero-icon-wrap">
+<section *ngIf="!isDialogMode" class="accounts-page">
+  <header class="accounts-header">
+    <div class="title-row">
+      <span class="title-icon">
         <mat-icon>account_balance</mat-icon>
-      </div>
+      </span>
       <div>
-        <span class="hero-eyebrow">Finanças pessoais</span>
-        <h1>Contas Bancárias</h1>
-        <p>Gerencie saldos, faça transferências e acompanhe seus investimentos em um só lugar.</p>
+        <p class="eyebrow">Contas bancárias</p>
+        <h1>Carteira financeira</h1>
       </div>
     </div>
-  </div>
 
-  <!-- Form card -->
-  <mat-card class="form-card">
-    <mat-card-header>
-      <mat-card-title class="card-title-row">
-        <mat-icon class="icon-blue">add_circle</mat-icon>
-        Nova Conta
-      </mat-card-title>
-      <mat-card-subtitle>Selecione o tipo e preencha os dados da conta</mat-card-subtitle>
-    </mat-card-header>
+    <p>
+      Cadastre contas correntes, poupanças, investimentos e reservas. Use essa base para receitas,
+      transferências e acompanhamento de saldo.
+    </p>
+  </header>
 
-    <mat-card-content>
-      <form (ngSubmit)="createAccount()" [formGroup]="accountForm">
-
-        <!-- Tipo selector -->
-        <p class="form-section-label">Tipo de conta</p>
-        <div class="tipo-grid">
-          <button
-            type="button"
-            *ngFor="let tipo of tiposConta"
-            class="tipo-tile"
-            [class.tipo-selected]="accountForm.get('tipo')?.value === tipo.value"
-            (click)="accountForm.get('tipo')?.setValue(tipo.value)"
-          >
-            <span class="tipo-tile-icon" [ngClass]="tipo.iconClass">
-              <mat-icon>{{ tipo.icon }}</mat-icon>
-            </span>
-            <span class="tipo-tile-body">
-              <span class="tipo-tile-label">{{ tipo.label }}</span>
-              <span class="tipo-tile-desc">{{ tipo.description }}</span>
-            </span>
-            <mat-icon class="tipo-check-icon">check_circle</mat-icon>
-          </button>
+  <main class="accounts-layout">
+    <aside class="accounts-form-panel">
+      <form (ngSubmit)="createAccount()" [formGroup]="accountForm" class="account-form">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Nova conta</p>
+            <h2>Dados bancários</h2>
+          </div>
+          <span class="panel-icon">
+            <mat-icon>add_card</mat-icon>
+          </span>
         </div>
 
-        <div class="form-separator"></div>
+        <section class="account-section">
+          <div class="section-copy">
+            <h3>Tipo de conta</h3>
+            <p>Escolha como essa conta será classificada no sistema.</p>
+          </div>
 
-        <!-- Fields -->
-        <p class="form-section-label">Dados da conta</p>
-        <div class="fields-grid">
+          <div class="tipo-grid">
+            <button
+              type="button"
+              *ngFor="let tipo of tiposConta"
+              class="tipo-tile"
+              [class.tipo-selected]="accountForm.get('tipo')?.value === tipo.value"
+              (click)="accountForm.get('tipo')?.setValue(tipo.value)">
+              <span class="tipo-tile-icon" [ngClass]="tipo.iconClass">
+                <mat-icon>{{ tipo.icon }}</mat-icon>
+              </span>
+              <span class="tipo-tile-body">
+                <span class="tipo-tile-label">{{ tipo.label }}</span>
+                <span class="tipo-tile-desc">{{ tipo.description }}</span>
+              </span>
+              <mat-icon class="tipo-check-icon">check_circle</mat-icon>
+            </button>
+          </div>
+        </section>
 
-          <mat-form-field appearance="outline" [ngClass]="{'field-full': !mostrarTaxaRendimento()}">
+        <section class="account-section">
+          <div class="section-copy">
+            <h3>Identificação</h3>
+            <p>Use um nome fácil de reconhecer nas movimentações.</p>
+          </div>
+
+          <mat-form-field appearance="outline" class="full-width">
             <mat-label>Nome do titular</mat-label>
             <input autocomplete="off" formControlName="titular" matInput placeholder="Ex: Maria da Silva">
             <mat-icon matSuffix>person</mat-icon>
-            <mat-hint>Como você quer identificar esta conta</mat-hint>
           </mat-form-field>
 
-          <mat-form-field *ngIf="mostrarTaxaRendimento()" appearance="outline">
+          <mat-form-field *ngIf="mostrarTaxaRendimento()" appearance="outline" class="full-width">
             <mat-label>Taxa de rendimento anual (%)</mat-label>
-            <input autocomplete="off" formControlName="taxaRendimento" matInput type="number" step="0.01" min="0" max="100" placeholder="Ex: 13.25">
+            <input autocomplete="off" formControlName="taxaRendimento" matInput type="number" step="0.01" min="0" max="100" placeholder="Ex: 13,25">
             <mat-icon matSuffix>percent</mat-icon>
-            <mat-hint>CDI, Selic ou referência desta conta</mat-hint>
+            <mat-hint>Ex: CDI, Selic, poupança</mat-hint>
             <mat-error *ngIf="accountForm.get('taxaRendimento')?.hasError('min') || accountForm.get('taxaRendimento')?.hasError('max')">
               Informe um valor entre 0 e 100
             </mat-error>
           </mat-form-field>
 
-          <mat-form-field appearance="outline" class="field-full">
+          <mat-form-field appearance="outline" class="full-width">
             <mat-label>Descrição (opcional)</mat-label>
-            <input autocomplete="off" formControlName="descricao" matInput placeholder="Ex: Conta para guardar para viagem">
+            <input autocomplete="off" formControlName="descricao" matInput placeholder="Ex: Reserva de viagem, fundo mensal">
             <mat-icon matSuffix>description</mat-icon>
-            <mat-hint>Contexto ou propósito desta conta</mat-hint>
           </mat-form-field>
+        </section>
 
+        <div class="account-actions-footer">
+          <button mat-flat-button color="primary" [disabled]="accountForm.invalid" type="submit" class="primary-action">
+            <mat-icon>save</mat-icon>
+            Salvar conta
+          </button>
+          <button mat-stroked-button type="button" (click)="resetForm()" class="secondary-action">
+            <mat-icon>restart_alt</mat-icon>
+            Limpar
+          </button>
         </div>
-
       </form>
-    </mat-card-content>
+    </aside>
 
-    <mat-card-actions align="end">
-      <button mat-stroked-button type="button" (click)="resetForm()">
-        <mat-icon>restart_alt</mat-icon> Limpar
-      </button>
-      <button mat-flat-button color="primary" [disabled]="accountForm.invalid" (click)="createAccount()">
-        <mat-icon>save</mat-icon> Salvar conta
-      </button>
-    </mat-card-actions>
-  </mat-card>
+    <section class="accounts-list-panel">
+      <div class="list-heading">
+        <div>
+          <p class="eyebrow">Contas</p>
+          <h2>Contas cadastradas</h2>
+        </div>
+        <span>Saldos</span>
+      </div>
 
-  <!-- Accounts list -->
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title class="card-title-row">
-        <mat-icon class="icon-green">account_balance_wallet</mat-icon>
-        Suas Contas
-      </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
       <app-list-accounts></app-list-accounts>
-    </mat-card-content>
-  </mat-card>
-
-</div>
+    </section>
+  </main>
+</section>

@@ -105,6 +105,6 @@ export class AccountComponent {
   }
 
   resetForm() {
-    this.accountForm.reset()
+    this.accountForm.reset({ tipo: 'CORRENTE' })
   }
 }

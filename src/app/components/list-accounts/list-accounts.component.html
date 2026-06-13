@@ -26,12 +26,10 @@
     [ngClass]="getCardAccentClass(account.tipo)"
   >
     <mat-card-content>
-      <!-- Type icon -->
       <div class="account-icon-wrap" [ngClass]="getIconClass(account.tipo)">
         <mat-icon>{{ getTipoIcon(account.tipo) }}</mat-icon>
       </div>
 
-      <!-- Name: view or edit -->
       <div class="account-body">
         <ng-container *ngIf="!isEditing(account)">
           <p class="account-holder">{{ account.titular }}</p>
@@ -50,7 +48,6 @@
         {{ account.saldo | currency:'BRL':'symbol':'1.2-2' }}
       </p>
 
-      <!-- Actions -->
       <div class="account-actions">
         <ng-container *ngIf="!isEditing(account)">
           <button mat-icon-button (click)="startEdit(account)" matTooltip="Editar nome">
