@@ -298,30 +298,6 @@
   text-decoration: underline;
 }
 
-.insight-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  margin-bottom: 20px;
-}
-
-.insight-card {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 16px 18px;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  background: var(--surface-color);
-  box-shadow: var(--shadow-sm);
-}
-
-.insight-value {
-  margin-bottom: 4px;
-  color: var(--text-color);
-  font-size: var(--font-size-lg);
-  font-weight: 700;
-}
-
 .data-card {
   position: relative;
   height: 100%;

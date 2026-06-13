@@ -2,6 +2,18 @@
 
 ## [Unreleased]
 
+## [1.43.0] - 2026-06-12
+
+### Melhorias
+
+- **Dashboard**: removido card flutuante de Reserva de Emergência entre os cards de resumo (já exibido na seção "Saúde financeira" abaixo); removidas tabelas redundantes de compras parceladas ativas e compras em débito do mês (páginas dedicadas existem no menu); dashboard passa de 549 para ~415 linhas de template
+- **Menu lateral**: removido rodapé com nome/email/versão que duplicava informações já visíveis na toolbar; altura do sidenav-content ajustada para ocupar o espaço liberado
+- **Ambiente**: corrigida URL da API em `environment.ts` (`api.salvemais.tallyto.com` → `salvemais.tallyto.com/api`)
+
+### Refatoração
+
+- **DashboardComponent**: removidos imports, propriedades e métodos relacionados a `CompraParcelada` e `CompraDebito` que se tornaram órfãos após simplificação do template
+
 ## [1.42.0] - 2026-06-07
 
 ### Melhorias

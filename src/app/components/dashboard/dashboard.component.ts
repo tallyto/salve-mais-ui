@@ -10,10 +10,6 @@ import { GastoCartaoService } from '../../services/gasto-cartao.service';
 import { GastoCartao } from '../../models/gasto-cartao.model';
 import { catchError } from 'rxjs/operators';
 import { Page } from '../../models/page.model';
-import { CompraParceladaService } from '../../services/compra-parcelada.service';
-import { CompraParcelada } from '../../models/compra-parcelada.model';
-import { CompraDebitoService } from '../../services/compra-debito.service';
-import { CompraDebito } from '../../models/compra-debito.model';
 import { Period } from './month-year-filter/month-year-filter.component';
 
 interface Transaction {
@@ -79,14 +75,6 @@ export class DashboardComponent implements OnInit {
 
   // Dados para transações recentes
   recentTransactions: Transaction[] = [];
-
-  // Dados para compras parceladas
-  comprasParceladas: CompraParcelada[] = [];
-  comprasParceladasCarregando: boolean = false;
-
-  // Dados para compras em débito
-  comprasDebito: CompraDebito[] = [];
-  comprasDebitoCarregando: boolean = false;
 
   // Configurações para os gráficos
   // Pie Chart (Despesas por Categoria)
@@ -198,9 +186,7 @@ export class DashboardComponent implements OnInit {
     private accountService: AccountService,
     private proventoService: ProventoService,
     private dashboardService: DashboardService,
-    private gastoCartaoService: GastoCartaoService,
-    private compraParceladaService: CompraParceladaService,
-    private compraDebitoService: CompraDebitoService
+    private gastoCartaoService: GastoCartaoService
   ) {
     // Inicializar filtros com mês e ano atuais
     const currentDate = new Date();
@@ -210,8 +196,6 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadDashboardData();
-    this.loadComprasParceladas();
-    this.loadComprasDebito();
   }
 
   getSaudacao(): string {
@@ -309,41 +293,6 @@ export class DashboardComponent implements OnInit {
       },
       error: (error) => {
         this.isLoading = false;
-      }
-    });
-  }
-
-  // Carrega as compras parceladas ativas (não pagas)
-  loadComprasParceladas(): void {
-    this.comprasParceladasCarregando = true;
-    // Busca as 5 compras parceladas mais recentes com parcelas não pagas
-    this.compraParceladaService.listar(0, 5).subscribe({
-      next: (result) => {
-        // Filtra para mostrar apenas compras com parcelas não pagas
-        this.comprasParceladas = result.content.filter(cp =>
-          cp.parcelas?.some(p => !p.paga)
-        );
-        this.comprasParceladasCarregando = false;
-      },
-      error: (err) => {
-        this.comprasParceladas = [];
-        this.comprasParceladasCarregando = false;
-      }
-    });
-  }
-
-  // Carrega as compras em débito recentes
-  loadComprasDebito(): void {
-    this.comprasDebitoCarregando = true;
-    // Busca as 5 compras em débito mais recentes do mês atual
-    this.compraDebitoService.listarCompras(0, 5, this.selectedMonth, this.selectedYear).subscribe({
-      next: (result) => {
-        this.comprasDebito = result.content;
-        this.comprasDebitoCarregando = false;
-      },
-      error: (err) => {
-        this.comprasDebito = [];
-        this.comprasDebitoCarregando = false;
       }
     });
   }
@@ -541,30 +490,6 @@ export class DashboardComponent implements OnInit {
     return variations;
   }
 
-  // Métodos auxiliares para compras parceladas
-  getProximoVencimento(compra: CompraParcelada): string {
-    if (!compra.parcelas || compra.parcelas.length === 0) {
-      return '-';
-    }
-    const parcelaNaoPaga = compra.parcelas.find(p => !p.paga);
-    return parcelaNaoPaga ? parcelaNaoPaga.dataVencimento : '-';
-  }
-
-  temParcelasPendentes(compra: CompraParcelada): boolean {
-    if (!compra.parcelas || compra.parcelas.length === 0) {
-      return false;
-    }
-    return compra.parcelas.some(p => !p.paga);
-  }
-
-  getStatusCompra(compra: CompraParcelada): string {
-    return this.temParcelasPendentes(compra) ? 'Em aberto' : 'Quitada';
-  }
-
-  getStatusClass(compra: CompraParcelada): string {
-    return this.temParcelasPendentes(compra) ? 'badge-warning' : 'badge-success';
-  }
-
   onPeriodChange(period: Period): void {
     this.selectedMonth = period.month;
     this.selectedYear = period.year;
@@ -573,8 +498,6 @@ export class DashboardComponent implements OnInit {
 
   onFilterChange(): void {
     this.loadDashboardData();
-    this.loadComprasParceladas();
-    this.loadComprasDebito();
   }
 
   // Método para exportar dados do dashboard para Excel
