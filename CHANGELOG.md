@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [1.44.0] - 2026-06-12
+
+### Melhorias
+
+- **Dashboard**: visual evoluído para produto financeiro — hero com gradiente azul/roxo, KPI cards com borda superior semântica por cor (verde=saldo/receitas, vermelho=despesas, roxo=contas, azul=parcelas, laranja=pendentes), quick actions com ícone em círculo animado, section headings com acento lateral, hover nos cards com elevação sutil e nas linhas de tabela
+
 ## [1.43.0] - 2026-06-12
 
 ### Melhorias
