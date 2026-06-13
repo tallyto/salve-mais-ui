@@ -259,6 +259,404 @@ body {
   font-weight: var(--font-weight-semibold);
 }
 
+/* ===========================
+   FINANCE SCREENS
+   Base visual compartilhada por Reserva, edição da Reserva e Receitas
+   =========================== */
+.reserve-page,
+.reserve-form-page,
+.income-page,
+.accounts-page,
+.dashboard-page {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 24px 0 40px;
+  color: #111827;
+}
+
+.loading-state {
+  min-height: 360px;
+  display: grid;
+  place-items: center;
+}
+
+.reserve-page .eyebrow,
+.reserve-form-page .eyebrow,
+.income-page .eyebrow,
+.accounts-page .eyebrow,
+.dashboard-page .eyebrow,
+.reserve-page .panel-label,
+.reserve-form-page .panel-label,
+.income-page .panel-label,
+.accounts-page .panel-label,
+.dashboard-page .panel-label {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.reserve-header,
+.form-header,
+.income-header,
+.accounts-header,
+.dashboard-header {
+  margin-bottom: 18px;
+  padding: 4px 2px;
+}
+
+.reserve-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.title-icon,
+.panel-icon {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #111827;
+  color: #fff;
+  flex: 0 0 auto;
+}
+
+.title-icon mat-icon,
+.panel-icon mat-icon {
+  font-size: 23px;
+  width: 23px;
+  height: 23px;
+}
+
+.reserve-header h1,
+.form-header h1,
+.income-header h1,
+.accounts-header h1,
+.dashboard-header h1 {
+  margin: 2px 0 0;
+  color: #111827;
+  font-size: clamp(1.7rem, 3vw, 2.45rem);
+  font-weight: 850;
+  line-height: 1.05;
+}
+
+.header-description,
+.form-header > p,
+.income-header > p,
+.accounts-header > p,
+.dashboard-header > p {
+  max-width: 720px;
+  margin: 12px 0 0 56px;
+  color: #4b5563;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.header-copy {
+  min-width: 0;
+}
+
+.header-actions {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.danger-action {
+  color: #dc2626 !important;
+}
+
+.reserve-layout,
+.form-layout,
+.income-layout,
+.accounts-layout {
+  display: grid;
+  gap: 16px;
+  align-items: start;
+}
+
+.reserve-layout,
+.form-layout {
+  grid-template-columns: minmax(0, 1fr) 360px;
+}
+
+.income-layout {
+  grid-template-columns: 360px minmax(0, 1fr);
+}
+
+.accounts-layout {
+  grid-template-columns: 360px minmax(0, 1fr);
+}
+
+.overview-panel,
+.action-panel,
+.history-panel,
+.config-panel,
+.side-card,
+.submit-card,
+.income-form-panel,
+.income-list-panel,
+.accounts-form-panel,
+.accounts-list-panel {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 10px 28px rgba(17, 24, 39, 0.06);
+}
+
+.overview-panel,
+.config-panel {
+  padding: 22px;
+}
+
+.action-panel,
+.side-panel,
+.income-form-panel,
+.accounts-form-panel {
+  position: sticky;
+  top: 16px;
+}
+
+.action-panel,
+.side-card,
+.submit-card,
+.income-form-panel,
+.accounts-form-panel {
+  padding: 18px;
+}
+
+.side-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.panel-heading,
+.action-header,
+.side-heading,
+.list-heading,
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.panel-heading {
+  padding-bottom: 18px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.action-header {
+  margin-bottom: 18px;
+}
+
+.side-heading,
+.submit-card > div {
+  margin-bottom: 16px;
+}
+
+.panel-heading h2,
+.action-header h2,
+.side-heading h2,
+.submit-card h2,
+.list-heading h2,
+.section-heading h2 {
+  margin: 3px 0 0;
+  color: #111827;
+  font-size: 1.25rem;
+  font-weight: 850;
+  line-height: 1.15;
+}
+
+.panel-icon,
+.action-icon,
+.kpi-icon,
+.history-icon {
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  background: #ecfdf5;
+  color: #059669;
+  flex: 0 0 auto;
+}
+
+.panel-icon mat-icon,
+.action-icon mat-icon,
+.kpi-icon mat-icon,
+.history-icon mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.amount-field {
+  display: block;
+  padding: 13px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background: #f9fafb;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+}
+
+.amount-field:focus-within {
+  border-color: #16a34a;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.12);
+}
+
+.amount-field > span {
+  display: block;
+  margin-bottom: 8px;
+  color: #6b7280;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.amount-field div {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.amount-field small {
+  color: #4b5563;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.amount-field input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #111827;
+  font: inherit;
+  font-size: 2.15rem;
+  font-weight: 900;
+  letter-spacing: 0;
+}
+
+.amount-field input::placeholder {
+  color: #9ca3af;
+}
+
+.primary-action,
+.secondary-action,
+.simulate-action {
+  width: 100%;
+  height: 48px !important;
+}
+
+.primary-action mat-icon,
+.secondary-action mat-icon,
+.simulate-action mat-icon {
+  margin-right: 6px;
+}
+
+.section-heading,
+.list-heading {
+  padding-bottom: 14px;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.section-heading > span,
+.list-heading > span {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #f3f4f6;
+  color: #4b5563;
+  font-size: 0.78rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+@media (max-width: 980px) {
+  .reserve-layout,
+  .form-layout,
+  .income-layout,
+  .accounts-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .action-panel,
+  .side-panel,
+  .income-form-panel,
+  .accounts-form-panel {
+    position: static;
+  }
+}
+
+@media (max-width: 720px) {
+  .reserve-page,
+  .reserve-form-page,
+  .income-page,
+  .accounts-page,
+  .dashboard-page {
+    width: min(100% - 24px, 1180px);
+    padding-top: 14px;
+  }
+
+  .reserve-header,
+  .accounts-header,
+  .dashboard-header,
+  .section-heading,
+  .list-heading {
+    flex-direction: column;
+  }
+
+  .header-description,
+  .form-header > p,
+  .income-header > p,
+  .accounts-header > p,
+  .dashboard-header > p {
+    margin-left: 0;
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .overview-panel,
+  .action-panel,
+  .history-panel,
+  .config-panel,
+  .side-card,
+  .submit-card,
+  .income-form-panel {
+    padding: 16px;
+  }
+
+  .accounts-form-panel {
+    padding: 16px;
+  }
+
+  .amount-field input {
+    font-size: 1.9rem;
+  }
+}
+
 /* Table Styles */
 .table-container,
 .list-table-container {
