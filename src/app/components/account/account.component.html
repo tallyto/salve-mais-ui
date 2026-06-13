@@ -41,10 +41,10 @@
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
-    <button mat-button type="button" (click)="fecharDialog()">
+    <button mat-stroked-button type="button" (click)="fecharDialog()">
       <mat-icon>close</mat-icon> Cancelar
     </button>
-    <button mat-raised-button color="primary" type="submit" [disabled]="accountForm.invalid" (click)="createAccount()">
+    <button mat-flat-button color="primary" type="submit" [disabled]="accountForm.invalid" (click)="createAccount()">
       <mat-icon>save</mat-icon> Salvar
     </button>
   </mat-dialog-actions>
@@ -68,57 +68,79 @@
   </div>
 
   <!-- Form card -->
-  <mat-card>
+  <mat-card class="form-card">
     <mat-card-header>
       <mat-card-title class="card-title-row">
         <mat-icon class="icon-blue">add_circle</mat-icon>
         Nova Conta
       </mat-card-title>
-      <mat-card-subtitle>Preencha os dados para cadastrar uma nova conta bancária</mat-card-subtitle>
+      <mat-card-subtitle>Selecione o tipo e preencha os dados da conta</mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content>
-      <form (ngSubmit)="createAccount()" [formGroup]="accountForm" class="account-form-grid">
+      <form (ngSubmit)="createAccount()" [formGroup]="accountForm">
 
-        <mat-form-field appearance="outline">
-          <mat-label>Nome do titular</mat-label>
-          <input autocomplete="off" formControlName="titular" matInput placeholder="Ex: Maria da Silva">
-          <mat-icon matSuffix>person</mat-icon>
-        </mat-form-field>
+        <!-- Tipo selector -->
+        <p class="form-section-label">Tipo de conta</p>
+        <div class="tipo-grid">
+          <button
+            type="button"
+            *ngFor="let tipo of tiposConta"
+            class="tipo-tile"
+            [class.tipo-selected]="accountForm.get('tipo')?.value === tipo.value"
+            (click)="accountForm.get('tipo')?.setValue(tipo.value)"
+          >
+            <span class="tipo-tile-icon" [ngClass]="tipo.iconClass">
+              <mat-icon>{{ tipo.icon }}</mat-icon>
+            </span>
+            <span class="tipo-tile-body">
+              <span class="tipo-tile-label">{{ tipo.label }}</span>
+              <span class="tipo-tile-desc">{{ tipo.description }}</span>
+            </span>
+            <mat-icon class="tipo-check-icon">check_circle</mat-icon>
+          </button>
+        </div>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Tipo de conta</mat-label>
-          <mat-select formControlName="tipo">
-            <mat-option *ngFor="let tipo of tiposConta" [value]="tipo.value">
-              <mat-icon class="tipo-option-icon">{{ tipo.icon }}</mat-icon> {{ tipo.label }}
-            </mat-option>
-          </mat-select>
-          <mat-icon matSuffix>category</mat-icon>
-        </mat-form-field>
+        <div class="form-separator"></div>
 
-        <mat-form-field *ngIf="mostrarTaxaRendimento()" appearance="outline">
-          <mat-label>Taxa de rendimento anual (%)</mat-label>
-          <input autocomplete="off" formControlName="taxaRendimento" matInput type="number" step="0.01" min="0" max="100" placeholder="Ex: 13.25">
-          <mat-icon matSuffix>percent</mat-icon>
-          <mat-error *ngIf="accountForm.get('taxaRendimento')?.hasError('min') || accountForm.get('taxaRendimento')?.hasError('max')">
-            Informe um valor entre 0 e 100
-          </mat-error>
-        </mat-form-field>
+        <!-- Fields -->
+        <p class="form-section-label">Dados da conta</p>
+        <div class="fields-grid">
 
-        <mat-form-field appearance="outline" [class.span-full]="!mostrarTaxaRendimento()">
-          <mat-label>Descrição (opcional)</mat-label>
-          <input autocomplete="off" formControlName="descricao" matInput placeholder="Ex: Conta para reserva de viagem">
-          <mat-icon matSuffix>description</mat-icon>
-        </mat-form-field>
+          <mat-form-field appearance="outline" [ngClass]="{'field-full': !mostrarTaxaRendimento()}">
+            <mat-label>Nome do titular</mat-label>
+            <input autocomplete="off" formControlName="titular" matInput placeholder="Ex: Maria da Silva">
+            <mat-icon matSuffix>person</mat-icon>
+            <mat-hint>Como você quer identificar esta conta</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="mostrarTaxaRendimento()" appearance="outline">
+            <mat-label>Taxa de rendimento anual (%)</mat-label>
+            <input autocomplete="off" formControlName="taxaRendimento" matInput type="number" step="0.01" min="0" max="100" placeholder="Ex: 13.25">
+            <mat-icon matSuffix>percent</mat-icon>
+            <mat-hint>CDI, Selic ou referência desta conta</mat-hint>
+            <mat-error *ngIf="accountForm.get('taxaRendimento')?.hasError('min') || accountForm.get('taxaRendimento')?.hasError('max')">
+              Informe um valor entre 0 e 100
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="field-full">
+            <mat-label>Descrição (opcional)</mat-label>
+            <input autocomplete="off" formControlName="descricao" matInput placeholder="Ex: Conta para guardar para viagem">
+            <mat-icon matSuffix>description</mat-icon>
+            <mat-hint>Contexto ou propósito desta conta</mat-hint>
+          </mat-form-field>
+
+        </div>
 
       </form>
     </mat-card-content>
 
     <mat-card-actions align="end">
-      <button mat-button type="button" (click)="resetForm()">
-        <mat-icon>cancel</mat-icon> Limpar
+      <button mat-stroked-button type="button" (click)="resetForm()">
+        <mat-icon>restart_alt</mat-icon> Limpar
       </button>
-      <button mat-raised-button color="primary" [disabled]="accountForm.invalid" (click)="createAccount()">
+      <button mat-flat-button color="primary" [disabled]="accountForm.invalid" (click)="createAccount()">
         <mat-icon>save</mat-icon> Salvar conta
       </button>
     </mat-card-actions>

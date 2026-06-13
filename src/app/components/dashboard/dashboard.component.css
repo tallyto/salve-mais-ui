@@ -109,11 +109,17 @@
   height: 42px;
   border-radius: var(--radius-sm);
 }
-.icon-green  { color: var(--success-color); background: var(--success-light); }
-.icon-red    { color: var(--danger-color);  background: var(--danger-light);  }
-.icon-blue   { color: var(--primary-color); background: var(--primary-light); }
-.icon-orange { color: var(--warning-color); background: var(--warning-light); }
-.icon-purple { color: var(--accent-color);  background: var(--accent-light);  }
+/* Cor apenas — background só no wrapper .card-icon para não sujar mat-icon solto */
+.icon-green  { color: var(--success-color); }
+.icon-red    { color: var(--danger-color);  }
+.icon-blue   { color: var(--primary-color); }
+.icon-orange { color: var(--warning-color); }
+.icon-purple { color: var(--accent-color);  }
+.card-icon.icon-green  { background: var(--success-light); }
+.card-icon.icon-red    { background: var(--danger-light);  }
+.card-icon.icon-blue   { background: var(--primary-light); }
+.card-icon.icon-orange { background: var(--warning-light); }
+.card-icon.icon-purple { background: var(--accent-light);  }
 
 /* ── Quick actions ────────────────────────────────────────── */
 .quick-actions-bar { display: grid; grid-template-columns: repeat(8, 1fr); gap: 8px; }

@@ -38,7 +38,7 @@
 .accent-orange { border-top-color: var(--warning-color) !important; }
 .accent-purple { border-top-color: var(--accent-color)  !important; }
 
-/* Icon */
+/* Icon wrapper */
 .account-icon-wrap {
   display: inline-flex;
   align-items: center;
@@ -47,10 +47,11 @@
   height: 48px;
   border-radius: var(--radius-sm);
 }
-.icon-blue   { color: var(--primary-color); background: var(--primary-light); }
-.icon-green  { color: var(--success-color); background: var(--success-light); }
-.icon-orange { color: var(--warning-color); background: var(--warning-light); }
-.icon-purple { color: var(--accent-color);  background: var(--accent-light);  }
+/* Cor no ícone filho + fundo apenas no wrapper (evita background em mat-icon solto) */
+.account-icon-wrap.icon-blue   { color: var(--primary-color); background: var(--primary-light); }
+.account-icon-wrap.icon-green  { color: var(--success-color); background: var(--success-light); }
+.account-icon-wrap.icon-orange { color: var(--warning-color); background: var(--warning-light); }
+.account-icon-wrap.icon-purple { color: var(--accent-color);  background: var(--accent-light);  }
 
 /* Card body */
 .account-body      { display: flex; flex-direction: column; gap: 4px; }

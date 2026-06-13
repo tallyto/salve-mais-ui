@@ -2,6 +2,19 @@
 
 ## [Unreleased]
 
+## [1.46.0] - 2026-06-12
+
+### Melhorias
+
+- **Formulário de contas**: seletor de tipo reimaginado com tiles visuais (ícone + label + descrição por tipo), hint text nos campos, botão de ação primário como `mat-flat-button` e secundário como `mat-stroked-button`
+- **Global**: ícones de suffix/prefix nos inputs reduzidos de 24px para 17px e coloridos com `--text-muted` em repouso, voltando para `--primary-color` no foco
+- **Global**: botões `mat-raised/flat/icon-button color="primary"` alinhados à paleta da marca (`#2563eb`) em vez do indigo do tema padrão; `border-radius` e `font-weight: 600` aplicados globalmente
+- **Global**: `gap: 10px` entre botões em `mat-card-actions` e `mat-dialog-actions`
+
+### Correções
+
+- **Ícones com background indevido**: classes `.icon-blue/.icon-green/.icon-orange/.icon-purple` agora definem apenas `color`; background aplicado somente nos wrappers `.card-icon`, `.tipo-tile-icon` e `.account-icon-wrap` — elimina retângulo colorido atrás de mat-icon em card headers
+
 ## [1.45.0] - 2026-06-12
 
 ### Melhorias

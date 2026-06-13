@@ -15,10 +15,34 @@ export class AccountComponent {
   public isDialogMode: boolean = false;
 
   public tiposConta = [
-    { value: 'CORRENTE', label: 'Conta Corrente', icon: 'account_balance' },
-    { value: 'POUPANCA', label: 'Poupança', icon: 'savings' },
-    { value: 'INVESTIMENTO', label: 'Investimento', icon: 'trending_up' },
-    { value: 'RESERVA_EMERGENCIA', label: 'Reserva de Emergência', icon: 'shield' }
+    {
+      value: 'CORRENTE',
+      label: 'Conta Corrente',
+      icon: 'account_balance',
+      description: 'Movimentação e pagamentos do dia a dia',
+      iconClass: 'icon-blue'
+    },
+    {
+      value: 'POUPANCA',
+      label: 'Poupança',
+      icon: 'savings',
+      description: 'Rendimento básico com liquidez diária',
+      iconClass: 'icon-green'
+    },
+    {
+      value: 'INVESTIMENTO',
+      label: 'Investimento',
+      icon: 'trending_up',
+      description: 'CDB, tesouro direto, fundos e outros',
+      iconClass: 'icon-orange'
+    },
+    {
+      value: 'RESERVA_EMERGENCIA',
+      label: 'Reserva de Emergência',
+      icon: 'shield',
+      description: 'Fundo de segurança para imprevistos',
+      iconClass: 'icon-purple'
+    }
   ];
 
   constructor(
