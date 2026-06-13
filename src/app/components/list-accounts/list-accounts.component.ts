@@ -1,9 +1,6 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {MatPaginator} from "@angular/material/paginator";
-import {MatSort} from "@angular/material/sort";
-import {catchError, map, merge, of as observableOf, startWith, switchMap} from "rxjs";
+import { Component, OnInit } from '@angular/core';
 import { AccountService } from 'src/app/services/account.service';
-import {Account} from "../../models/account.model";
+import { Account } from '../../models/account.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { TransferenciaModalComponent } from '../transferencia-modal/transferencia-modal.component';
@@ -14,13 +11,9 @@ import { TransferenciaModalComponent } from '../transferencia-modal/transferenci
     styleUrls: ['./list-accounts.component.css'],
     standalone: false
 })
-export class ListAccountsComponent implements AfterViewInit {
-  resultsLength = 0;
-  isLoadingResults = true;
-
-  displayedColumnsProventos: string[] = ['saldo', 'titular', 'tipo', 'acoes'];
-
+export class ListAccountsComponent implements OnInit {
   accounts: Account[] = [];
+  isLoadingResults = true;
   editingAccount: Account | null = null;
   tempTitular: string = '';
 
@@ -29,160 +22,120 @@ export class ListAccountsComponent implements AfterViewInit {
     private snackBar: MatSnackBar,
     private dialog: MatDialog
   ) {
-    this.accountService.savedAccount.subscribe({
-      next: () => {
-        this.refreshAccountList()
+    this.accountService.savedAccount.subscribe(() => this.loadAccounts());
+  }
+
+  ngOnInit(): void {
+    this.loadAccounts();
+  }
+
+  loadAccounts(): void {
+    this.isLoadingResults = true;
+    this.accountService.listarTodasContas().subscribe({
+      next: (accounts) => {
+        this.accounts = accounts;
+        this.isLoadingResults = false;
+      },
+      error: () => {
+        this.isLoadingResults = false;
       }
-    })
+    });
   }
 
-  // @ts-expect-error
-  @ViewChild(MatPaginator) paginator: MatPaginator
-  // @ts-expect-error
-  @ViewChild(MatSort) sort: MatSort;
-
-  ngAfterViewInit(): void {
-    this.refreshAccountList()
+  getSaldoTotal(): number {
+    return this.accounts.reduce((sum, a) => sum + (a.saldo || 0), 0);
   }
 
-  startEdit(account: Account) {
+  getTipoIcon(tipo: string): string {
+    const icons: Record<string, string> = {
+      CORRENTE: 'account_balance',
+      POUPANCA: 'savings',
+      INVESTIMENTO: 'trending_up',
+      RESERVA_EMERGENCIA: 'shield'
+    };
+    return icons[tipo] ?? 'account_balance_wallet';
+  }
+
+  getCardAccentClass(tipo: string): string {
+    const map: Record<string, string> = {
+      CORRENTE: 'accent-blue',
+      POUPANCA: 'accent-green',
+      INVESTIMENTO: 'accent-orange',
+      RESERVA_EMERGENCIA: 'accent-purple'
+    };
+    return map[tipo] ?? 'accent-blue';
+  }
+
+  getIconClass(tipo: string): string {
+    const map: Record<string, string> = {
+      CORRENTE: 'icon-blue',
+      POUPANCA: 'icon-green',
+      INVESTIMENTO: 'icon-orange',
+      RESERVA_EMERGENCIA: 'icon-purple'
+    };
+    return map[tipo] ?? 'icon-blue';
+  }
+
+  getTipoDescricao(tipo: string): string {
+    const labels: Record<string, string> = {
+      CORRENTE: 'Conta Corrente',
+      POUPANCA: 'Poupança',
+      INVESTIMENTO: 'Investimento',
+      RESERVA_EMERGENCIA: 'Reserva de Emergência'
+    };
+    return labels[tipo] ?? tipo;
+  }
+
+  startEdit(account: Account): void {
     this.editingAccount = account;
     this.tempTitular = account.titular;
   }
 
-  cancelEdit() {
+  cancelEdit(): void {
     this.editingAccount = null;
     this.tempTitular = '';
   }
 
-  saveEdit() {
-    if (this.editingAccount) {
-      const updatedAccount = {
-        ...this.editingAccount,
-        titular: this.tempTitular
-        // saldo is intentionally omitted to prevent direct balance updates
-      };
-      this.accountService.atualizarAccount(updatedAccount).subscribe({
-        next: () => {
-          this.snackBar.open('Conta atualizada com sucesso!', 'Fechar', {
-            duration: 3000,
-            panelClass: 'snackbar-success'
-          });
-          this.editingAccount = null;
-          this.tempTitular = '';
-          this.refreshAccountList();
-        },
-        error: (err: any) => {
-          this.snackBar.open('Erro ao atualizar conta: ' + (err.error?.message || 'Erro desconhecido'), 'Fechar', {
-            duration: 3000,
-            panelClass: 'snackbar-error'
-          });
-        }
-      });
-    }
+  saveEdit(): void {
+    if (!this.editingAccount) return;
+    const updated = { ...this.editingAccount, titular: this.tempTitular };
+    this.accountService.atualizarAccount(updated).subscribe({
+      next: () => {
+        this.snackBar.open('Conta atualizada!', 'Fechar', { duration: 3000, panelClass: 'snackbar-success' });
+        this.editingAccount = null;
+        this.tempTitular = '';
+        this.loadAccounts();
+      },
+      error: (err: any) => {
+        this.snackBar.open('Erro ao atualizar: ' + (err.error?.message || 'Erro desconhecido'), 'Fechar', { duration: 3000, panelClass: 'snackbar-error' });
+      }
+    });
   }
 
   isEditing(account: Account): boolean {
     return this.editingAccount?.id === account.id;
   }
 
-  excluirConta(account: Account) {
-    if (confirm(`Tem certeza que deseja excluir a conta ${account.titular}?`)) {
-      this.accountService.excluirAccount(account.id).subscribe({
-        next: () => {
-          this.snackBar.open('Conta excluída com sucesso!', 'Fechar', {
-            duration: 3000,
-            panelClass: 'snackbar-success'
-          });
-          this.refreshAccountList();
-        },
-        error: (err: any) => {
-          this.snackBar.open('Erro ao excluir conta: ' + (err.error?.message || 'Erro desconhecido'), 'Fechar', {
-            duration: 3000,
-            panelClass: 'snackbar-error'
-          });
-        }
-      });
-    }
-  }
-
-  getBadgeClass(tipo: string): string {
-    switch (tipo) {
-      case 'CORRENTE':
-        return 'badge-primary';
-      case 'POUPANCA':
-        return 'badge-success';
-      case 'INVESTIMENTO':
-        return 'badge-warning';
-      case 'RESERVA_EMERGENCIA':
-        return 'badge-danger';
-      default:
-        return 'badge-info';
-    }
-  }
-
-  getTipoDescricao(tipo: string): string {
-    switch (tipo) {
-      case 'CORRENTE':
-        return 'Conta Corrente';
-      case 'POUPANCA':
-        return 'Poupança';
-      case 'INVESTIMENTO':
-        return 'Investimento';
-      case 'RESERVA_EMERGENCIA':
-        return 'Reserva de Emergência';
-      default:
-        return tipo;
-    }
-  }
-
-  abrirTransferencia(account: Account) {
-    const dialogRef = this.dialog.open(TransferenciaModalComponent, {
-      width: '500px',
-      data: { contaOrigem: account }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.refreshAccountList();
+  excluirConta(account: Account): void {
+    if (!confirm(`Excluir a conta "${account.titular}"?`)) return;
+    this.accountService.excluirAccount(account.id).subscribe({
+      next: () => {
+        this.snackBar.open('Conta excluída!', 'Fechar', { duration: 3000, panelClass: 'snackbar-success' });
+        this.loadAccounts();
+      },
+      error: (err: any) => {
+        this.snackBar.open('Erro ao excluir: ' + (err.error?.message || 'Erro desconhecido'), 'Fechar', { duration: 3000, panelClass: 'snackbar-error' });
       }
     });
   }
 
-  refreshAccountList() {
-    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
-
-    merge(this.sort.sortChange, this.paginator.page)
-      .pipe(
-        startWith({}),
-        switchMap(() => {
-          this.isLoadingResults = true;
-          const sort = `${this.sort.active},${this.sort.direction}`
-          return this.accountService.listarAccounts(
-            this.paginator.pageIndex,
-            this.paginator.pageSize,
-            sort,
-          ).pipe(catchError(() => observableOf(null)));
-        }),
-        map(data => {
-          // Flip flag to show that loading has finished.
-          this.isLoadingResults = false;
-
-          // @ts-expect-error
-          if (data.content === null) {
-            return [];
-          }
-
-          // Only refresh the result length if there is new data. In case of rate
-          // limit errors, we do not want to reset the paginator to zero, as that
-          // would prevent users from re-triggering requests.
-          // @ts-ignore
-          this.resultsLength = data.totalElements;
-          // @ts-ignore
-          return data.content;
-        }),
-      )
-      .subscribe(data => (this.accounts = data));
+  abrirTransferencia(account: Account): void {
+    const dialogRef = this.dialog.open(TransferenciaModalComponent, {
+      width: '500px',
+      data: { contaOrigem: account }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) this.loadAccounts();
+    });
   }
-
 }

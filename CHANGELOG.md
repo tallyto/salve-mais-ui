@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+## [1.45.0] - 2026-06-12
+
+### Melhorias
+
+- **Contas Bancárias**: componente completamente reimaginado — hero com gradiente azul/roxo, cards por conta com acento de cor por tipo (azul=corrente, verde=poupança, laranja=investimento, roxo=reserva), saldo em destaque, KPI bar com saldo total e total de contas; formulário convertido para `mat-card` com grid CSS nativo sem PrimeFlex; edição inline mantida nos cards; estado vazio com ícone estilizado
+
+### Refatoração
+
+- **ListAccountsComponent**: simplificado de `AfterViewInit` + `MatSort` + `MatPaginator` para `OnInit` + `listarTodasContas()` direto; removida dependência de mat-table (contas são lista pequena, cards comunicam melhor); adicionados métodos `getSaldoTotal()`, `getTipoIcon()`, `getCardAccentClass()`
+- **AccountComponent**: CSS reduzido de 165 → 55 linhas removendo padrões form-hero/form-card/header-title duplicados e substituindo por mat-card nativo
+
 ## [1.44.0] - 2026-06-12
 
 ### Melhorias

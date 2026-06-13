@@ -1,75 +1,86 @@
-<div class="card-content p-3">
-  <div class="table-container">
-    <table [dataSource]="accounts" mat-table matSort matSortActive="id" matSortDisableClear matSortDirection="desc" class="data-table list-table">
+<!-- KPI bar -->
+<div class="accounts-kpi-bar" *ngIf="accounts.length > 0">
+  <div class="kpi-item">
+    <span class="kpi-label">Saldo total</span>
+    <strong class="kpi-value" [ngClass]="getSaldoTotal() >= 0 ? 'positive' : 'negative'">
+      {{ getSaldoTotal() | currency:'BRL':'symbol':'1.2-2' }}
+    </strong>
+  </div>
+  <div class="kpi-divider"></div>
+  <div class="kpi-item">
+    <span class="kpi-label">Contas cadastradas</span>
+    <strong class="kpi-value">{{ accounts.length }}</strong>
+  </div>
+</div>
 
-      <!-- Valor Column -->
-      <ng-container matColumnDef="saldo">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Saldo</th>
-        <td *matCellDef="let account" mat-cell class="p-3">
-          <div [ngClass]="{'positive': account.saldo > 0, 'negative': account.saldo < 0}" class="font-medium">
-            {{ account.saldo | currency:'BRL':'symbol':'1.2-2' }}
-          </div>
-        </td>
-      </ng-container>
+<!-- Loading -->
+<div class="loading-wrap" *ngIf="isLoadingResults">
+  <mat-spinner diameter="36"></mat-spinner>
+</div>
 
-      <!-- Nome Column -->
-      <ng-container matColumnDef="titular">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Titular</th>
-        <td *matCellDef="let account" mat-cell class="p-3">
-          <div *ngIf="!isEditing(account)">
-            {{ account.titular }}
-          </div>
-          <mat-form-field *ngIf="isEditing(account)" appearance="outline" class="edit-field">
-            <input matInput [(ngModel)]="tempTitular" type="text">
+<!-- Accounts grid -->
+<div class="accounts-grid" *ngIf="!isLoadingResults && accounts.length > 0">
+  <mat-card
+    *ngFor="let account of accounts"
+    class="account-card"
+    [ngClass]="getCardAccentClass(account.tipo)"
+  >
+    <mat-card-content>
+      <!-- Type icon -->
+      <div class="account-icon-wrap" [ngClass]="getIconClass(account.tipo)">
+        <mat-icon>{{ getTipoIcon(account.tipo) }}</mat-icon>
+      </div>
+
+      <!-- Name: view or edit -->
+      <div class="account-body">
+        <ng-container *ngIf="!isEditing(account)">
+          <p class="account-holder">{{ account.titular }}</p>
+          <span class="account-tipo-label">{{ getTipoDescricao(account.tipo) }}</span>
+        </ng-container>
+        <ng-container *ngIf="isEditing(account)">
+          <mat-form-field appearance="outline" class="edit-field">
+            <mat-label>Nome do titular</mat-label>
+            <input matInput [(ngModel)]="tempTitular" (keyup.enter)="saveEdit()" (keyup.escape)="cancelEdit()">
           </mat-form-field>
-        </td>
-      </ng-container>
+        </ng-container>
+      </div>
 
-      <!-- Tipo Column -->
-      <ng-container matColumnDef="tipo">
-        <th *matHeaderCellDef mat-header-cell mat-sort-header class="p-3"> Tipo</th>
-        <td *matCellDef="let account" mat-cell class="p-3">
-          <div [ngClass]="getBadgeClass(account.tipo)" class="badge">
-            {{ getTipoDescricao(account.tipo) }}
-          </div>
-        </td>
-      </ng-container>
+      <!-- Balance -->
+      <p class="account-balance" [ngClass]="account.saldo >= 0 ? 'positive' : 'negative'">
+        {{ account.saldo | currency:'BRL':'symbol':'1.2-2' }}
+      </p>
 
-      <!-- Ações Column -->
-      <ng-container matColumnDef="acoes">
-        <th *matHeaderCellDef mat-header-cell class="p-3 text-right"> Ações</th>
-        <td *matCellDef="let account" mat-cell class="p-3 text-right">
-          <div *ngIf="!isEditing(account)" class="action-buttons flex justify-content-end gap-2">
-            <button mat-icon-button color="primary" (click)="startEdit(account)" matTooltip="Editar conta">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button color="accent" (click)="abrirTransferencia(account)" matTooltip="Transferir saldo">
-              <mat-icon>swap_horiz</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" (click)="excluirConta(account)" matTooltip="Excluir conta">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </div>
-          <div *ngIf="isEditing(account)" class="action-buttons flex justify-content-end gap-2">
-            <button mat-icon-button color="primary" (click)="saveEdit()" matTooltip="Salvar">
-              <mat-icon>check</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" (click)="cancelEdit()" matTooltip="Cancelar">
-              <mat-icon>close</mat-icon>
-            </button>
-          </div>
-        </td>
-      </ng-container>
+      <!-- Actions -->
+      <div class="account-actions">
+        <ng-container *ngIf="!isEditing(account)">
+          <button mat-icon-button (click)="startEdit(account)" matTooltip="Editar nome">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button (click)="abrirTransferencia(account)" matTooltip="Transferir saldo">
+            <mat-icon>swap_horiz</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="excluirConta(account)" matTooltip="Excluir conta">
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+        </ng-container>
+        <ng-container *ngIf="isEditing(account)">
+          <button mat-icon-button color="primary" (click)="saveEdit()" matTooltip="Salvar">
+            <mat-icon>check</mat-icon>
+          </button>
+          <button mat-icon-button (click)="cancelEdit()" matTooltip="Cancelar">
+            <mat-icon>close</mat-icon>
+          </button>
+        </ng-container>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
 
-      <tr *matHeaderRowDef="displayedColumnsProventos" mat-header-row></tr>
-      <tr *matRowDef="let row; columns: displayedColumnsProventos;" mat-row></tr>
-    </table>
+<!-- Empty state -->
+<div class="empty-state" *ngIf="!isLoadingResults && accounts.length === 0">
+  <div class="empty-icon-wrap">
+    <mat-icon>account_balance</mat-icon>
   </div>
-
-  <mat-paginator [length]="resultsLength" [pageSizeOptions]="[5, 10, 20]" [pageSize]="10" class="border-top-0"></mat-paginator>
-
-  <div *ngIf="accounts.length === 0" class="empty-state p-5 text-center">
-    <mat-icon class="empty-icon">account_balance</mat-icon>
-    <p class="empty-message">Nenhuma conta cadastrada. Adicione uma conta utilizando o formulário acima.</p>
-  </div>
+  <p class="empty-title">Nenhuma conta cadastrada</p>
+  <p class="empty-sub">Adicione uma conta bancária usando o formulário acima.</p>
 </div>

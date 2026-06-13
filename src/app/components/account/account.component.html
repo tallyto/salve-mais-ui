@@ -1,5 +1,5 @@
 <!-- Modo Dialog -->
-<div *ngIf="isDialogMode">
+<ng-container *ngIf="isDialogMode">
   <h2 mat-dialog-title class="flex align-items-center gap-2">
     <mat-icon>account_balance</mat-icon>
     <span>Nova Conta</span>
@@ -7,157 +7,134 @@
 
   <mat-dialog-content>
     <form [formGroup]="accountForm" id="accountDialogForm">
-      <div class="p-0">
-        <div class="mb-3">
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Nome do titular</mat-label>
-            <input autocomplete="off" formControlName="titular" matInput placeholder="Ex: Maria da Silva" autofocus>
-            <mat-icon matSuffix>person</mat-icon>
-          </mat-form-field>
-        </div>
+      <mat-form-field appearance="outline" class="w-full mb-3">
+        <mat-label>Nome do titular</mat-label>
+        <input autocomplete="off" formControlName="titular" matInput placeholder="Ex: Maria da Silva" autofocus>
+        <mat-icon matSuffix>person</mat-icon>
+      </mat-form-field>
 
-        <div class="mb-3">
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Tipo de conta</mat-label>
-            <mat-select formControlName="tipo">
-              <mat-option *ngFor="let tipo of tiposConta" [value]="tipo.value">
-                <mat-icon class="tipo-option-icon">{{ tipo.icon }}</mat-icon> {{ tipo.label }}
-              </mat-option>
-            </mat-select>
-            <mat-icon matSuffix>category</mat-icon>
-          </mat-form-field>
-        </div>
+      <mat-form-field appearance="outline" class="w-full mb-3">
+        <mat-label>Tipo de conta</mat-label>
+        <mat-select formControlName="tipo">
+          <mat-option *ngFor="let tipo of tiposConta" [value]="tipo.value">
+            <mat-icon class="tipo-option-icon">{{ tipo.icon }}</mat-icon> {{ tipo.label }}
+          </mat-option>
+        </mat-select>
+        <mat-icon matSuffix>category</mat-icon>
+      </mat-form-field>
 
-        <div class="mb-3" *ngIf="mostrarTaxaRendimento()">
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Taxa de rendimento anual (%)</mat-label>
-            <input autocomplete="off" formControlName="taxaRendimento" matInput type="number" step="0.01" min="0" max="100" placeholder="Ex: 13.25">
-            <mat-icon matSuffix>percent</mat-icon>
-            <mat-error *ngIf="accountForm.get('taxaRendimento')?.hasError('min') || accountForm.get('taxaRendimento')?.hasError('max')">
-              Informe um valor entre 0 e 100
-            </mat-error>
-          </mat-form-field>
-        </div>
+      <mat-form-field *ngIf="mostrarTaxaRendimento()" appearance="outline" class="w-full mb-3">
+        <mat-label>Taxa de rendimento anual (%)</mat-label>
+        <input autocomplete="off" formControlName="taxaRendimento" matInput type="number" step="0.01" min="0" max="100" placeholder="Ex: 13.25">
+        <mat-icon matSuffix>percent</mat-icon>
+        <mat-error *ngIf="accountForm.get('taxaRendimento')?.hasError('min') || accountForm.get('taxaRendimento')?.hasError('max')">
+          Informe um valor entre 0 e 100
+        </mat-error>
+      </mat-form-field>
 
-        <div class="mb-3">
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Descrição (opcional)</mat-label>
-            <input autocomplete="off" formControlName="descricao" matInput placeholder="Ex: Conta para reserva de viagem">
-            <mat-icon matSuffix>description</mat-icon>
-          </mat-form-field>
-        </div>
-      </div>
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Descrição (opcional)</mat-label>
+        <input autocomplete="off" formControlName="descricao" matInput placeholder="Ex: Conta para reserva de viagem">
+        <mat-icon matSuffix>description</mat-icon>
+      </mat-form-field>
     </form>
   </mat-dialog-content>
 
-  <mat-dialog-actions align="end" class="gap-2">
+  <mat-dialog-actions align="end">
     <button mat-button type="button" (click)="fecharDialog()">
-      <mat-icon>close</mat-icon>
-      Cancelar
+      <mat-icon>close</mat-icon> Cancelar
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      type="submit"
-      [disabled]="accountForm.invalid"
-      (click)="createAccount()"
-    >
-      <mat-icon>save</mat-icon>
-      Salvar
+    <button mat-raised-button color="primary" type="submit" [disabled]="accountForm.invalid" (click)="createAccount()">
+      <mat-icon>save</mat-icon> Salvar
     </button>
   </mat-dialog-actions>
-</div>
+</ng-container>
 
 <!-- Modo Página Completa -->
-<div *ngIf="!isDialogMode" class="account-container form-page p-3 mx-auto">
-  <div class="header form-hero mb-4">
-    <div class="header-content">
-      <div class="header-icon">
+<div *ngIf="!isDialogMode" class="accounts-page">
+
+  <!-- Hero -->
+  <div class="page-hero">
+    <div class="hero-inner">
+      <div class="hero-icon-wrap">
         <mat-icon>account_balance</mat-icon>
       </div>
-      <div class="header-text">
-        <span class="header-kicker">Contas</span>
-        <h2 class="page-title">Gerenciamento de Contas</h2>
-        <div class="account-subtitle text-color-secondary">
-          <mat-icon>date_range</mat-icon> Gerencie suas contas bancárias
-        </div>
+      <div>
+        <span class="hero-eyebrow">Finanças pessoais</span>
+        <h1>Contas Bancárias</h1>
+        <p>Gerencie saldos, faça transferências e acompanhe seus investimentos em um só lugar.</p>
       </div>
     </div>
   </div>
 
-  <div class="account-card form-card p-4 mb-4 shadow-1">
-    <div class="card-header mb-4">
-      <div class="header-title">
-        <span class="section-icon primary">
-          <mat-icon>add_circle</mat-icon>
-        </span>
-        <h2 class="section-title m-0 mb-1">Adicionar Conta</h2>
-      </div>
-      <div class="text-color-secondary text-sm">Insira os dados da nova conta bancária</div>
-    </div>
+  <!-- Form card -->
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="card-title-row">
+        <mat-icon class="icon-blue">add_circle</mat-icon>
+        Nova Conta
+      </mat-card-title>
+      <mat-card-subtitle>Preencha os dados para cadastrar uma nova conta bancária</mat-card-subtitle>
+    </mat-card-header>
 
-    <form (ngSubmit)="createAccount()" [formGroup]="accountForm" class="account-form">
-      <div class="grid">
-        <div class="col-12 md:col-6">
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Nome do titular</mat-label>
-            <input autocomplete="off" formControlName="titular" matInput placeholder="Ex: Maria da Silva">
-            <mat-icon matSuffix>person</mat-icon>
-          </mat-form-field>
-        </div>
+    <mat-card-content>
+      <form (ngSubmit)="createAccount()" [formGroup]="accountForm" class="account-form-grid">
 
-        <div class="col-12 md:col-6">
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Tipo de conta</mat-label>
-            <mat-select formControlName="tipo">
-              <mat-option *ngFor="let tipo of tiposConta" [value]="tipo.value">
-                <mat-icon class="tipo-option-icon">{{ tipo.icon }}</mat-icon> {{ tipo.label }}
-              </mat-option>
-            </mat-select>
-            <mat-icon matSuffix>category</mat-icon>
-          </mat-form-field>
-        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Nome do titular</mat-label>
+          <input autocomplete="off" formControlName="titular" matInput placeholder="Ex: Maria da Silva">
+          <mat-icon matSuffix>person</mat-icon>
+        </mat-form-field>
 
-        <div class="col-12 md:col-6" *ngIf="mostrarTaxaRendimento()">
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Taxa de rendimento anual (%)</mat-label>
-            <input autocomplete="off" formControlName="taxaRendimento" matInput type="number" step="0.01" min="0" max="100" placeholder="Ex: 13.25">
-            <mat-icon matSuffix>percent</mat-icon>
-            <mat-error *ngIf="accountForm.get('taxaRendimento')?.hasError('min') || accountForm.get('taxaRendimento')?.hasError('max')">
-              Informe um valor entre 0 e 100
-            </mat-error>
-          </mat-form-field>
-        </div>
+        <mat-form-field appearance="outline">
+          <mat-label>Tipo de conta</mat-label>
+          <mat-select formControlName="tipo">
+            <mat-option *ngFor="let tipo of tiposConta" [value]="tipo.value">
+              <mat-icon class="tipo-option-icon">{{ tipo.icon }}</mat-icon> {{ tipo.label }}
+            </mat-option>
+          </mat-select>
+          <mat-icon matSuffix>category</mat-icon>
+        </mat-form-field>
 
-        <div class="col-12" [ngClass]="mostrarTaxaRendimento() ? 'md:col-6' : ''">
-          <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Descrição (opcional)</mat-label>
-            <input autocomplete="off" formControlName="descricao" matInput placeholder="Ex: Conta para reserva de viagem">
-            <mat-icon matSuffix>description</mat-icon>
-          </mat-form-field>
-        </div>
-      </div>
+        <mat-form-field *ngIf="mostrarTaxaRendimento()" appearance="outline">
+          <mat-label>Taxa de rendimento anual (%)</mat-label>
+          <input autocomplete="off" formControlName="taxaRendimento" matInput type="number" step="0.01" min="0" max="100" placeholder="Ex: 13.25">
+          <mat-icon matSuffix>percent</mat-icon>
+          <mat-error *ngIf="accountForm.get('taxaRendimento')?.hasError('min') || accountForm.get('taxaRendimento')?.hasError('max')">
+            Informe um valor entre 0 e 100
+          </mat-error>
+        </mat-form-field>
 
-      <div class="form-actions flex justify-content-end gap-2">
-        <button mat-stroked-button type="button" class="text-color-secondary" (click)="resetForm()">
-          <mat-icon>cancel</mat-icon> Cancelar
-        </button>
-        <button mat-raised-button color="primary" [disabled]="accountForm.invalid" type="submit" class="min-w-min">
-          <mat-icon>save</mat-icon> Salvar conta
-        </button>
-      </div>
-    </form>
-  </div>
+        <mat-form-field appearance="outline" [class.span-full]="!mostrarTaxaRendimento()">
+          <mat-label>Descrição (opcional)</mat-label>
+          <input autocomplete="off" formControlName="descricao" matInput placeholder="Ex: Conta para reserva de viagem">
+          <mat-icon matSuffix>description</mat-icon>
+        </mat-form-field>
 
-  <div class="accounts-list-card data-card form-card shadow-1">
-    <div class="card-header">
-      <div class="header-title">
-        <span class="section-icon success">
-          <mat-icon>account_balance_wallet</mat-icon>
-        </span>
-        <h2 class="section-title m-0">Suas Contas</h2>
-      </div>
-    </div>
-    <app-list-accounts></app-list-accounts>
-  </div>
+      </form>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button mat-button type="button" (click)="resetForm()">
+        <mat-icon>cancel</mat-icon> Limpar
+      </button>
+      <button mat-raised-button color="primary" [disabled]="accountForm.invalid" (click)="createAccount()">
+        <mat-icon>save</mat-icon> Salvar conta
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <!-- Accounts list -->
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title class="card-title-row">
+        <mat-icon class="icon-green">account_balance_wallet</mat-icon>
+        Suas Contas
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <app-list-accounts></app-list-accounts>
+    </mat-card-content>
+  </mat-card>
+
 </div>

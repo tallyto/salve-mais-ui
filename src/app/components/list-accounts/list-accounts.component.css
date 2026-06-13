@@ -1,49 +1,92 @@
-.card-content {
-  padding: 0;
+/* KPI bar */
+.accounts-kpi-bar {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--background-color);
+}
+.kpi-item   { display: flex; flex-direction: column; gap: 2px; }
+.kpi-label  { font-size: var(--font-size-xs); color: var(--text-secondary); font-weight: var(--font-weight-medium); text-transform: uppercase; letter-spacing: .04em; }
+.kpi-value  { font-size: var(--font-size-xl); font-weight: 700; color: var(--text-color); }
+.kpi-divider { width: 1px; height: 36px; background: var(--border-color); }
+
+/* Accounts grid */
+.accounts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
 }
 
-.edit-field {
-  width: min(220px, 100%);
-  margin: 0;
+/* Account card */
+.account-card {
+  border-top: 3px solid transparent !important;
+  transition: box-shadow .2s ease, transform .15s ease;
 }
-
-.edit-field .mat-mdc-form-field-subscript-wrapper {
-  display: none;
+.account-card:hover {
+  box-shadow: 0 6px 20px rgba(15,23,42,.10) !important;
+  transform: translateY(-1px);
 }
+.account-card mat-card-content { display: flex; flex-direction: column; gap: 12px; }
 
-.badge-primary {
-  background: var(--primary-light);
-  color: var(--primary-dark);
+/* Color accents */
+.accent-blue   { border-top-color: var(--primary-color) !important; }
+.accent-green  { border-top-color: var(--success-color) !important; }
+.accent-orange { border-top-color: var(--warning-color) !important; }
+.accent-purple { border-top-color: var(--accent-color)  !important; }
+
+/* Icon */
+.account-icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
 }
+.icon-blue   { color: var(--primary-color); background: var(--primary-light); }
+.icon-green  { color: var(--success-color); background: var(--success-light); }
+.icon-orange { color: var(--warning-color); background: var(--warning-light); }
+.icon-purple { color: var(--accent-color);  background: var(--accent-light);  }
 
-.badge-success {
-  background: var(--success-light);
-  color: #047857;
+/* Card body */
+.account-body      { display: flex; flex-direction: column; gap: 4px; }
+.account-holder    { margin: 0; font-size: var(--font-size-md); font-weight: var(--font-weight-semibold); color: var(--text-color); }
+.account-tipo-label { font-size: var(--font-size-xs); color: var(--text-secondary); font-weight: var(--font-weight-medium); text-transform: uppercase; letter-spacing: .04em; }
+
+/* Balance */
+.account-balance {
+  margin: 4px 0 0;
+  font-size: clamp(1.4rem, 2vw, 1.8rem);
+  font-weight: 700;
+  letter-spacing: -.01em;
 }
+.positive { color: var(--success-color); }
+.negative { color: var(--danger-color); }
 
-.badge-warning {
-  background: var(--warning-light);
-  color: #b45309;
-}
+/* Actions */
+.account-actions { display: flex; align-items: center; gap: 4px; margin-top: 4px; }
+.account-actions button { opacity: .65; transition: opacity .15s; }
+.account-actions button:hover { opacity: 1; }
 
-.badge-danger {
-  background: var(--danger-light);
-  color: #b91c1c;
-}
+/* Edit field */
+.edit-field { width: 100%; margin: 0; }
 
-.badge-info {
-  background: var(--info-light);
-  color: #0369a1;
-}
+/* Loading */
+.loading-wrap { display: flex; justify-content: center; padding: 40px; }
 
-.positive {
-  color: #047857;
-}
+/* Empty state */
+.empty-state { display: flex; flex-direction: column; align-items: center; padding: 48px 24px; text-align: center; }
+.empty-icon-wrap { display: flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: 50%; background: var(--primary-light); color: var(--primary-color); margin-bottom: 16px; }
+.empty-icon-wrap mat-icon { font-size: 32px; width: 32px; height: 32px; }
+.empty-title { margin: 0 0 6px; font-size: var(--font-size-lg); font-weight: var(--font-weight-semibold); color: var(--text-color); }
+.empty-sub   { margin: 0; font-size: var(--font-size-sm); color: var(--text-secondary); }
 
-.negative {
-  color: #b91c1c;
-}
-
-.empty-icon {
-  color: var(--primary-color);
+@media (max-width: 768px) {
+  .accounts-grid { grid-template-columns: 1fr; }
+  .accounts-kpi-bar { flex-wrap: wrap; }
+  .kpi-divider { display: none; }
 }
