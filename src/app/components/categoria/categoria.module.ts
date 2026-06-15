@@ -20,7 +20,7 @@ import { ChipModule } from 'primeng/chip';
 
 import { CategoriaContainerComponent } from './categoria-container/categoria-container.component';
 import { CategoriaFormComponent } from './categoria-form/categoria-form.component';
-import { CategoriaListComponent } from './categoria-list/categoria-list.component';
+import { ListCategoriasComponent } from './list-categorias/list-categorias.component';
 import { CategoriaTypeChipComponent } from './categoria-type-chip/categoria-type-chip.component';
 
 const routes: Routes = [
@@ -34,7 +34,7 @@ const routes: Routes = [
   declarations: [
     CategoriaContainerComponent,
     CategoriaFormComponent,
-    CategoriaListComponent,
+    ListCategoriasComponent,
     CategoriaTypeChipComponent
   ],
   imports: [
@@ -61,7 +61,7 @@ const routes: Routes = [
   exports: [
     CategoriaContainerComponent,
     CategoriaFormComponent,
-    CategoriaListComponent,
+    ListCategoriasComponent,
     CategoriaTypeChipComponent
   ]
 })

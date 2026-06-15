@@ -1,0 +1,284 @@
+<div class="flex flex-column gap-3 p-4">
+
+  <div class="flex align-items-center gap-3 mb-2">
+    <i class="pi pi-money-bill text-4xl"></i>
+    <div>
+      <h1 class="m-0 font-bold">Status de Pagamentos</h1>
+      <p class="text-sm text-color-secondary m-0">Visão consolidada de pagamentos realizados e pendentes</p>
+    </div>
+  </div>
+
+  <!-- Skeleton de carregamento -->
+  <div *ngIf="isLoading" class="flex flex-column gap-3">
+    <div class="grid">
+      <div class="col-12 md:col-6">
+        <p-card>
+          <p-skeleton height="4rem" styleClass="mb-2"></p-skeleton>
+          <p-skeleton height="2rem" width="60%"></p-skeleton>
+        </p-card>
+      </div>
+      <div class="col-12 md:col-6">
+        <p-card>
+          <p-skeleton height="4rem" styleClass="mb-2"></p-skeleton>
+          <p-skeleton height="2rem" width="60%"></p-skeleton>
+        </p-card>
+      </div>
+    </div>
+    <p-card>
+      <p-skeleton height="1.5rem" width="40%" styleClass="mb-3"></p-skeleton>
+      <p-skeleton height="2.5rem" styleClass="mb-2"></p-skeleton>
+      <p-skeleton height="2.5rem" styleClass="mb-2"></p-skeleton>
+      <p-skeleton height="2.5rem"></p-skeleton>
+    </p-card>
+    <p-card>
+      <p-skeleton height="1.5rem" width="40%" styleClass="mb-3"></p-skeleton>
+      <p-skeleton height="2.5rem" styleClass="mb-2"></p-skeleton>
+      <p-skeleton height="2.5rem"></p-skeleton>
+    </p-card>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="grid" *ngIf="!isLoading">
+    <div class="col-12 md:col-6">
+      <p-card [style]="{'border-left': '4px solid var(--green-500)'}">
+        <div class="flex flex-column gap-2">
+          <div class="flex align-items-center gap-2">
+            <i class="pi pi-check-circle text-green-600 text-xl"></i>
+            <span class="text-sm text-color-secondary">Total Pago</span>
+          </div>
+          <span class="text-2xl font-bold text-green-600">{{ statusPagamentos.totalPago | currency:'BRL':'symbol':'1.2-2' }}</span>
+          <span class="text-xs text-color-secondary">{{ statusPagamentos.faturasPagas.length + statusPagamentos.contasFixasPagas.length }} pagamentos realizados</span>
+        </div>
+      </p-card>
+    </div>
+
+    <div class="col-12 md:col-6">
+      <p-card [style]="{'border-left': '4px solid var(--orange-500)'}">
+        <div class="flex flex-column gap-2">
+          <div class="flex align-items-center gap-2">
+            <i class="pi pi-clock text-orange-600 text-xl"></i>
+            <span class="text-sm text-color-secondary">Total Pendente</span>
+          </div>
+          <span class="text-2xl font-bold text-orange-600">{{ statusPagamentos.totalPendente | currency:'BRL':'symbol':'1.2-2' }}</span>
+          <span class="text-xs text-color-secondary">{{ statusPagamentos.faturasPendentes.length + statusPagamentos.contasFixasPendentes.length }} pagamentos aguardando</span>
+        </div>
+      </p-card>
+    </div>
+  </div>
+
+  <!-- Faturas Section -->
+  <p-card *ngIf="!isLoading">
+    <div class="flex align-items-center gap-2 mb-3">
+      <i class="pi pi-credit-card text-xl"></i>
+      <h3 class="m-0">Faturas de Cartão</h3>
+    </div>
+
+    <!-- Faturas Pendentes -->
+    <div *ngIf="statusPagamentos.faturasPendentes.length > 0" class="mb-4">
+      <h4 class="text-base font-semibold text-orange-700 flex align-items-center gap-2 mb-3">
+        <i class="pi pi-exclamation-triangle text-orange-600"></i>
+        Faturas Pendentes ({{ statusPagamentos.faturasPendentes.length }})
+      </h4>
+      <p-table [value]="statusPagamentos.faturasPendentes" styleClass="p-datatable-sm" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Cartão</th>
+            <th>Valor</th>
+            <th>Vencimento</th>
+            <th>Pagamento</th>
+            <th>Status</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-fatura>
+          <tr>
+            <td>{{ fatura.nomeCartao }}</td>
+            <td>
+              <strong class="text-orange-600">{{ fatura.valorTotal | currency:'BRL':'symbol':'1.2-2' }}</strong>
+            </td>
+            <td>{{ fatura.dataVencimento | date:'dd/MM/yyyy' }}</td>
+            <td class="text-color-secondary">-</td>
+            <td>
+              <p-tag value="Pendente" severity="warning" icon="pi pi-clock"></p-tag>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <!-- Faturas Pagas -->
+    <div *ngIf="statusPagamentos.faturasPagas.length > 0" class="mb-4">
+      <h4 class="text-base font-semibold text-green-700 flex align-items-center gap-2 mb-3">
+        <i class="pi pi-check-circle text-green-600"></i>
+        Faturas Pagas ({{ statusPagamentos.faturasPagas.length }})
+      </h4>
+      <p-table [value]="statusPagamentos.faturasPagas" styleClass="p-datatable-sm" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Cartão</th>
+            <th>Valor</th>
+            <th>Vencimento</th>
+            <th>Pagamento</th>
+            <th>Status</th>
+            <th>Ações</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-fatura>
+          <tr>
+            <td>{{ fatura.nomeCartao }}</td>
+            <td>
+              <strong class="text-green-600">{{ fatura.valorTotal | currency:'BRL':'symbol':'1.2-2' }}</strong>
+            </td>
+            <td>{{ fatura.dataVencimento | date:'dd/MM/yyyy' }}</td>
+            <td>{{ fatura.dataPagamento | date:'dd/MM/yyyy' }}</td>
+            <td>
+              <p-tag value="Pago" severity="success" icon="pi pi-check-circle"></p-tag>
+            </td>
+            <td>
+              <p-button *ngIf="podeExcluirFatura(fatura)" icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger"
+                        (onClick)="confirmarExclusaoFatura(fatura)" pTooltip="Excluir fatura paga sem débito em conta" tooltipPosition="top"></p-button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <div *ngIf="statusPagamentos.faturasPagas.length === 0 && statusPagamentos.faturasPendentes.length === 0" class="flex flex-column align-items-center gap-2 py-6 text-center">
+      <i class="pi pi-inbox text-4xl text-color-secondary"></i>
+      <p class="font-semibold m-0">Nenhuma fatura encontrada</p>
+    </div>
+  </p-card>
+
+  <!-- Contas Fixas Section -->
+  <p-card *ngIf="!isLoading">
+    <div class="flex align-items-center gap-2 mb-3">
+      <i class="pi pi-file-check text-xl"></i>
+      <h3 class="m-0">Contas Fixas</h3>
+    </div>
+
+    <!-- Contas Pendentes -->
+    <div *ngIf="statusPagamentos.contasFixasPendentes.length > 0" class="mb-4">
+      <h4 class="text-base font-semibold text-orange-700 flex align-items-center gap-2 mb-3">
+        <i class="pi pi-exclamation-triangle text-orange-600"></i>
+        Contas Pendentes ({{ statusPagamentos.contasFixasPendentes.length }})
+      </h4>
+      <p-table [value]="statusPagamentos.contasFixasPendentes" styleClass="p-datatable-sm" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Nome</th>
+            <th>Categoria</th>
+            <th>Valor</th>
+            <th>Vencimento</th>
+            <th>Status</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-conta>
+          <tr>
+            <td>{{ conta.nome }}</td>
+            <td>
+              <p-tag [value]="conta.categoria.nome" severity="info"></p-tag>
+            </td>
+            <td>
+              <strong class="text-orange-600">{{ conta.valor | currency:'BRL':'symbol':'1.2-2' }}</strong>
+            </td>
+            <td>{{ conta.vencimento }}</td>
+            <td>
+              <p-tag value="Pendente" severity="warning" icon="pi pi-clock"></p-tag>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <!-- Contas Pagas -->
+    <div *ngIf="statusPagamentos.contasFixasPagas.length > 0" class="mb-4">
+      <h4 class="text-base font-semibold text-green-700 flex align-items-center gap-2 mb-3">
+        <i class="pi pi-check-circle text-green-600"></i>
+        Contas Pagas ({{ statusPagamentos.contasFixasPagas.length }})
+      </h4>
+      <p-table [value]="statusPagamentos.contasFixasPagas" styleClass="p-datatable-sm" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Nome</th>
+            <th>Categoria</th>
+            <th>Valor</th>
+            <th>Vencimento</th>
+            <th>Status</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-conta>
+          <tr>
+            <td>{{ conta.nome }}</td>
+            <td>
+              <p-tag [value]="conta.categoria.nome" severity="info"></p-tag>
+            </td>
+            <td>
+              <strong class="text-green-600">{{ conta.valor | currency:'BRL':'symbol':'1.2-2' }}</strong>
+            </td>
+            <td>{{ conta.vencimento }}</td>
+            <td>
+              <p-tag value="Pago" severity="success" icon="pi pi-check-circle"></p-tag>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <div *ngIf="statusPagamentos.contasFixasPagas.length === 0 && statusPagamentos.contasFixasPendentes.length === 0" class="flex flex-column align-items-center gap-2 py-6 text-center">
+      <i class="pi pi-inbox text-4xl text-color-secondary"></i>
+      <p class="font-semibold m-0">Nenhuma conta fixa encontrada</p>
+    </div>
+  </p-card>
+
+  <!-- Compras Parceladas Section -->
+  <p-card *ngIf="!isLoading && statusPagamentos.comprasParceladas.length > 0">
+    <div class="flex align-items-center gap-2 mb-3">
+      <i class="pi pi-shopping-cart text-xl"></i>
+      <h3 class="m-0">Compras Parceladas</h3>
+    </div>
+
+    <div class="grid">
+      <div *ngFor="let compra of statusPagamentos.comprasParceladas" class="col-12 md:col-6 lg:col-4">
+        <p-card [style]="{'border-left': '4px solid var(--blue-500)'}">
+          <div class="flex justify-content-between align-items-start gap-3 mb-3">
+            <h4 class="m-0 text-sm font-bold">{{ compra.descricao }}</h4>
+            <span class="font-bold text-blue-600 text-sm">{{ compra.valorTotal | currency:'BRL':'symbol':'1.2-2' }}</span>
+          </div>
+
+          <div class="flex flex-column gap-2 text-xs mb-3">
+            <div class="flex align-items-center gap-2">
+              <i class="pi pi-credit-card text-color-secondary"></i>
+              <span class="text-color-secondary">{{ compra.cartaoNome }}</span>
+            </div>
+            <div class="flex align-items-center gap-2">
+              <i class="pi pi-tag text-color-secondary"></i>
+              <span class="text-color-secondary">{{ compra.categoriaNome }}</span>
+            </div>
+          </div>
+
+          <p-divider [style]="{margin: '0.5rem 0'}"></p-divider>
+
+          <div class="flex flex-column gap-2 text-xs mb-3">
+            <div class="flex justify-content-between">
+              <span class="text-green-600 font-bold">{{ getParcelasPagasMes(compra) }} pagas no mês</span>
+              <span class="text-green-600">{{ getValorParcelasPagasMes(compra) | currency:'BRL':'symbol':'1.2-2' }}</span>
+            </div>
+            <div class="flex justify-content-between">
+              <span class="text-orange-600 font-bold">{{ getParcelasPendentesMes(compra) }} pendentes no mês</span>
+              <span class="text-orange-600">{{ getValorParcelasPendentesMes(compra) | currency:'BRL':'symbol':'1.2-2' }}</span>
+            </div>
+          </div>
+
+          <div class="flex flex-column gap-2 text-xs">
+            <span class="text-color-secondary">{{ compra.totalParcelas - (compra.parcelasRestantes || 0) }} de {{ compra.totalParcelas }} parcelas</span>
+            <p-progressbar
+              mode="determinate"
+              [value]="getProgressoCompra(compra)"
+              severity="success">
+            </p-progressbar>
+          </div>
+        </p-card>
+      </div>
+    </div>
+  </p-card>
+
+</div>

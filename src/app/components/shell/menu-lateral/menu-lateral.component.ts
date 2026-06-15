@@ -60,7 +60,7 @@ export class MenuLateralComponent implements OnInit, OnDestroy {
         { route: '/despesas-fixas', icon: 'refresh', label: 'Débitos em Conta' },
         { route: '/despesas-recorrentes', icon: 'sync', label: 'Assinaturas e Serviços' },
         { route: '/compras-debito', icon: 'shopping-bag', label: 'Compras em Débito' },
-        { route: '/pagamentos-status', icon: 'clock', label: 'Status de Pagamentos' }
+        { route: '/list-pagamentos-status', icon: 'clock', label: 'Status de Pagamentos' }
       ]
     },
     {
@@ -99,7 +99,7 @@ export class MenuLateralComponent implements OnInit, OnDestroy {
       items: [
         { route: '/categoria-form', icon: 'tag', label: 'Categorias' },
         { route: '/comprovantes', icon: 'file-check', label: 'Comprovantes' },
-        { route: '/admin-usuarios', icon: 'users', label: 'Gerenciar Usuários' },
+        { route: '/list-usuarios', icon: 'users', label: 'Gerenciar Usuários' },
         { route: '/notificacoes-email-config', icon: 'bell', label: 'Notificações por Email' },
         { route: '/tenant-config', icon: 'cog', label: 'Sistema' },
         { route: '/billing', icon: 'credit-card', label: 'Plano & Cobrança' }

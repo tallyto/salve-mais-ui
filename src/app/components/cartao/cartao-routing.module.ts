@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@guards/auth.guard';
 import { CartaoFormComponent } from './cartao-form/cartao-form.component';
-import { CartaoLimitesComponent } from './cartao-limites/cartao-limites.component';
+import { ListCartaoLimitesComponent } from './list-cartao-limites/list-cartao-limites.component';
 import { FaturaFormComponent } from './fatura-form/fatura-form.component';
 
 const routes: Routes = [
@@ -21,7 +21,7 @@ const routes: Routes = [
       },
       {
         path: 'limites',
-        component: CartaoLimitesComponent,
+        component: ListCartaoLimitesComponent,
         canActivate: [AuthGuard]
       },
       {

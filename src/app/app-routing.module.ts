@@ -11,27 +11,27 @@ import { AuthGuard } from './guards/auth.guard';
 import { NoAuthGuard } from './guards/no-auth.guard';
 import { RecuperarSenhaComponent } from './components/auth/recuperar-senha/recuperar-senha.component';
 import { RedefinirSenhaComponent } from './components/auth/redefinir-senha/redefinir-senha.component';
-import { CriarUsuarioComponent } from './components/criar-usuario/criar-usuario.component';
+import { CriarUsuarioComponent } from './components/auth/criar-usuario/criar-usuario.component';
 import { RelatorioMensalComponent } from './components/relatorios/relatorio-mensal/relatorio-mensal.component';
 import { ContaFixaRecorrenteComponent } from './components/despesas/conta-fixa-recorrente/conta-fixa-recorrente.component';
-import { NotificacoesComponent } from './components/notificacoes/notificacoes.component';
+import { NotificacoesComponent } from './components/notificacoes/notificacoes/notificacoes.component';
 import { NotificacoesEmailConfigComponent } from './components/notificacoes/notificacoes-email-config/notificacoes-email-config.component';
 import { MinhaContaComponent } from './components/admin/minha-conta/minha-conta.component';
-import { ReservaEmergenciaComponent } from './components/reserva-emergencia/reserva-emergencia.component';
+import { ReservaEmergenciaComponent } from './components/reserva-emergencia/reserva-emergencia/reserva-emergencia.component';
 import { ReservaEmergenciaFormComponent } from './components/reserva-emergencia/reserva-emergencia-form/reserva-emergencia-form.component';
-import { BudgetRuleComponent } from './components/budget-rule/budget-rule.component';
+import { BudgetRuleComponent } from './components/dashboard/budget-rule/budget-rule.component';
 import { ListTransacoesComponent } from './components/transacoes/list-transacoes/list-transacoes.component';
 import { TransacaoDetalheComponent } from './components/transacoes/transacao-detalhe/transacao-detalhe.component';
 import { CompraParceladaFormComponent } from './components/compras/compra-parcelada-form/compra-parcelada-form.component';
 import { ListComprasParceladasComponent } from './components/compras/list-compras-parceladas/list-compras-parceladas.component';
-import { PagamentosStatusComponent } from './components/despesas/pagamentos-status/pagamentos-status.component';
+import { ListPagamentosStatusComponent } from './components/despesas/list-pagamentos-status/list-pagamentos-status.component';
 import { TenantConfigComponent } from './components/admin/tenant-config/tenant-config.component';
 import { HomeComponent } from './components/shell/home/home.component';
-import { AdminUsuariosComponent } from './components/admin/admin-usuarios/admin-usuarios.component';
+import { ListUsuariosComponent } from './components/admin/list-usuarios/list-usuarios.component';
 import { CompraDebitoFormComponent } from './components/compras/compra-debito-form/compra-debito-form.component';
 import { ListComprasDebitoComponent } from './components/compras/list-compras-debito/list-compras-debito.component';
 import { ComparativoMensalComponent } from './components/relatorios/comparativo-mensal/comparativo-mensal.component';
-import { BillingComponent } from './components/billing/billing.component';
+import { BillingComponent } from './components/billing/billing/billing.component';
 import { BillingSucessoComponent } from './components/billing/billing-sucesso/billing-sucesso.component';
 import { BillingCanceladoComponent } from './components/billing/billing-cancelado/billing-cancelado.component';
 import { ComprovantesListComponent } from './components/cartao/comprovantes-list/comprovantes-list.component';
@@ -60,7 +60,7 @@ const routes: Routes = [
   {path: 'despesas-recorrentes', component: DespesasRecorrentesComponent, canActivate: [AuthGuard]},
   {path: 'notificacoes', component: NotificacoesComponent, canActivate: [AuthGuard]},
   {path: 'notificacoes-email-config', component: NotificacoesEmailConfigComponent, canActivate: [AuthGuard]},
-  {path: 'pagamentos-status', component: PagamentosStatusComponent, canActivate: [AuthGuard]},
+  {path: 'list-pagamentos-status', component: ListPagamentosStatusComponent, canActivate: [AuthGuard]},
   {path: 'account', component: AccountComponent, canActivate: [AuthGuard]},
   {path: 'minha-conta', component: MinhaContaComponent, canActivate: [AuthGuard]},
   {path: 'budget-rule', component: BudgetRuleComponent, canActivate: [AuthGuard]},
@@ -86,7 +86,7 @@ const routes: Routes = [
   {path: 'billing/sucesso', component: BillingSucessoComponent, canActivate: [AuthGuard]},
   {path: 'billing/cancelado', component: BillingCanceladoComponent, canActivate: [AuthGuard]},
   {path: 'tenant-config', component: TenantConfigComponent, canActivate: [AuthGuard]},
-  {path: 'admin-usuarios', component: AdminUsuariosComponent, canActivate: [AuthGuard]},
+  {path: 'list-usuarios', component: ListUsuariosComponent, canActivate: [AuthGuard]},
   {path: 'comprovantes', component: ComprovantesListComponent, canActivate: [AuthGuard]},
   {path: 'politica-privacidade', component: PoliticaPrivacidadeComponent},
   {path: 'termos-uso', component: TermosUsoComponent},
