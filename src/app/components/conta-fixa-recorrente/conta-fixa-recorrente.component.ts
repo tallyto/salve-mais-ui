@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 
@@ -9,11 +10,13 @@ import { AccountService } from '../../services/account.service';
 import { ContaFixaRecorrente, TipoRecorrencia, TipoRecorrenciaInfo } from '../../models/conta-fixa.model';
 import { Categoria } from '../../models/categoria.model';
 import { Conta, TipoConta } from '../../models/conta.model';
+import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '../../shared/primeng-shared';
 
 @Component({
     selector: 'app-conta-fixa-recorrente',
     templateUrl: './conta-fixa-recorrente.component.html',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, ...SALVE_COMMON, ...SALVE_FORMS, ...SALVE_DATA, ...SALVE_OVERLAY]
 })
 export class ContaFixaRecorrenteComponent implements OnInit {
   

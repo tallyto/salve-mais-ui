@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Conta, TipoConta } from 'src/app/models/conta.model';
 import { ContaService } from 'src/app/services/conta.service';
 import { ReservaEmergenciaService } from '../../services/reserva-emergencia.service';
 import { FormBaseService } from '../../services/form-base.service';
+import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '../../shared/primeng-shared';
 
 @Component({
   selector: 'app-reserva-emergencia-form',
   templateUrl: './reserva-emergencia-form.component.html',
-  standalone: false
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, ...SALVE_COMMON, ...SALVE_FORMS, ...SALVE_DATA]
 })
 export class ReservaEmergenciaFormComponent implements OnInit {
   reservaForm: FormGroup;

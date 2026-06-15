@@ -1,13 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { NgChartsModule } from 'ng2-charts';
 import { RelatorioMensalService } from '../../services/relatorio-mensal.service';
 import { ComparativoMensalDTO, ResumoComparativoDTO, ComparativoCategoriaDTO, DestaqueMudancaDTO } from '../../models/comparativo-mensal.model';
 import { ChartData, ChartOptions } from 'chart.js';
 import { MONTHS, generateYears } from '../../shared/utils';
+import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '../../shared/primeng-shared';
 
 @Component({
   selector: 'app-comparativo-mensal',
   templateUrl: './comparativo-mensal.component.html',
-  standalone: false
+  standalone: true,
+  imports: [CommonModule, FormsModule, NgChartsModule, ...SALVE_COMMON, ...SALVE_FORMS, ...SALVE_DATA]
 })
 export class ComparativoMensalComponent implements OnInit {
   comparativo: ComparativoMensalDTO | null = null;

@@ -1,16 +1,19 @@
 import { formatarMoeda } from '../../shared/utils';
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { TransacaoService } from '../../services/transacao.service';
 import { Transacao } from '../../models/transacao.model';
 import { TipoTransacao } from '../../models/tipo-transacao.enum';
 import { Location } from '@angular/common';
+import { SALVE_COMMON, SALVE_DATA } from '../../shared/primeng-shared';
 
 @Component({
   selector: 'app-transacao-detalhe',
   templateUrl: './transacao-detalhe.component.html',
-  standalone: false
+  standalone: true,
+  imports: [CommonModule, ...SALVE_COMMON, ...SALVE_DATA]
 })
 export class TransacaoDetalheComponent implements OnInit {
   transacao: Transacao | null = null;

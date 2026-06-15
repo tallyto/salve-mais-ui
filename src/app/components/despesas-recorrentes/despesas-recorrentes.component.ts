@@ -1,5 +1,7 @@
 import { formatarMoeda } from '../../shared/utils';
 import {Component, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Categoria} from "../../models/categoria.model";
 import {CategoriaService} from "../../services/categoria.service";
@@ -9,11 +11,13 @@ import {Cartao} from "../../models/cartao.model";
 import {MessageService} from "primeng/api";
 import {GastoCartao} from "../../models/gasto-cartao.model";
 import { filter } from 'rxjs';
+import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '../../shared/primeng-shared';
 
 @Component({
     selector: 'app-despesas-recorrentes',
     templateUrl: './despesas-recorrentes.component.html',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, ...SALVE_COMMON, ...SALVE_FORMS, ...SALVE_DATA, ...SALVE_OVERLAY]
 })
 export class DespesasRecorrentesComponent implements OnInit {
   gastosRecorrentes: FormGroup;

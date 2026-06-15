@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RelatorioMensalService } from '../../services/relatorio-mensal.service';
 import { RelatorioMensalDTO, ItemGastoFixoDTO } from '../../models/relatorio-mensal.model';
 import { MONTHS, generateYears, formatarMoeda } from '../../shared/utils';
+import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '../../shared/primeng-shared';
 
 @Component({
     selector: 'app-relatorio-mensal',
     templateUrl: './relatorio-mensal.component.html',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, ...SALVE_COMMON, ...SALVE_FORMS, ...SALVE_DATA]
 })
 export class RelatorioMensalComponent implements OnInit {
   relatorioForm: FormGroup;

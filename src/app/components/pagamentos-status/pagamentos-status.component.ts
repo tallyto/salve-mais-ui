@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FaturaService } from '../../services/fatura.service';
 import { ContasFixasService } from '../../services/financa.service';
 import { CompraParceladaService } from '../../services/compra-parcelada.service';
@@ -8,6 +9,7 @@ import { CompraParcelada } from '../../models/compra-parcelada.model';
 import { Page } from '../../models/page.model';
 import { forkJoin } from 'rxjs';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { SALVE_COMMON, SALVE_DATA, SALVE_OVERLAY } from '../../shared/primeng-shared';
 
 interface StatusPagamentos {
   faturasPagas: FaturaResponseDTO[];
@@ -22,7 +24,8 @@ interface StatusPagamentos {
 @Component({
   selector: 'app-pagamentos-status',
   templateUrl: './pagamentos-status.component.html',
-  standalone: false
+  standalone: true,
+  imports: [CommonModule, ...SALVE_COMMON, ...SALVE_DATA, ...SALVE_OVERLAY]
 })
 export class PagamentosStatusComponent implements OnInit {
   isLoading = true;

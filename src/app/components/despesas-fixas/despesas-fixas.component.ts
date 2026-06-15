@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ContasFixasService} from "../../services/financa.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Categoria} from "../../models/categoria.model";
@@ -8,11 +10,13 @@ import {AccountService} from "../../services/account.service";
 import {Financa} from "../../models/financa.model";
 import {MessageService} from "primeng/api";
 import { filter } from 'rxjs';
+import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '../../shared/primeng-shared';
 
 @Component({
     selector: 'app-despesas-fixas',
     templateUrl: './despesas-fixas.component.html',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, ...SALVE_COMMON, ...SALVE_FORMS, ...SALVE_DATA, ...SALVE_OVERLAY]
 })
 export class DespesasFixasComponent implements OnInit {
   despesaFixaForm: FormGroup;

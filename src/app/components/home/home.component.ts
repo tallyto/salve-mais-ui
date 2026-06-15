@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ButtonModule } from 'primeng/button';
+import { SALVE_COMMON } from '../../shared/primeng-shared';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  standalone: false
+  standalone: true,
+  imports: [CommonModule, RouterModule, ...SALVE_COMMON]
 })
 export class HomeComponent {
   currentYear = new Date().getFullYear();
