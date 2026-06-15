@@ -36,6 +36,8 @@ import { BillingSucessoComponent } from './components/billing/billing-sucesso/bi
 import { BillingCanceladoComponent } from './components/billing/billing-cancelado/billing-cancelado.component';
 import { ComprovantesListComponent } from './components/cartao/comprovantes-list/comprovantes-list.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { PoliticaPrivacidadeComponent } from './components/politica-privacidade/politica-privacidade.component';
+import { TermosUsoComponent } from './components/termos-uso/termos-uso.component';
 
 
 const routes: Routes = [
@@ -86,6 +88,8 @@ const routes: Routes = [
   {path: 'tenant-config', component: TenantConfigComponent, canActivate: [AuthGuard]},
   {path: 'admin-usuarios', component: AdminUsuariosComponent, canActivate: [AuthGuard]},
   {path: 'comprovantes', component: ComprovantesListComponent, canActivate: [AuthGuard]},
+  {path: 'politica-privacidade', component: PoliticaPrivacidadeComponent},
+  {path: 'termos-uso', component: TermosUsoComponent},
   {path: '**', component: NotFoundComponent}
 ];
 
