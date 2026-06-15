@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MessageService } from "primeng/api";
 import { ProventoService } from "../../services/provento.service";
 import { Conta, TipoConta } from './../../models/conta.model';
 import { AccountService } from "../../services/account.service";
+import { FormBaseService } from "../../services/form-base.service";
 import { Provento } from "../../models/provento.model";
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs';
@@ -22,7 +22,7 @@ export class ProventoFormComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private proventoService: ProventoService,
     private accountService: AccountService,
-    private messageService: MessageService,
+    private formBaseService: FormBaseService
   ) {
     this.proventoForm = this.formBuilder.group({
       id: [null],
@@ -65,23 +65,25 @@ export class ProventoFormComponent implements OnInit, OnDestroy {
     if (this.proventoForm.value.id) {
       this.proventoService.atualizarProvento(this.proventoForm.value).subscribe({
         next: () => {
-          this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Provento atualizado com sucesso!' });
+          this.formBaseService.showSuccess('Provento atualizado com sucesso!');
           this.proventoForm.reset();
           this.proventoService.proventosChanged$.next(undefined);
         },
         error: error => {
-          this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Erro ao atualizar provento!' });
+          const mensagem = this.formBaseService.handleError(error, 'Erro ao atualizar provento');
+          this.formBaseService.showError(mensagem);
         }
       });
     } else {
       this.proventoService.criarProvento(this.proventoForm.value).subscribe({
         next: () => {
-          this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Provento salvo com sucesso!' });
+          this.formBaseService.showSuccess('Provento salvo com sucesso!');
           this.proventoForm.reset();
           this.proventoService.proventosChanged$.next(undefined);
         },
         error: error => {
-          this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Erro ao salvar provento!' });
+          const mensagem = this.formBaseService.handleError(error, 'Erro ao salvar provento');
+          this.formBaseService.showError(mensagem);
         }
       });
     }

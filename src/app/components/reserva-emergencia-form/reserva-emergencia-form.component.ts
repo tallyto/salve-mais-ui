@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Conta, TipoConta } from 'src/app/models/conta.model';
 import { ContaService } from 'src/app/services/conta.service';
 import { ReservaEmergenciaService } from '../../services/reserva-emergencia.service';
-import { MessageService } from 'primeng/api';
+import { FormBaseService } from '../../services/form-base.service';
 
 @Component({
   selector: 'app-reserva-emergencia-form',
@@ -35,7 +35,7 @@ export class ReservaEmergenciaFormComponent implements OnInit {
     private contaService: ContaService,
     private route: ActivatedRoute,
     private router: Router,
-    private messageService: MessageService
+    private formBaseService: FormBaseService
   ) {
     this.reservaForm = this.fb.group({
       objetivo: [null, [Validators.required, Validators.min(0.01)]],
@@ -76,7 +76,7 @@ export class ReservaEmergenciaFormComponent implements OnInit {
         }
       },
       error: (err) => {
-        this.showError(this.errMsg(err, 'Erro ao carregar contas.'));
+        this.formBaseService.showError(this.formBaseService.handleError(err, 'Erro ao carregar contas.'));
         this.loading = false;
       }
     });
@@ -94,7 +94,7 @@ export class ReservaEmergenciaFormComponent implements OnInit {
         this.loading = false;
       },
       error: (err) => {
-        this.showError(this.errMsg(err, 'Erro ao carregar dados da reserva.'));
+        this.formBaseService.showError(this.formBaseService.handleError(err, 'Erro ao carregar dados da reserva.'));
         this.loading = false;
         this.router.navigate(['/reserva-emergencia']);
       }
@@ -103,7 +103,7 @@ export class ReservaEmergenciaFormComponent implements OnInit {
 
   onSubmit(): void {
     if (this.reservaForm.invalid) {
-      this.showError('Por favor, preencha todos os campos corretamente.');
+      this.formBaseService.showError('Por favor, preencha todos os campos corretamente.');
       return;
     }
 
@@ -114,22 +114,22 @@ export class ReservaEmergenciaFormComponent implements OnInit {
       // Modo de edição
       this.reservaService.updateReserva(this.reservaId, formData).subscribe({
         next: () => {
-          this.showSuccess('Reserva atualizada com sucesso!');
+          this.formBaseService.showSuccess('Reserva atualizada com sucesso!');
           this.router.navigate(['/reserva-emergencia']);
         },
         error: (err) => {
-          this.showError(this.errMsg(err, 'Erro ao atualizar reserva.'));
+          this.formBaseService.showError(this.formBaseService.handleError(err, 'Erro ao atualizar reserva.'));
           this.loading = false;
         }
       });
     } else {
       this.reservaService.createReserva(formData).subscribe({
         next: () => {
-          this.showSuccess('Reserva criada com sucesso!');
+          this.formBaseService.showSuccess('Reserva criada com sucesso!');
           this.router.navigate(['/reserva-emergencia']);
         },
         error: (err) => {
-          this.showError(this.errMsg(err, 'Erro ao criar reserva.'));
+          this.formBaseService.showError(this.formBaseService.handleError(err, 'Erro ao criar reserva.'));
           this.loading = false;
         }
       });
@@ -140,7 +140,7 @@ export class ReservaEmergenciaFormComponent implements OnInit {
     const multiplicador = this.reservaForm.get('multiplicadorDespesas')?.value;
 
     if (!multiplicador) {
-      this.showError('Selecione um multiplicador de despesas primeiro.');
+      this.formBaseService.showError('Selecione um multiplicador de despesas primeiro.');
       return;
     }
 
@@ -151,7 +151,7 @@ export class ReservaEmergenciaFormComponent implements OnInit {
         this.calculandoObjetivo = false;
       },
       error: (err) => {
-        this.showError(this.errMsg(err, 'Erro ao calcular objetivo.'));
+        this.formBaseService.showError(this.formBaseService.handleError(err, 'Erro ao calcular objetivo.'));
         this.calculandoObjetivo = false;
       }
     });
@@ -162,7 +162,7 @@ export class ReservaEmergenciaFormComponent implements OnInit {
     const mensal = this.reservaForm.get('valorContribuicaoMensal');
 
     if (objetivoCtrl?.invalid || mensal?.invalid) {
-      this.showError('Defina um objetivo e uma contribuição mensal válidos primeiro.');
+      this.formBaseService.showError('Defina um objetivo e uma contribuição mensal válidos primeiro.');
       return;
     }
 
@@ -171,7 +171,7 @@ export class ReservaEmergenciaFormComponent implements OnInit {
     const taxaRendimento = this.reservaForm.get('taxaRendimento')?.value ?? 0;
 
     if (valorMensal <= 0) {
-      this.showError('A contribuição mensal deve ser maior que zero.');
+      this.formBaseService.showError('A contribuição mensal deve ser maior que zero.');
       return;
     }
 
@@ -198,15 +198,4 @@ export class ReservaEmergenciaFormComponent implements OnInit {
     this.router.navigate(['/reserva-emergencia']);
   }
 
-  private errMsg(err: any, fallback: string): string {
-    return err?.error?.message ?? fallback;
-  }
-
-  private showSuccess(message: string): void {
-    this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: message });
-  }
-
-  private showError(message: string): void {
-    this.messageService.add({ severity: 'error', summary: 'Erro', detail: message });
-  }
 }

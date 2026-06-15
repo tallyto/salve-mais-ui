@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { CompraParceladaService } from '../../services/compra-parcelada.service';
 import { CategoriaService } from '../../services/categoria.service';
 import { CartaoService } from '../../services/cartao.service';
+import { FormBaseService } from '../../services/form-base.service';
 import { Categoria } from '../../models/categoria.model';
 import { Cartao } from '../../models/cartao.model';
 import { CompraParceladaRequest } from '../../models/compra-parcelada.model';
@@ -46,7 +46,7 @@ export class CompraParceladaFormComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private dialogService: DialogService,
-    private messageService: MessageService
+    private formBaseService: FormBaseService
   ) {}
 
   ngOnInit(): void {
@@ -84,7 +84,7 @@ export class CompraParceladaFormComponent implements OnInit {
         this.loading = false;
       },
       error: (error) => {
-        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Erro ao carregar compra parcelada.' });
+        this.formBaseService.showError('Erro ao carregar compra parcelada.');
         this.loading = false;
         this.router.navigate(['/compras-parceladas']);
       }
@@ -208,7 +208,7 @@ export class CompraParceladaFormComponent implements OnInit {
       // Modo de edição
       this.compraParceladaService.atualizar(this.compraId, request).subscribe({
         next: (response) => {
-          this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Compra parcelada atualizada com sucesso.' });
+          this.formBaseService.showSuccess('Compra parcelada atualizada com sucesso.');
           this.router.navigate(['/compras-parceladas']);
         },
         error: (error) => {
@@ -220,11 +220,7 @@ export class CompraParceladaFormComponent implements OnInit {
       // Modo de criação
       this.compraParceladaService.criar(request).subscribe({
         next: (response) => {
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Sucesso',
-            detail: `Compra parcelada criada com sucesso. ${this.parcelasRestantes} parcelas de R$ ${this.valorParcela.toFixed(2)}`
-          });
+          this.formBaseService.showSuccess(`Compra parcelada criada com sucesso. ${this.parcelasRestantes} parcelas de R$ ${this.valorParcela.toFixed(2)}`);
           this.router.navigate(['/compras-parceladas']);
         },
         error: (error) => {
@@ -270,7 +266,7 @@ export class CompraParceladaFormComponent implements OnInit {
     this.showCategoriaDialog = false;
     this.loadCategorias();
     this.form.patchValue({ categoriaId: categoria.id });
-    this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Categoria criada com sucesso.' });
+    this.formBaseService.showSuccess('Categoria criada com sucesso.');
   }
 
   onCategoriaDialogClose(): void {
@@ -288,7 +284,7 @@ export class CompraParceladaFormComponent implements OnInit {
       if (result) {
         this.loadCartoes();
         this.form.patchValue({ cartaoId: result.id });
-        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Cartão criado com sucesso.' });
+        this.formBaseService.showSuccess('Cartão criado com sucesso.');
       }
     });
   }
