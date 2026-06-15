@@ -45,7 +45,7 @@ export class ListContasFixasComponent extends LazyTableBase implements OnInit {
       pago: [false]
     });
 
-    this.financaService.savedFinanca.subscribe(
+    this.financaService.financasChanged$.subscribe(
       {
         next: () => {
           this.carregarDados()
@@ -83,7 +83,7 @@ export class ListContasFixasComponent extends LazyTableBase implements OnInit {
     });
 
     // Emitir evento para que o componente principal possa reagir
-    this.financaService.editingFinanca.emit(despesa);
+    this.financaService.editingFinanca$.next(despesa);
   }
 
   cancelEdit(): void {

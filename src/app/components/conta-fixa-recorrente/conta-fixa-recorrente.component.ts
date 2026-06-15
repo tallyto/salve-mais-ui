@@ -8,7 +8,7 @@ import { CategoriaService } from '../../services/categoria.service';
 import { AccountService } from '../../services/account.service';
 import { ContaFixaRecorrente, TipoRecorrencia, TipoRecorrenciaInfo } from '../../models/conta-fixa.model';
 import { Categoria } from '../../models/categoria.model';
-import { Account } from '../../models/account.model';
+import { Conta, TipoConta } from '../../models/conta.model';
 
 @Component({
     selector: 'app-conta-fixa-recorrente',
@@ -19,7 +19,7 @@ export class ContaFixaRecorrenteComponent implements OnInit {
   
   contaRecorrenteForm: FormGroup;
   categorias: Categoria[] = [];
-  contas: Account[] = [];
+  contas: Conta[] = [];
   loading = false;
 
   tiposRecorrencia: TipoRecorrenciaInfo[] = [

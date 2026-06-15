@@ -2,10 +2,11 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MessageService } from "primeng/api";
 import { ProventoService } from "../../services/provento.service";
-import { Account } from "../../models/account.model";
+import { Conta, TipoConta } from './../../models/conta.model';
 import { AccountService } from "../../services/account.service";
 import { Provento } from "../../models/provento.model";
 import { Subscription } from 'rxjs';
+import { filter } from 'rxjs';
 
 @Component({
     selector: 'app-provento-form',
@@ -14,7 +15,7 @@ import { Subscription } from 'rxjs';
 })
 export class ProventoFormComponent implements OnInit, OnDestroy {
   public proventoForm: FormGroup;
-  public accounts: Account[] = [];
+  public accounts: Conta[] = [];
   private editSubscription: Subscription | undefined;
 
   constructor(
@@ -39,7 +40,9 @@ export class ProventoFormComponent implements OnInit, OnDestroy {
       }
     });
     // Escuta evento de edição
-    this.editSubscription = this.proventoService.editingProvento.subscribe((provento: Provento) => {
+    this.editSubscription = this.proventoService.editingProvento$.pipe(
+      filter((provento): provento is Provento => provento !== null)
+    ).subscribe((provento: Provento) => {
       this.proventoForm.patchValue({
         id: provento.id,
         contaId: provento.conta?.id,
@@ -64,7 +67,7 @@ export class ProventoFormComponent implements OnInit, OnDestroy {
         next: () => {
           this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Provento atualizado com sucesso!' });
           this.proventoForm.reset();
-          this.proventoService.proventoSaved.emit();
+          this.proventoService.proventosChanged$.next(undefined);
         },
         error: error => {
           this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Erro ao atualizar provento!' });
@@ -75,7 +78,7 @@ export class ProventoFormComponent implements OnInit, OnDestroy {
         next: () => {
           this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Provento salvo com sucesso!' });
           this.proventoForm.reset();
-          this.proventoService.proventoSaved.emit();
+          this.proventoService.proventosChanged$.next(undefined);
         },
         error: error => {
           this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Erro ao salvar provento!' });

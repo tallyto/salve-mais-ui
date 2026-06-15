@@ -7,6 +7,7 @@ import {CartaoService} from "../../services/cartao.service";
 import {Cartao} from "../../models/cartao.model";
 import {MessageService} from "primeng/api";
 import {GastoCartao} from "../../models/gasto-cartao.model";
+import { filter } from 'rxjs';
 
 @Component({
     selector: 'app-despesas-recorrentes',
@@ -40,18 +41,18 @@ export class DespesasRecorrentesComponent implements OnInit {
     this.carregarCategorias();
     this.carregarCartoes();
 
-    this.despesaRecorrenteService.editingGasto.subscribe((gasto: GastoCartao) => {
-      if (gasto) {
-        this.editingGasto = gasto;
-        this.gastosRecorrentes.patchValue({
-          id: gasto.id,
-          descricao: gasto.descricao,
-          valor: gasto.valor,
-          data: gasto.data ? new Date(gasto.data) : null,
-          categoriaId: gasto.categoria?.id,
-          cartaoId: gasto.cartaoCredito?.id
-        });
-      }
+    this.despesaRecorrenteService.editingGasto$.pipe(
+      filter((gasto): gasto is GastoCartao => gasto !== null)
+    ).subscribe((gasto: GastoCartao) => {
+      this.editingGasto = gasto;
+      this.gastosRecorrentes.patchValue({
+        id: gasto.id,
+        descricao: gasto.descricao,
+        valor: gasto.valor,
+        data: gasto.data ? new Date(gasto.data) : null,
+        categoriaId: gasto.categoria?.id,
+        cartaoId: gasto.cartaoCredito?.id
+      });
     });
   }
 
@@ -110,7 +111,7 @@ export class DespesasRecorrentesComponent implements OnInit {
       next: () => {
         this.limparFormulario();
         this.editingGasto = null;
-        this.despesaRecorrenteService.gastaoCartaoSaved.emit();
+        this.despesaRecorrenteService.gastosChanged$.next(undefined);
 
         const message = isEditing ? 'Gasto atualizado com sucesso!' : 'Gasto salvo com sucesso!';
         this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: message });

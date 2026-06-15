@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AccountService } from 'src/app/services/account.service';
-import { Account } from '../../models/account.model';
+import { Conta, TipoConta } from '../../models/conta.model';
 
 @Component({
   selector: 'app-transferencia-modal',
@@ -12,8 +12,8 @@ import { Account } from '../../models/account.model';
 })
 export class TransferenciaModalComponent implements OnInit {
   transferenciaForm: FormGroup;
-  contas: Account[] = [];
-  contaOrigem: Account | null = null;
+  contas: Conta[] = [];
+  contaOrigem: Conta | null = null;
   isLoading = false;
 
   constructor(
@@ -28,7 +28,7 @@ export class TransferenciaModalComponent implements OnInit {
       valor: ['', [Validators.required, Validators.min(0.01)]]
     });
 
-    const data = config?.data as { contaOrigem: Account } | undefined;
+    const data = config?.data as { contaOrigem: Conta } | undefined;
     if (data && data.contaOrigem) {
       this.contaOrigem = data.contaOrigem;
     }

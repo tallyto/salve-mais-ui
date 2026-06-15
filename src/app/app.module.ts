@@ -131,8 +131,6 @@ registerLocaleData(localePt, 'pt-BR');
     ListDespesasRecorrentesComponent,
     ListContasFixasComponent,
     ListProventosComponent,
-    AccountComponent,
-    ListAccountsComponent,
     SpendingTrendChartComponent,
     IncomeExpenseChartComponent,
     ExpensePieChartComponent,
@@ -207,6 +205,9 @@ registerLocaleData(localePt, 'pt-BR');
     // Newly standalone components (Phase 5)
     TenantConfigComponent,
     NotificacoesComponent,
+    // Newly standalone components (Phase 6) - Conversion of EventEmitter → BehaviorSubject
+    AccountComponent,
+    ListAccountsComponent,
     // Other standalone components
     RegisterComponent,
     LoginComponent,

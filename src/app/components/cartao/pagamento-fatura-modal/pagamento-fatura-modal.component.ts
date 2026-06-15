@@ -4,7 +4,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
 import { FaturaService } from '@services/fatura.service';
 import { AccountService } from '@services/account.service';
-import { Account } from '@models/account.model';
+import { Conta, TipoConta } from '../../../models/conta.model';
 import { FaturaResponseDTO } from '@models/fatura.model';
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '../../../shared/primeng-shared';
 
@@ -20,7 +20,7 @@ import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '../../../shared/primeng-s
 })
 export class PagamentoFaturaModalComponent implements OnInit {
   pagamentoForm: FormGroup;
-  contas: Account[] = [];
+  contas: Conta[] = [];
   loading = false;
 
   constructor(
@@ -95,7 +95,7 @@ export class PagamentoFaturaModalComponent implements OnInit {
     }).format(valor);
   }
 
-  temSaldoSuficiente(conta: Account): boolean {
+  temSaldoSuficiente(conta: Conta): boolean {
     return conta.saldo >= this.data.fatura.valorTotal;
   }
 

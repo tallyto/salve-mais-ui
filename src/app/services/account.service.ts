@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import {EventEmitter, Injectable} from '@angular/core';
-import {Account, AccountPage} from '../models/account.model';
-import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Conta, TipoConta } from '@models/conta.model';
+import { Page } from '@models/page.model';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
+import { environment } from '@environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,27 +13,26 @@ export class AccountService {
 
   private apiUrl = environment.apiUrl + '/contas'
 
-  savedAccount = new EventEmitter<void>();
+  accountsChanged$ = new BehaviorSubject<void>(undefined);
   constructor(private http: HttpClient) {
 
   }
 
-  salvarAccount(account: Account): Observable<Account> {
-    // Define o saldo inicial como 0 e tipo como CORRENTE por padrão
+  salvarAccount(account: Conta): Observable<Conta> {
+    // Define o saldo inicial como 0
     const newAccount = {
       ...account,
-      saldo: 0,
-      tipo: account.tipo || 'CORRENTE'
+      saldo: 0
     };
-    return this.http.post<Account>(this.apiUrl, newAccount);
+    return this.http.post<Conta>(this.apiUrl, newAccount);
   }
 
-  atualizarAccount(account: Account): Observable<Account> {
-    return this.http.put<Account>(`${this.apiUrl}/${account.id}`, account)
+  atualizarAccount(account: Conta): Observable<Conta> {
+    return this.http.put<Conta>(`${this.apiUrl}/${account.id}`, account)
   }
 
-  listarAccounts(page: number, size: number, sort: string): Observable<AccountPage> {
-    return this.http.get<AccountPage>(this.apiUrl,  {
+  listarAccounts(page: number, size: number, sort: string): Observable<Page<Conta>> {
+    return this.http.get<Page<Conta>>(this.apiUrl,  {
       params: {
         page,
         size,
@@ -41,11 +41,11 @@ export class AccountService {
     })
   }
 
-  listarTodasContas(): Observable<Account[]> {
+  listarTodasContas(): Observable<Conta[]> {
     // Usa a mesma endpoint paginada mas com um tamanho grande para pegar todas
-    return this.http.get<AccountPage>(`${this.apiUrl}?page=0&size=1000&sort=titular`)
+    return this.http.get<Page<Conta>>(`${this.apiUrl}?page=0&size=1000&sort=titular`)
       .pipe(
-        map((response: AccountPage) => response.content || [])
+        map((response: Page<Conta>) => response.content || [])
       );
   }
 

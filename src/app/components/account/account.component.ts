@@ -3,11 +3,18 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AccountService } from 'src/app/services/account.service';
+import { SALVE_COMMON, SALVE_FORMS } from '../../shared/primeng-shared';
+import { ListAccountsComponent } from '../list-accounts/list-accounts.component';
 
 @Component({
     selector: 'app-account',
     templateUrl: './account.component.html',
-    standalone: false
+    standalone: true,
+    imports: [
+      ...SALVE_COMMON,
+      ...SALVE_FORMS,
+      ListAccountsComponent
+    ]
 })
 export class AccountComponent implements AfterViewInit {
   public accountForm: FormGroup;
@@ -81,7 +88,7 @@ export class AccountComponent implements AfterViewInit {
           } else {
             this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: message });
             this.accountForm.reset();
-            this.accountService.savedAccount.emit();
+            this.accountService.accountsChanged$.next(undefined);
           }
         },
         error: err => {

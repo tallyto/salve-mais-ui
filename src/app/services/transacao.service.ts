@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Transacao, TransacaoFiltro } from '../models/transacao.model';
 import { environment } from '../../environments/environment';
-import { PageResponse } from '../models/page-response.model';
+import { Page } from '../models/page.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class TransacaoService {
 
   constructor(private http: HttpClient) { }
 
-  listarTransacoes(filtro?: TransacaoFiltro, page = 0, size = 10): Observable<PageResponse<Transacao>> {
+  listarTransacoes(filtro?: TransacaoFiltro, page = 0, size = 10): Observable<Page<Transacao>> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString())
@@ -49,7 +49,7 @@ export class TransacaoService {
       }
     }
 
-    return this.http.get<PageResponse<Transacao>>(this.apiUrl, { params });
+    return this.http.get<Page<Transacao>>(this.apiUrl, { params });
   }
 
   obterTransacao(id: number): Observable<Transacao> {

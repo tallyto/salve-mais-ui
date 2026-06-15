@@ -9,7 +9,7 @@ export interface Conta {
   id: number;
   titular: string;
   saldo: number;
-  tipo?: TipoConta;
+  tipo: TipoConta;
   taxaRendimento?: number;
   descricao?: string;
 }

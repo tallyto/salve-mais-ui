@@ -1,7 +1,7 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import {GastoCartaoInput} from "../models/input/gasto-cartao.input";
-import {Observable} from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import {GastoCartao} from "../models/gasto-cartao.model";
 import { environment } from '../../environments/environment';
 import { Page } from '../models/page.model';
@@ -13,8 +13,8 @@ export class GastoCartaoService {
 
   private apiUrl = environment.apiUrl + '/compras';
 
-  gastaoCartaoSaved = new EventEmitter<void>();
-  editingGasto = new EventEmitter<GastoCartao>();
+  gastosChanged$ = new BehaviorSubject<void>(undefined);
+  editingGasto$ = new BehaviorSubject<GastoCartao | null>(null);
 
   constructor(private http: HttpClient) {
   }

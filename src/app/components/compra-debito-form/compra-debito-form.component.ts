@@ -8,7 +8,7 @@ import { CategoriaService } from '../../services/categoria.service';
 import { AccountService } from '../../services/account.service';
 import { CompraDebitoInput } from '../../models/compra-debito.model';
 import { Categoria } from '../../models/categoria.model';
-import { Account } from '../../models/account.model';
+import { Conta, TipoConta } from '../../models/conta.model';
 
 @Component({
     selector: 'app-compra-debito-form',
@@ -19,7 +19,7 @@ export class CompraDebitoFormComponent implements OnInit {
   
   compraDebitoForm: FormGroup;
   categorias: Categoria[] = [];
-  contas: Account[] = [];
+  contas: Conta[] = [];
   loading = false;
   isEditing = false;
   compraDebitoId?: number;

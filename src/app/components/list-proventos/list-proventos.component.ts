@@ -25,7 +25,7 @@ export class ListProventosComponent extends LazyTableBase implements OnInit {
     private confirmationService: ConfirmationService,
   ) {
     super();
-    this.proventoService.proventoSaved.subscribe(
+    this.proventoService.proventosChanged$.subscribe(
       {
         next: () => {
           this.carregarDados()
@@ -77,7 +77,7 @@ export class ListProventosComponent extends LazyTableBase implements OnInit {
 
   onEditProvento(provento: Provento) {
     this.selectedProvento = { ...provento };
-    this.proventoService.editingProvento.emit(this.selectedProvento);
+    this.proventoService.editingProvento$.next(this.selectedProvento);
   }
 
   excluirProvento(provento: Provento) {

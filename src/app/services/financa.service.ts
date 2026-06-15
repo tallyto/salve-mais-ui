@@ -1,6 +1,6 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Observable, tap} from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import {Financa} from '../models/financa.model';
 import {ContaFixa, ContaFixaRecorrente} from '../models/conta-fixa.model';
 import { environment } from '../../environments/environment';
@@ -11,10 +11,10 @@ import { NotificationEventService } from './notification-event.service';
 })
 export class ContasFixasService {
 
-  private apiUrl = environment.apiUrl + '/contas/fixas'; // substitua pela sua URL
+  private apiUrl = environment.apiUrl + '/contas/fixas';
 
-  savedFinanca = new EventEmitter<void>();
-  editingFinanca = new EventEmitter<Financa>();
+  financasChanged$ = new BehaviorSubject<void>(undefined);
+  editingFinanca$ = new BehaviorSubject<Financa | null>(null);
 
   constructor(
     private http: HttpClient,

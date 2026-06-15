@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../../services/account.service';
 import { ProventoService } from '../../services/provento.service';
 import { DashboardService, DashboardSummary, CategoryExpense, MonthlyExpense, VariationData } from '../../services/dashboard.service';
-import { Account, AccountPage } from '../../models/account.model';
+import { Conta, TipoConta } from '../../models/conta.model';
 import { Provento } from '../../models/provento.model';
 import { forkJoin, of } from 'rxjs';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
@@ -40,7 +40,7 @@ interface QuickAction {
   standalone: false
 })
 export class DashboardComponent implements OnInit {
-  accounts: Account[] = [];
+  accounts: Conta[] = [];
   proventos: Provento[] = [];
   totalSaldo: number = 0;
   totalReceitas: number = 0;
@@ -254,7 +254,7 @@ export class DashboardComponent implements OnInit {
 
         // Também carrega dados de contas para exibição no dashboard
         this.accountService.listarAccounts(0, 100, '').pipe(
-          catchError(() => of({ content: [] } as unknown as AccountPage))
+          catchError(() => of({ content: [] } as unknown as Page<Conta>))
         ).subscribe({
           next: (accountPage) => {
             this.accounts = accountPage.content;

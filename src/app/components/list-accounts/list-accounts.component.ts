@@ -1,19 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from 'src/app/services/account.service';
-import { Account } from '../../models/account.model';
+import { Conta, TipoConta } from '../../models/conta.model';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TransferenciaModalComponent } from '../transferencia-modal/transferencia-modal.component';
+import { SALVE_COMMON, SALVE_DATA, SALVE_FORMS } from '../../shared/primeng-shared';
 
 @Component({
     selector: 'app-list-accounts',
     templateUrl: './list-accounts.component.html',
-    standalone: false
+    standalone: true,
+    imports: [
+      ...SALVE_COMMON,
+      ...SALVE_DATA,
+      ...SALVE_FORMS
+    ]
 })
 export class ListAccountsComponent implements OnInit {
-  accounts: Account[] = [];
+  accounts: Conta[] = [];
   isLoadingResults = true;
-  editingAccount: Account | null = null;
+  editingAccount: Conta | null = null;
   tempTitular: string = '';
   transferenciaRef?: DynamicDialogRef;
 
@@ -22,7 +28,7 @@ export class ListAccountsComponent implements OnInit {
     private messageService: MessageService,
     private dialogService: DialogService
   ) {
-    this.accountService.savedAccount.subscribe(() => this.loadAccounts());
+    this.accountService.accountsChanged$.subscribe(() => this.loadAccounts());
   }
 
   ngOnInit(): void {
@@ -66,7 +72,7 @@ export class ListAccountsComponent implements OnInit {
     return labels[tipo] ?? tipo;
   }
 
-  startEdit(account: Account): void {
+  startEdit(account: Conta): void {
     this.editingAccount = account;
     this.tempTitular = account.titular;
   }
@@ -92,11 +98,11 @@ export class ListAccountsComponent implements OnInit {
     });
   }
 
-  isEditing(account: Account): boolean {
+  isEditing(account: Conta): boolean {
     return this.editingAccount?.id === account.id;
   }
 
-  excluirConta(account: Account): void {
+  excluirConta(account: Conta): void {
     if (!confirm(`Excluir a conta "${account.titular}"?`)) return;
     this.accountService.excluirAccount(account.id).subscribe({
       next: () => {
@@ -109,7 +115,7 @@ export class ListAccountsComponent implements OnInit {
     });
   }
 
-  abrirTransferencia(account: Account): void {
+  abrirTransferencia(account: Conta): void {
     this.transferenciaRef = this.dialogService.open(TransferenciaModalComponent, {
       header: 'Transferência entre Contas',
       modal: true,

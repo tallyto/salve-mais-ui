@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import {EventEmitter, Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import {Provento} from '../models/provento.model';
-import {Observable} from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 export interface ProventoPage {
@@ -14,13 +14,13 @@ export interface ProventoPage {
 })
 export class ProventoService {
 
-  private apiUrl = environment.apiUrl + '/proventos'; // substitua pela sua URL
+  private apiUrl = environment.apiUrl + '/proventos';
 
   constructor(private http: HttpClient) {
   }
 
-  proventoSaved = new EventEmitter<void>();
-  editingProvento = new EventEmitter<Provento>();
+  proventosChanged$ = new BehaviorSubject<void>(undefined);
+  editingProvento$ = new BehaviorSubject<Provento | null>(null);
 
   public listarProventos(page: number, size: number, sort: string): Observable<ProventoPage | Provento[]> {
     return this.http.get<ProventoPage | Provento[]>(this.apiUrl, {

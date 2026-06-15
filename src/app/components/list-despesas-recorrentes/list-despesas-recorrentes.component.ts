@@ -30,7 +30,7 @@ export class ListDespesasRecorrentesComponent extends LazyTableBase implements O
     private confirmationService: ConfirmationService,
   ) {
     super();
-    this.despesaRecorrenteService.gastaoCartaoSaved.subscribe({
+    this.despesaRecorrenteService.gastosChanged$.subscribe({
       next: () => {
         this.carregarDados()
       }
@@ -84,7 +84,7 @@ export class ListDespesasRecorrentesComponent extends LazyTableBase implements O
   }
 
   editarGasto(gastoRecorrente: GastoCartao): void {
-    this.despesaRecorrenteService.editingGasto.emit(gastoRecorrente);
+    this.despesaRecorrenteService.editingGasto$.next(gastoRecorrente);
   }
 
   onFilterChange(): void {

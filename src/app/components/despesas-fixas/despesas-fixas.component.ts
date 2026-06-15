@@ -3,10 +3,11 @@ import {ContasFixasService} from "../../services/financa.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Categoria} from "../../models/categoria.model";
 import {CategoriaService} from "../../services/categoria.service";
-import {Account} from "../../models/account.model";
+import { Conta, TipoConta } from './../../models/conta.model';
 import {AccountService} from "../../services/account.service";
 import {Financa} from "../../models/financa.model";
 import {MessageService} from "primeng/api";
+import { filter } from 'rxjs';
 
 @Component({
     selector: 'app-despesas-fixas',
@@ -16,7 +17,7 @@ import {MessageService} from "primeng/api";
 export class DespesasFixasComponent implements OnInit {
   despesaFixaForm: FormGroup;
   public categorias: Categoria[] = [];
-  public accounts: Account[] = [];
+  public accounts: Conta[] = [];
   public editingDespesa: Financa | null = null;
 
   constructor(
@@ -42,19 +43,19 @@ export class DespesasFixasComponent implements OnInit {
     this.carregarContas();
 
     // Subscribe to edit event
-    this.financaService.editingFinanca.subscribe((financa: Financa) => {
-      if (financa) {
-        this.editingDespesa = financa;
-        this.despesaFixaForm.patchValue({
-          id: financa.id,
-          nome: financa.nome,
-          categoriaId: financa.categoria?.id,
-          contaId: financa.conta?.id,
-          vencimento: financa.vencimento,
-          valor: financa.valor,
-          pago: financa.pago
-        });
-      }
+    this.financaService.editingFinanca$.pipe(
+      filter((financa): financa is Financa => financa !== null)
+    ).subscribe((financa: Financa) => {
+      this.editingDespesa = financa;
+      this.despesaFixaForm.patchValue({
+        id: financa.id,
+        nome: financa.nome,
+        categoriaId: financa.categoria?.id,
+        contaId: financa.conta?.id,
+        vencimento: financa.vencimento,
+        valor: financa.valor,
+        pago: financa.pago
+      });
     });
   }
 
@@ -85,7 +86,7 @@ export class DespesasFixasComponent implements OnInit {
         });
 
         this.editingDespesa = null;
-        this.financaService.savedFinanca.emit();
+        this.financaService.financasChanged$.next(undefined);
 
         const message = isEditing ? 'Despesa atualizada com sucesso!' : 'Despesa salva com sucesso!';
         this.messageService.add({
