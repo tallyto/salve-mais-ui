@@ -1,117 +1,142 @@
-<div class="min-h-screen flex flex-column" style="background: var(--surface-ground)">
+<div class="flex flex-column" style="min-height: 100vh; background: var(--surface-ground);">
 
   <!-- Navbar pública -->
-  <header class="flex align-items-center justify-content-between px-5 py-3"
-          style="background-color: var(--salve-toolbar-bg, #00796b); color: white;">
+  <header class="flex align-items-center justify-content-between px-5 py-3 sticky top-0 z-5"
+          style="background-color: #00796b; color: white; border-bottom: 1px solid rgba(255,255,255,0.1);">
     <div class="flex align-items-center gap-2">
       <img src="assets/images/logo.svg" alt="Salve Mais" style="width:32px;height:32px">
       <span class="font-bold text-xl">Salve Mais</span>
     </div>
     <div class="flex gap-2">
-      <p-button label="Entrar" variant="outlined" styleClass="text-white border-white" (onClick)="navigateToLogin()"></p-button>
-      <p-button label="Criar conta" (onClick)="navigateToRegister()" styleClass="bg-white text-primary border-white"></p-button>
+      <p-button label="Entrar" variant="text"
+                [style]="{'color':'white'}"
+                (onClick)="navigateToLogin()"></p-button>
+      <p-button label="Criar conta"
+                [style]="{'background':'white','color':'#00796b','border-color':'white','font-weight':'600'}"
+                (onClick)="navigateToRegister()"></p-button>
     </div>
   </header>
 
   <!-- Hero -->
-  <section class="flex flex-column align-items-center justify-content-center text-center px-4 py-8 gap-4"
-           style="background: linear-gradient(135deg, #00796b 0%, #004d40 100%); color: white; min-height: 420px;">
-    <i class="pi pi-wallet" style="font-size: 4rem; opacity: 0.9;"></i>
-    <h1 class="m-0 text-5xl font-bold">Salve Mais</h1>
-    <p class="m-0 text-xl" style="opacity: 0.9; max-width: 520px;">
-      Controle financeiro inteligente para quem quer chegar lá.
-      Organize receitas, despesas, cartões e metas em um só lugar.
-    </p>
-    <div class="flex gap-3 mt-2">
-      <p-button label="Criar conta grátis" icon="pi pi-user-plus" size="large" (onClick)="navigateToRegister()"
-                styleClass="bg-white text-primary border-white font-bold"></p-button>
-      <p-button label="Já tenho conta" icon="pi pi-sign-in" size="large" variant="outlined"
-                styleClass="text-white border-white" (onClick)="navigateToLogin()"></p-button>
+  <section class="flex flex-column align-items-center justify-content-center text-center px-4 py-8"
+           style="background: linear-gradient(160deg, #00796b 0%, #004d40 100%); color: white; min-height: 520px;">
+    <div style="max-width: 680px;" class="flex flex-column align-items-center gap-4">
+      <span class="text-sm font-semibold px-3 py-1 border-round-xl"
+            style="background: rgba(255,255,255,0.15); letter-spacing: 1px; text-transform: uppercase;">
+        Gestão financeira pessoal
+      </span>
+      <h1 class="m-0 font-bold line-height-2" style="font-size: clamp(2.2rem, 5vw, 3.5rem);">
+        Organize sua vida financeira de uma vez por todas
+      </h1>
+      <p class="m-0 text-lg" style="opacity: 0.88; max-width: 520px; line-height: 1.7;">
+        Contas, cartões, despesas fixas, reserva de emergência e relatórios completos — tudo em um lugar simples e seguro.
+      </p>
+      <div class="flex gap-3 flex-wrap justify-content-center mt-2">
+        <p-button label="Criar conta grátis" icon="pi pi-user-plus" size="large"
+                  [style]="{'background':'white','color':'#00796b','border-color':'white','font-weight':'700','padding':'0.85rem 2rem'}"
+                  (onClick)="navigateToRegister()"></p-button>
+        <p-button label="Já tenho conta" icon="pi pi-sign-in" size="large" variant="outlined"
+                  [style]="{'color':'white','border-color':'rgba(255,255,255,0.6)','padding':'0.85rem 2rem'}"
+                  (onClick)="navigateToLogin()"></p-button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="flex gap-5 mt-7 flex-wrap justify-content-center">
+      <div class="flex flex-column align-items-center gap-1">
+        <span class="text-4xl font-bold">360°</span>
+        <span class="text-sm" style="opacity:0.75">visão completa</span>
+      </div>
+      <div style="width:1px;background:rgba(255,255,255,0.2)" class="hidden md:block"></div>
+      <div class="flex flex-column align-items-center gap-1">
+        <span class="text-4xl font-bold">24h</span>
+        <span class="text-sm" style="opacity:0.75">sempre disponível</span>
+      </div>
+      <div style="width:1px;background:rgba(255,255,255,0.2)" class="hidden md:block"></div>
+      <div class="flex flex-column align-items-center gap-1">
+        <span class="text-4xl font-bold">100%</span>
+        <span class="text-sm" style="opacity:0.75">seguro e privado</span>
+      </div>
     </div>
   </section>
 
   <!-- Features -->
-  <section class="p-6">
-    <div class="text-center mb-5">
+  <section class="px-4 py-7" style="max-width: 1100px; margin: 0 auto; width: 100%;">
+    <div class="text-center mb-6">
       <h2 class="text-3xl font-bold m-0">Tudo que você precisa</h2>
-      <p class="text-color-secondary mt-2">Uma plataforma completa para a sua vida financeira</p>
+      <p class="text-color-secondary mt-2 mb-0 text-lg">Uma plataforma completa para a sua saúde financeira</p>
     </div>
 
     <div class="grid">
-      <div class="col-12 md:col-6 lg:col-4">
-        <p-card styleClass="h-full">
-          <div class="flex flex-column align-items-center text-center gap-3 p-3">
-            <i class="pi pi-th-large text-primary" style="font-size: 2.5rem;"></i>
-            <h3 class="m-0 font-bold">Dashboard</h3>
-            <p class="m-0 text-color-secondary">Visão geral das suas finanças com gráficos de receitas, despesas e saldo.</p>
+      <div class="col-12 md:col-6 lg:col-4 p-3" *ngFor="let feature of features">
+        <div class="flex flex-column gap-3 p-4 border-round-xl h-full"
+             style="background: var(--surface-card); border: 1px solid var(--surface-border);">
+          <div class="flex align-items-center justify-content-center border-round-lg"
+               style="width:52px;height:52px;background:var(--primary-50,#e0f2f1);">
+            <i class="pi text-primary" [ngClass]="feature.icon" style="font-size:1.5rem"></i>
           </div>
-        </p-card>
+          <div>
+            <h3 class="m-0 font-bold text-lg">{{ feature.title }}</h3>
+            <p class="m-0 mt-2 text-color-secondary line-height-3">{{ feature.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Como funciona -->
+  <section class="px-4 py-7" style="background: var(--surface-section);">
+    <div style="max-width: 900px; margin: 0 auto;">
+      <div class="text-center mb-6">
+        <h2 class="text-3xl font-bold m-0">Como funciona</h2>
+        <p class="text-color-secondary mt-2 mb-0 text-lg">Três passos para ter controle total</p>
       </div>
 
-      <div class="col-12 md:col-6 lg:col-4">
-        <p-card styleClass="h-full">
-          <div class="flex flex-column align-items-center text-center gap-3 p-3">
-            <i class="pi pi-credit-card text-primary" style="font-size: 2.5rem;"></i>
-            <h3 class="m-0 font-bold">Cartões</h3>
-            <p class="m-0 text-color-secondary">Controle faturas, limites e alertas de todos os seus cartões de crédito.</p>
-          </div>
-        </p-card>
-      </div>
-
-      <div class="col-12 md:col-6 lg:col-4">
-        <p-card styleClass="h-full">
-          <div class="flex flex-column align-items-center text-center gap-3 p-3">
-            <i class="pi pi-refresh text-primary" style="font-size: 2.5rem;"></i>
-            <h3 class="m-0 font-bold">Despesas Fixas</h3>
-            <p class="m-0 text-color-secondary">Cadastre débitos e assinaturas recorrentes e nunca perca um vencimento.</p>
-          </div>
-        </p-card>
-      </div>
-
-      <div class="col-12 md:col-6 lg:col-4">
-        <p-card styleClass="h-full">
-          <div class="flex flex-column align-items-center text-center gap-3 p-3">
-            <i class="pi pi-wallet text-primary" style="font-size: 2.5rem;"></i>
-            <h3 class="m-0 font-bold">Reserva de Emergência</h3>
-            <p class="m-0 text-color-secondary">Planeje e acompanhe o crescimento da sua reserva de emergência.</p>
-          </div>
-        </p-card>
-      </div>
-
-      <div class="col-12 md:col-6 lg:col-4">
-        <p-card styleClass="h-full">
-          <div class="flex flex-column align-items-center text-center gap-3 p-3">
-            <i class="pi pi-chart-bar text-primary" style="font-size: 2.5rem;"></i>
-            <h3 class="m-0 font-bold">Relatórios</h3>
-            <p class="m-0 text-color-secondary">Relatórios mensais e comparativos para entender sua evolução financeira.</p>
-          </div>
-        </p-card>
-      </div>
-
-      <div class="col-12 md:col-6 lg:col-4">
-        <p-card styleClass="h-full">
-          <div class="flex flex-column align-items-center text-center gap-3 p-3">
-            <i class="pi pi-chart-pie text-primary" style="font-size: 2.5rem;"></i>
-            <h3 class="m-0 font-bold">Regra 50/30/20</h3>
-            <p class="m-0 text-color-secondary">Aplique a regra de ouro do orçamento e equilibre necessidades, desejos e poupança.</p>
-          </div>
-        </p-card>
+      <div class="grid">
+        <div class="col-12 md:col-4 flex flex-column align-items-center text-center gap-3 p-4">
+          <div class="flex align-items-center justify-content-center border-round-full font-bold text-white text-xl"
+               style="width:56px;height:56px;background:#00796b;">1</div>
+          <h3 class="m-0 font-bold">Crie sua conta</h3>
+          <p class="m-0 text-color-secondary line-height-3">Cadastre-se gratuitamente em menos de um minuto, sem cartão de crédito.</p>
+        </div>
+        <div class="col-12 md:col-4 flex flex-column align-items-center text-center gap-3 p-4">
+          <div class="flex align-items-center justify-content-center border-round-full font-bold text-white text-xl"
+               style="width:56px;height:56px;background:#00796b;">2</div>
+          <h3 class="m-0 font-bold">Configure suas finanças</h3>
+          <p class="m-0 text-color-secondary line-height-3">Adicione contas bancárias, cartões, receitas e despesas fixas.</p>
+        </div>
+        <div class="col-12 md:col-4 flex flex-column align-items-center text-center gap-3 p-4">
+          <div class="flex align-items-center justify-content-center border-round-full font-bold text-white text-xl"
+               style="width:56px;height:56px;background:#00796b;">3</div>
+          <h3 class="m-0 font-bold">Acompanhe e decida</h3>
+          <p class="m-0 text-color-secondary line-height-3">Veja relatórios, compare meses e tome decisões financeiras com segurança.</p>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- CTA final -->
-  <section class="flex flex-column align-items-center text-center p-6 gap-3"
-           style="background-color: var(--surface-section)">
-    <h2 class="text-3xl font-bold m-0">Comece hoje, é grátis</h2>
-    <p class="text-color-secondary m-0">Sem cartão de crédito. Sem complicação.</p>
-    <p-button label="Criar minha conta" icon="pi pi-user-plus" size="large" (onClick)="navigateToRegister()"></p-button>
+  <section class="flex flex-column align-items-center text-center px-4 py-8 gap-4"
+           style="background: linear-gradient(160deg, #00796b 0%, #004d40 100%); color: white;">
+    <h2 class="text-4xl font-bold m-0">Comece hoje. É grátis.</h2>
+    <p class="m-0 text-lg" style="opacity: 0.88;">Sem cartão de crédito. Sem complicação. Cancele quando quiser.</p>
+    <p-button label="Criar minha conta agora" icon="pi pi-user-plus" size="large"
+              [style]="{'background':'white','color':'#00796b','border-color':'white','font-weight':'700','padding':'0.85rem 2.5rem'}"
+              (onClick)="navigateToRegister()"></p-button>
   </section>
 
   <!-- Footer -->
-  <footer class="text-center py-4 text-color-secondary text-sm"
-          style="background-color: var(--surface-ground); border-top: 1px solid var(--surface-border)">
-    &copy; {{ currentYear }} Salve Mais. Todos os direitos reservados.
+  <footer class="flex align-items-center justify-content-between px-5 py-4 flex-wrap gap-3"
+          style="background: var(--surface-ground); border-top: 1px solid var(--surface-border);">
+    <div class="flex align-items-center gap-2">
+      <img src="assets/images/logo.svg" alt="Salve Mais" style="width:24px;height:24px">
+      <span class="font-semibold">Salve Mais</span>
+    </div>
+    <span class="text-color-secondary text-sm">&copy; {{ currentYear }} Salve Mais. Todos os direitos reservados.</span>
+    <div class="flex gap-4">
+      <a routerLink="/login" class="text-color-secondary text-sm no-underline hover:underline">Entrar</a>
+      <a routerLink="/register" class="text-color-secondary text-sm no-underline hover:underline">Criar conta</a>
+    </div>
   </footer>
 
 </div>
