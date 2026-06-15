@@ -1,36 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { InputTextModule } from 'primeng/inputtext';
-import { FloatLabelModule } from 'primeng/floatlabel';
-import { SelectModule } from 'primeng/select';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { TooltipModule } from 'primeng/tooltip';
 import { FaturaService } from '@services/fatura.service';
 import { AccountService } from '@services/account.service';
 import { Account } from '@models/account.model';
 import { FaturaResponseDTO } from '@models/fatura.model';
+import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '../../../shared/primeng-shared';
 
 @Component({
     selector: 'app-pagamento-fatura-modal',
     templateUrl: './pagamento-fatura-modal.component.html',
     standalone: true,
     imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        ButtonModule,
-        CardModule,
-        InputTextModule,
-        FloatLabelModule,
-        SelectModule,
-        ProgressSpinnerModule,
-        TooltipModule
-    ],
-    providers: [MessageService]
+        ...SALVE_COMMON,
+        ...SALVE_FORMS,
+        ...SALVE_DATA
+    ]
 })
 export class PagamentoFaturaModalComponent implements OnInit {
   pagamentoForm: FormGroup;

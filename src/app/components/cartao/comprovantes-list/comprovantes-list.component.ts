@@ -12,8 +12,7 @@ import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '../../../shared/primeng-s
     ...SALVE_COMMON,
     ...SALVE_FORMS,
     ...SALVE_DATA
-  ],
-  providers: [MessageService]
+  ]
 })
 export class ComprovantesListComponent implements OnInit {
   anexos: Anexo[] = [];

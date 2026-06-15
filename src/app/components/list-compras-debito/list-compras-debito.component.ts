@@ -5,11 +5,7 @@ import { catchError, map, of as observableOf } from "rxjs";
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { TableLazyLoadEvent } from 'primeng/table';
-
-interface MonthOption {
-  value: number;
-  label: string;
-}
+import { MONTHS, generateYears } from '../../shared/utils';
 
 @Component({
     selector: 'app-list-compras-debito',
@@ -28,20 +24,7 @@ export class ListComprasDebitoComponent implements OnInit {
   // Filtros de mês e ano
   selectedMonth: number;
   selectedYear: number;
-  months: MonthOption[] = [
-    { value: 1, label: 'Janeiro' },
-    { value: 2, label: 'Fevereiro' },
-    { value: 3, label: 'Março' },
-    { value: 4, label: 'Abril' },
-    { value: 5, label: 'Maio' },
-    { value: 6, label: 'Junho' },
-    { value: 7, label: 'Julho' },
-    { value: 8, label: 'Agosto' },
-    { value: 9, label: 'Setembro' },
-    { value: 10, label: 'Outubro' },
-    { value: 11, label: 'Novembro' },
-    { value: 12, label: 'Dezembro' }
-  ];
+  months = MONTHS;
   years: number[] = [];
 
   constructor(
@@ -94,10 +77,7 @@ export class ListComprasDebitoComponent implements OnInit {
   }
 
   generateYears(): void {
-    const currentYear = new Date().getFullYear();
-    for (let year = currentYear - 3; year <= currentYear + 2; year++) {
-      this.years.push(year);
-    }
+    this.years = generateYears();
   }
 
   onFilterChange(): void {

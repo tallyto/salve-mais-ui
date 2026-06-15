@@ -7,11 +7,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ComprovantesDialogComponent } from '../cartao/comprovantes-dialog/comprovantes-dialog.component';
-
-interface MonthOption {
-  value: number;
-  label: string;
-}
+import { MONTHS, generateYears } from '../../shared/utils';
 
 @Component({
     selector: 'app-list-contas-fixas',
@@ -34,20 +30,7 @@ export class ListContasFixasComponent implements OnInit {
   // Filtros de mês e ano
   selectedMonth: number;
   selectedYear: number;
-  months: MonthOption[] = [
-    { value: 1, label: 'Janeiro' },
-    { value: 2, label: 'Fevereiro' },
-    { value: 3, label: 'Março' },
-    { value: 4, label: 'Abril' },
-    { value: 5, label: 'Maio' },
-    { value: 6, label: 'Junho' },
-    { value: 7, label: 'Julho' },
-    { value: 8, label: 'Agosto' },
-    { value: 9, label: 'Setembro' },
-    { value: 10, label: 'Outubro' },
-    { value: 11, label: 'Novembro' },
-    { value: 12, label: 'Dezembro' }
-  ];
+  months = MONTHS;
   years: number[] = [];
 
   constructor(
@@ -191,13 +174,7 @@ export class ListContasFixasComponent implements OnInit {
   }
 
   private generateYears(): void {
-    const currentYear = new Date().getFullYear();
-    this.years = [];
-
-    // Gerar anos dos últimos 3 anos até os próximos 2 anos
-    for (let year = currentYear - 3; year <= currentYear + 2; year++) {
-      this.years.push(year);
-    }
+    this.years = generateYears();
   }
   
   /**

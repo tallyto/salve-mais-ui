@@ -1,26 +1,19 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ButtonModule } from 'primeng/button';
-import { ProgressBarModule } from 'primeng/progressbar';
-import { AccordionModule } from 'primeng/accordion';
-import { TooltipModule } from 'primeng/tooltip';
 import { Anexo, UrlDownload } from '@models/anexo.model';
 import { AnexoService } from '@services/anexo.service';
+import { SALVE_COMMON, SALVE_DATA, SALVE_OVERLAY } from '../../../shared/primeng-shared';
 
 @Component({
     selector: 'app-comprovantes-dialog',
     templateUrl: './comprovantes-dialog.component.html',
     standalone: true,
     imports: [
-        CommonModule,
-        ButtonModule,
-        ProgressBarModule,
-        AccordionModule,
-        TooltipModule
-    ],
-    providers: [MessageService]
+        ...SALVE_COMMON,
+        ...SALVE_DATA,
+        ...SALVE_OVERLAY
+    ]
 })
 export class ComprovantesDialogComponent {
   anexos: Anexo[] = [];

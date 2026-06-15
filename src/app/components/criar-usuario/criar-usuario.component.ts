@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { TenantService } from '../../services/tenant.service';
 import { SALVE_COMMON, SALVE_FORMS, SALVE_OVERLAY } from '../../shared/primeng-shared';
+import { senhasIguaisValidator, markFormGroupTouched } from '../../shared/utils';
 
 @Component({
   selector: 'app-criar-usuario',
@@ -35,7 +36,7 @@ export class CriarUsuarioComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       senha: ['', [Validators.required, Validators.minLength(6)]],
       confirmarSenha: ['', [Validators.required]]
-    }, { validators: this.senhasIguaisValidator });
+    }, { validators: senhasIguaisValidator });
   }
 
   ngOnInit() {
@@ -46,16 +47,9 @@ export class CriarUsuarioComponent implements OnInit {
     }
   }
 
-  senhasIguaisValidator(group: FormGroup) {
-    const senha = group.get('senha')?.value;
-    const confirmarSenha = group.get('confirmarSenha')?.value;
-
-    return senha === confirmarSenha ? null : { senhasDiferentes: true };
-  }
-
   onSubmit() {
     if (this.userForm.invalid) {
-      this.markFormGroupTouched(this.userForm);
+      markFormGroupTouched(this.userForm);
       return;
     }
 
@@ -76,15 +70,6 @@ export class CriarUsuarioComponent implements OnInit {
         this.errorMessage = err.error?.message || 'Erro ao criar usuário.';
         this.successMessage = '';
         this.loading = false;
-      }
-    });
-  }
-
-  markFormGroupTouched(formGroup: FormGroup) {
-    Object.values(formGroup.controls).forEach(control => {
-      control.markAsTouched();
-      if ((control as any).controls) {
-        this.markFormGroupTouched(control as FormGroup);
       }
     });
   }

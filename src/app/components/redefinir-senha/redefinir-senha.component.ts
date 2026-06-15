@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { SALVE_COMMON, SALVE_FORMS } from '../../shared/primeng-shared';
+import { senhasIguaisValidator } from '../../shared/utils';
 
 @Component({
     selector: 'app-redefinir-senha',
@@ -34,7 +35,7 @@ export class RedefinirSenhaComponent implements OnInit {
     this.redefinirForm = this.fb.group({
       novaSenha: ['', [Validators.required, Validators.minLength(6)]],
       confirmarSenha: ['', [Validators.required]]
-    }, { validators: this.senhasIguaisValidator });
+    }, { validators: senhasIguaisValidator });
   }
 
   ngOnInit() {
@@ -62,13 +63,6 @@ export class RedefinirSenhaComponent implements OnInit {
         this.router.navigate(['/recuperar-senha']);
       }
     });
-  }
-
-  senhasIguaisValidator(group: FormGroup) {
-    const novaSenha = group.get('novaSenha')?.value;
-    const confirmarSenha = group.get('confirmarSenha')?.value;
-
-    return novaSenha === confirmarSenha ? null : { senhasDiferentes: true };
   }
 
   redefinirSenha() {

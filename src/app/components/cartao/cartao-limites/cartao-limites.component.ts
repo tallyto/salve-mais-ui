@@ -13,8 +13,7 @@ import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '../../../shared/primeng-s
     ...SALVE_FORMS,
     ...SALVE_DATA
   ],
-  templateUrl: './cartao-limites.component.html',
-  providers: [MessageService]
+  templateUrl: './cartao-limites.component.html'
 })
 export class CartaoLimitesComponent implements OnInit {
   limiteForm: FormGroup;

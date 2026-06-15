@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RelatorioMensalService } from '../../services/relatorio-mensal.service';
 import { ComparativoMensalDTO, ResumoComparativoDTO, ComparativoCategoriaDTO, DestaqueMudancaDTO } from '../../models/comparativo-mensal.model';
 import { ChartData, ChartOptions } from 'chart.js';
+import { MONTHS, generateYears } from '../../shared/utils';
 
 @Component({
   selector: 'app-comparativo-mensal',
@@ -20,20 +21,7 @@ export class ComparativoMensalComponent implements OnInit {
   selectedMesAtual: number;
   selectedAnoAtual: number;
 
-  months = [
-    { value: 1, label: 'Janeiro' },
-    { value: 2, label: 'Fevereiro' },
-    { value: 3, label: 'Março' },
-    { value: 4, label: 'Abril' },
-    { value: 5, label: 'Maio' },
-    { value: 6, label: 'Junho' },
-    { value: 7, label: 'Julho' },
-    { value: 8, label: 'Agosto' },
-    { value: 9, label: 'Setembro' },
-    { value: 10, label: 'Outubro' },
-    { value: 11, label: 'Novembro' },
-    { value: 12, label: 'Dezembro' }
-  ];
+  months = MONTHS;
   years: number[] = [];
 
   // Dados para gráficos

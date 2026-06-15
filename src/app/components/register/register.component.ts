@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { TenantService } from '../../services/tenant.service';
 import { Observable, map, of, debounceTime, switchMap } from 'rxjs';
 import { SALVE_COMMON, SALVE_FORMS } from '../../shared/primeng-shared';
+import { markFormGroupTouched } from '../../shared/utils';
 
 @Component({
   selector: 'app-register',
@@ -127,7 +128,7 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     if (this.registerForm.invalid) {
-      this.markFormGroupTouched(this.registerForm);
+      markFormGroupTouched(this.registerForm);
       return;
     }
 
@@ -143,15 +144,6 @@ export class RegisterComponent implements OnInit {
         this.errorMessage = err.error?.message || 'Erro ao cadastrar tenant.';
         this.successMessage = '';
         this.loading = false;
-      }
-    });
-  }
-
-  markFormGroupTouched(formGroup: FormGroup) {
-    Object.values(formGroup.controls).forEach(control => {
-      control.markAsTouched();
-      if ((control as any).controls) {
-        this.markFormGroupTouched(control as FormGroup);
       }
     });
   }

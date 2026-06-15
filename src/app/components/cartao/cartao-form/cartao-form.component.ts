@@ -17,8 +17,7 @@ import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '../../../s
     ...SALVE_DATA,
     ...SALVE_OVERLAY,
     CalendarModule
-  ],
-  providers: [MessageService, DialogService]
+  ]
 })
 export class CartaoFormComponent implements OnInit {
   public cartaoForm: FormGroup;

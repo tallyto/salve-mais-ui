@@ -11,11 +11,7 @@ import { Cartao } from '@models/cartao.model';
 import { PagamentoFaturaModalComponent } from '../pagamento-fatura-modal/pagamento-fatura-modal.component';
 import { MonthYearFilterComponent } from '../../dashboard/month-year-filter/month-year-filter.component';
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '../../../shared/primeng-shared';
-
-interface MonthOption {
-  value: number;
-  label: string;
-}
+import { MONTHS, generateYears as utilGenerateYears } from '../../../shared/utils';
 
 @Component({
     selector: 'app-fatura-form',
@@ -27,8 +23,7 @@ interface MonthOption {
         ...SALVE_DATA,
         CurrencyInputDirective,
         MonthYearFilterComponent
-    ],
-    providers: [MessageService, DialogService]
+    ]
 })
 export class FaturaFormComponent implements OnInit, AfterViewInit {
   faturaForm: FormGroup;
@@ -47,20 +42,7 @@ export class FaturaFormComponent implements OnInit, AfterViewInit {
   // Filtros de mês e ano
   selectedMonth: number;
   selectedYear: number;
-  months: MonthOption[] = [
-    { value: 1, label: 'Janeiro' },
-    { value: 2, label: 'Fevereiro' },
-    { value: 3, label: 'Março' },
-    { value: 4, label: 'Abril' },
-    { value: 5, label: 'Maio' },
-    { value: 6, label: 'Junho' },
-    { value: 7, label: 'Julho' },
-    { value: 8, label: 'Agosto' },
-    { value: 9, label: 'Setembro' },
-    { value: 10, label: 'Outubro' },
-    { value: 11, label: 'Novembro' },
-    { value: 12, label: 'Dezembro' }
-  ];
+  months = MONTHS;
   years: number[] = [];
 
   displayedColumns: string[] = ['nomeCartao', 'valorTotal', 'dataVencimento', 'dataPagamento', 'contaPagamento', 'pago', 'totalCompras', 'acoes'];
@@ -101,11 +83,7 @@ export class FaturaFormComponent implements OnInit, AfterViewInit {
   }
 
   private generateYears(): void {
-    const currentYear = new Date().getFullYear();
-    this.years = [];
-    for (let year = currentYear - 3; year <= currentYear + 2; year++) {
-      this.years.push(year);
-    }
+    this.years = utilGenerateYears();
   }
 
   onFilterChange(): void {

@@ -4,11 +4,7 @@ import {GastoCartao} from "../../models/gasto-cartao.model";
 import {GastoCartaoService} from "../../services/gasto-cartao.service";
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { TableLazyLoadEvent } from 'primeng/table';
-
-interface MonthOption {
-  value: number;
-  label: string;
-}
+import { MONTHS, generateYears } from '../../shared/utils';
 
 @Component({
   standalone: false,
@@ -29,20 +25,7 @@ export class ListDespesasRecorrentesComponent implements OnInit {
   // Filtros de mês e ano
   selectedMonth: number;
   selectedYear: number;
-  months: MonthOption[] = [
-    { value: 1, label: 'Janeiro' },
-    { value: 2, label: 'Fevereiro' },
-    { value: 3, label: 'Março' },
-    { value: 4, label: 'Abril' },
-    { value: 5, label: 'Maio' },
-    { value: 6, label: 'Junho' },
-    { value: 7, label: 'Julho' },
-    { value: 8, label: 'Agosto' },
-    { value: 9, label: 'Setembro' },
-    { value: 10, label: 'Outubro' },
-    { value: 11, label: 'Novembro' },
-    { value: 12, label: 'Dezembro' }
-  ];
+  months = MONTHS;
   years: number[] = [];
 
   constructor(
@@ -140,13 +123,7 @@ export class ListDespesasRecorrentesComponent implements OnInit {
   }
 
   private generateYears(): void {
-    const currentYear = new Date().getFullYear();
-    this.years = [];
-
-    // Gerar anos dos últimos 3 anos até os próximos 2 anos
-    for (let year = currentYear - 3; year <= currentYear + 2; year++) {
-      this.years.push(year);
-    }
+    this.years = generateYears();
   }
   
   /**

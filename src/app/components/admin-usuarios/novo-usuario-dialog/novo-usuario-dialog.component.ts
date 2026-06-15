@@ -1,24 +1,17 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { UsuarioService } from '../../../services/usuario.service';
 import { MessageService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { FloatLabelModule } from 'primeng/floatlabel';
-import { InputTextModule } from 'primeng/inputtext';
-import { PasswordModule } from 'primeng/password';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { senhasIguaisValidator, markFormGroupTouched } from '../../../shared/utils';
+import { SALVE_COMMON, SALVE_FORMS } from '../../../shared/primeng-shared';
 
 @Component({
   selector: 'app-novo-usuario-dialog',
   standalone: true,
   imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ButtonModule,
-    FloatLabelModule,
-    InputTextModule,
-    PasswordModule
+    ...SALVE_COMMON,
+    ...SALVE_FORMS
   ],
   templateUrl: './novo-usuario-dialog.component.html'
 })
@@ -39,18 +32,12 @@ export class NovoUsuarioDialogComponent {
       email: ['', [Validators.required, Validators.email]],
       senha: ['', [Validators.required, Validators.minLength(6)]],
       confirmarSenha: ['', [Validators.required]]
-    }, { validators: this.senhasIguaisValidator });
-  }
-
-  senhasIguaisValidator(group: FormGroup) {
-    const senha = group.get('senha')?.value;
-    const confirmarSenha = group.get('confirmarSenha')?.value;
-    return senha === confirmarSenha ? null : { senhasDiferentes: true };
+    }, { validators: senhasIguaisValidator });
   }
 
   onSubmit() {
     if (this.usuarioForm.invalid) {
-      this.markFormGroupTouched(this.usuarioForm);
+      markFormGroupTouched(this.usuarioForm);
       return;
     }
 
@@ -66,15 +53,6 @@ export class NovoUsuarioDialogComponent {
         const errorMessage = err.error?.message || 'Erro ao criar usuário';
         this.messageService.add({ severity: 'error', summary: 'Erro', detail: errorMessage });
         this.loading = false;
-      }
-    });
-  }
-
-  markFormGroupTouched(formGroup: FormGroup) {
-    Object.values(formGroup.controls).forEach(control => {
-      control.markAsTouched();
-      if (control instanceof FormGroup) {
-        this.markFormGroupTouched(control);
       }
     });
   }
