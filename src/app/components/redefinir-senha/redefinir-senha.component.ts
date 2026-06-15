@@ -31,6 +31,7 @@ export class RedefinirSenhaComponent implements OnInit {
   hidePassword = true;
   hideConfirmPassword = true;
   tokenValido = false;
+  currentYear = new Date().getFullYear();
 
   constructor(
     private route: ActivatedRoute,

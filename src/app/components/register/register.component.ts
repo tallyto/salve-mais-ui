@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl, AsyncValidatorFn, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { TenantService } from '../../services/tenant.service';
 import { Observable, map, of, debounceTime, switchMap } from 'rxjs';
-import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { DividerModule } from 'primeng/divider';
 
 @Component({
   selector: 'app-register',
@@ -16,11 +15,11 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    CardModule,
+    RouterModule,
     ButtonModule,
     FloatLabelModule,
     InputTextModule,
-    ProgressSpinnerModule
+    DividerModule
   ],
   templateUrl: './register.component.html'
 })
@@ -33,6 +32,7 @@ export class RegisterComponent implements OnInit {
   mode: 'register' | 'confirm' = 'register';
   token: string | null = null;
   confirmacaoSucesso = false;
+  currentYear = new Date().getFullYear();
 
   // Lista de domínios de provedores de email comuns
   private emailProviders = [

@@ -35,6 +35,7 @@ import { BillingComponent } from './components/billing/billing.component';
 import { BillingSucessoComponent } from './components/billing/billing-sucesso/billing-sucesso.component';
 import { BillingCanceladoComponent } from './components/billing/billing-cancelado/billing-cancelado.component';
 import { ComprovantesListComponent } from './components/cartao/comprovantes-list/comprovantes-list.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 
 const routes: Routes = [
@@ -85,7 +86,7 @@ const routes: Routes = [
   {path: 'tenant-config', component: TenantConfigComponent, canActivate: [AuthGuard]},
   {path: 'admin-usuarios', component: AdminUsuariosComponent, canActivate: [AuthGuard]},
   {path: 'comprovantes', component: ComprovantesListComponent, canActivate: [AuthGuard]},
-  {path: '**', redirectTo: 'dashboard'}
+  {path: '**', component: NotFoundComponent}
 ];
 
 @NgModule({
