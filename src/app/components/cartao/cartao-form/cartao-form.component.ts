@@ -1,7 +1,7 @@
-import { Component, OnInit, Optional } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit, Optional, Inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { CartaoService } from "@services/cartao.service";
 import { Cartao } from "@models/cartao.model";
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '@shared/primeng-shared';
@@ -11,6 +11,8 @@ import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '@shared/pr
   templateUrl: './cartao-form.component.html',
   standalone: true,
   imports: [
+    ReactiveFormsModule,
+    FormsModule,
     ...SALVE_COMMON,
     ...SALVE_FORMS,
     ...SALVE_DATA,
