@@ -147,15 +147,7 @@
       </ng-template>
 
       <ng-template pTemplate="emptymessage">
-        <tr>
-          <td [attr.colspan]="displayedColumns.length">
-            <div class="flex flex-column align-items-center gap-3 text-center p-5">
-              <i class="pi pi-inbox text-4xl text-color-secondary"></i>
-              <p class="m-0 font-semibold">Nenhuma transação encontrada</p>
-              <span class="text-color-secondary">Tente ajustar os filtros ou adicionar novas transações</span>
-            </div>
-          </td>
-        </tr>
+        <tr><td [attr.colspan]="displayedColumns.length"><app-empty-state message="Nenhuma transação encontrada" icon="pi-inbox"></app-empty-state></td></tr>
       </ng-template>
     </p-table>
   </p-card>
