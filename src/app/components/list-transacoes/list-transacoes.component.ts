@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TransacaoService } from '../../services/transacao.service';
 import { Transacao, TransacaoFiltro } from '../../models/transacao.model';
@@ -12,6 +12,7 @@ import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '../../shar
   selector: 'app-list-transacoes',
   templateUrl: './list-transacoes.component.html',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     ...SALVE_COMMON,
     ...SALVE_FORMS,
@@ -39,6 +40,7 @@ export class ListTransacoesComponent implements OnInit {
     'categoria',
     'acoes'
   ];
+  private menuCache = new Map<number, any[]>();
 
   constructor(
     private transacaoService: TransacaoService,
@@ -46,7 +48,8 @@ export class ListTransacoesComponent implements OnInit {
     private categoriaService: CategoriaService,
     private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private cdr: ChangeDetectorRef
   ) {
     this.filtroForm = this.formBuilder.group({
       contaId: [''],
@@ -75,12 +78,14 @@ export class ListTransacoesComponent implements OnInit {
 
   carregarTransacoes(filtro?: TransacaoFiltro): void {
     this.loading = true;
+    this.menuCache.clear();
     this.transacaoService.listarTransacoes(filtro, this.pageIndex, this.pageSize)
       .subscribe(
         response => {
           this.transacoes = response.content;
           this.totalElements = response.totalElements;
           this.loading = false;
+          this.cdr.markForCheck();
         },
         error => {
           this.loading = false;
@@ -263,7 +268,11 @@ export class ListTransacoesComponent implements OnInit {
   }
 
   getMenuItems(transacao: Transacao): any[] {
-    return [
+    if (this.menuCache.has(transacao.id)) {
+      return this.menuCache.get(transacao.id)!;
+    }
+
+    const items = [
       {
         label: 'Detalhes',
         icon: 'pi pi-eye',
@@ -280,6 +289,9 @@ export class ListTransacoesComponent implements OnInit {
         command: () => this.confirmarExclusao(transacao)
       }
     ];
+
+    this.menuCache.set(transacao.id, items);
+    return items;
   }
 
   confirmarExclusao(transacao: Transacao): void {
