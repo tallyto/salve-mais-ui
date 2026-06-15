@@ -1,0 +1,325 @@
+<section class="p-4 flex flex-column gap-4">
+  <!-- Header -->
+  <div class="flex align-items-center justify-content-between gap-3 flex-wrap">
+    <div class="flex align-items-center gap-3">
+      <i class="pi pi-receipt text-3xl text-primary"></i>
+      <div>
+        <h2 class="m-0 font-bold">Gerenciamento de Faturas</h2>
+        <span class="text-sm text-color-secondary">Cadastre e gerencie as faturas dos seus cartões de crédito</span>
+      </div>
+    </div>
+    <div class="flex gap-2">
+      <p-button [label]="mostrarPreview ? 'Fechar Preview' : 'Preview da Fatura'"
+               (onClick)="togglePreview()"
+               [icon]="mostrarPreview ? 'pi pi-times' : 'pi pi-eye'"
+               variant="outlined">
+      </p-button>
+      <p-button [label]="mostrarFormulario ? 'Cancelar' : 'Nova Fatura Manual'"
+               (onClick)="toggleFormulario()"
+               [icon]="mostrarFormulario ? 'pi pi-times' : 'pi pi-plus'">
+      </p-button>
+    </div>
+  </div>
+
+  <!-- Preview da Fatura -->
+  <p-card *ngIf="mostrarPreview">
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center gap-2 p-3">
+        <i class="pi pi-eye"></i>
+        <h3 class="m-0 font-semibold">Preview da Fatura</h3>
+      </div>
+    </ng-template>
+
+    <p class="m-0 mb-4 text-sm text-color-secondary">Veja quais compras e parcelas seriam incluídas na fatura antes de gerá-la</p>
+
+    <form [formGroup]="previewForm" (ngSubmit)="buscarPreview()" class="flex flex-column gap-4">
+      <div class="grid">
+        <div class="col-12 md:col-6 pt-4">
+          <p-floatlabel class="w-full">
+            <p-select id="cartaoPreview" formControlName="cartaoCreditoId"
+                     [options]="cartoes"
+                     optionLabel="nome"
+                     optionValue="id"
+                     (onChange)="onCartaoPreviewChange($event.value)"
+                     class="w-full">
+              <ng-template let-option pTemplate="item">
+                {{ option.nome }} - Vence dia {{ formatarDiaVencimento(option.vencimento) }}
+              </ng-template>
+            </p-select>
+            <label for="cartaoPreview">Cartão de Crédito</label>
+          </p-floatlabel>
+          <small class="p-error" *ngIf="previewForm.get('cartaoCreditoId')?.hasError('required')">
+            Selecione um cartão
+          </small>
+        </div>
+
+        <div class="col-12 md:col-6 pt-4">
+          <p-floatlabel class="w-full">
+            <p-datepicker id="dataVencimentoPreview" formControlName="dataVencimento" dateFormat="dd/mm/yy" styleClass="w-full"></p-datepicker>
+            <label for="dataVencimentoPreview">Data de Vencimento</label>
+          </p-floatlabel>
+          <small class="text-color-secondary">Data preenchida automaticamente do cartão</small>
+          <small class="p-error" *ngIf="previewForm.get('dataVencimento')?.hasError('required')">
+            Data de vencimento é obrigatória
+          </small>
+        </div>
+      </div>
+
+      <div class="flex gap-2 justify-content-end">
+        <p-button label="Cancelar" variant="outlined" (onClick)="togglePreview()"></p-button>
+        <p-button [label]="loadingPreview ? 'Carregando...' : 'Buscar Preview'"
+                 type="submit"
+                 [disabled]="previewForm.invalid || loadingPreview"
+                 [loading]="loadingPreview">
+        </p-button>
+      </div>
+    </form>
+
+    <!-- Resultado do Preview -->
+    <div *ngIf="preview" class="mt-4 flex flex-column gap-3">
+      <div class="flex flex-column gap-1 p-3 surface-ground border-round">
+        <h3 class="m-0 font-bold">{{ preview.nomeCartao }}</h3>
+        <span class="text-sm text-color-secondary">Vencimento: {{ formatarData(preview.dataVencimento) }}</span>
+      </div>
+
+      <div class="grid">
+        <div class="col-12 md:col-4">
+          <p-card>
+            <div class="text-sm text-color-secondary mb-1">Compras à vista</div>
+            <div class="text-lg font-bold">{{ formatarMoeda(preview.valorCompras) }}</div>
+          </p-card>
+        </div>
+        <div class="col-12 md:col-4">
+          <p-card>
+            <div class="text-sm text-color-secondary mb-1">Parcelas</div>
+            <div class="text-lg font-bold">{{ formatarMoeda(preview.valorParcelas) }}</div>
+          </p-card>
+        </div>
+        <div class="col-12 md:col-4">
+          <p-card class="kpi-card kpi-positive">
+            <div class="text-sm text-color-secondary mb-1">Valor Total</div>
+            <div class="text-lg font-bold text-primary">{{ formatarMoeda(preview.valorTotal) }}</div>
+          </p-card>
+        </div>
+      </div>
+
+      <div *ngIf="preview.compras && preview.compras.length > 0">
+        <h4 class="flex align-items-center gap-2 mb-3 m-0">
+          <i class="pi pi-shopping-cart"></i> Compras à Vista ({{ preview.compras.length }})
+        </h4>
+        <div class="flex flex-column gap-2 mt-2">
+          <div class="flex justify-content-between align-items-center p-3 border-bottom-1 surface-border" *ngFor="let compra of preview.compras">
+            <div class="flex flex-column gap-1">
+              <span class="font-bold">{{ compra.descricao }}</span>
+              <span class="text-sm text-color-secondary">{{ compra.categoria }}</span>
+              <span class="text-sm text-color-secondary">{{ formatarData(compra.data) }}</span>
+            </div>
+            <span class="text-lg font-bold">{{ formatarMoeda(compra.valor) }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="preview.parcelas && preview.parcelas.length > 0">
+        <h4 class="flex align-items-center gap-2 mb-3 m-0">
+          <i class="pi pi-credit-card"></i> Parcelas ({{ preview.parcelas.length }})
+        </h4>
+        <div class="flex flex-column gap-2 mt-2">
+          <div class="flex justify-content-between align-items-center p-3 border-bottom-1 surface-border" *ngFor="let parcela of preview.parcelas">
+            <div class="flex flex-column gap-1">
+              <span class="font-bold">{{ parcela.descricaoCompra }}</span>
+              <span class="text-sm text-color-secondary">Parcela {{ parcela.numeroParcela }}/{{ parcela.totalParcelas }}</span>
+              <span class="text-sm text-color-secondary">Vence em: {{ formatarData(parcela.dataVencimento) }}</span>
+            </div>
+            <span class="text-lg font-bold">{{ formatarMoeda(parcela.valor) }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-column align-items-center gap-2 p-5" *ngIf="preview.compras.length === 0 && preview.parcelas.length === 0">
+        <i class="pi pi-inbox text-4xl text-color-secondary"></i>
+        <p class="m-0 text-color-secondary">Nenhuma compra ou parcela encontrada para este período</p>
+      </div>
+
+      <div class="flex justify-content-end" *ngIf="preview.compras.length > 0 || preview.parcelas.length > 0">
+        <p-button label="{{ loading ? 'Gerando...' : 'Gerar Fatura' }}"
+                 (onClick)="gerarFaturaDaPreview()"
+                 [disabled]="loading"
+                 [loading]="loading">
+        </p-button>
+      </div>
+    </div>
+  </p-card>
+
+  <!-- Formulário de Fatura Manual -->
+  <p-card *ngIf="mostrarFormulario">
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center gap-2 p-3">
+        <i class="pi pi-plus-circle"></i>
+        <h3 class="m-0 font-semibold">Criar Fatura Manual</h3>
+      </div>
+    </ng-template>
+
+    <p class="m-0 mb-4 text-sm text-color-secondary">Cadastre uma fatura especificando cartão, valor e data de vencimento</p>
+
+    <form [formGroup]="faturaForm" (ngSubmit)="onSubmit()" class="flex flex-column gap-4">
+      <div class="grid">
+        <div class="col-12 md:col-4 pt-4">
+          <p-floatlabel class="w-full">
+            <p-select id="cartaoFatura" formControlName="cartaoCreditoId"
+                     [options]="cartoes"
+                     optionLabel="nome"
+                     optionValue="id"
+                     class="w-full">
+            </p-select>
+            <label for="cartaoFatura">Cartão de Crédito</label>
+          </p-floatlabel>
+          <small class="p-error" *ngIf="faturaForm.get('cartaoCreditoId')?.hasError('required')">Selecione um cartão</small>
+        </div>
+
+        <div class="col-12 md:col-4 pt-4">
+          <p-floatlabel class="w-full">
+            <input pInputText id="valorTotal" type="text" formControlName="valorTotal" appCurrencyInput class="w-full">
+            <label for="valorTotal">Valor Total</label>
+          </p-floatlabel>
+          <small class="p-error" *ngIf="faturaForm.get('valorTotal')?.hasError('required')">Valor é obrigatório</small>
+          <small class="p-error" *ngIf="faturaForm.get('valorTotal')?.hasError('min')">Valor deve ser maior que zero</small>
+        </div>
+
+        <div class="col-12 md:col-4 pt-4">
+          <p-floatlabel class="w-full">
+            <p-datepicker id="dataVencimentoFatura" formControlName="dataVencimento" dateFormat="dd/mm/yy" styleClass="w-full"></p-datepicker>
+            <label for="dataVencimentoFatura">Data de Vencimento</label>
+          </p-floatlabel>
+          <small class="p-error" *ngIf="faturaForm.get('dataVencimento')?.hasError('required')">Data de vencimento é obrigatória</small>
+        </div>
+      </div>
+
+      <div class="flex gap-2 justify-content-end">
+        <p-button label="Cancelar" variant="outlined" (onClick)="toggleFormulario()"></p-button>
+        <p-button label="{{ loading ? 'Criando...' : 'Criar Fatura' }}"
+                 type="submit"
+                 [disabled]="faturaForm.invalid || loading"
+                 [loading]="loading">
+        </p-button>
+      </div>
+    </form>
+  </p-card>
+
+  <!-- Lista de Faturas -->
+  <p-card>
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center gap-2 p-3">
+        <i class="pi pi-list"></i>
+        <h3 class="m-0 font-semibold">Faturas Cadastradas</h3>
+      </div>
+    </ng-template>
+
+    <div class="flex flex-column gap-3">
+      <div class="grid">
+        <div class="col-12 md:col-6">
+          <div class="surface-ground border-round p-3 h-full flex align-items-center justify-content-between gap-3">
+            <div>
+              <div class="text-sm text-color-secondary">Itens no período</div>
+              <div class="text-2xl font-bold">{{ resultsLength }}</div>
+            </div>
+            <i class="pi pi-list text-3xl text-primary"></i>
+          </div>
+        </div>
+
+        <div class="col-12 md:col-6">
+          <div class="surface-ground border-round p-3 h-full flex align-items-center justify-content-between gap-3">
+            <div>
+              <div class="text-sm text-color-secondary">Valor total</div>
+              <div class="text-2xl font-bold">{{ calcularTotalFaturas() | currency:'BRL':'symbol':'1.2-2' }}</div>
+            </div>
+            <i class="pi pi-receipt text-3xl text-primary"></i>
+          </div>
+        </div>
+      </div>
+
+      <app-month-year-filter
+        [month]="selectedMonth"
+        [year]="selectedYear"
+        (periodChange)="onPeriodChange($event)">
+      </app-month-year-filter>
+    </div>
+
+    <p-progressbar *ngIf="isLoadingResults" mode="indeterminate" [style]="{'height': '4px'}" [showValue]="false"></p-progressbar>
+
+    <div *ngIf="!isLoadingResults && faturas.length === 0" class="flex flex-column align-items-center gap-2 p-5 text-center">
+      <i class="pi pi-receipt text-4xl text-color-secondary"></i>
+      <h3 class="m-0 font-semibold">Nenhuma fatura cadastrada para {{ getSelectedPeriodText() }}</h3>
+      <p class="m-0 text-color-secondary">Selecione outro período ou crie uma nova fatura</p>
+    </div>
+
+    <p-table *ngIf="!isLoadingResults && faturas.length > 0"
+             [value]="faturas" styleClass="p-datatable-sm" responsiveLayout="scroll">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Cartão</th>
+          <th>Valor Total</th>
+          <th>Vencimento</th>
+          <th>Data Pagamento</th>
+          <th>Conta Pagamento</th>
+          <th>Status</th>
+          <th>Compras</th>
+          <th>Ações</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-fatura>
+        <tr>
+          <td>{{ fatura.nomeCartao }}</td>
+          <td><strong>{{ formatarMoeda(fatura.valorTotal) }}</strong></td>
+          <td>{{ formatarData(fatura.dataVencimento) }}</td>
+          <td>{{ fatura.dataPagamento ? formatarData(fatura.dataPagamento) : '-' }}</td>
+          <td>{{ fatura.nomeContaPagamento || '-' }}</td>
+          <td>
+            <p-tag [value]="fatura.pago ? 'Pago' : 'Pendente'"
+                   [severity]="fatura.pago ? 'success' : 'warn'">
+            </p-tag>
+          </td>
+          <td>{{ fatura.totalCompras }}</td>
+          <td>
+            <div class="flex gap-1">
+              <ng-container *ngIf="!fatura.pago">
+                <p-button [rounded]="true" [text]="true" icon="pi pi-credit-card"
+                         (onClick)="marcarComoPaga(fatura)" pTooltip="Pagar com conta" tooltipPosition="top"></p-button>
+                <p-button [rounded]="true" [text]="true" icon="pi pi-check" severity="success"
+                         (onClick)="marcarComoPageSimples(fatura.id)" pTooltip="Marcar como pago" tooltipPosition="top"></p-button>
+                <p-button [rounded]="true" [text]="true" icon="pi pi-trash" severity="danger"
+                         (onClick)="excluirFatura(fatura.id)" pTooltip="Excluir" tooltipPosition="top"></p-button>
+              </ng-container>
+              <span *ngIf="fatura.pago" class="flex align-items-center gap-1 text-sm font-semibold text-primary">
+                <i class="pi pi-check-circle"></i> Paga
+              </span>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+
+  <!-- Gerar Fatura Automática -->
+  <p-card>
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center gap-2 p-3">
+        <i class="pi pi-bolt"></i>
+        <h3 class="m-0 font-semibold">Gerar Fatura Automática</h3>
+      </div>
+    </ng-template>
+
+    <p class="m-0 mb-4 text-sm text-color-secondary">Gere faturas automaticamente baseadas nas compras dos cartões</p>
+
+    <div class="grid">
+      <div *ngFor="let cartao of cartoes" class="col-12 md:col-6 lg:col-4">
+        <p-card>
+          <h4 class="m-0 mb-1 font-bold">{{ cartao.nome }}</h4>
+          <p class="m-0 mb-3 text-sm text-color-secondary">Vencimento: {{ formatarData(cartao.vencimento) }}</p>
+          <p-button label="Gerar Fatura" icon="pi pi-bolt" variant="outlined"
+                   (onClick)="gerarFaturaAutomatica(cartao.id)" styleClass="w-full">
+          </p-button>
+        </p-card>
+      </div>
+    </div>
+  </p-card>
+</section>

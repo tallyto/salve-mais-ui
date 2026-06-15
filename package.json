@@ -1,0 +1,58 @@
+{
+  "name": "salve-mais-ui",
+  "version": "2.0.0",
+  "description": "Aplicação web para gerenciamento financeiro pessoal e controle de despesas",
+  "keywords": [
+    "finanças",
+    "controle de gastos",
+    "gestão financeira",
+    "angular",
+    "despesas",
+    "orçamento"
+  ],
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve --configuration=development",
+    "local": "ng serve --configuration=local",
+    "start:prod": "ng serve --configuration=production",
+    "build": "ng build --configuration=production",
+    "build:dev": "ng build --configuration=development",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^19.2.14",
+    "@angular/cdk": "^19.2.19",
+    "@angular/common": "^19.2.14",
+    "@angular/compiler": "^19.2.14",
+    "@angular/core": "^19.2.14",
+    "@angular/forms": "^19.2.14",
+    "@angular/platform-browser": "^19.2.14",
+    "@angular/platform-browser-dynamic": "^19.2.14",
+    "@angular/router": "^19.2.14",
+    "@primeng/themes": "^19.1.4",
+    "@primeuix/utils": "^0.7.2",
+    "chart.js": "^4.5.0",
+    "ng2-charts": "^5.0.4",
+    "primeflex": "^3.3.1",
+    "primeicons": "^7.0.0",
+    "primeng": "^19.1.4",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.15.1"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^19.2.15",
+    "@angular/cli": "^19.2.15",
+    "@angular/compiler-cli": "^19.2.14",
+    "@types/jasmine": "~4.3.0",
+    "jasmine-core": "~4.6.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.0.0",
+    "typescript": "~5.8.3"
+  }
+}

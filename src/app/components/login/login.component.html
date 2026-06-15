@@ -1,0 +1,84 @@
+<div class="flex w-full" style="min-height: 100vh;">
+
+  <!-- Painel esquerdo — visível só em desktop -->
+  <section class="hidden md:flex p-6 bg-surface-0 flex-column justify-content-between" style="flex: 1;" aria-label="Salve Mais">
+    <div>
+      <div class="mb-3">
+        <img src="assets/images/logo.svg" alt="Salve Mais" style="width: 64px; height: auto;">
+      </div>
+      <p class="text-sm font-medium text-color-secondary mb-3">Gestão financeira inteligente</p>
+      <h1 class="text-4xl font-bold mb-4">Organize, acompanhe e decida melhor sobre o dinheiro da sua empresa.</h1>
+      <p class="text-lg text-color-secondary">
+        Uma experiência simples para controlar contas, cartões, receitas e relatórios em um único lugar.
+      </p>
+    </div>
+
+    <div class="flex gap-5">
+      <div>
+        <div class="text-2xl font-bold text-primary mb-1">360°</div>
+        <div class="text-sm text-color-secondary">visão completa</div>
+      </div>
+      <div>
+        <div class="text-2xl font-bold text-primary mb-1">24h</div>
+        <div class="text-sm text-color-secondary">dados acessíveis</div>
+      </div>
+      <div>
+        <div class="text-2xl font-bold text-primary mb-1">+foco</div>
+        <div class="text-sm text-color-secondary">menos retrabalho</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Painel direito — formulário de login -->
+  <div class="flex-1 p-4 md:p-6 flex align-items-center justify-content-center" style="background: var(--salve-bg);">
+    <p-card class="w-full" [style]="{'max-width': '420px'}">
+      <ng-template pTemplate="header">
+        <div class="p-4 border-bottom-1 surface-border">
+          <div class="flex gap-3 align-items-start">
+            <img src="assets/images/logo.svg" alt="" style="width: 48px; height: auto;">
+            <div>
+              <p class="text-sm font-medium text-color-secondary m-0">Bem-vindo de volta</p>
+              <h2 class="text-2xl font-bold m-0">Entrar no Salve Mais</h2>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+      <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="flex flex-column gap-4">
+        <div class="flex flex-column gap-1">
+          <p-floatlabel class="w-full">
+            <input pInputText id="email" formControlName="email" class="w-full" type="email" (blur)="onEmailBlur()">
+            <label for="email">Email</label>
+          </p-floatlabel>
+          <small class="p-error" *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched">Email é obrigatório</small>
+          <small class="p-error" *ngIf="loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched">Formato de email inválido</small>
+        </div>
+
+        <div class="flex flex-column gap-1">
+          <p-floatlabel class="w-full">
+            <p-password id="senha" formControlName="senha" styleClass="w-full" inputStyleClass="w-full" [toggleMask]="true" [feedback]="false"></p-password>
+            <label for="senha">Senha</label>
+          </p-floatlabel>
+          <small class="p-error" *ngIf="loginForm.get('senha')?.hasError('required') && loginForm.get('senha')?.touched">Senha é obrigatória</small>
+          <small class="p-error" *ngIf="loginForm.get('senha')?.hasError('minlength') && loginForm.get('senha')?.touched">A senha deve ter no mínimo 6 caracteres</small>
+        </div>
+
+        <div class="flex justify-content-between align-items-center gap-2">
+          <div class="flex align-items-center gap-2">
+            <p-checkbox inputId="lembrarMe" formControlName="lembrarMe" [binary]="true"></p-checkbox>
+            <label for="lembrarMe" class="cursor-pointer text-sm">Lembrar-me</label>
+          </div>
+          <a routerLink="/recuperar-senha" class="text-primary text-sm no-underline hover:underline">Esqueceu a senha?</a>
+        </div>
+
+        <p-button [label]="loading ? 'Entrando...' : 'Entrar'" [disabled]="loginForm.invalid || loading" [loading]="loading" type="submit" class="w-full"></p-button>
+
+        <p-divider></p-divider>
+
+        <div class="text-center text-sm">
+          Não tem uma conta? <a routerLink="/register" class="text-primary no-underline font-bold hover:underline">Criar conta</a>
+        </div>
+      </form>
+    </p-card>
+  </div>
+</div>

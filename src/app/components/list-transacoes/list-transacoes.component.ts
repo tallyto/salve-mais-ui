@@ -1,0 +1,335 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { TransacaoService } from '../../services/transacao.service';
+import { Transacao, TransacaoFiltro } from '../../models/transacao.model';
+import { TipoTransacao } from '../../models/tipo-transacao.enum';
+import { ContaService } from '../../services/conta.service';
+import { CategoriaService } from '../../services/categoria.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { CommonModule } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { TableModule } from 'primeng/table';
+import { SelectModule } from 'primeng/select';
+import { DatePickerModule } from 'primeng/datepicker';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { TagModule } from 'primeng/tag';
+import { MenuModule } from 'primeng/menu';
+import { TooltipModule } from 'primeng/tooltip';
+import { RouterModule } from '@angular/router';
+import { MessageModule } from 'primeng/message';
+
+@Component({
+  selector: 'app-list-transacoes',
+  templateUrl: './list-transacoes.component.html',
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    ButtonModule,
+    CardModule,
+    TableModule,
+    SelectModule,
+    DatePickerModule,
+    FloatLabelModule,
+    ProgressSpinnerModule,
+    TagModule,
+    MenuModule,
+    TooltipModule,
+    RouterModule,
+    MessageModule
+  ]
+})
+export class ListTransacoesComponent implements OnInit {
+  transacoes: Transacao[] = [];
+  filtroForm: FormGroup;
+  tiposTransacao = Object.values(TipoTransacao);
+  tipoOptions: any[] = [];
+  contas: any[] = [];
+  categorias: any[] = [];
+  loading = false;
+  totalElements = 0;
+  pageSize = 10;
+  pageIndex = 0;
+  displayedColumns: string[] = [
+    'data',
+    'tipo',
+    'descricao',
+    'valor',
+    'conta',
+    'categoria',
+    'acoes'
+  ];
+
+  constructor(
+    private transacaoService: TransacaoService,
+    private contaService: ContaService,
+    private categoriaService: CategoriaService,
+    private formBuilder: FormBuilder,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
+  ) {
+    this.filtroForm = this.formBuilder.group({
+      contaId: [''],
+      tipo: [''],
+      dataInicio: [''],
+      dataFim: [''],
+      categoriaId: ['']
+    });
+  }
+
+  ngOnInit(): void {
+    this.carregarContas();
+    this.carregarCategorias();
+    this.setupTipoOptions();
+  }
+
+  setupTipoOptions(): void {
+    this.tipoOptions = [
+      { label: 'Entrada (Crédito)', value: 'CREDITO' },
+      { label: 'Saída (Débito)', value: 'DEBITO' },
+      { label: 'Transferência Entrada', value: 'TRANSFERENCIA_ENTRADA' },
+      { label: 'Transferência Saída', value: 'TRANSFERENCIA_SAIDA' },
+      { label: 'Pagamento Fatura', value: 'PAGAMENTO_FATURA' }
+    ];
+  }
+
+  carregarTransacoes(filtro?: TransacaoFiltro): void {
+    this.loading = true;
+    this.transacaoService.listarTransacoes(filtro, this.pageIndex, this.pageSize)
+      .subscribe(
+        response => {
+          this.transacoes = response.content;
+          this.totalElements = response.totalElements;
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Erro ao carregar transações' });
+        }
+      );
+  }
+
+  carregarContas(): void {
+    this.contaService.getContas().subscribe(
+      (contas: any[]) => {
+        this.contas = contas;
+      },
+      (error: any) => {
+      }
+    );
+  }
+
+  carregarCategorias(): void {
+    this.categoriaService.listarCategorias().subscribe(
+      categorias => {
+        this.categorias = categorias;
+      },
+      error => {
+      }
+    );
+  }
+
+  aplicarFiltro(): void {
+    const filtro: TransacaoFiltro = {};
+
+    const formValue = this.filtroForm.value;
+
+    if (formValue.contaId && formValue.contaId !== null) {
+      filtro.contaId = formValue.contaId;
+    }
+    if (formValue.tipo && formValue.tipo !== null) {
+      filtro.tipo = formValue.tipo;
+    }
+    if (formValue.categoriaId && formValue.categoriaId !== null) {
+      filtro.categoriaId = formValue.categoriaId;
+    }
+    if (formValue.dataInicio) {
+      filtro.dataInicio = formValue.dataInicio;
+    }
+    if (formValue.dataFim) {
+      filtro.dataFim = formValue.dataFim;
+    }
+
+    this.pageIndex = 0;
+    this.carregarTransacoes(filtro);
+  }
+
+  limparFiltro(): void {
+    this.filtroForm.reset({
+      contaId: null,
+      tipo: null,
+      categoriaId: null,
+      dataInicio: null,
+      dataFim: null
+    });
+    this.pageIndex = 0;
+    this.carregarTransacoes();
+  }
+
+  mudarPagina(event: any): void {
+    if (event.first !== undefined) {
+      this.pageIndex = Math.floor(event.first / (event.rows || this.pageSize));
+    }
+    if (event.rows) {
+      this.pageSize = event.rows;
+    }
+    this.carregarTransacoes(this.filtroForm.value);
+  }
+
+  getSinalValor(tipo: TipoTransacao | string): string {
+    const tipoStr = typeof tipo === 'string' ? tipo : tipo;
+    switch (tipoStr) {
+      case 'CREDITO':
+      case 'TRANSFERENCIA_ENTRADA':
+        return '+';
+      case 'DEBITO':
+      case 'TRANSFERENCIA_SAIDA':
+      case 'PAGAMENTO_FATURA':
+        return '-';
+      default:
+        return '';
+    }
+  }
+
+  getTipoTransacaoLabel(tipo: TipoTransacao | string): string {
+    const tipoStr = typeof tipo === 'string' ? tipo : tipo;
+    switch (tipoStr) {
+      case 'CREDITO':
+        return 'Crédito';
+      case 'DEBITO':
+        return 'Débito';
+      case 'TRANSFERENCIA_SAIDA':
+        return 'Transferência (Saída)';
+      case 'TRANSFERENCIA_ENTRADA':
+        return 'Transferência (Entrada)';
+      case 'PAGAMENTO_FATURA':
+        return 'Pagamento de Fatura';
+      default:
+        return tipo as string;
+    }
+  }
+
+  getTipoDisplayText(tipo: string | null): string {
+    if (!tipo) {
+      return 'Todos os tipos';
+    }
+    switch (tipo) {
+      case 'CREDITO':
+        return 'Entrada (Crédito)';
+      case 'DEBITO':
+        return 'Saída (Débito)';
+      case 'TRANSFERENCIA_ENTRADA':
+        return 'Transferência Entrada';
+      case 'TRANSFERENCIA_SAIDA':
+        return 'Transferência Saída';
+      case 'PAGAMENTO_FATURA':
+        return 'Pagamento Fatura';
+      default:
+        return tipo;
+    }
+  }
+
+  calcularTotalTransacoes(): number {
+    return this.transacoes.reduce((total, transacao) => {
+      const valor = transacao.valor || 0;
+      return this.isEntrada(transacao.tipo) ? total + valor : total - valor;
+    }, 0);
+  }
+
+  isEntrada(tipo: TipoTransacao | string): boolean {
+    const tipoStr = typeof tipo === 'string' ? tipo : tipo;
+    return tipoStr === 'CREDITO' || tipoStr === 'TRANSFERENCIA_ENTRADA';
+  }
+
+  isSaida(tipo: TipoTransacao | string): boolean {
+    const tipoStr = typeof tipo === 'string' ? tipo : tipo;
+    return tipoStr === 'DEBITO' ||
+           tipoStr === 'TRANSFERENCIA_SAIDA' ||
+           tipoStr === 'PAGAMENTO_FATURA';
+  }
+
+  getTipoIcon(tipo: TipoTransacao | string): string {
+    const tipoStr = typeof tipo === 'string' ? tipo : tipo;
+    switch (tipoStr) {
+      case 'CREDITO':
+        return 'arrow_upward';
+      case 'DEBITO':
+        return 'arrow_downward';
+      case 'TRANSFERENCIA_ENTRADA':
+      case 'TRANSFERENCIA_SAIDA':
+        return 'swap_horiz';
+      case 'PAGAMENTO_FATURA':
+        return 'credit_card';
+      default:
+        return 'help';
+    }
+  }
+
+  getTipoIconPrime(tipo: TipoTransacao | string): string {
+    const tipoStr = typeof tipo === 'string' ? tipo : tipo;
+    switch (tipoStr) {
+      case 'CREDITO':
+        return 'pi-arrow-up';
+      case 'DEBITO':
+        return 'pi-arrow-down';
+      case 'TRANSFERENCIA_ENTRADA':
+      case 'TRANSFERENCIA_SAIDA':
+        return 'pi-arrow-right-arrow-left';
+      case 'PAGAMENTO_FATURA':
+        return 'pi-credit-card';
+      default:
+        return 'pi-question';
+    }
+  }
+
+  getMenuItems(transacao: Transacao): any[] {
+    return [
+      {
+        label: 'Detalhes',
+        icon: 'pi pi-eye',
+        routerLink: ['/transacao', transacao.id]
+      },
+      {
+        label: 'Editar',
+        icon: 'pi pi-pencil',
+        routerLink: ['/transacoes/editar', transacao.id]
+      },
+      {
+        label: 'Excluir',
+        icon: 'pi pi-trash',
+        command: () => this.confirmarExclusao(transacao)
+      }
+    ];
+  }
+
+  confirmarExclusao(transacao: Transacao): void {
+    this.confirmationService.confirm({
+      message: `Tem certeza que deseja excluir a transação #${transacao.id} (${transacao.descricao})? Essa ação não poderá ser desfeita.`,
+      header: 'Excluir transação',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Excluir',
+      rejectLabel: 'Cancelar',
+      acceptButtonStyleClass: 'p-button-danger',
+      accept: () => {
+        this.excluirTransacao(transacao.id);
+      }
+    });
+  }
+
+  excluirTransacao(id: number): void {
+    this.loading = true;
+    this.transacaoService.deletarTransacao(id).subscribe({
+      next: () => {
+        this.carregarTransacoes(this.filtroForm.value);
+        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Transação excluída com sucesso' });
+      },
+      error: () => {
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Erro ao excluir transação' });
+        this.loading = false;
+      }
+    });
+  }
+
+}

@@ -1,0 +1,58 @@
+<!-- Modo Dialog -->
+<p-dialog *ngIf="isDialogMode" [visible]="true" [header]="editingCategoria ? 'Editar Categoria' : 'Nova Categoria'" [modal]="true" [style]="{width:'500px'}" (onHide)="fecharDialog()">
+  <form [formGroup]="categoriaForm" id="categoriaDialogForm" class="flex flex-column gap-4">
+    <p-floatlabel class="w-full pt-4">
+      <input pInputText id="nome" formControlName="nome" class="w-full" autofocus>
+      <label for="nome">Nome da Categoria</label>
+    </p-floatlabel>
+
+    <p-floatlabel class="w-full pt-4">
+      <p-select id="tipo" formControlName="tipo" [options]="tipoOptions" optionLabel="label" optionValue="value" styleClass="w-full"></p-select>
+      <label for="tipo">Tipo da Categoria (Regra 50/30/20)</label>
+    </p-floatlabel>
+    <small class="text-color-secondary">Classifique de acordo com a regra 50/30/20</small>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <div class="flex justify-content-end gap-2">
+      <p-button label="Cancelar" variant="outlined" icon="pi pi-times" (onClick)="fecharDialog()"></p-button>
+      <p-button label="{{ editingCategoria ? 'Atualizar' : 'Salvar' }}" icon="pi pi-check" [disabled]="categoriaForm.invalid" (onClick)="salvarCategoria()"></p-button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<!-- Modo Página Completa -->
+<p-card *ngIf="!isDialogMode">
+  <ng-template pTemplate="header">
+    <div class="flex align-items-center justify-content-between w-full p-3">
+      <div>
+        <h3 class="m-0 font-semibold">{{ editingCategoria ? 'Editar Categoria' : 'Nova Categoria' }}</h3>
+        <span class="text-sm text-color-secondary">Defina o nome e o tipo da categoria</span>
+      </div>
+      <i [class]="editingCategoria ? 'pi pi-pencil text-2xl text-orange-500' : 'pi pi-plus-circle text-2xl text-green-500'"></i>
+    </div>
+  </ng-template>
+
+  <form (ngSubmit)="salvarCategoria()" [formGroup]="categoriaForm" class="flex flex-column gap-4">
+    <div class="grid">
+      <div class="col-12 md:col-6 pt-4">
+        <p-floatlabel class="w-full">
+          <input pInputText id="nome" formControlName="nome" class="w-full" autofocus>
+          <label for="nome">Nome da Categoria</label>
+        </p-floatlabel>
+      </div>
+
+      <div class="col-12 md:col-6 pt-4">
+        <p-floatlabel class="w-full">
+          <p-select id="tipo" formControlName="tipo" [options]="tipoOptions" optionLabel="label" optionValue="value" styleClass="w-full"></p-select>
+          <label for="tipo">Tipo (Regra 50/30/20)</label>
+        </p-floatlabel>
+      </div>
+    </div>
+
+    <div class="flex justify-content-end gap-2 mt-3">
+      <p-button label="{{ editingCategoria ? 'Cancelar' : 'Limpar' }}" variant="outlined" icon="{{ editingCategoria ? 'pi pi-times' : 'pi pi-refresh' }}" type="button" (onClick)="cancelarEdicao()"></p-button>
+      <p-button label="{{ editingCategoria ? 'Atualizar' : 'Salvar' }}" icon="{{ editingCategoria ? 'pi pi-check' : 'pi pi-plus' }}" [disabled]="categoriaForm.invalid" type="submit"></p-button>
+    </div>
+  </form>
+</p-card>

@@ -1,0 +1,162 @@
+<section class="p-4 flex flex-column gap-3">
+  <p-card>
+    <div class="flex align-items-center gap-2 mb-2">
+      <i class="pi pi-clock text-2xl"></i>
+      <div>
+        <h2 class="m-0 font-semibold">Histórico de Transações</h2>
+        <span class="text-sm text-color-secondary">Visualize todas as suas movimentações financeiras</span>
+      </div>
+    </div>
+  </p-card>
+
+  <p-card>
+    <div class="flex align-items-center gap-2 mb-3">
+      <i class="pi pi-filter"></i>
+      <div>
+        <h3 class="m-0">Filtros</h3>
+        <span class="text-sm text-color-secondary">Refine por conta, tipo, categoria e período</span>
+      </div>
+    </div>
+
+    <form [formGroup]="filtroForm" (ngSubmit)="aplicarFiltro()" class="flex flex-column gap-3">
+      <div class="grid">
+        <div class="col-12 md:col-6 lg:col-3">
+          <p-floatlabel class="w-full">
+            <p-select id="contaId" formControlName="contaId" [options]="contas" optionLabel="titular" optionValue="id" [showClear]="true" styleClass="w-full"></p-select>
+            <label for="contaId">Conta</label>
+          </p-floatlabel>
+        </div>
+
+        <div class="col-12 md:col-6 lg:col-3">
+          <p-floatlabel class="w-full">
+            <p-select id="tipo" formControlName="tipo" [options]="tipoOptions" optionLabel="label" optionValue="value" [showClear]="true" styleClass="w-full"></p-select>
+            <label for="tipo">Tipo</label>
+          </p-floatlabel>
+        </div>
+
+        <div class="col-12 md:col-6 lg:col-3">
+          <p-floatlabel class="w-full">
+            <p-select id="categoriaId" formControlName="categoriaId" [options]="categorias" optionLabel="nome" optionValue="id" [showClear]="true" styleClass="w-full"></p-select>
+            <label for="categoriaId">Categoria</label>
+          </p-floatlabel>
+        </div>
+
+        <div class="col-12 md:col-6 lg:col-3">
+          <p-floatlabel class="w-full">
+            <p-datepicker id="dataInicio" formControlName="dataInicio" dateFormat="dd/mm/yy" [showIcon]="true" styleClass="w-full"></p-datepicker>
+            <label for="dataInicio">Data início</label>
+          </p-floatlabel>
+        </div>
+
+        <div class="col-12 md:col-6 lg:col-3">
+          <p-floatlabel class="w-full">
+            <p-datepicker id="dataFim" formControlName="dataFim" dateFormat="dd/mm/yy" [showIcon]="true" styleClass="w-full"></p-datepicker>
+            <label for="dataFim">Data fim</label>
+          </p-floatlabel>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap justify-content-end gap-2">
+        <p-button label="Limpar filtros" icon="pi pi-times" variant="outlined" type="button" (onClick)="limparFiltro()"></p-button>
+        <p-button label="Aplicar filtros" icon="pi pi-search" type="submit"></p-button>
+      </div>
+    </form>
+  </p-card>
+
+  <p-card>
+    <div class="flex align-items-center justify-content-between gap-2 mb-3">
+      <div>
+        <h3 class="m-0">Movimentações</h3>
+        <span class="text-sm text-color-secondary">{{ totalElements }} registro{{ totalElements !== 1 ? 's' : '' }}</span>
+      </div>
+      <i class="pi pi-file-check text-2xl text-color-secondary"></i>
+    </div>
+
+    <div class="grid mb-3">
+      <div class="col-12 md:col-6">
+        <div class="surface-ground border-round p-3 h-full flex align-items-center justify-content-between gap-3">
+          <div>
+            <div class="text-sm text-color-secondary">Itens encontrados</div>
+            <div class="text-2xl font-bold">{{ totalElements }}</div>
+          </div>
+          <i class="pi pi-list text-3xl text-primary"></i>
+        </div>
+      </div>
+
+      <div class="col-12 md:col-6">
+        <div class="surface-ground border-round p-3 h-full flex align-items-center justify-content-between gap-3">
+          <div>
+            <div class="text-sm text-color-secondary">Valor líquido</div>
+            <div class="text-2xl font-bold">{{ calcularTotalTransacoes() | currency:'BRL':'symbol':'1.2-2' }}</div>
+          </div>
+          <i class="pi pi-arrows-h text-3xl text-primary"></i>
+        </div>
+      </div>
+    </div>
+
+    <p-table [value]="transacoes" [paginator]="true" [rows]="pageSize"
+             [totalRecords]="totalElements" [first]="pageIndex * pageSize"
+             (onLazyLoad)="mudarPagina($event)" [lazy]="true"
+             [loading]="loading"
+             styleClass="p-datatable-sm" [tableStyle]="{ 'min-width': '50rem' }">
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="data">Data <p-sortIcon field="data"></p-sortIcon></th>
+          <th pSortableColumn="tipo">Tipo <p-sortIcon field="tipo"></p-sortIcon></th>
+          <th pSortableColumn="descricao">Descrição <p-sortIcon field="descricao"></p-sortIcon></th>
+          <th pSortableColumn="valor" style="text-align: right">Valor <p-sortIcon field="valor"></p-sortIcon></th>
+          <th pSortableColumn="conta">Conta <p-sortIcon field="conta"></p-sortIcon></th>
+          <th pSortableColumn="categoria">Categoria <p-sortIcon field="categoria"></p-sortIcon></th>
+          <th style="text-align: right">Ações</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-transacao>
+        <tr>
+          <td>{{ transacao.data | date: 'dd/MM/yyyy' }}</td>
+          <td>
+            <p-tag [value]="getTipoTransacaoLabel(transacao.tipo)" [icon]="'pi ' + getTipoIconPrime(transacao.tipo)" severity="info"></p-tag>
+          </td>
+          <td>{{ transacao.descricao }}</td>
+          <td style="text-align: right">
+            <strong [ngClass]="{'text-green-600': isEntrada(transacao.tipo), 'text-red-600': isSaida(transacao.tipo)}">
+              {{ getSinalValor(transacao.tipo) }}{{ transacao.valor | currency: 'BRL' }}
+            </strong>
+          </td>
+          <td>{{ transacao.conta?.titular || '-' }}</td>
+          <td>{{ transacao.categoria?.nome || '-' }}</td>
+          <td style="text-align: right">
+            <p-button
+              icon="pi pi-ellipsis-v"
+              [rounded]="true"
+              [text]="true"
+              (onClick)="op.toggle($event)"
+              [attr.aria-controls]="'transacao-menu-' + transacao.id"
+              aria-haspopup="true">
+            </p-button>
+            <p-menu
+              #op
+              [id]="'transacao-menu-' + transacao.id"
+              [model]="getMenuItems(transacao)"
+              [popup]="true"
+              appendTo="body">
+            </p-menu>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td [attr.colspan]="displayedColumns.length">
+            <div class="flex flex-column align-items-center gap-3 text-center p-5">
+              <i class="pi pi-inbox text-4xl text-color-secondary"></i>
+              <p class="m-0 font-semibold">Nenhuma transação encontrada</p>
+              <span class="text-color-secondary">Tente ajustar os filtros ou adicionar novas transações</span>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</section>

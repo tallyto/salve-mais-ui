@@ -1,0 +1,37 @@
+<p-card>
+  <ng-template pTemplate="header">
+    <div class="flex align-items-center gap-2 p-3">
+      <i class="pi pi-shield"></i>
+      <div>
+        <h3 class="m-0">Saúde Financeira</h3>
+        <p class="m-0 text-sm text-color-secondary">Proporção entre saldo e despesas mensais</p>
+      </div>
+    </div>
+  </ng-template>
+
+  <div class="flex flex-column gap-3">
+    <div class="flex align-items-center gap-2 p-3 surface-ground border-round">
+      <i [class]="'pi ' + getHealthIcon() + ' text-2xl'"></i>
+      <div>
+        <div class="font-bold">{{ formatarPercentual(getBalanceRatio()) }}</div>
+        <div class="text-sm text-color-secondary">{{ getHealthLabel() }}</div>
+      </div>
+    </div>
+
+    <div class="flex flex-column gap-2">
+      <div class="flex justify-content-between gap-3">
+        <span>Saldo vs Despesas</span>
+        <strong>{{ formatarPercentual(getBalanceRatio()) }}</strong>
+      </div>
+      <p-progressbar [value]="getBalanceRatio()" [showValue]="false" styleClass="w-full"></p-progressbar>
+    </div>
+
+    <div class="flex gap-2 p-3 surface-ground border-round">
+      <i class="pi pi-lightbulb text-xl" style="flex-shrink: 0;"></i>
+      <div>
+        <div class="font-bold mb-1">Dica Financeira</div>
+        <div class="text-sm">{{ getFinancialTip() }}</div>
+      </div>
+    </div>
+  </div>
+</p-card>

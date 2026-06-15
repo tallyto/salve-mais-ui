@@ -1,0 +1,67 @@
+<section class="p-4 flex flex-column gap-4">
+  <div class="flex align-items-center justify-content-between">
+    <div class="flex align-items-center gap-3">
+      <i class="pi pi-users text-3xl text-primary"></i>
+      <div>
+        <h2 class="m-0 font-bold">Gerenciamento de Usuários</h2>
+        <span class="text-sm text-color-secondary">Gerencie os usuários do seu tenant</span>
+      </div>
+    </div>
+    <p-button label="Novo Usuário" icon="pi pi-user-plus" (onClick)="abrirDialogNovoUsuario()"></p-button>
+  </div>
+
+  <p-card>
+    <div *ngIf="loading" class="flex flex-column gap-3">
+      <p-skeleton height="2.5rem"></p-skeleton>
+      <p-skeleton height="2.5rem"></p-skeleton>
+      <p-skeleton height="2.5rem"></p-skeleton>
+    </div>
+
+    <div *ngIf="!loading && usuarios.length === 0" class="flex flex-column align-items-center justify-content-center p-5 gap-2">
+      <i class="pi pi-users text-4xl text-color-secondary"></i>
+      <p class="text-center text-color-secondary">Nenhum usuário encontrado</p>
+    </div>
+
+    <p-table *ngIf="!loading && usuarios.length > 0" [value]="usuarios" responsiveLayout="scroll" styleClass="p-datatable-sm">
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="nome">Nome <p-sortIcon field="nome"></p-sortIcon></th>
+          <th>Email</th>
+          <th pSortableColumn="criadoEm">Criado Em <p-sortIcon field="criadoEm"></p-sortIcon></th>
+          <th>Último Acesso</th>
+          <th>Ações</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-usuario>
+        <tr>
+          <td>{{ usuario.nome }}</td>
+          <td>{{ usuario.email }}</td>
+          <td>{{ formatarData(usuario.criadoEm) }}</td>
+          <td>{{ formatarData(usuario.ultimoAcesso) }}</td>
+          <td>
+            <p-button
+              icon="pi pi-trash"
+              [rounded]="true"
+              [text]="true"
+              severity="danger"
+              (onClick)="deletarUsuario(usuario)"
+              [disabled]="!podeDeletar(usuario)"
+              [pTooltip]="podeDeletar(usuario) ? 'Deletar usuário' : 'Você não pode deletar sua própria conta'"
+              tooltipPosition="top">
+            </p-button>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr><td colspan="5">
+          <div class="flex flex-column align-items-center gap-2 p-5">
+            <i class="pi pi-users text-4xl text-color-secondary"></i>
+            <span>Nenhum usuário encontrado.</span>
+          </div>
+        </td></tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</section>

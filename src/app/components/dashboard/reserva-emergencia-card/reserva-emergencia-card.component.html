@@ -1,0 +1,57 @@
+<p-card>
+  <ng-template pTemplate="header">
+    <div class="flex align-items-center gap-2 p-3">
+      <i class="pi pi-wallet"></i>
+      <div>
+        <h3 class="m-0">Reserva de Emergência</h3>
+        <p class="m-0 text-sm text-color-secondary" *ngIf="objetivo">Objetivo: {{ objetivo | currency:'BRL':'symbol':'1.2-2' }}</p>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-container *ngIf="temReserva; else semReserva">
+    <div class="flex flex-column gap-3">
+      <div class="flex align-items-center gap-2 p-3 surface-ground border-round">
+        <i [class]="'pi ' + getIcon() + ' text-2xl'"></i>
+        <div>
+          <div class="font-bold">{{ getPercentual() | number:'1.1-1' }}%</div>
+          <div class="text-sm text-color-secondary">{{ getStatus() }}</div>
+        </div>
+      </div>
+
+      <div class="flex flex-column gap-2">
+        <div class="flex justify-content-between gap-3">
+          <span>Progresso</span>
+          <strong>{{ getPercentual() | number:'1.1-1' }}%</strong>
+        </div>
+        <p-progressbar [value]="getPercentual()" [showValue]="false" styleClass="w-full"></p-progressbar>
+      </div>
+
+      <div class="flex gap-2 p-3 surface-ground border-round">
+        <i class="pi pi-info-circle text-xl" style="flex-shrink: 0;"></i>
+        <div>
+          <div class="font-bold mb-1">Informações</div>
+          <p class="m-0 text-sm" *ngIf="!estaCompleta() && getTempoRestante()">
+            Faltam aproximadamente {{ getTempoRestante() }} meses para completar sua reserva.
+          </p>
+          <p class="m-0 text-sm" *ngIf="estaCompleta()">
+            Sua reserva de emergência está completa! Considere investir o excedente.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex justify-content-end">
+        <p-button label="Ver detalhes" [text]="true" icon="pi pi-eye" [routerLink]="['/reserva-emergencia']"></p-button>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #semReserva>
+    <div class="flex flex-column align-items-center gap-3 text-center p-4">
+      <i class="pi pi-wallet text-4xl text-color-secondary"></i>
+      <p class="m-0">Você ainda não configurou sua reserva de emergência.</p>
+      <p class="m-0 text-sm text-color-secondary">Recomenda-se ter entre 3 a 6 meses de despesas guardados.</p>
+      <p-button label="Configurar reserva" icon="pi pi-plus-circle" [routerLink]="['/reserva-emergencia/criar']"></p-button>
+    </div>
+  </ng-template>
+</p-card>

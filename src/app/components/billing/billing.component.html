@@ -1,0 +1,173 @@
+<section class="p-4 flex flex-column gap-4">
+  <!-- Header -->
+  <div class="flex align-items-center gap-3">
+    <i class="pi pi-credit-card text-3xl text-primary"></i>
+    <div>
+      <h2 class="m-0 font-bold">Plano & Cobrança</h2>
+      <span class="text-sm text-color-secondary">Gerencie sua assinatura e acompanhe o uso do sistema.</span>
+    </div>
+  </div>
+
+  <!-- Banners de status -->
+  <div *ngIf="isTrial && diasRestantes >= 0"
+       class="flex gap-3 align-items-start p-3 border-round surface-ground border-left-3 border-primary">
+    <i class="pi pi-info-circle text-primary"></i>
+    <p class="text-sm m-0">Período de teste: <strong>{{ diasRestantes }}</strong> dia(s) restante(s). Assine um plano para continuar usando após o trial.</p>
+  </div>
+
+  <div *ngIf="isTrial && diasRestantes < 0"
+       class="flex gap-3 align-items-start p-3 border-round surface-ground border-left-3 border-orange-500">
+    <i class="pi pi-exclamation-triangle text-orange-600"></i>
+    <p class="text-sm m-0">Seu período de teste expirou. Assine um plano para continuar usando o sistema.</p>
+  </div>
+
+  <div *ngIf="isInadimplente"
+       class="flex gap-3 align-items-start p-3 border-round surface-ground border-left-3 border-red-500">
+    <i class="pi pi-times-circle text-red-600"></i>
+    <p class="text-sm m-0">Pagamento pendente. Atualize sua assinatura para restabelecer o acesso completo.</p>
+  </div>
+
+  <!-- Plano atual + quotas -->
+  <p-card *ngIf="hasSubscription">
+    <ng-template pTemplate="header">
+      <div class="flex justify-content-between align-items-start gap-3 flex-wrap p-3">
+        <div>
+          <h3 class="m-0 font-bold text-xl">{{ billingStatus?.nomePlano }}</h3>
+          <p class="text-color-secondary text-sm m-0 mt-1">
+            {{ billingStatus?.precoMensal | currency:'BRL' }}/mês
+            <ng-container *ngIf="!cancelamentoAgendado && billingStatus?.subscriptionEndDate">
+              · próxima cobrança em {{ billingStatus?.subscriptionEndDate | date:'dd/MM/yyyy' }}
+            </ng-container>
+            <ng-container *ngIf="cancelamentoAgendado">
+              · acesso até {{ cancelamentoAgendado | date:'dd/MM/yyyy' }}
+            </ng-container>
+          </p>
+        </div>
+
+        <div class="flex gap-2">
+          <p-tag *ngIf="cancelamentoAgendado" value="Cancelamento agendado" icon="pi pi-clock" severity="warn"></p-tag>
+          <p-button *ngIf="!cancelamentoAgendado"
+                    label="Cancelar"
+                    icon="pi pi-times"
+                    severity="danger"
+                    variant="outlined"
+                    [disabled]="cancelando"
+                    [loading]="cancelando"
+                    (onClick)="confirmarCancelamento()">
+          </p-button>
+        </div>
+      </div>
+    </ng-template>
+
+    <div class="grid">
+      <div *ngIf="billingStatus?.maxUsuarios" class="col-12 md:col-4 flex flex-column gap-2">
+        <div class="flex justify-content-between align-items-center">
+          <span class="flex align-items-center gap-2 font-bold">
+            <i class="pi pi-users"></i>
+            <span>Usuários</span>
+          </span>
+          <span class="text-sm text-color-secondary">{{ billingStatus?.usuariosAtivos }} / {{ billingStatus?.maxUsuarios }}</span>
+        </div>
+        <p-progressbar [value]="quotaPercent(billingStatus?.usuariosAtivos ?? null, billingStatus?.maxUsuarios ?? null)" [showValue]="false"></p-progressbar>
+      </div>
+
+      <div *ngIf="billingStatus?.maxTransacoesMes" class="col-12 md:col-4 flex flex-column gap-2">
+        <div class="flex justify-content-between align-items-center">
+          <span class="flex align-items-center gap-2 font-bold">
+            <i class="pi pi-arrows-h"></i>
+            <span>Transações</span>
+          </span>
+          <span class="text-sm text-color-secondary">{{ billingStatus?.transacoesMes }} / {{ billingStatus?.maxTransacoesMes }}</span>
+        </div>
+        <p-progressbar [value]="quotaPercent(billingStatus?.transacoesMes ?? null, billingStatus?.maxTransacoesMes ?? null)" [showValue]="false"></p-progressbar>
+      </div>
+
+      <div *ngIf="billingStatus?.maxStorageGb" class="col-12 md:col-4 flex flex-column gap-2">
+        <div class="flex justify-content-between align-items-center">
+          <span class="flex align-items-center gap-2 font-bold">
+            <i class="pi pi-database"></i>
+            <span>Armazenamento</span>
+          </span>
+          <span class="text-sm text-color-secondary">{{ billingStatus?.maxStorageGb }} GB</span>
+        </div>
+        <p-progressbar [value]="100" [showValue]="false"></p-progressbar>
+      </div>
+    </div>
+  </p-card>
+
+  <!-- Seção de planos -->
+  <div>
+    <h3 class="m-0 mb-3 font-semibold" *ngIf="!loading">
+      {{ hasSubscription ? 'Mudar de plano' : 'Escolha um plano' }}
+    </h3>
+
+    <div *ngIf="loading" class="grid">
+      <div class="col-12 md:col-6 lg:col-4" *ngFor="let i of [1,2,3]">
+        <p-card>
+          <div class="flex flex-column gap-3">
+            <p-skeleton width="60%" height="1.25rem"></p-skeleton>
+            <p-skeleton width="40%" height="2rem"></p-skeleton>
+            <p-skeleton height=".875rem"></p-skeleton>
+            <p-skeleton height=".875rem" width="80%"></p-skeleton>
+            <p-skeleton height="2.5rem"></p-skeleton>
+          </div>
+        </p-card>
+      </div>
+    </div>
+
+    <div *ngIf="!loading" class="grid">
+      <div *ngFor="let plano of planos" class="col-12 md:col-6 lg:col-4">
+        <p-card [ngStyle]="{'border': isCurrentPlan(plano) ? '2px solid var(--primary-color)' : '1px solid var(--surface-border)'}">
+          <ng-template pTemplate="header">
+            <div class="flex flex-column gap-2 p-3">
+              <h3 class="text-lg font-bold m-0">{{ plano.nome }}</h3>
+              <div class="flex align-items-baseline gap-1">
+                <span class="text-2xl font-bold">{{ plano.precoMensal | currency:'BRL' }}</span>
+                <span class="text-color-secondary text-sm">/mês</span>
+              </div>
+            </div>
+          </ng-template>
+
+          <p class="text-sm text-color-secondary mb-3 m-0">{{ plano.descricao }}</p>
+
+          <ul class="m-0 p-0 flex flex-column gap-2 list-none">
+            <li class="flex gap-2 align-items-start text-sm">
+              <i class="pi pi-check-circle text-primary mt-1"></i>
+              <span>Até {{ plano.maxUsuarios }} usuário(s)</span>
+            </li>
+            <li *ngIf="plano.maxTransacoesMes" class="flex gap-2 align-items-start text-sm">
+              <i class="pi pi-check-circle text-primary mt-1"></i>
+              <span>Até {{ plano.maxTransacoesMes }} transações/mês</span>
+            </li>
+            <li *ngIf="plano.maxStorageGb" class="flex gap-2 align-items-start text-sm">
+              <i class="pi pi-check-circle text-primary mt-1"></i>
+              <span>{{ plano.maxStorageGb }} GB de armazenamento</span>
+            </li>
+          </ul>
+
+          <ng-template pTemplate="footer">
+            <p-button *ngIf="!isCurrentPlan(plano)"
+                      [label]="hasSubscription ? 'Trocar para este plano' : 'Assinar'"
+                      icon="pi pi-arrow-right"
+                      iconPos="right"
+                      styleClass="w-full"
+                      [disabled]="assinando"
+                      [loading]="assinando"
+                      (onClick)="assinar(plano.id)">
+            </p-button>
+
+            <div *ngIf="isCurrentPlan(plano)" class="flex justify-content-center align-items-center gap-2 py-2">
+              <i class="pi pi-check-circle text-primary"></i>
+              <span class="font-bold text-primary">Plano Ativo</span>
+            </div>
+          </ng-template>
+        </p-card>
+      </div>
+
+      <div *ngIf="planos.length === 0" class="col-12 flex flex-column align-items-center gap-2 p-5 text-center">
+        <i class="pi pi-info-circle text-4xl text-color-secondary"></i>
+        <p class="text-color-secondary m-0">Nenhum plano disponível no momento.</p>
+      </div>
+    </div>
+  </div>
+</section>

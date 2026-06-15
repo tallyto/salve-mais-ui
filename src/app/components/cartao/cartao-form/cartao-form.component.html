@@ -1,0 +1,132 @@
+<!-- Modo Dialog -->
+<div *ngIf="isDialogMode">
+  <div class="flex align-items-center gap-2 mb-4">
+    <i class="pi pi-credit-card"></i>
+    <span class="text-lg font-bold">Novo Cartão de Crédito</span>
+  </div>
+
+  <form [formGroup]="cartaoForm" id="cartaoDialogForm" class="flex flex-column gap-4">
+    <div class="pt-4">
+      <p-floatlabel class="w-full">
+        <input pInputText id="nome" formControlName="nome" autofocus class="w-full">
+        <label for="nome">Nome do Cartão</label>
+      </p-floatlabel>
+    </div>
+
+    <div class="pt-4">
+      <p-floatlabel class="w-full">
+        <p-datepicker id="vencimento" formControlName="vencimento" dateFormat="dd/mm/yy" styleClass="w-full"></p-datepicker>
+        <label for="vencimento">Data de Vencimento da Fatura</label>
+      </p-floatlabel>
+      <small class="text-color-secondary">Dia do vencimento da fatura</small>
+    </div>
+  </form>
+
+  <div class="flex gap-2 justify-content-end mt-4">
+    <p-button label="Cancelar" (onClick)="fecharDialog()" variant="outlined"></p-button>
+    <p-button label="Salvar" (onClick)="salvarCartao()" [disabled]="cartaoForm.invalid"></p-button>
+  </div>
+</div>
+
+<!-- Modo Página Completa -->
+<section *ngIf="!isDialogMode" class="p-4 flex flex-column gap-4">
+  <!-- Header -->
+  <div class="flex align-items-center justify-content-between gap-3">
+    <div class="flex align-items-center gap-3">
+      <i class="pi pi-credit-card text-3xl text-primary"></i>
+      <div>
+        <h2 class="m-0 font-bold">Cartões de Crédito</h2>
+        <span class="text-sm text-color-secondary">Gerencie seus cartões de crédito</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Formulário de Cadastro -->
+  <p-card>
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center gap-3 p-3">
+        <i class="pi pi-plus-circle"></i>
+        <h3 class="m-0 font-bold">Cadastrar Cartão</h3>
+      </div>
+    </ng-template>
+
+    <form (ngSubmit)="salvarCartao()" [formGroup]="cartaoForm" class="flex flex-column gap-4">
+      <div class="grid">
+        <div class="col-12 md:col-6 pt-4">
+          <p-floatlabel class="w-full">
+            <input pInputText id="nomeCartao" formControlName="nome" autofocus class="w-full">
+            <label for="nomeCartao">Nome do Cartão</label>
+          </p-floatlabel>
+        </div>
+
+        <div class="col-12 md:col-6 pt-4">
+          <p-floatlabel class="w-full">
+            <p-datepicker id="dataVencimento" formControlName="vencimento" dateFormat="dd/mm/yy" styleClass="w-full"></p-datepicker>
+            <label for="dataVencimento">Data de Vencimento</label>
+          </p-floatlabel>
+        </div>
+      </div>
+
+      <div class="flex gap-2 justify-content-end">
+        <p-button label="Cancelar" variant="outlined" type="button"></p-button>
+        <p-button label="Salvar" [disabled]="cartaoForm.invalid" type="submit"></p-button>
+      </div>
+    </form>
+  </p-card>
+
+  <!-- Tabela de Cartões -->
+  <p-card>
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center gap-3 p-3">
+        <i class="pi pi-list"></i>
+        <h3 class="m-0 font-bold">Lista de Cartões</h3>
+      </div>
+    </ng-template>
+
+    <p-table *ngIf="cartoes && cartoes.length > 0" [value]="cartoes" styleClass="p-datatable-sm" responsiveLayout="scroll">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Nome</th>
+          <th>Vencimento</th>
+          <th class="text-right">Ações</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-cartao>
+        <tr>
+          <td>
+            <span *ngIf="!isEditing(cartao)">{{ cartao.nome }}</span>
+            <input pInputText *ngIf="isEditing(cartao)" [(ngModel)]="tempNome" class="w-full">
+          </td>
+          <td>
+            <span *ngIf="!isEditing(cartao)">{{ cartao.vencimento | date:'dd/MM/yyyy' }}</span>
+            <p-datepicker *ngIf="isEditing(cartao)" [(ngModel)]="tempVencimento" dateFormat="dd/mm/yy" styleClass="w-full"></p-datepicker>
+          </td>
+          <td class="text-right">
+            <div *ngIf="!isEditing(cartao)" class="flex gap-1 justify-content-end">
+              <p-button [rounded]="true" [text]="true" icon="pi pi-pencil" (onClick)="startEdit(cartao)" pTooltip="Editar" tooltipPosition="top"></p-button>
+              <p-button [rounded]="true" [text]="true" icon="pi pi-trash" severity="danger" (onClick)="excluirCartao(cartao)" pTooltip="Excluir" tooltipPosition="top"></p-button>
+            </div>
+            <div *ngIf="isEditing(cartao)" class="flex gap-1 justify-content-end">
+              <p-button [rounded]="true" [text]="true" icon="pi pi-check" severity="success" (onClick)="saveEdit()" pTooltip="Salvar" tooltipPosition="top"></p-button>
+              <p-button [rounded]="true" [text]="true" icon="pi pi-times" severity="danger" (onClick)="cancelEdit()" pTooltip="Cancelar" tooltipPosition="top"></p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr><td colspan="3">
+          <div class="flex flex-column align-items-center gap-2 p-5">
+            <i class="pi pi-credit-card text-4xl text-color-secondary"></i>
+            <span>Nenhum cartão cadastrado.</span>
+          </div>
+        </td></tr>
+      </ng-template>
+    </p-table>
+
+    <div *ngIf="!cartoes || cartoes.length === 0" class="flex flex-column align-items-center justify-content-center gap-3 p-5 text-center">
+      <i class="pi pi-credit-card text-4xl text-color-secondary"></i>
+      <h3 class="m-0 font-semibold">Nenhum cartão cadastrado</h3>
+      <p class="m-0 text-color-secondary">Adicione seu primeiro cartão usando o formulário acima</p>
+    </div>
+  </p-card>
+</section>

@@ -1,0 +1,68 @@
+<section class="p-4 flex flex-column gap-4">
+  <div class="flex align-items-center justify-content-between gap-3">
+    <div class="flex align-items-center gap-3">
+      <i class="pi pi-file-check text-3xl text-primary"></i>
+      <div>
+        <h2 class="m-0 font-bold">Todos os Comprovantes</h2>
+        <span class="text-sm text-color-secondary">Gerencie os comprovantes anexados às suas contas</span>
+      </div>
+    </div>
+  </div>
+
+  <p-card>
+    <div class="flex align-items-center gap-2 w-full md:w-30rem">
+      <div class="flex-1 pt-4">
+        <p-floatlabel class="w-full">
+          <input pInputText id="search" [(ngModel)]="searchTerm" (keyup)="aplicarFiltro()" class="w-full">
+          <label for="search">Buscar por nome</label>
+        </p-floatlabel>
+      </div>
+      <p-button *ngIf="searchTerm" [rounded]="true" [text]="true" icon="pi pi-times"
+               (onClick)="limparFiltro()" pTooltip="Limpar busca" tooltipPosition="top">
+      </p-button>
+    </div>
+
+    <p-divider></p-divider>
+
+    <div *ngIf="isLoading" class="flex flex-column gap-3 p-2">
+      <div *ngFor="let item of skeletonItems" class="flex align-items-center gap-3 p-3 border-bottom-1 surface-border">
+        <p-skeleton shape="circle" size="2rem"></p-skeleton>
+        <div class="flex-1 flex flex-column gap-2">
+          <p-skeleton width="60%" height="1rem"></p-skeleton>
+          <p-skeleton width="40%" height=".875rem"></p-skeleton>
+        </div>
+        <p-skeleton shape="circle" size="2rem"></p-skeleton>
+        <p-skeleton shape="circle" size="2rem"></p-skeleton>
+      </div>
+    </div>
+
+    <div *ngIf="!isLoading && filteredAnexos.length === 0" class="flex flex-column align-items-center justify-content-center gap-2 p-5 text-center">
+      <i class="pi pi-inbox text-4xl text-color-secondary"></i>
+      <p class="m-0" *ngIf="!searchTerm">Nenhum comprovante encontrado no sistema.</p>
+      <p class="m-0" *ngIf="searchTerm">Nenhum comprovante encontrado para "{{ searchTerm }}".</p>
+    </div>
+
+    <ng-container *ngIf="!isLoading && filteredAnexos.length > 0">
+      <div class="mb-3">
+        <span class="text-sm text-color-secondary">{{ filteredAnexos.length }} comprovante(s) encontrado(s)</span>
+      </div>
+
+      <div *ngFor="let anexo of filteredAnexos" class="flex align-items-center gap-3 p-3 border-bottom-1 surface-border">
+        <i [class]="'pi ' + getFileIconClass(anexo.tipo) + ' text-xl text-color-secondary'"></i>
+        <div class="flex-1">
+          <div class="font-bold">{{ anexo.nome }}</div>
+          <div class="text-sm text-color-secondary">Enviado em: {{ formatarData(anexo.dataUpload) }}</div>
+          <div class="text-sm text-color-secondary" *ngIf="anexo.contaFixaId">Conta Fixa ID: {{ anexo.contaFixaId }}</div>
+        </div>
+        <div class="flex gap-2">
+          <p-button [rounded]="true" [text]="true" icon="pi pi-download"
+                   (onClick)="downloadAnexo(anexo)" pTooltip="Baixar comprovante" tooltipPosition="top">
+          </p-button>
+          <p-button [rounded]="true" [text]="true" icon="pi pi-trash" severity="danger"
+                   (onClick)="removerAnexo(anexo)" pTooltip="Remover comprovante" tooltipPosition="top">
+          </p-button>
+        </div>
+      </div>
+    </ng-container>
+  </p-card>
+</section>

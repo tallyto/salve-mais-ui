@@ -1,0 +1,152 @@
+<div class="p-4 flex flex-column gap-3">
+  <p-card>
+    <div class="flex justify-content-between align-items-center gap-3 flex-wrap">
+      <div class="flex align-items-center gap-2">
+        <i class="pi pi-bell text-xl"></i>
+        <h2 class="m-0 text-xl font-bold">Notificações</h2>
+      </div>
+      <p-button
+        label="Atualizar"
+        icon="pi pi-refresh"
+        variant="outlined"
+        [disabled]="loading"
+        [loading]="loading"
+        (onClick)="carregarNotificacoes()"></p-button>
+    </div>
+  </p-card>
+
+  <p-card>
+    <div class="flex flex-column gap-3">
+      <div>
+        <h2 class="flex align-items-center gap-2 m-0 text-lg font-bold">
+          <i class="pi pi-filter"></i>
+          Filtros
+        </h2>
+        <p class="m-0 text-sm text-color-secondary">{{ filtrarNotificacoes().length }} resultado(s)</p>
+      </div>
+
+      <div aria-label="Filtros de notificação" class="flex flex-wrap gap-2">
+        <p-button
+          *ngFor="let filtro of filtros"
+          [label]="filtro.label + (getContadorPorFiltro(filtro.valor) > 0 ? ' ' + getContadorPorFiltro(filtro.valor) : '')"
+          [icon]="'pi ' + getIconeFiltro(filtro.valor)"
+          [severity]="filtroAtual !== filtro.valor ? 'secondary' : undefined"
+          [outlined]="filtroAtual !== filtro.valor"
+          (onClick)="aplicarFiltro(filtro.valor)"></p-button>
+      </div>
+    </div>
+  </p-card>
+
+  <div *ngIf="loading" class="flex flex-column gap-3">
+    <p-card *ngFor="let i of [1,2,3]">
+      <div class="flex gap-3 align-items-start">
+        <p-skeleton shape="circle" size="3rem"></p-skeleton>
+        <div class="flex-1 flex flex-column gap-2">
+          <p-skeleton height="1rem" width="40%"></p-skeleton>
+          <p-skeleton height="0.75rem" width="70%"></p-skeleton>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <ng-container *ngIf="!loading">
+    <p-card *ngIf="filtrarNotificacoes().length === 0">
+      <div class="flex flex-column align-items-center gap-3 text-center p-5">
+        <i class="pi pi-bell-slash text-4xl text-color-secondary"></i>
+        <h3 class="m-0">Nenhuma notificação</h3>
+        <p class="m-0" *ngIf="filtroAtual === 'TODAS'">Você não possui notificações pendentes.</p>
+        <p class="m-0" *ngIf="filtroAtual !== 'TODAS'">Nenhuma notificação do tipo "{{ getFiltroLabel(filtroAtual) }}".</p>
+        <p-button
+          label="Ver todas"
+          icon="pi pi-list"
+          variant="outlined"
+          (onClick)="aplicarFiltro('TODAS')"
+          *ngIf="filtroAtual !== 'TODAS'"></p-button>
+      </div>
+    </p-card>
+
+    <div *ngIf="filtrarNotificacoes().length > 0" class="flex flex-column gap-3">
+      <p-card *ngFor="let notificacao of filtrarNotificacoes()" (click)="navegarParaEntidade(notificacao)" styleClass="cursor-pointer">
+        <div class="flex flex-column gap-3">
+          <div class="flex gap-3 align-items-start">
+            <span class="flex align-items-center justify-content-center border-circle w-3rem h-3rem"
+                  [ngStyle]="{'background-color': getBackgroundColor(notificacao.prioridade), 'color': getIconColor(notificacao.prioridade)}">
+              <i [class]="'pi ' + getIconeTipo(notificacao.tipo)"></i>
+            </span>
+            <div class="flex-1">
+              <h3 class="m-0 text-lg font-bold">{{ notificacao.titulo }}</h3>
+              <p class="m-0 text-sm text-color-secondary">{{ notificacao.mensagem }}</p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-2">
+            <p-tag
+              [icon]="notificacao.tipo.includes('ATRASADA') ? 'pi pi-calendar-times' : 'pi pi-calendar'"
+              [value]="formatarDias(notificacao.diasDiferenca, notificacao.tipo)"
+              severity="info"></p-tag>
+            <p-tag
+              [icon]="notificacao.tipoEntidade === 'CONTA_FIXA' ? 'pi pi-building' : 'pi pi-credit-card'"
+              [value]="notificacao.tipoEntidade === 'CONTA_FIXA' ? 'Conta' : 'Fatura'"
+              severity="secondary"></p-tag>
+            <p-tag
+              [value]="getPrioridadeLabel(notificacao.prioridade)"
+              [severity]="notificacao.prioridade === 'CRITICA' || notificacao.prioridade === 'ALTA' ? 'danger' : (notificacao.prioridade === 'MEDIA' ? 'warn' : 'success')"></p-tag>
+          </div>
+
+          <div class="flex justify-content-end">
+            <p-button label="Abrir" icon="pi pi-chevron-right" iconPos="right" [text]="true"></p-button>
+          </div>
+        </div>
+      </p-card>
+    </div>
+
+    <p-card *ngIf="notificacoes.length > 0">
+      <ng-template pTemplate="header">
+        <div class="flex align-items-center gap-2 p-4 border-bottom-1 surface-border">
+          <i class="pi pi-chart-line"></i>
+          <h2 class="m-0 text-lg font-bold">
+          Resumo de Notificações
+          </h2>
+        </div>
+      </ng-template>
+
+      <div class="grid">
+        <div class="col-12 md:col-4">
+          <p-card>
+            <div class="flex align-items-center gap-3">
+              <i class="pi pi-bell text-3xl text-primary"></i>
+              <div>
+                <div class="text-2xl font-bold">{{ notificacoes.length }}</div>
+                <div class="text-sm text-color-secondary">Total de Notificações</div>
+              </div>
+            </div>
+          </p-card>
+        </div>
+
+        <div class="col-12 md:col-4">
+          <p-card>
+            <div class="flex align-items-center gap-3">
+              <i class="pi pi-exclamation-triangle text-3xl text-orange-600"></i>
+              <div>
+                <div class="text-2xl font-bold">{{ getNotificacoesPrioridade() }}</div>
+                <div class="text-sm text-color-secondary">Alta/Crítica Prioridade</div>
+              </div>
+            </div>
+          </p-card>
+        </div>
+
+        <div class="col-12 md:col-4">
+          <p-card>
+            <div class="flex align-items-center gap-3">
+              <i class="pi pi-clock text-3xl text-red-600"></i>
+              <div>
+                <div class="text-2xl font-bold">{{ getNotificacoesAtrasadas() }}</div>
+                <div class="text-sm text-color-secondary">Em Atraso</div>
+              </div>
+            </div>
+          </p-card>
+        </div>
+      </div>
+    </p-card>
+  </ng-container>
+</div>

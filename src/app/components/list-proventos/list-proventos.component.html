@@ -1,0 +1,84 @@
+<div class="flex flex-column gap-3">
+  <p-progressbar *ngIf="isLoadingResults" mode="indeterminate" [style]="{'height': '4px'}"></p-progressbar>
+
+  <div *ngIf="!isLoadingResults" class="grid">
+    <div class="col-12 md:col-6">
+      <div class="surface-ground border-round p-3 h-full flex align-items-center justify-content-between gap-3">
+        <div>
+          <div class="text-sm text-color-secondary">Itens encontrados</div>
+          <div class="text-2xl font-bold">{{ resultsLength }}</div>
+        </div>
+        <i class="pi pi-list text-3xl text-primary"></i>
+      </div>
+    </div>
+
+    <div class="col-12 md:col-6">
+      <div class="surface-ground border-round p-3 h-full flex align-items-center justify-content-between gap-3">
+        <div>
+          <div class="text-sm text-color-secondary">Valor total</div>
+          <div class="text-2xl font-bold">{{ calcularTotal() | currency:'BRL':'symbol':'1.2-2' }}</div>
+        </div>
+        <i class="pi pi-dollar text-3xl text-primary"></i>
+      </div>
+    </div>
+  </div>
+
+  <p-table [value]="proventos"
+           [paginator]="true"
+           [rows]="pageSize"
+           [totalRecords]="resultsLength"
+           [first]="pageIndex * pageSize"
+           [lazy]="true"
+           sortField="data"
+           [sortOrder]="-1"
+           (onLazyLoad)="onLazyLoad($event)"
+           styleClass="p-datatable-sm" [tableStyle]="{ 'min-width': '50rem' }">
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="descricao">Descrição <p-sortIcon field="descricao"></p-sortIcon></th>
+        <th pSortableColumn="conta">Conta <p-sortIcon field="conta"></p-sortIcon></th>
+        <th pSortableColumn="data">Data <p-sortIcon field="data"></p-sortIcon></th>
+        <th pSortableColumn="valor" style="text-align: right">Valor <p-sortIcon field="valor"></p-sortIcon></th>
+        <th style="text-align: center">Ações</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-provento>
+      <tr>
+        <td>
+          <div class="flex align-items-center gap-2">
+            <i class="pi pi-dollar"></i>
+            <div class="flex flex-column">
+              <strong>{{ provento.descricao }}</strong>
+              <span class="text-sm text-color-secondary">Receita registrada</span>
+            </div>
+          </div>
+        </td>
+        <td>{{ provento.conta?.titular || 'Sem conta' }}</td>
+        <td>{{ provento.data | date:'dd/MM/yyyy' }}</td>
+        <td style="text-align: right">
+          <strong>{{ provento.valor | currency:'BRL':'symbol':'1.2-2' }}</strong>
+        </td>
+        <td style="text-align: center">
+          <div class="flex gap-2 justify-content-center">
+            <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" (onClick)="onEditProvento(provento)" pTooltip="Editar receita" tooltipPosition="top"></p-button>
+            <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (onClick)="excluirProvento(provento)" pTooltip="Excluir receita" tooltipPosition="top"></p-button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td [attr.colspan]="5">
+          <div class="flex flex-column align-items-center gap-3 text-center p-5">
+            <i class="pi pi-inbox text-4xl text-color-secondary"></i>
+            <h3 class="m-0">Nenhuma receita cadastrada</h3>
+            <p class="text-color-secondary m-0">Use o formulário para registrar sua primeira entrada.</p>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

@@ -1,0 +1,81 @@
+<div class="grid w-full" style="grid-template-columns: 1fr 1fr; min-height: 100vh;">
+  <section class="p-6 bg-surface-0 flex flex-column justify-content-between" aria-label="Salve Mais">
+    <div>
+      <div class="mb-3">
+        <img src="assets/images/logo.svg" alt="Salve Mais" style="width: 64px; height: auto;">
+      </div>
+      <p class="text-sm font-medium text-color-secondary mb-3">Nova credencial</p>
+      <h1 class="text-4xl font-bold mb-4">Defina uma senha forte e retome o controle financeiro.</h1>
+      <p class="text-lg text-color-secondary">
+        Apos confirmar a nova senha, voce volta ao login para acessar o Salve Mais com seguranca.
+      </p>
+    </div>
+  </section>
+
+  <div class="p-6 flex align-items-center justify-content-center">
+    <p-card class="w-full" [ngStyle]="{'max-width': '420px'}">
+      <ng-template pTemplate="header">
+        <div class="p-4 border-bottom">
+          <div class="flex gap-3 align-items-start">
+            <img src="assets/images/logo.svg" alt="" style="width: 48px; height: auto;">
+            <div>
+              <p class="text-sm font-medium text-color-secondary m-0">Atualizacao de senha</p>
+              <h2 class="text-2xl font-bold m-0">Redefinir senha</h2>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+      <p class="text-sm text-color-secondary mb-4">
+        Digite sua nova senha para concluir o processo de redefinição.
+      </p>
+
+      <form [formGroup]="redefinirForm" (ngSubmit)="redefinirSenha()" class="flex flex-column gap-4">
+        <p-floatlabel class="w-full">
+          <p-password
+            id="novaSenha"
+            formControlName="novaSenha"
+            class="w-full"
+            [toggleMask]="true"
+            [feedback]="true"></p-password>
+          <label for="novaSenha">Nova Senha</label>
+        </p-floatlabel>
+        <small class="p-error" *ngIf="redefinirForm.get('novaSenha')?.hasError('required') && redefinirForm.get('novaSenha')?.touched">
+          Senha é obrigatória
+        </small>
+        <small class="p-error" *ngIf="redefinirForm.get('novaSenha')?.hasError('minlength') && redefinirForm.get('novaSenha')?.touched">
+          Senha deve ter pelo menos 6 caracteres
+        </small>
+
+        <p-floatlabel class="w-full">
+          <p-password
+            id="confirmarSenha"
+            formControlName="confirmarSenha"
+            class="w-full"
+            [toggleMask]="true"
+            [feedback]="false"></p-password>
+          <label for="confirmarSenha">Confirmar Nova Senha</label>
+        </p-floatlabel>
+        <small class="p-error" *ngIf="redefinirForm.get('confirmarSenha')?.hasError('required') && redefinirForm.get('confirmarSenha')?.touched">
+          Confirmação de senha é obrigatória
+        </small>
+        <small class="p-error" *ngIf="redefinirForm.hasError('senhasDiferentes') && redefinirForm.get('confirmarSenha')?.touched">
+          As senhas não coincidem
+        </small>
+
+        <p-button
+          [label]="loading ? 'Processando...' : 'Redefinir Senha'"
+          icon="pi pi-check-circle"
+          [disabled]="redefinirForm.invalid || loading"
+          [loading]="loading"
+          type="submit"
+          class="w-full"></p-button>
+
+        <a routerLink="/login" class="text-center text-primary no-underline text-sm font-bold hover:underline">
+          <i class="pi pi-arrow-left mr-2"></i>
+          Voltar para o login
+        </a>
+      </form>
+    </p-card>
+  </div>
+</div>

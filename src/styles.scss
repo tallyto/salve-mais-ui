@@ -1,0 +1,385 @@
+// ─── Design tokens do produto ──────────────────────────────
+:root {
+  --salve-bg:            #f0f7f9;
+  --salve-sidebar-bg:    #ffffff;
+  --salve-card-border:   rgba(0, 0, 0, 0.07);
+  --salve-card-shadow:   0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  --salve-toolbar-bg:    #00796b;
+  --salve-toolbar-fg:    rgba(255, 255, 255, 0.95);
+  --salve-toolbar-elev:  0 2px 8px rgba(0, 121, 107, 0.35);
+  --salve-nav-active-bg: rgba(0, 150, 136, 0.1);
+  --salve-nav-active-fg: #00796b;
+  --salve-kpi-neutral:   rgba(0, 121, 107, 0.07);
+  --salve-kpi-positive:  rgba(46, 125, 50, 0.07);
+  --salve-kpi-negative:  rgba(198, 40, 40, 0.07);
+  --salve-kpi-icon-op:   0.18;
+}
+
+html.dark-mode {
+  --salve-bg:            #0d1b2a;
+  --salve-sidebar-bg:    #0a1628;
+  --salve-card-border:   rgba(255, 255, 255, 0.07);
+  --salve-card-shadow:   0 1px 4px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  --salve-toolbar-bg:    #004d40;
+  --salve-toolbar-fg:    rgba(255, 255, 255, 0.95);
+  --salve-toolbar-elev:  0 2px 8px rgba(0, 0, 0, 0.5);
+  --salve-nav-active-bg: rgba(0, 188, 212, 0.12);
+  --salve-nav-active-fg: #4dd0e1;
+  --salve-kpi-neutral:   rgba(255, 255, 255, 0.04);
+  --salve-kpi-positive:  rgba(76, 175, 80, 0.1);
+  --salve-kpi-negative:  rgba(239, 83, 80, 0.1);
+  --salve-kpi-icon-op:   0.25;
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not(.light-mode) {
+    --salve-bg:            #0d1b2a;
+    --salve-sidebar-bg:    #0a1628;
+    --salve-card-border:   rgba(255, 255, 255, 0.07);
+    --salve-card-shadow:   0 1px 4px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.04);
+    --salve-toolbar-bg:    #004d40;
+    --salve-toolbar-fg:    rgba(255, 255, 255, 0.95);
+    --salve-toolbar-elev:  0 2px 8px rgba(0, 0, 0, 0.5);
+    --salve-nav-active-bg: rgba(0, 188, 212, 0.12);
+    --salve-nav-active-fg: #4dd0e1;
+    --salve-kpi-neutral:   rgba(255, 255, 255, 0.04);
+    --salve-kpi-positive:  rgba(76, 175, 80, 0.1);
+    --salve-kpi-negative:  rgba(239, 83, 80, 0.1);
+    --salve-kpi-icon-op:   0.25;
+  }
+}
+
+// ─── Base ──────────────────────────────────────────────────
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  background-color: var(--salve-bg);
+}
+
+// ─── Brand no topo do sidenav ──────────────────────────────
+.sidenav-brand-name {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.sidenav-brand-version {
+  font-size: 11px;
+  opacity: 0.45;
+}
+
+// Accordion flat dentro do sidenav
+.sidenav-accordion {
+  .p-accordionpanel {
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+  }
+
+  .p-accordion-header-action {
+    padding: 0 16px;
+    height: 40px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.45;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+
+    &:hover {
+      background: transparent !important;
+      opacity: 0.6;
+    }
+  }
+
+  .p-accordion-content {
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+  }
+}
+
+.sidenav-section-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-color-secondary);
+  opacity: 0.72;
+}
+
+.sidenav-section + .sidenav-section {
+  margin-top: 6px;
+}
+
+.sidenav-link {
+  min-height: 38px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    background-color: rgba(0, 150, 136, 0.06);
+  }
+
+  i {
+    width: 1.25rem;
+    text-align: center;
+  }
+}
+
+.salve-skeleton-card {
+  background: var(--surface-card, #fff);
+  border: 1px solid var(--salve-card-border);
+  border-radius: 12px;
+  box-shadow: var(--salve-card-shadow);
+  padding: 1.25rem;
+}
+
+.salve-surface-card {
+  background: var(--surface-card, #fff);
+  border: 1px solid var(--salve-card-border);
+  border-radius: 12px;
+  box-shadow: var(--salve-card-shadow);
+  padding: 1.25rem;
+}
+
+.salve-radio {
+  width: 1.125rem;
+  height: 1.125rem;
+  accent-color: var(--primary-color, #009688);
+}
+
+.salve-amount-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.75rem;
+  padding: 0 0.5rem;
+  border-radius: 999px;
+  color: #0369a1;
+  background-color: #e0f2fe;
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+.salve-skeleton-card-inner {
+  min-height: 8rem;
+  box-shadow: none;
+}
+
+.salve-skeleton-line,
+.salve-skeleton-field,
+.salve-skeleton-button,
+.salve-skeleton-pill,
+.salve-skeleton-circle {
+  background: linear-gradient(90deg, rgba(148, 163, 184, 0.16), rgba(148, 163, 184, 0.32), rgba(148, 163, 184, 0.16));
+  background-size: 200% 100%;
+  animation: salve-skeleton-shimmer 1.2s ease-in-out infinite;
+}
+
+.salve-skeleton-line {
+  height: 1rem;
+  border-radius: 999px;
+}
+
+.salve-skeleton-field {
+  height: 2.5rem;
+  border-radius: 8px;
+}
+
+.salve-skeleton-button {
+  width: 7rem;
+  height: 2.5rem;
+  border-radius: 8px;
+}
+
+.salve-skeleton-pill {
+  width: 5rem;
+  height: 1.75rem;
+  border-radius: 999px;
+}
+
+.salve-skeleton-circle {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
+.salve-chart-container {
+  position: relative;
+  width: 100%;
+  min-height: 320px;
+}
+
+.salve-chart-container canvas {
+  max-height: 360px;
+}
+
+.salve-sticky-panel {
+  position: sticky;
+  top: 20px;
+}
+
+.salve-period-filter {
+  width: 100%;
+}
+
+.salve-period-month {
+  width: 10rem !important;
+}
+
+.salve-period-year {
+  width: 7rem !important;
+}
+
+@keyframes salve-skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+// Active link no sidenav
+a.nav-active {
+  background-color: var(--salve-nav-active-bg) !important;
+  border-radius: 8px !important;
+  color: var(--salve-nav-active-fg) !important;
+
+  i, span {
+    color: var(--salve-nav-active-fg) !important;
+  }
+}
+
+// ─── Cards PrimeNG ─────────────────────────────────────────
+.p-card {
+  box-shadow: var(--salve-card-shadow) !important;
+  border: 1px solid var(--salve-card-border) !important;
+  border-radius: 12px !important;
+}
+
+// ─── KPI stats inline (sem card) ───────────────────────────
+.kpi-stat-negative .kpi-value { color: #c62828; }
+.kpi-stat-warning  .kpi-value { color: #e65100; }
+
+html.dark-mode {
+  .kpi-stat-negative .kpi-value { color: #ef9a9a; }
+  .kpi-stat-warning  .kpi-value { color: #ffcc80; }
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not(.light-mode) {
+    .kpi-stat-negative .kpi-value { color: #ef9a9a; }
+    .kpi-stat-warning  .kpi-value { color: #ffcc80; }
+  }
+}
+
+// ─── KPI Cards ─────────────────────────────────────────────
+.kpi-card {
+  background-color: var(--salve-kpi-neutral) !important;
+
+  &.kpi-positive {
+    background-color: var(--salve-kpi-positive) !important;
+  }
+
+  &.kpi-negative {
+    background-color: var(--salve-kpi-negative) !important;
+  }
+
+  &.kpi-warning {
+    background-color: rgba(245, 124, 0, 0.08) !important;
+  }
+
+  .kpi-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.55;
+    margin-bottom: 6px;
+  }
+
+  .kpi-value {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+
+  .kpi-trend {
+    font-size: 12px;
+    opacity: 0.55;
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .kpi-icon {
+    font-size: 36px !important;
+    width: 36px !important;
+    height: 36px !important;
+    opacity: var(--salve-kpi-icon-op);
+    color: var(--mat-sys-primary);
+  }
+}
+
+.dashboard-kpi-card {
+  min-height: 124px;
+
+  .p-card-body,
+  .p-card-content {
+    height: 100%;
+  }
+}
+
+.dashboard-summary-card {
+  min-height: 260px;
+
+  .p-card-body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .p-card-content {
+    flex: 1;
+  }
+}
+
+app-financial-health-card,
+app-reserva-emergencia-card,
+app-limite-alertas-widget,
+app-notificacoes-widget {
+  display: block;
+  height: 100%;
+
+  .p-card {
+    height: 100%;
+  }
+}
+
+.dashboard-widget-card {
+  min-height: 300px;
+
+  .p-card-body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .p-card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.dashboard-widget-content {
+  flex: 1;
+}

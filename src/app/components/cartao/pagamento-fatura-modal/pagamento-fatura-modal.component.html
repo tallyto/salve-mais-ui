@@ -1,0 +1,90 @@
+<div>
+  <div class="flex align-items-center justify-content-between gap-2 mb-4">
+    <span class="flex align-items-center gap-2">
+      <i class="pi pi-credit-card"></i>
+      Pagar Fatura
+    </span>
+    <p-button [rounded]="true" [text]="true" icon="pi pi-times" (click)="onCancel()"></p-button>
+  </div>
+
+  <div class="p-4">
+    <!-- Informações da Fatura -->
+    <p-card class="mb-4">
+      <ng-template pTemplate="header">
+        <div class="flex align-items-center gap-2 p-3">
+          <i class="pi pi-receipt"></i>
+          <h3 class="m-0 text-lg font-bold">Detalhes da Fatura</h3>
+        </div>
+      </ng-template>
+      <div class="flex flex-column gap-3">
+        <div class="flex justify-content-between border-bottom-1 border-gray-200 pb-2">
+          <span class="text-gray-600">Cartão:</span>
+          <span class="font-bold">{{ data.fatura.nomeCartao }}</span>
+        </div>
+        <div class="flex justify-content-between border-bottom-1 border-gray-200 pb-2">
+          <span class="text-gray-600">Valor:</span>
+          <span class="text-lg font-bold text-primary">{{ formatarMoeda(data.fatura.valorTotal) }}</span>
+        </div>
+        <div class="flex justify-content-between pb-2">
+          <span class="text-gray-600">Vencimento:</span>
+          <span class="font-bold">{{ data.fatura.dataVencimento | date: 'dd/MM/yyyy' }}</span>
+        </div>
+      </div>
+    </p-card>
+
+    <!-- Formulário de Pagamento -->
+    <form [formGroup]="pagamentoForm" (ngSubmit)="onSubmit()">
+      <h3 class="flex align-items-center gap-2 mb-3">
+        <i class="pi pi-credit-card"></i>
+        <span>Selecionar Conta para Pagamento</span>
+      </h3>
+
+      <div *ngIf="loading" class="flex flex-column align-items-center justify-content-center gap-2 p-4">
+        <p-progressspinner></p-progressspinner>
+        <span>Carregando contas...</span>
+      </div>
+
+      <div *ngIf="!loading && contas.length === 0" class="flex flex-column align-items-center justify-content-center gap-2 p-4">
+        <i class="pi pi-credit-card text-4xl text-gray-400"></i>
+        <p class="m-0 text-gray-600">Nenhuma conta disponível</p>
+      </div>
+
+      <div *ngIf="!loading && contas.length > 0">
+        <p-floatlabel>
+          <p-select id="conta" formControlName="contaId" [options]="contas"
+                   optionLabel="titular" optionValue="id" class="w-full">
+            <ng-template let-option pTemplate="item">
+              <div class="flex flex-column gap-1">
+                <span class="font-bold">{{ option.titular }}</span>
+                <span class="text-sm" [style.color]="temSaldoSuficiente(option) ? '#4caf50' : '#f44336'">
+                  Saldo: {{ formatarMoeda(option.saldo) }}
+                  <i *ngIf="!temSaldoSuficiente(option)" class="pi pi-exclamation-triangle" style="font-size: 12px;"></i>
+                </span>
+              </div>
+            </ng-template>
+          </p-select>
+          <label for="conta">Conta para Débito</label>
+        </p-floatlabel>
+        <small class="text-red-500" *ngIf="pagamentoForm.get('contaId')?.hasError('required')">
+          Selecione uma conta
+        </small>
+      </div>
+
+      <!-- Aviso de Saldo Insuficiente -->
+      <div *ngIf="contas.length > 0 && !temAlgumaContaComSaldo()"
+           class="flex align-items-center gap-2 p-3 mt-3" style="background-color: #fff3cd; border-radius: 4px; border-left: 4px solid #ffc107;">
+        <i class="pi pi-exclamation-triangle text-warning"></i>
+        <span class="text-sm">Nenhuma conta possui saldo suficiente para pagar esta fatura.</span>
+      </div>
+    </form>
+  </div>
+
+  <div class="flex gap-2 justify-content-end p-4 border-top-1 border-gray-200">
+    <p-button label="Cancelar" variant="outlined" (click)="onCancel()" [disabled]="loading"></p-button>
+    <p-button label="{{ loading ? 'Processando...' : 'Confirmar Pagamento' }}"
+             [disabled]="pagamentoForm.invalid || loading || !temAlgumaContaComSaldo()"
+             (click)="onSubmit()"
+             [loading]="loading">
+    </p-button>
+  </div>
+</div>

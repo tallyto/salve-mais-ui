@@ -1,0 +1,321 @@
+<section class="p-4 flex flex-column gap-4">
+  <div class="flex align-items-center justify-content-between flex-wrap gap-3">
+    <div class="flex align-items-center gap-3">
+      <i class="pi pi-cog text-3xl text-primary"></i>
+      <div>
+        <h2 class="m-0 font-bold">Sistema</h2>
+        <span class="text-sm text-color-secondary">Gerencie identidade, plano, e-mail e padrões regionais.</span>
+      </div>
+    </div>
+
+    <p-tag
+      *ngIf="currentTenant"
+      [value]="currentTenant.subscriptionPlan || 'FREE'"
+      icon="pi pi-shield"
+      severity="info">
+    </p-tag>
+  </div>
+
+  <div *ngIf="!isLoading && currentTenant" class="surface-ground border-round p-3">
+    <div class="grid">
+      <div class="col-12 md:col-4 flex align-items-center gap-3">
+        <i class="pi pi-building text-2xl text-primary"></i>
+        <div>
+          <div class="text-sm text-color-secondary">Organização</div>
+          <div class="font-semibold">{{ currentTenant.displayName || currentTenant.nome || currentTenant.dominio || 'Não informado' }}</div>
+        </div>
+      </div>
+
+      <div class="col-12 md:col-4 flex align-items-center gap-3">
+        <i class="pi pi-users text-2xl text-primary"></i>
+        <div>
+          <div class="text-sm text-color-secondary">Limite de usuários</div>
+          <div class="font-semibold">{{ currentTenant.maxUsers || 'Sem limite definido' }}</div>
+        </div>
+      </div>
+
+      <div class="col-12 md:col-4 flex align-items-center gap-3">
+        <i class="pi pi-globe text-2xl text-primary"></i>
+        <div>
+          <div class="text-sm text-color-secondary">Região</div>
+          <div class="font-semibold">{{ currentTenant.timezone || 'America/Sao_Paulo' }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="flex flex-column gap-3">
+    <p-card>
+      <div class="flex flex-column gap-4 p-2">
+        <div class="flex align-items-center gap-3">
+          <p-skeleton shape="circle" size="2rem"></p-skeleton>
+          <div class="flex flex-column gap-2 flex-1">
+            <p-skeleton width="12rem" height="1.25rem"></p-skeleton>
+            <p-skeleton width="18rem" height=".875rem"></p-skeleton>
+          </div>
+        </div>
+        <div class="grid">
+          <div class="col-12 md:col-4"><p-skeleton height="3rem"></p-skeleton></div>
+          <div class="col-12 md:col-4"><p-skeleton height="3rem"></p-skeleton></div>
+          <div class="col-12 md:col-4"><p-skeleton height="3rem"></p-skeleton></div>
+        </div>
+        <p-skeleton width="10rem" height="2.5rem" styleClass="align-self-end"></p-skeleton>
+      </div>
+    </p-card>
+  </div>
+
+  <div *ngIf="!isLoading && currentTenant">
+    <p-tabs value="marca">
+      <p-tablist>
+        <p-tab value="marca">
+          <span class="flex align-items-center gap-2"><i class="pi pi-palette"></i>Marca</span>
+        </p-tab>
+        <p-tab value="plano">
+          <span class="flex align-items-center gap-2"><i class="pi pi-star"></i>Plano</span>
+        </p-tab>
+        <p-tab value="email">
+          <span class="flex align-items-center gap-2"><i class="pi pi-envelope"></i>E-mail</span>
+        </p-tab>
+        <p-tab value="regional">
+          <span class="flex align-items-center gap-2"><i class="pi pi-globe"></i>Regional</span>
+        </p-tab>
+      </p-tablist>
+
+      <p-tabpanels>
+        <p-tabpanel value="marca">
+          <p-card>
+            <ng-template pTemplate="header">
+              <div class="flex align-items-center gap-2 p-3">
+                <i class="pi pi-palette"></i>
+                <div>
+                  <h3 class="m-0">Personalização de Marca</h3>
+                  <p class="m-0 text-sm text-color-secondary">Configure a identidade visual da sua organização</p>
+                </div>
+              </div>
+            </ng-template>
+
+            <form [formGroup]="brandingForm" class="flex flex-column gap-4">
+              <div class="pt-4">
+                <p-floatlabel class="w-full">
+                  <input pInputText id="displayName" formControlName="displayName" class="w-full">
+                  <label for="displayName">Nome de Exibição</label>
+                </p-floatlabel>
+                <small class="text-color-secondary">Nome exibido na interface da aplicação</small>
+              </div>
+
+              <div class="pt-4">
+                <p-floatlabel class="w-full">
+                  <input pInputText id="logoUrl" formControlName="logoUrl" class="w-full">
+                  <label for="logoUrl">URL do Logo</label>
+                </p-floatlabel>
+                <small class="text-color-secondary">Logo exibido na aplicação</small>
+              </div>
+
+              <div class="pt-4">
+                <p-floatlabel class="w-full">
+                  <input pInputText id="faviconUrl" formControlName="faviconUrl" class="w-full">
+                  <label for="faviconUrl">URL do Favicon</label>
+                </p-floatlabel>
+                <small class="text-color-secondary">Ícone exibido na aba do navegador</small>
+              </div>
+
+              <div class="flex justify-content-end">
+                <p-button label="Salvar Marca" icon="pi pi-save" type="button"
+                          [disabled]="!brandingForm.valid || isLoading"
+                          [loading]="isLoading"
+                          (onClick)="onSubmitBranding()">
+                </p-button>
+              </div>
+            </form>
+          </p-card>
+        </p-tabpanel>
+
+        <p-tabpanel value="plano">
+          <p-card>
+            <ng-template pTemplate="header">
+              <div class="flex align-items-center gap-2 p-3">
+                <i class="pi pi-star"></i>
+                <div>
+                  <h3 class="m-0">Plano de Assinatura</h3>
+                  <p class="m-0 text-sm text-color-secondary">Configure o plano e limitações</p>
+                </div>
+              </div>
+            </ng-template>
+
+            <form [formGroup]="subscriptionForm" (ngSubmit)="onSubmitSubscription()" class="flex flex-column gap-4">
+              <div class="pt-4">
+                <p-floatlabel class="w-full">
+                  <p-select id="subscriptionPlan" formControlName="subscriptionPlan" [options]="subscriptionPlans" styleClass="w-full"></p-select>
+                  <label for="subscriptionPlan">Plano</label>
+                </p-floatlabel>
+              </div>
+
+              <div class="grid">
+                <div class="col-12 md:col-6 pt-4">
+                  <p-floatlabel class="w-full">
+                    <input pInputText id="maxUsers" type="number" formControlName="maxUsers" min="1" class="w-full">
+                    <label for="maxUsers">Máximo de Usuários</label>
+                  </p-floatlabel>
+                </div>
+
+                <div class="col-12 md:col-6 pt-4">
+                  <p-floatlabel class="w-full">
+                    <input pInputText id="maxStorageGb" type="number" formControlName="maxStorageGb" min="1" class="w-full">
+                    <label for="maxStorageGb">Armazenamento (GB)</label>
+                  </p-floatlabel>
+                </div>
+              </div>
+
+              <div class="grid">
+                <div class="col-12 md:col-6 pt-4">
+                  <p-floatlabel class="w-full">
+                    <p-datepicker id="subscriptionStartDate" formControlName="subscriptionStartDate" dateFormat="dd/mm/yy" styleClass="w-full"></p-datepicker>
+                    <label for="subscriptionStartDate">Início do Trial</label>
+                  </p-floatlabel>
+                </div>
+
+                <div class="col-12 md:col-6 pt-4">
+                  <p-floatlabel class="w-full">
+                    <p-datepicker id="trialEndDate" formControlName="trialEndDate" dateFormat="dd/mm/yy" styleClass="w-full"></p-datepicker>
+                    <label for="trialEndDate">Fim do Trial</label>
+                  </p-floatlabel>
+                </div>
+              </div>
+
+              <div class="flex justify-content-end">
+                <p-button label="Salvar Plano" icon="pi pi-save" type="submit"
+                          [disabled]="!subscriptionForm.valid || isLoading"
+                          [loading]="isLoading">
+                </p-button>
+              </div>
+            </form>
+          </p-card>
+        </p-tabpanel>
+
+        <p-tabpanel value="email">
+          <p-card>
+            <ng-template pTemplate="header">
+              <div class="flex align-items-center gap-2 p-3">
+                <i class="pi pi-envelope"></i>
+                <div>
+                  <h3 class="m-0">Configurações de E-mail</h3>
+                  <p class="m-0 text-sm text-color-secondary">Configure o servidor SMTP para envio de e-mails</p>
+                </div>
+              </div>
+            </ng-template>
+
+            <form [formGroup]="smtpForm" (ngSubmit)="onSubmitSmtp()" class="flex flex-column gap-4">
+              <div class="grid">
+                <div class="col-12 md:col-6 pt-4">
+                  <p-floatlabel class="w-full">
+                    <input pInputText id="host" formControlName="host" class="w-full">
+                    <label for="host">Servidor SMTP</label>
+                  </p-floatlabel>
+                </div>
+
+                <div class="col-12 md:col-6 pt-4">
+                  <p-floatlabel class="w-full">
+                    <input pInputText id="port" type="number" formControlName="port" min="1" max="65535" class="w-full">
+                    <label for="port">Porta</label>
+                  </p-floatlabel>
+                </div>
+              </div>
+
+              <div class="pt-4">
+                <p-floatlabel class="w-full">
+                  <input pInputText id="user" formControlName="user" class="w-full">
+                  <label for="user">Usuário</label>
+                </p-floatlabel>
+              </div>
+
+              <div class="pt-4">
+                <p-floatlabel class="w-full">
+                  <p-password id="password" formControlName="password" styleClass="w-full" inputStyleClass="w-full" [toggleMask]="true" [feedback]="false"></p-password>
+                  <label for="password">Senha</label>
+                </p-floatlabel>
+              </div>
+
+              <div class="grid">
+                <div class="col-12 md:col-6 pt-4">
+                  <p-floatlabel class="w-full">
+                    <input pInputText id="fromEmail" type="email" formControlName="fromEmail" class="w-full">
+                    <label for="fromEmail">E-mail do Remetente</label>
+                  </p-floatlabel>
+                </div>
+
+                <div class="col-12 md:col-6 pt-4">
+                  <p-floatlabel class="w-full">
+                    <input pInputText id="fromName" formControlName="fromName" class="w-full">
+                    <label for="fromName">Nome do Remetente</label>
+                  </p-floatlabel>
+                </div>
+              </div>
+
+              <div class="flex justify-content-end">
+                <p-button label="Salvar E-mail" icon="pi pi-save" type="submit"
+                          [disabled]="!smtpForm.valid || isLoading"
+                          [loading]="isLoading">
+                </p-button>
+              </div>
+            </form>
+          </p-card>
+        </p-tabpanel>
+
+        <p-tabpanel value="regional">
+          <p-card>
+            <ng-template pTemplate="header">
+              <div class="flex align-items-center gap-2 p-3">
+                <i class="pi pi-globe"></i>
+                <div>
+                  <h3 class="m-0">Configurações Regionais</h3>
+                  <p class="m-0 text-sm text-color-secondary">Configure idioma, moeda e localização</p>
+                </div>
+              </div>
+            </ng-template>
+
+            <form [formGroup]="regionalForm" (ngSubmit)="onSubmitRegional()" class="flex flex-column gap-4">
+              <div class="grid">
+                <div class="col-12 md:col-6 pt-4">
+                  <p-floatlabel class="w-full">
+                    <p-select id="timezone" formControlName="timezone" [options]="timezones" optionLabel="label" optionValue="value" styleClass="w-full"></p-select>
+                    <label for="timezone">Fuso Horário</label>
+                  </p-floatlabel>
+                </div>
+
+                <div class="col-12 md:col-6 pt-4">
+                  <p-floatlabel class="w-full">
+                    <p-select id="locale" formControlName="locale" [options]="locales" optionLabel="label" optionValue="value" styleClass="w-full"></p-select>
+                    <label for="locale">Idioma</label>
+                  </p-floatlabel>
+                </div>
+              </div>
+
+              <div class="grid">
+                <div class="col-12 md:col-6 pt-4">
+                  <p-floatlabel class="w-full">
+                    <p-select id="currencyCode" formControlName="currencyCode" [options]="currencies" optionLabel="label" optionValue="value" styleClass="w-full"></p-select>
+                    <label for="currencyCode">Moeda</label>
+                  </p-floatlabel>
+                </div>
+
+                <div class="col-12 md:col-6 pt-4">
+                  <p-floatlabel class="w-full">
+                    <input pInputText id="dateFormat" formControlName="dateFormat" class="w-full">
+                    <label for="dateFormat">Formato de Data</label>
+                  </p-floatlabel>
+                </div>
+              </div>
+
+              <div class="flex justify-content-end">
+                <p-button label="Salvar Regional" icon="pi pi-save" type="submit"
+                          [disabled]="!regionalForm.valid || isLoading"
+                          [loading]="isLoading">
+                </p-button>
+              </div>
+            </form>
+          </p-card>
+        </p-tabpanel>
+      </p-tabpanels>
+    </p-tabs>
+  </div>
+</section>

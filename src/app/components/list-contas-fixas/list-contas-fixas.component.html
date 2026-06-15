@@ -1,0 +1,152 @@
+<div class="flex flex-column gap-3">
+  <p-card>
+    <ng-template pTemplate="content">
+      <app-month-year-filter
+        [month]="selectedMonth"
+        [year]="selectedYear"
+        (periodChange)="onPeriodChange($event)">
+      </app-month-year-filter>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <div class="flex justify-content-end">
+        <p-button
+          label="Exportar"
+          icon="pi pi-download"
+          severity="secondary"
+          (onClick)="exportarParaExcel()"
+          pTooltip="Exportar para Excel"
+          tooltipPosition="top">
+        </p-button>
+      </div>
+    </ng-template>
+  </p-card>
+
+  <p-progressbar *ngIf="isLoadingResults" mode="indeterminate" [style]="{'height': '4px'}"></p-progressbar>
+
+  <div *ngIf="!isLoadingResults" class="grid">
+    <div class="col-12 md:col-6">
+      <div class="surface-ground border-round p-3 h-full flex align-items-center justify-content-between gap-3">
+        <div>
+          <div class="text-sm text-color-secondary">Itens no período</div>
+          <div class="text-2xl font-bold">{{ resultsLength }}</div>
+        </div>
+        <i class="pi pi-list text-3xl text-primary"></i>
+      </div>
+    </div>
+
+    <div class="col-12 md:col-6">
+      <div class="surface-ground border-round p-3 h-full flex align-items-center justify-content-between gap-3">
+        <div>
+          <div class="text-sm text-color-secondary">Total do período</div>
+          <div class="text-2xl font-bold">{{ calcularTotal() | currency:'BRL':'symbol':'1.2-2' }}</div>
+        </div>
+        <i class="pi pi-money-bill text-3xl text-primary"></i>
+      </div>
+    </div>
+  </div>
+
+  <p-table
+    [value]="contasFixas"
+    [paginator]="true"
+    [rows]="pageSize"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [totalRecords]="resultsLength"
+    [first]="pageIndex * pageSize"
+    [lazy]="true"
+    sortField="id"
+    [sortOrder]="-1"
+    (onLazyLoad)="onLazyLoad($event)"
+    styleClass="p-datatable-sm"
+    [tableStyle]="{ 'min-width': '64rem' }">
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="nome">Nome <p-sortIcon field="nome"></p-sortIcon></th>
+        <th pSortableColumn="categoria">Categoria <p-sortIcon field="categoria"></p-sortIcon></th>
+        <th pSortableColumn="conta">Conta <p-sortIcon field="conta"></p-sortIcon></th>
+        <th pSortableColumn="vencimento">Vencimento <p-sortIcon field="vencimento"></p-sortIcon></th>
+        <th pSortableColumn="valor" class="text-right">Valor <p-sortIcon field="valor"></p-sortIcon></th>
+        <th class="text-center">Status</th>
+        <th class="text-right">Ações</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-contaFixa>
+      <tr>
+        <td>
+          <div class="flex align-items-center gap-2">
+            <i class="pi pi-receipt text-color-secondary"></i>
+            <span class="font-medium">{{ contaFixa.nome }}</span>
+          </div>
+        </td>
+        <td>{{ contaFixa.categoria?.nome || 'N/A' }}</td>
+        <td>{{ contaFixa.conta?.titular || 'N/A' }}</td>
+        <td>{{ contaFixa.vencimento | date:'dd/MM/yyyy' }}</td>
+        <td class="text-right">
+          <strong [ngClass]="contaFixa.pago ? 'text-green-600' : 'text-red-600'">
+            {{ contaFixa.valor | currency:'BRL':'symbol':'1.2-2' }}
+          </strong>
+        </td>
+        <td class="text-center">
+          <p-tag
+            [value]="contaFixa.pago ? 'Pago' : 'Pendente'"
+            [severity]="getStatusSeverity(contaFixa)">
+          </p-tag>
+        </td>
+        <td class="text-right">
+          <div class="flex justify-content-end gap-2">
+            <p-button
+              icon="pi pi-money-bill"
+              [rounded]="true"
+              [text]="true"
+              [disabled]="contaFixa.pago"
+              (onClick)="pagarContaFixa(contaFixa)"
+              [pTooltip]="contaFixa.pago ? 'Já está pago' : 'Pagar conta'"
+              tooltipPosition="top">
+            </p-button>
+
+            <p-button
+              icon="pi pi-pencil"
+              [rounded]="true"
+              [text]="true"
+              (onClick)="startEdit(contaFixa)"
+              pTooltip="Editar despesa"
+              tooltipPosition="top">
+            </p-button>
+
+            <p-button
+              icon="pi pi-ellipsis-v"
+              [rounded]="true"
+              [text]="true"
+              (onClick)="moreMenu.toggle($event)"
+              [attr.aria-controls]="'conta-fixa-menu-' + contaFixa.id"
+              aria-haspopup="true"
+              pTooltip="Mais opções"
+              tooltipPosition="top">
+            </p-button>
+            <p-menu
+              #moreMenu
+              [id]="'conta-fixa-menu-' + contaFixa.id"
+              [model]="getMenuItems(contaFixa)"
+              [popup]="true"
+              appendTo="body">
+            </p-menu>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="7">
+          <div class="flex flex-column align-items-center justify-content-center p-6 text-center">
+            <i class="pi pi-money-bill text-4xl text-color-secondary mb-3"></i>
+            <p class="m-0 font-semibold">Nenhuma despesa fixa encontrada para {{ getSelectedPeriodText() }}.</p>
+            <p class="m-0 text-color-secondary">Selecione outro período ou adicione uma nova despesa.</p>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

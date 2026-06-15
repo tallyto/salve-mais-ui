@@ -1,0 +1,337 @@
+<section class="p-4 flex flex-column gap-4">
+  <!-- Hero -->
+  <p-card styleClass="kpi-card">
+    <div class="flex align-items-center justify-content-between flex-wrap gap-3">
+      <div>
+        <h2 class="m-0 text-xl font-semibold">{{ getSaudacao() }}</h2>
+        <span class="text-sm text-color-secondary">{{ today | date:"EEEE, d 'de' MMMM" : '' : 'pt-BR' | titlecase }}</span>
+      </div>
+
+      <div class="flex align-items-center gap-4 flex-wrap">
+        <div [class.kpi-stat-negative]="getResultadoMensal() < 0">
+          <div class="kpi-label">Resultado do mês</div>
+          <div class="kpi-value" style="font-size:20px">{{ getResultadoMensal() | currency:'BRL':'symbol':'1.2-2' }}</div>
+        </div>
+        <div [class.kpi-stat-warning]="getExpenseRatio() > 90">
+          <div class="kpi-label">Receita comprometida</div>
+          <div class="kpi-value" style="font-size:20px">{{ getExpenseRatio() | number:'1.0-0' }}%</div>
+        </div>
+        <p-button label="Exportar" icon="pi pi-download" (onClick)="exportToExcel()" [disabled]="isLoading"></p-button>
+      </div>
+    </div>
+  </p-card>
+
+  <div class="px-1">
+    <app-month-year-filter [month]="selectedMonth" [year]="selectedYear" (periodChange)="onPeriodChange($event)"></app-month-year-filter>
+  </div>
+
+  <!-- Skeleton de carregamento -->
+  <div *ngIf="isLoading">
+    <div class="grid mb-2">
+      <div class="col-12 md:col-6 lg:col-3" *ngFor="let i of [1,2,3,4]">
+        <p-card styleClass="dashboard-kpi-card h-full">
+          <div class="flex justify-content-between align-items-start">
+            <div class="flex flex-column gap-2 w-full">
+              <p-skeleton width="6rem" height="0.75rem"></p-skeleton>
+              <p-skeleton width="9rem" height="1.75rem"></p-skeleton>
+              <p-skeleton width="7rem" height="0.75rem"></p-skeleton>
+            </div>
+            <p-skeleton shape="circle" size="2.5rem"></p-skeleton>
+          </div>
+        </p-card>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="col-12 md:col-6">
+        <p-card styleClass="h-full">
+          <p-skeleton height="12rem"></p-skeleton>
+        </p-card>
+      </div>
+      <div class="col-12 md:col-6">
+        <p-card styleClass="h-full">
+          <p-skeleton height="12rem"></p-skeleton>
+        </p-card>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="!isLoading">
+    <!-- KPIs do mês -->
+    <div class="grid">
+      <div class="col-12 md:col-6 lg:col-3">
+        <p-card styleClass="kpi-card dashboard-kpi-card h-full">
+          <div class="flex justify-content-between align-items-start">
+            <div>
+              <div class="kpi-label">Saldo Total</div>
+              <div class="kpi-value">{{ totalSaldo | currency:'BRL':'symbol':'1.2-2' }}</div>
+              <div class="kpi-trend" *ngIf="summaryData && summaryData.saldoMesAnterior !== undefined">
+                <i [class]="totalSaldo >= summaryData.saldoMesAnterior ? 'pi pi-arrow-up' : 'pi pi-arrow-down'" style="font-size: 0.875rem; margin-right: 0.25rem;"></i>
+                {{ (totalSaldo / summaryData.saldoMesAnterior - 1) * 100 | number:'1.1-1' }}% vs mês anterior
+              </div>
+            </div>
+            <i class="pi pi-wallet kpi-icon"></i>
+          </div>
+        </p-card>
+      </div>
+
+      <div class="col-12 md:col-6 lg:col-3">
+        <p-card styleClass="kpi-card kpi-positive dashboard-kpi-card h-full">
+          <div class="flex justify-content-between align-items-start">
+            <div>
+              <div class="kpi-label">Receitas do Mês</div>
+              <div class="kpi-value">{{ totalReceitas | currency:'BRL':'symbol':'1.2-2' }}</div>
+              <div class="kpi-trend" *ngIf="monthlyTrendData && monthlyTrendData.length > 1">
+                {{ getIncomeExpenseRatio() | number:'1.1-1' }}x das despesas
+              </div>
+            </div>
+            <i class="pi pi-arrow-up kpi-icon"></i>
+          </div>
+        </p-card>
+      </div>
+
+      <div class="col-12 md:col-6 lg:col-3">
+        <p-card styleClass="kpi-card kpi-negative dashboard-kpi-card h-full">
+          <div class="flex justify-content-between align-items-start">
+            <div>
+              <div class="kpi-label">Despesas do Mês</div>
+              <div class="kpi-value">{{ totalDespesas | currency:'BRL':'symbol':'1.2-2' }}</div>
+              <div class="kpi-trend" *ngIf="summaryData">
+                {{ getExpenseRatio() | number:'1.1-1' }}% da receita
+              </div>
+            </div>
+            <i class="pi pi-arrow-down kpi-icon"></i>
+          </div>
+        </p-card>
+      </div>
+
+      <div class="col-12 md:col-6 lg:col-3">
+        <p-card styleClass="kpi-card dashboard-kpi-card h-full">
+          <div class="flex justify-content-between align-items-start">
+            <div>
+              <div class="kpi-label">Contas Bancárias</div>
+              <div class="kpi-value">{{ accounts.length }}</div>
+              <div class="kpi-trend">
+                {{ accounts.length > 0 ? (totalSaldo / accounts.length | currency:'BRL':'symbol':'1.0-0') + ' média' : 'Nenhuma conta' }}
+              </div>
+            </div>
+            <i class="pi pi-building kpi-icon"></i>
+          </div>
+        </p-card>
+      </div>
+    </div>
+
+    <p-card>
+      <ng-template pTemplate="header">
+        <div class="flex align-items-center gap-2 p-3">
+          <i class="pi pi-bolt"></i>
+          <span class="font-semibold">Ações rápidas</span>
+        </div>
+      </ng-template>
+      <div class="flex flex-wrap gap-2">
+        <p-button *ngFor="let action of quickActions"
+                  [label]="action.label"
+                  [icon]="'pi pi-' + action.icon"
+                  [routerLink]="action.route"
+                  variant="outlined">
+        </p-button>
+      </div>
+    </p-card>
+
+    <ng-container *ngIf="summaryData && summaryData.parcelasResumo">
+      <div>
+        <p class="m-0 mb-2 flex align-items-center gap-2 font-medium">
+          <i class="pi pi-shopping-cart" style="font-size:18px;"></i>
+          Compras parceladas
+        </p>
+        <div class="grid">
+          <div class="col-12 md:col-6 lg:col-3">
+            <p-card styleClass="kpi-card dashboard-kpi-card h-full">
+              <div class="kpi-label">Parcelas Ativas</div>
+              <div class="kpi-value" style="font-size:22px">{{ summaryData.parcelasResumo.totalParcelasAtivas }}</div>
+              <p-button label="Ver todas" [text]="true" routerLink="/compras-parceladas" styleClass="mt-1 p-0" [style]="{ 'font-size': '12px' }"></p-button>
+            </p-card>
+          </div>
+          <div class="col-12 md:col-6 lg:col-3">
+            <p-card styleClass="kpi-card kpi-positive dashboard-kpi-card h-full">
+              <div class="kpi-label">Pagas no Mês</div>
+              <div class="kpi-value" style="font-size:22px">{{ summaryData.parcelasResumo.parcelasPagasMes }}</div>
+              <div class="kpi-trend">{{ summaryData.parcelasResumo.valorPagoMes | currency:'BRL':'symbol':'1.2-2' }}</div>
+            </p-card>
+          </div>
+          <div class="col-12 md:col-6 lg:col-3">
+            <p-card styleClass="kpi-card kpi-warning dashboard-kpi-card h-full">
+              <div class="kpi-label">Pendentes no Mês</div>
+              <div class="kpi-value" style="font-size:22px">{{ summaryData.parcelasResumo.parcelasNaoPagasMes }}</div>
+              <div class="kpi-trend">{{ summaryData.parcelasResumo.valorRestanteMes | currency:'BRL':'symbol':'1.2-2' }}</div>
+            </p-card>
+          </div>
+          <div class="col-12 md:col-6 lg:col-3">
+            <p-card styleClass="kpi-card dashboard-kpi-card h-full">
+              <div class="kpi-label">Total do Mês</div>
+              <div class="kpi-value" style="font-size:22px">{{ summaryData.parcelasResumo.valorTotalParcelasMes | currency:'BRL':'symbol':'1.2-2' }}</div>
+            </p-card>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <p-card>
+      <ng-template pTemplate="header">
+        <div class="flex align-items-center gap-2 p-3">
+          <i class="pi pi-chart-line"></i>
+          <span>Análise financeira</span>
+        </div>
+      </ng-template>
+      <p-tabs value="categorias">
+        <p-tablist>
+          <p-tab value="categorias">Categorias</p-tab>
+          <p-tab value="receitas">Receitas vs Despesas</p-tab>
+          <p-tab value="tendencia">Tendência</p-tab>
+        </p-tablist>
+
+        <p-tabpanels>
+          <p-tabpanel value="categorias">
+          <div class="p-3">
+            <div *ngIf="hasCategoryData()" class="salve-chart-container">
+              <canvas baseChart [data]="pieChartData" [options]="pieChartOptions" [type]="'pie'"></canvas>
+            </div>
+            <div *ngIf="!hasCategoryData()" class="flex flex-column align-items-center gap-2 p-5 text-center">
+              <i class="pi pi-chart-pie text-4xl text-color-secondary"></i>
+              <p class="m-0">Nenhuma despesa categorizada neste período.</p>
+            </div>
+          </div>
+          </p-tabpanel>
+
+          <p-tabpanel value="receitas">
+          <div class="p-3">
+            <div *ngIf="hasIncomeExpenseData()" class="salve-chart-container">
+              <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="'bar'"></canvas>
+            </div>
+            <div *ngIf="!hasIncomeExpenseData()" class="flex flex-column align-items-center gap-2 p-5 text-center">
+              <i class="pi pi-chart-bar text-4xl text-color-secondary"></i>
+              <p class="m-0">Sem receitas ou despesas registradas neste período.</p>
+            </div>
+          </div>
+          </p-tabpanel>
+
+          <p-tabpanel value="tendencia">
+          <div class="p-3">
+            <div *ngIf="hasMonthlyTrendData()" class="salve-chart-container">
+              <canvas baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="'line'"></canvas>
+            </div>
+            <div *ngIf="!hasMonthlyTrendData()" class="flex flex-column align-items-center gap-2 p-5 text-center">
+              <i class="pi pi-chart-line text-4xl text-color-secondary"></i>
+              <p class="m-0">Histórico insuficiente para exibir a tendência mensal.</p>
+            </div>
+          </div>
+          </p-tabpanel>
+        </p-tabpanels>
+      </p-tabs>
+    </p-card>
+
+    <div class="grid">
+      <div class="col-12 md:col-6">
+        <app-limite-alertas-widget></app-limite-alertas-widget>
+      </div>
+      <div class="col-12 md:col-6">
+        <app-notificacoes-widget></app-notificacoes-widget>
+      </div>
+    </div>
+
+    <p-card>
+      <ng-template pTemplate="header">
+        <div class="flex align-items-center gap-2 p-3">
+          <i class="pi pi-arrows-h"></i>
+          <span>Comparativo com o Mês Anterior</span>
+        </div>
+      </ng-template>
+      <app-variation-table [data]="variationData"></app-variation-table>
+    </p-card>
+
+    <p-card>
+      <ng-template pTemplate="header">
+        <div class="flex align-items-center gap-2 p-3">
+          <i class="pi pi-credit-card"></i>
+          <div>
+            <span>Últimas Compras</span>
+            <p class="m-0 text-sm text-color-secondary">Últimos 5 lançamentos</p>
+          </div>
+        </div>
+      </ng-template>
+      <p-table [value]="recentTransactions" styleClass="p-datatable-sm" [paginator]="false">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Descrição</th>
+            <th>Data</th>
+            <th>Categoria</th>
+            <th>Cartão</th>
+            <th>Valor</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-transaction>
+          <tr>
+            <td>{{ transaction.descricao }}</td>
+            <td>{{ transaction.data | date:'dd/MM/yyyy' }}</td>
+            <td>{{ transaction.categoria?.nome || 'Não categorizada' }}</td>
+            <td>{{ transaction.cartao?.nome || '-' }}</td>
+            <td>{{ transaction.valor | currency:'BRL':'symbol':'1.2-2' }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr><td colspan="5">
+            <div class="flex flex-column align-items-center gap-2 p-5">
+              <i class="pi pi-credit-card text-4xl text-color-secondary"></i>
+              <span>Nenhuma compra no cartão encontrada.</span>
+            </div>
+          </td></tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+
+    <div class="grid">
+      <div class="col-12 md:col-6 lg:col-4">
+        <app-financial-health-card [summaryData]="summaryData"></app-financial-health-card>
+      </div>
+      <div class="col-12 md:col-6 lg:col-4">
+        <app-reserva-emergencia-card [summaryData]="summaryData"></app-reserva-emergencia-card>
+      </div>
+      <div class="col-12 md:col-6 lg:col-4">
+        <p-card styleClass="dashboard-summary-card h-full">
+          <ng-template pTemplate="header">
+            <div class="flex align-items-center gap-2 p-3">
+              <i class="pi pi-building"></i>
+              <span>Resumo de Contas</span>
+            </div>
+          </ng-template>
+          <p-table [value]="accounts" styleClass="p-datatable-sm" [paginator]="false">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Titular</th>
+                <th>Saldo</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-account>
+              <tr>
+                <td>{{ account.titular }}</td>
+                <td>{{ account.saldo | currency:'BRL':'symbol':'1.2-2' }}</td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr><td colspan="2">
+                <div class="flex flex-column align-items-center gap-2 p-5">
+                  <i class="pi pi-building text-4xl text-color-secondary"></i>
+                  <span>Nenhuma conta cadastrada.</span>
+                </div>
+              </td></tr>
+            </ng-template>
+          </p-table>
+          <ng-template pTemplate="footer" *ngIf="accounts.length > 0">
+            <div class="flex justify-content-end">
+              <p-button label="Gerenciar contas" [text]="true" icon="pi pi-plus-circle" [routerLink]="['/account']"></p-button>
+            </div>
+          </ng-template>
+        </p-card>
+      </div>
+    </div>
+  </ng-container>
+</section>

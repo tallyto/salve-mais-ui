@@ -1,0 +1,170 @@
+<section class="p-4 flex flex-column gap-4">
+  <div class="flex flex-column md:flex-row md:align-items-center justify-content-between gap-3">
+    <div class="flex align-items-center gap-3">
+      <i class="pi pi-shopping-cart text-3xl text-primary"></i>
+      <div>
+        <h1 class="m-0 text-2xl font-semibold">Compras em Débito</h1>
+        <p class="m-0 text-color-secondary">Acompanhe as compras pagas direto pela conta</p>
+      </div>
+    </div>
+
+    <p-button label="Nova compra" icon="pi pi-plus" (onClick)="novaCompra()"></p-button>
+  </div>
+
+  <p-card>
+    <ng-template pTemplate="content">
+      <div class="grid mb-3">
+        <div class="col-12 md:col-6">
+          <div class="surface-ground border-round p-3 h-full flex align-items-center justify-content-between gap-3">
+            <div>
+              <div class="text-sm text-color-secondary">Itens no período</div>
+              <div class="text-2xl font-bold">{{ resultsLength }}</div>
+            </div>
+            <i class="pi pi-list text-3xl text-primary"></i>
+          </div>
+        </div>
+
+        <div class="col-12 md:col-6">
+          <div class="surface-ground border-round p-3 h-full flex align-items-center justify-content-between gap-3">
+            <div>
+              <div class="text-sm text-color-secondary">Total do período</div>
+              <div class="text-2xl font-bold">{{ calcularTotal() | currency:'BRL':'symbol':'1.2-2' }}</div>
+            </div>
+            <i class="pi pi-shopping-cart text-3xl text-primary"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-2">
+        <app-month-year-filter
+          [month]="selectedMonth"
+          [year]="selectedYear"
+          (periodChange)="onPeriodChange($event)">
+        </app-month-year-filter>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <div class="flex justify-content-end">
+        <p-button
+          label="Exportar"
+          icon="pi pi-download"
+          (onClick)="exportarParaExcel()"
+          pTooltip="Exportar para Excel"
+          tooltipPosition="top">
+        </p-button>
+      </div>
+    </ng-template>
+  </p-card>
+
+  <p-progressbar *ngIf="isLoadingResults" mode="indeterminate" [style]="{'height': '4px'}"></p-progressbar>
+
+  <p-card>
+    <ng-template pTemplate="content">
+      <p-table
+        [value]="comprasDebito"
+        [paginator]="true"
+        [rows]="pageSize"
+        [rowsPerPageOptions]="[5, 10, 25, 50]"
+        [totalRecords]="resultsLength"
+        [first]="pageIndex * pageSize"
+        [lazy]="true"
+        (onLazyLoad)="onLazyLoad($event)"
+        styleClass="p-datatable-sm"
+        [tableStyle]="{ 'min-width': '58rem' }">
+
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Descrição</th>
+            <th>Categoria</th>
+            <th>Data</th>
+            <th class="text-right">Valor</th>
+            <th>Observações</th>
+            <th class="text-right">Ações</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-compra>
+          <tr>
+            <td>
+              <div class="flex align-items-center gap-2">
+                <i class="pi pi-shopping-cart text-color-secondary"></i>
+                <span class="font-medium">{{ compra.nome }}</span>
+              </div>
+            </td>
+            <td>
+              <p-tag *ngIf="compra.categoria" [value]="compra.categoria.nome" severity="info"></p-tag>
+              <span *ngIf="!compra.categoria" class="text-color-secondary">Sem categoria</span>
+            </td>
+            <td>{{ compra.dataCompra | date:'dd/MM/yyyy' }}</td>
+            <td class="text-right">
+              <strong>{{ compra.valor | currency:'BRL':'symbol':'1.2-2' }}</strong>
+            </td>
+            <td>
+              <span
+                *ngIf="compra.observacoes"
+                [pTooltip]="compra.observacoes"
+                tooltipPosition="top">
+                {{ compra.observacoes.length > 30 ? (compra.observacoes | slice:0:30) + '...' : compra.observacoes }}
+              </span>
+              <span *ngIf="!compra.observacoes" class="text-color-secondary">-</span>
+            </td>
+            <td class="text-right">
+              <div class="flex justify-content-end gap-2">
+                <p-button
+                  icon="pi pi-pencil"
+                  [rounded]="true"
+                  [text]="true"
+                  (onClick)="editarCompra(compra)"
+                  pTooltip="Editar"
+                  tooltipPosition="top">
+                </p-button>
+
+                <p-button
+                  icon="pi pi-trash"
+                  [rounded]="true"
+                  [text]="true"
+                  severity="danger"
+                  (onClick)="excluirCompra(compra)"
+                  pTooltip="Excluir"
+                  tooltipPosition="top">
+                </p-button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6">
+              <div class="flex flex-column align-items-center justify-content-center p-6 text-center">
+                <i class="pi pi-shopping-cart text-4xl text-color-secondary mb-3"></i>
+                <p class="m-0 font-semibold" *ngIf="!isLoadingResults">Nenhuma compra encontrada para o período selecionado.</p>
+                <p class="m-0 font-semibold" *ngIf="isLoadingResults">Carregando compras...</p>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </ng-template>
+  </p-card>
+
+  <p-card *ngIf="comprasDebito.length > 0">
+    <ng-template pTemplate="content">
+      <div class="grid">
+        <div class="col-12 md:col-6">
+          <div class="flex justify-content-between align-items-center">
+            <span class="text-color-secondary">Total de compras</span>
+            <strong>{{ comprasDebito.length }}</strong>
+          </div>
+        </div>
+        <div class="col-12 md:col-6">
+          <div class="flex justify-content-between align-items-center">
+            <span class="text-color-secondary">Valor total</span>
+            <strong>{{ calcularTotal() | currency:'BRL':'symbol':'1.2-2' }}</strong>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-card>
+</section>

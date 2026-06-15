@@ -1,0 +1,160 @@
+<div class="grid w-full" style="grid-template-columns: 1fr 1fr; min-height: 100vh;">
+  <section class="p-6 bg-surface-0 flex flex-column justify-content-between" aria-label="Salve Mais">
+    <div>
+      <div class="mb-3">
+        <img src="assets/images/logo.svg" alt="Salve Mais" style="width: 64px; height: auto;">
+      </div>
+      <p class="text-sm font-medium text-color-secondary mb-3">Nova credencial</p>
+      <h1 class="text-4xl font-bold mb-4">Crie seu ambiente financeiro com dados separados e acesso seguro.</h1>
+      <p class="text-lg text-color-secondary">
+        O tenant organiza usuarios, contas e relatorios para a sua empresa trabalhar com mais clareza desde o primeiro acesso.
+      </p>
+    </div>
+  </section>
+
+  <div class="p-6 flex align-items-center justify-content-center">
+    <p-card class="w-full" [style]="{ 'max-width': '420px' }">
+      <ng-template pTemplate="header">
+        <div class="p-4 border-bottom-1 surface-border">
+          <div class="flex gap-3 align-items-start">
+            <img src="assets/images/logo.svg" alt="" style="width: 48px; height: auto;">
+            <div>
+              <p class="text-sm font-medium text-color-secondary m-0" *ngIf="mode === 'register'">Novo ambiente</p>
+              <p class="text-sm font-medium text-color-secondary m-0" *ngIf="mode === 'confirm'">Quase pronto</p>
+              <h2 class="text-2xl font-bold m-0" *ngIf="mode === 'register'">Cadastro de tenant</h2>
+              <h2 class="text-2xl font-bold m-0" *ngIf="mode === 'confirm'">Confirmação de tenant</h2>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+
+      <div *ngIf="mode === 'register'">
+        <p class="text-sm text-color-secondary mb-4">
+          Cadastre seu tenant para começar a usar o Salve Mais. Você receberá um email com instruções para confirmar o registro.
+        </p>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-column gap-4">
+          <p-floatlabel class="w-full">
+            <input pInputText id="name" formControlName="name" class="w-full" required>
+            <label for="name">Nome da Empresa</label>
+          </p-floatlabel>
+          <small class="p-error" *ngIf="registerForm.get('name')?.hasError('required') && registerForm.get('name')?.touched">
+            Nome da empresa é obrigatório
+          </small>
+
+          <p-floatlabel class="w-full">
+            <input pInputText id="domain" formControlName="domain" class="w-full" required autocomplete="off">
+            <label for="domain">Domínio</label>
+          </p-floatlabel>
+          <small class="p-error" *ngIf="registerForm.get('domain')?.hasError('required') && registerForm.get('domain')?.touched">
+            Domínio é obrigatório
+          </small>
+          <small class="p-error" *ngIf="registerForm.get('domain')?.hasError('pattern') && registerForm.get('domain')?.touched">
+            Formato de domínio inválido
+          </small>
+          <small class="p-error" *ngIf="registerForm.get('domain')?.hasError('minlength') && registerForm.get('domain')?.touched">
+            Domínio deve ter pelo menos 4 caracteres
+          </small>
+          <small class="p-error" *ngIf="registerForm.get('domain')?.hasError('dominioIndisponivel') && registerForm.get('domain')?.touched">
+            Este domínio já está em uso
+          </small>
+          <small class="p-error" *ngIf="registerForm.get('domain')?.hasError('dominioPublico') && registerForm.get('domain')?.touched">
+            Não é permitido usar domínios de provedores de email ou serviços gratuitos
+          </small>
+
+          <div *ngIf="registerForm.get('domain')?.touched" class="bg-surface-50 p-3 border-round">
+            <h4 class="text-sm font-bold m-0 mb-2">Regras para um domínio válido:</h4>
+            <ul class="m-0 pl-4 flex flex-column gap-1">
+              <li class="text-sm" [style.text-decoration]="!registerForm.get('domain')?.hasError('minlength') && registerForm.get('domain')?.value ? 'line-through' : 'none'" [style.color]="!registerForm.get('domain')?.hasError('minlength') && registerForm.get('domain')?.value ? 'var(--text-color-secondary)' : 'inherit'">
+                Mínimo de 4 caracteres
+              </li>
+              <li class="text-sm" [style.text-decoration]="!registerForm.get('domain')?.hasError('pattern') && registerForm.get('domain')?.value ? 'line-through' : 'none'" [style.color]="!registerForm.get('domain')?.hasError('pattern') && registerForm.get('domain')?.value ? 'var(--text-color-secondary)' : 'inherit'">
+                Formato de domínio válido
+              </li>
+              <li class="text-sm" [style.text-decoration]="!registerForm.get('domain')?.hasError('dominioPublico') && registerForm.get('domain')?.value ? 'line-through' : 'none'" [style.color]="!registerForm.get('domain')?.hasError('dominioPublico') && registerForm.get('domain')?.value ? 'var(--text-color-secondary)' : 'inherit'">
+                Não pode ser um provedor de email ou serviço gratuito
+              </li>
+              <li class="text-sm" [style.text-decoration]="!registerForm.get('domain')?.hasError('dominioIndisponivel') && registerForm.get('domain')?.value ? 'line-through' : 'none'" [style.color]="!registerForm.get('domain')?.hasError('dominioIndisponivel') && registerForm.get('domain')?.value ? 'var(--text-color-secondary)' : 'inherit'">
+                Deve estar disponível
+              </li>
+            </ul>
+          </div>
+
+          <p-floatlabel class="w-full">
+            <input pInputText id="email" formControlName="email" class="w-full" required type="email">
+            <label for="email">Email</label>
+          </p-floatlabel>
+          <small class="p-error" *ngIf="registerForm.get('email')?.hasError('required') && registerForm.get('email')?.touched">
+            Email é obrigatório
+          </small>
+          <small class="p-error" *ngIf="registerForm.get('email')?.hasError('email') && registerForm.get('email')?.touched">
+            Formato de email inválido
+          </small>
+
+          <p-button
+            [label]="loading ? 'Processando...' : 'Cadastrar Tenant'"
+            icon="pi pi-building"
+            [disabled]="registerForm.invalid || loading"
+            [loading]="loading"
+            type="submit"
+            class="w-full">
+          </p-button>
+
+          <p-button
+            label="Voltar para o login"
+            icon="pi pi-arrow-left"
+            severity="secondary"
+            [outlined]="true"
+            type="button"
+            (onClick)="backToLogin()"
+            class="w-full">
+          </p-button>
+        </form>
+      </div>
+
+      <div *ngIf="mode === 'confirm'" class="flex flex-column align-items-center gap-4">
+        <p class="text-sm text-color-secondary text-center" *ngIf="!confirmacaoSucesso && !errorMessage">
+          Você está prestes a confirmar seu tenant. Clique no botão abaixo para finalizar o processo de registro.
+        </p>
+
+        <p-button
+          *ngIf="!confirmacaoSucesso && !errorMessage"
+          [label]="loading ? 'Processando...' : 'Confirmar Tenant'"
+          icon="pi pi-check-circle"
+          [disabled]="loading"
+          [loading]="loading"
+          type="button"
+          (onClick)="confirmarTenant()"
+          class="w-full">
+        </p-button>
+
+        <div *ngIf="confirmacaoSucesso" class="flex flex-column align-items-center gap-2 text-center py-4">
+          <i class="pi pi-check-circle text-green-600" style="font-size: 3.5rem;"></i>
+          <p class="font-bold text-lg m-0">{{ successMessage }}</p>
+          <p class="text-sm text-color-secondary m-0">Você será redirecionado em alguns segundos...</p>
+        </div>
+
+        <p-button
+          *ngIf="!confirmacaoSucesso"
+          label="Voltar para o login"
+          icon="pi pi-arrow-left"
+          severity="secondary"
+          [outlined]="true"
+          type="button"
+          (onClick)="backToLogin()"
+          class="w-full">
+        </p-button>
+      </div>
+
+      <div *ngIf="errorMessage" class="mt-4 p-3 border-round bg-red-50 flex gap-3 align-items-start">
+        <i class="pi pi-exclamation-circle text-red-600"></i>
+        <span class="text-sm text-red-800">{{ errorMessage }}</span>
+      </div>
+
+      <div *ngIf="successMessage && !confirmacaoSucesso" class="mt-4 p-3 border-round bg-green-50 flex gap-3 align-items-start">
+        <i class="pi pi-check-circle text-green-600"></i>
+        <span class="text-sm text-green-800">{{ successMessage }}</span>
+      </div>
+    </p-card>
+  </div>
+</div>

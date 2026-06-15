@@ -1,0 +1,48 @@
+<div class="salve-period-filter flex flex-column lg:flex-row lg:align-items-center gap-3">
+  <div class="flex align-items-center gap-2 min-w-0">
+    <i class="pi pi-calendar text-primary"></i>
+    <div>
+      <div class="text-xs text-color-secondary">Período</div>
+      <div class="font-semibold white-space-nowrap">{{ getSelectedPeriodText() }}</div>
+    </div>
+  </div>
+
+  <div class="flex-1"></div>
+
+  <div class="flex align-items-center flex-wrap gap-2">
+    <p-button icon="pi pi-chevron-left"
+              [rounded]="true"
+              [text]="true"
+              (onClick)="previousMonth()"
+              pTooltip="Mês anterior"
+              tooltipPosition="bottom"></p-button>
+
+  <p-select [(ngModel)]="month"
+            [options]="months"
+            optionLabel="label"
+            optionValue="value"
+            (onChange)="onSelectionChange()"
+            styleClass="salve-period-month"></p-select>
+
+  <p-select [(ngModel)]="year"
+            [options]="years"
+            (onChange)="onSelectionChange()"
+            styleClass="salve-period-year"></p-select>
+
+  <p-button label="Hoje"
+            variant="outlined"
+            (onClick)="resetFilters()"></p-button>
+  <p-button label="Mês passado"
+            variant="outlined"
+            (onClick)="setLastMonth()"></p-button>
+  <p-button label="Próximo"
+            variant="outlined"
+            (onClick)="setNextMonth()"></p-button>
+  <p-button icon="pi pi-chevron-right"
+            [rounded]="true"
+            [text]="true"
+            (onClick)="nextMonth()"
+            pTooltip="Próximo mês"
+            tooltipPosition="bottom"></p-button>
+  </div>
+</div>

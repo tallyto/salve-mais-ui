@@ -1,0 +1,73 @@
+<p-card>
+  <ng-template pTemplate="header">
+    <div class="flex align-items-center justify-content-between w-full p-3">
+      <div>
+        <h3 class="m-0 font-semibold">Minhas Categorias</h3>
+        <span class="text-sm text-color-secondary">Consulte, edite ou remova categorias cadastradas</span>
+      </div>
+      <i class="pi pi-list text-2xl text-color-secondary"></i>
+    </div>
+  </ng-template>
+
+  <div *ngIf="editingCategoria" class="surface-ground border-round border-left-3 border-orange-500 p-3 mb-3">
+    <div class="flex align-items-center gap-2">
+      <i class="pi pi-pencil text-orange-500 text-xl"></i>
+      <span class="flex-1">Editando: <strong>{{ originalCategoria?.nome }}</strong></span>
+      <p-button icon="pi pi-times" [rounded]="true" [text]="true" severity="secondary" (onClick)="cancelarEdicao()"></p-button>
+    </div>
+  </div>
+
+  <p-table [value]="categorias" [paginator]="true" [rows]="10" dataKey="id" styleClass="p-datatable-sm">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="nome">Nome <p-sortIcon field="nome"></p-sortIcon></th>
+        <th>Tipo</th>
+        <th class="text-right">Ações</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-categoria>
+      <tr>
+        <td>
+          <div *ngIf="editingCategoria?.id !== categoria.id" class="flex align-items-center gap-2">
+            <i class="pi pi-tag"></i>
+            <span>{{ categoria.nome }}</span>
+          </div>
+          <p-floatlabel *ngIf="editingCategoria?.id === categoria.id" class="w-full pt-4">
+            <input pInputText id="nomeEdit" [(ngModel)]="editingCategoria!.nome" class="w-full">
+            <label for="nomeEdit">Nome</label>
+          </p-floatlabel>
+        </td>
+        <td>
+          <div *ngIf="editingCategoria?.id !== categoria.id">
+            <app-categoria-type-chip [tipo]="categoria.tipo"></app-categoria-type-chip>
+          </div>
+          <p-floatlabel *ngIf="editingCategoria?.id === categoria.id" class="w-full pt-4">
+            <p-select id="tipoEdit" [(ngModel)]="editingCategoria!.tipo" [options]="tipoOptions" optionLabel="label" optionValue="value" styleClass="w-full"></p-select>
+            <label for="tipoEdit">Tipo</label>
+          </p-floatlabel>
+        </td>
+        <td>
+          <div *ngIf="editingCategoria?.id !== categoria.id" class="flex justify-content-end gap-1">
+            <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" severity="info" (onClick)="editarCategoria(categoria)" pTooltip="Editar" tooltipPosition="top"></p-button>
+            <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (onClick)="excluirCategoria(categoria)" pTooltip="Excluir" tooltipPosition="top"></p-button>
+          </div>
+          <div *ngIf="editingCategoria?.id === categoria.id" class="flex justify-content-end gap-1">
+            <p-button icon="pi pi-check" [rounded]="true" [text]="true" severity="success" (onClick)="salvarEdicao()" pTooltip="Salvar" tooltipPosition="top"></p-button>
+            <p-button icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" (onClick)="cancelarEdicao()" pTooltip="Cancelar" tooltipPosition="top"></p-button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr><td colspan="3">
+        <div class="flex flex-column align-items-center gap-2 p-5">
+          <i class="pi pi-inbox text-4xl text-color-secondary"></i>
+          <span>Nenhuma categoria cadastrada</span>
+          <small class="text-color-secondary">Use o formulário acima para criar a primeira categoria.</small>
+        </div>
+      </td></tr>
+    </ng-template>
+  </p-table>
+</p-card>

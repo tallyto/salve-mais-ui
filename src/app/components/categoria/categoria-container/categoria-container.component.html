@@ -1,0 +1,26 @@
+<section class="p-4 flex flex-column gap-4">
+  <div class="flex flex-column md:flex-row md:align-items-center justify-content-between gap-3">
+    <div class="flex align-items-center gap-3">
+      <i class="pi pi-tag text-3xl text-primary"></i>
+      <div>
+        <h2 class="m-0 font-bold">Categorias</h2>
+        <span class="text-sm text-color-secondary">Organize suas despesas e receitas por categorias</span>
+      </div>
+    </div>
+  </div>
+
+  <app-categoria-form
+    [editingCategoria]="editingCategoria"
+    [isDialogMode]="false"
+    (categoriaCreated)="onCategoriaCreated($event)"
+    (categoriaUpdated)="onCategoriaUpdated($event)"
+    (formCancelled)="onFormCancelled()">
+  </app-categoria-form>
+
+  <app-categoria-list
+    [categorias]="categorias"
+    (categoriaEdit)="onCategoriaEdit($event)"
+    (categoriaDeleted)="onCategoriaDeleted($event)"
+    (categoriaUpdated)="onCategoriaUpdatedFromList($event)">
+  </app-categoria-list>
+</section>

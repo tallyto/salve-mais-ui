@@ -1,0 +1,59 @@
+<div class="transferencia-form">
+  <div class="mb-4">
+    <div class="flex align-items-center gap-2 mb-2">
+      <i class="pi pi-arrow-right-arrow-left text-xl"></i>
+      <h2 class="m-0">Transferência entre Contas</h2>
+    </div>
+    <span class="text-sm text-color-secondary">Movimente valores entre suas contas</span>
+  </div>
+
+  <div *ngIf="isLoading" class="flex justify-content-center align-items-center p-5">
+    <p-progressspinner [style]="{width: '50px', height: '50px'}" strokeWidth="4"></p-progressspinner>
+  </div>
+
+  <ng-container *ngIf="contaOrigem && !isLoading">
+    <p-card [style]="{'margin-bottom': '1.5rem'}">
+      <div class="flex justify-content-between align-items-start">
+        <div>
+          <div class="text-sm text-color-secondary mb-1">Conta de Origem</div>
+          <div class="font-semibold mb-2">{{ contaOrigem.titular }}</div>
+          <div class="text-sm">
+            <span class="text-color-secondary">Saldo Disponível:</span>
+            <span [ngClass]="{'text-green-600': contaOrigem.saldo > 0, 'text-red-600': contaOrigem.saldo < 0}" class="ml-2 font-bold">
+              {{ contaOrigem.saldo | currency:'BRL':'symbol':'1.2-2' }}
+            </span>
+          </div>
+        </div>
+        <i class="pi pi-building text-2xl text-color-secondary"></i>
+      </div>
+    </p-card>
+
+    <form [formGroup]="transferenciaForm" (ngSubmit)="transferir()" class="flex flex-column gap-3">
+      <p-floatlabel class="w-full" *ngIf="contas.length > 0">
+        <p-select id="contaDestino" formControlName="contaDestinoId" [options]="contas" optionLabel="titular" optionValue="id" styleClass="w-full"></p-select>
+        <label for="contaDestino">Conta de Destino</label>
+      </p-floatlabel>
+      <small class="p-error" *ngIf="transferenciaForm.get('contaDestinoId')?.hasError('required') && transferenciaForm.get('contaDestinoId')?.touched">
+        Selecione uma conta de destino
+      </small>
+
+      <p-floatlabel class="w-full" *ngIf="contas.length > 0">
+        <input pInputText id="valor" formControlName="valor" type="number" step="0.01" min="0.01" class="w-full">
+        <label for="valor">Valor da Transferência</label>
+      </p-floatlabel>
+      <small class="p-error" *ngIf="transferenciaForm.get('valor')?.hasError('required') && transferenciaForm.get('valor')?.touched">
+        Informe o valor da transferência
+      </small>
+      <small class="p-error" *ngIf="transferenciaForm.get('valor')?.hasError('min') && transferenciaForm.get('valor')?.touched">
+        O valor deve ser maior que zero
+      </small>
+
+      <p-message severity="error" text="Não existem outras contas disponíveis para transferência." *ngIf="contas.length === 0"></p-message>
+
+      <div class="flex justify-content-end gap-2 mt-3">
+        <p-button label="Cancelar" variant="outlined" type="button" (onClick)="fechar()"></p-button>
+        <p-button label="Transferir" icon="pi pi-check" type="submit" *ngIf="contas.length > 0" [disabled]="transferenciaForm.invalid || isLoading"></p-button>
+      </div>
+    </form>
+  </ng-container>
+</div>
