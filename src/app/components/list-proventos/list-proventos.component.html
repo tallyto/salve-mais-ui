@@ -61,10 +61,7 @@
           <strong>{{ provento.valor | currency:'BRL':'symbol':'1.2-2' }}</strong>
         </td>
         <td style="text-align: center">
-          <div class="flex gap-2 justify-content-center">
-            <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" (onClick)="onEditProvento(provento)" pTooltip="Editar receita" tooltipPosition="top"></p-button>
-            <p-button icon="pi pi-trash" [rounded]="true" [text]="true" severity="danger" (onClick)="excluirProvento(provento)" pTooltip="Excluir receita" tooltipPosition="top"></p-button>
-          </div>
+          <app-action-buttons (edit)="onEditProvento(provento)" (delete)="excluirProvento(provento)"></app-action-buttons>
         </td>
       </tr>
     </ng-template>

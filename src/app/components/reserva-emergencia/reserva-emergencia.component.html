@@ -55,10 +55,7 @@
             <p class="m-0 text-color-secondary">{{ getStatusDescricao() }}</p>
           </div>
         </div>
-        <div class="flex gap-2">
-          <p-button icon="pi pi-pencil" severity="secondary" [text]="true" (onClick)="editarReserva(reservaAtual.id!)" pTooltip="Editar reserva"></p-button>
-          <p-button icon="pi pi-trash" severity="danger" [text]="true" (onClick)="excluirReserva(reservaAtual.id!)" pTooltip="Excluir reserva"></p-button>
-        </div>
+        <app-action-buttons (edit)="editarReserva(reservaAtual.id!)" (delete)="excluirReserva(reservaAtual.id!)"></app-action-buttons>
       </div>
     </p-card>
 
