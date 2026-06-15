@@ -28,6 +28,7 @@ export class RecuperarSenhaComponent {
   recuperarForm: FormGroup;
   isSubmitting: boolean = false;
   showDomainField: boolean = false;
+  currentYear = new Date().getFullYear();
 
   constructor(
     private fb: FormBuilder,
