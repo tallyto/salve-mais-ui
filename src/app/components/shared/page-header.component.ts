@@ -14,12 +14,15 @@ import { SALVE_COMMON } from '../../shared/primeng-shared';
           <span *ngIf="subtitle" class="text-sm text-color-secondary">{{ subtitle }}</span>
         </div>
       </div>
-      <ng-content></ng-content>
+      <div>
+        <ng-content></ng-content>
+      </div>
     </div>
-  `
+  `,
+  styles: []
 })
 export class PageHeaderComponent {
-  @Input() icon?: string;
+  @Input() icon: string = '';
   @Input() title: string = '';
-  @Input() subtitle?: string;
+  @Input() subtitle: string = '';
 }

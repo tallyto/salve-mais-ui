@@ -11,23 +11,37 @@ import { SALVE_COMMON } from '../../shared/primeng-shared';
         icon="pi pi-pencil"
         [rounded]="true"
         [text]="true"
-        [pTooltip]="editTooltip"
-        (onClick)="onEdit.emit()"
-      ></p-button>
+        pTooltip="Editar"
+        tooltipPosition="top"
+        (onClick)="onEdit()">
+      </p-button>
       <p-button
         icon="pi pi-trash"
         [rounded]="true"
         [text]="true"
         severity="danger"
-        [pTooltip]="deleteTooltip"
-        (onClick)="onDelete.emit()"
-      ></p-button>
+        pTooltip="Excluir"
+        tooltipPosition="top"
+        (onClick)="onDelete()">
+      </p-button>
     </div>
-  `
+  `,
+  styles: []
 })
 export class ActionButtonsComponent {
-  @Input() editTooltip: string = 'Editar';
-  @Input() deleteTooltip: string = 'Excluir';
-  @Output() onEdit = new EventEmitter<void>();
-  @Output() onDelete = new EventEmitter<void>();
+  @Input() disabled: boolean = false;
+  @Output() edit = new EventEmitter<void>();
+  @Output() delete = new EventEmitter<void>();
+
+  onEdit(): void {
+    if (!this.disabled) {
+      this.edit.emit();
+    }
+  }
+
+  onDelete(): void {
+    if (!this.disabled) {
+      this.delete.emit();
+    }
+  }
 }
