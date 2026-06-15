@@ -46,12 +46,12 @@ const routes: Routes = [
   {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
   {
     path: 'cartao',
-    loadChildren: () => import('./components/cartao/cartao.module').then(m => m.CartaoModule),
+    loadChildren: () => import('./components/cartao/cartao.routes').then(m => m.CARTAO_ROUTES),
     canActivate: [AuthGuard]
   },
   {
-    path: 'categoria-form', 
-    loadChildren: () => import('./components/categoria/categoria.module').then(m => m.CategoriaModule),
+    path: 'categoria-form',
+    loadComponent: () => import('./components/categoria/categoria-container/categoria-container.component').then(m => m.CategoriaContainerComponent),
     canActivate: [AuthGuard]
   },
   {path: 'provento-form', component: ProventoFormComponent, canActivate: [AuthGuard]},

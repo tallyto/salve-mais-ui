@@ -1,40 +1,10 @@
+/**
+ * @deprecated CartaoRoutingModule foi migrado para component-based routing em cartao.routes.ts (v2.1.0+)
+ * Este arquivo é mantido apenas para referência histórica.
+ * As rotas estão definidas em cartao.routes.ts e importadas via loadChildren em app-routing.module.ts.
+ */
+
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from '@guards/auth.guard';
-import { CartaoFormComponent } from './cartao-form/cartao-form.component';
-import { ListCartaoLimitesComponent } from './list-cartao-limites/list-cartao-limites.component';
-import { FaturaFormComponent } from './fatura-form/fatura-form.component';
 
-const routes: Routes = [
-  {
-    path: '',
-    children: [
-      {
-        path: '',
-        redirectTo: 'form',
-        pathMatch: 'full'
-      },
-      {
-        path: 'form',
-        component: CartaoFormComponent,
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'limites',
-        component: ListCartaoLimitesComponent,
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'faturas',
-        component: FaturaFormComponent,
-        canActivate: [AuthGuard]
-      }
-    ]
-  }
-];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
-})
+@NgModule({})
 export class CartaoRoutingModule { }

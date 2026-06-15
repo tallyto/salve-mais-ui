@@ -9,7 +9,7 @@ import { FormBaseService } from '@services/form-base.service';
 import { Categoria } from '@models/categoria.model';
 import { Cartao } from '@models/cartao.model';
 import { CompraParceladaRequest } from '@models/compra-parcelada.model';
-import { CategoriaFormComponent, CategoriaModule } from '@components/categoria';
+import { CategoriaFormComponent } from '@components/categoria/categoria-form/categoria-form.component';
 import { CartaoFormComponent } from '@components/cartao/cartao-form/cartao-form.component';
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '@shared/primeng-shared';
 
@@ -21,7 +21,8 @@ import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '@shared/pr
     ...SALVE_FORMS,
     ...SALVE_DATA,
     ...SALVE_OVERLAY,
-    CategoriaModule
+    CategoriaFormComponent,
+    CartaoFormComponent
   ],
   templateUrl: './compra-parcelada-form.component.html'
 })
