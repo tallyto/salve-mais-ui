@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { of as observableOf, catchError, map } from 'rxjs';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { CurrencyInputDirective } from '../../../directives/currency-input.directive';
 import { FaturaService } from '@services/fatura.service';
 import { CartaoService } from '@services/cartao.service';
@@ -12,6 +13,7 @@ import { PagamentoFaturaModalComponent } from '../pagamento-fatura-modal/pagamen
 import { MonthYearFilterComponent } from '../../dashboard/month-year-filter/month-year-filter.component';
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '../../../shared/primeng-shared';
 import { MONTHS, generateYears as utilGenerateYears } from '../../../shared/utils';
+import { LazyTableBase } from '../../../shared/lazy-table.base';
 
 @Component({
     selector: 'app-fatura-form',
@@ -25,7 +27,7 @@ import { MONTHS, generateYears as utilGenerateYears } from '../../../shared/util
         MonthYearFilterComponent
     ]
 })
-export class FaturaFormComponent implements OnInit, AfterViewInit {
+export class FaturaFormComponent extends LazyTableBase implements OnInit, AfterViewInit {
   faturaForm: FormGroup;
   previewForm: FormGroup;
   cartoes: Cartao[] = [];
@@ -35,9 +37,6 @@ export class FaturaFormComponent implements OnInit, AfterViewInit {
   mostrarPreview = false;
   loadingPreview = false;
   preview: FaturaPreviewDTO | null = null;
-
-  resultsLength = 0;
-  isLoadingResults = true;
 
   // Filtros de mês e ano
   selectedMonth: number;
@@ -54,6 +53,7 @@ export class FaturaFormComponent implements OnInit, AfterViewInit {
     private messageService: MessageService,
     private dialogService: DialogService
   ) {
+    super();
     this.faturaForm = this.fb.group({
       cartaoCreditoId: ['', Validators.required],
       valorTotal: ['', [Validators.required, Validators.min(0.01)]],
@@ -79,6 +79,10 @@ export class FaturaFormComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.carregarDados();
+  }
+
+  protected carregarDados(): void {
     this.refreshFaturasList();
   }
 

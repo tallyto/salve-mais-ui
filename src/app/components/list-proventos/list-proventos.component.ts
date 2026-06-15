@@ -4,19 +4,15 @@ import {ProventoService} from "../../services/provento.service";
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { catchError, map, of as observableOf } from "rxjs";
+import { LazyTableBase } from '../../shared/lazy-table.base';
 
 @Component({
     selector: 'app-list-proventos',
     templateUrl: './list-proventos.component.html',
     standalone: false
 })
-export class ListProventosComponent implements OnInit {
-  resultsLength = 0;
-  isLoadingResults = true;
-  pageSize = 10;
-  pageIndex = 0;
-  sortField = 'data';
-  sortOrder = 'desc';
+export class ListProventosComponent extends LazyTableBase implements OnInit {
+  override sortField = 'data';
 
   displayedColumnsProventos: string[] = ['descricao', 'conta', 'data', 'valor', 'acoes'];
 
@@ -28,29 +24,25 @@ export class ListProventosComponent implements OnInit {
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
   ) {
+    super();
     this.proventoService.proventoSaved.subscribe(
       {
         next: () => {
-          this.refreshProventosList()
+          this.carregarDados()
         }
       }
     )
   }
 
   ngOnInit(): void {
-    this.refreshProventosList()
+    this.carregarDados()
   }
 
-  onLazyLoad(event: TableLazyLoadEvent): void {
-    const rows = event.rows ?? this.pageSize;
-    this.pageSize = rows;
-    this.pageIndex = Math.floor((event.first ?? 0) / rows);
-    this.sortField = this.resolveSortField(event.sortField);
-    this.sortOrder = event.sortOrder === 1 ? 'asc' : 'desc';
+  protected carregarDados(): void {
     this.refreshProventosList();
   }
 
-  refreshProventosList() {
+  private refreshProventosList() {
     this.isLoadingResults = true;
     const sort = `${this.sortField},${this.sortOrder}`;
 
@@ -116,13 +108,5 @@ export class ListProventosComponent implements OnInit {
 
   calcularTotal(): number {
     return this.proventos.reduce((sum, provento) => sum + (provento.valor || 0), 0);
-  }
-
-  private resolveSortField(sortField: string | string[] | null | undefined): string {
-    if (Array.isArray(sortField)) {
-      return sortField[0] ?? 'data';
-    }
-
-    return sortField || 'data';
   }
 }

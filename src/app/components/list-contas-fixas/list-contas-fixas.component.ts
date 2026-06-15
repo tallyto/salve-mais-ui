@@ -8,24 +8,18 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ComprovantesDialogComponent } from '../cartao/comprovantes-dialog/comprovantes-dialog.component';
 import { MONTHS, generateYears } from '../../shared/utils';
+import { LazyTableBase } from '../../shared/lazy-table.base';
 
 @Component({
     selector: 'app-list-contas-fixas',
     templateUrl: './list-contas-fixas.component.html',
     standalone: false
 })
-export class ListContasFixasComponent implements OnInit {
+export class ListContasFixasComponent extends LazyTableBase implements OnInit {
   displayedColumnsContasFixas: string[] = ['nome', 'categoria', 'conta', 'vencimento', 'valor', 'pago', 'acoes'];
   contasFixas: Financa[] = [];
   editingDespesa: Financa | null = null;
   despesaForm: FormGroup;
-
-  resultsLength = 0;
-  isLoadingResults = true;
-  pageSize = 10;
-  pageIndex = 0;
-  sortField = 'id';
-  sortOrder = 'desc';
 
   // Filtros de mês e ano
   selectedMonth: number;
@@ -40,6 +34,7 @@ export class ListContasFixasComponent implements OnInit {
     private formBuilder: FormBuilder,
     private dialogService: DialogService
   ) {
+    super();
     this.despesaForm = this.formBuilder.group({
       id: [null],
       nome: ['', Validators.required],
@@ -53,7 +48,7 @@ export class ListContasFixasComponent implements OnInit {
     this.financaService.savedFinanca.subscribe(
       {
         next: () => {
-          this.refreshContasFixasList()
+          this.carregarDados()
         }
       }
     );
@@ -68,7 +63,11 @@ export class ListContasFixasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.refreshContasFixasList()
+    this.carregarDados()
+  }
+
+  protected carregarDados(): void {
+    this.refreshContasFixasList();
   }
 
   startEdit(despesa: Financa): void {
@@ -148,13 +147,9 @@ export class ListContasFixasComponent implements OnInit {
     this.onFilterChange();
   }
 
-  onLazyLoad(event: TableLazyLoadEvent): void {
-    const rows = event.rows ?? this.pageSize;
-    this.pageSize = rows;
-    this.pageIndex = Math.floor((event.first ?? 0) / rows);
-    this.sortField = this.resolveSortField(event.sortField);
-    this.sortOrder = event.sortOrder === 1 ? 'asc' : 'desc';
-    this.refreshContasFixasList();
+  override onLazyLoad(event: TableLazyLoadEvent): void {
+    super.onLazyLoad(event);
+    this.carregarDados();
   }
 
   resetFilters(): void {
@@ -428,14 +423,6 @@ export class ListContasFixasComponent implements OnInit {
         command: () => this.excluirDespesa(contaFixa)
       }
     ];
-  }
-
-  private resolveSortField(sortField: string | string[] | null | undefined): string {
-    if (Array.isArray(sortField)) {
-      return sortField[0] ?? 'id';
-    }
-
-    return sortField || 'id';
   }
 
   private getErrorMessage(error: any, fallback: string): string {

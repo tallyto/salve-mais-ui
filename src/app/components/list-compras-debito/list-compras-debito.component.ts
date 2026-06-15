@@ -6,20 +6,16 @@ import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { MONTHS, generateYears } from '../../shared/utils';
+import { LazyTableBase } from '../../shared/lazy-table.base';
 
 @Component({
     selector: 'app-list-compras-debito',
     templateUrl: './list-compras-debito.component.html',
     standalone: false
 })
-export class ListComprasDebitoComponent implements OnInit {
+export class ListComprasDebitoComponent extends LazyTableBase implements OnInit {
   displayedColumns: string[] = ['nome', 'categoria', 'dataCompra', 'valor', 'observacoes', 'acoes'];
   comprasDebito: CompraDebito[] = [];
-
-  resultsLength = 0;
-  isLoadingResults = true;
-  pageSize = 10;
-  pageIndex = 0;
 
   // Filtros de mês e ano
   selectedMonth: number;
@@ -33,6 +29,7 @@ export class ListComprasDebitoComponent implements OnInit {
     private confirmationService: ConfirmationService,
     private router: Router
   ) {
+    super();
     // Inicializar filtros com mês e ano atuais
     const currentDate = new Date();
     this.selectedMonth = currentDate.getMonth() + 1;
@@ -43,10 +40,14 @@ export class ListComprasDebitoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.carregarDados();
+  }
+
+  protected carregarDados(): void {
     this.refreshList();
   }
 
-  refreshList(): void {
+  private refreshList(): void {
     this.isLoadingResults = true;
 
     this.compraDebitoService.listarCompras(
@@ -89,13 +90,6 @@ export class ListComprasDebitoComponent implements OnInit {
     this.selectedMonth = period.month;
     this.selectedYear = period.year;
     this.onFilterChange();
-  }
-
-  onLazyLoad(event: TableLazyLoadEvent): void {
-    const rows = event.rows ?? this.pageSize;
-    this.pageSize = rows;
-    this.pageIndex = Math.floor((event.first ?? 0) / rows);
-    this.refreshList();
   }
 
   novaCompra(): void {

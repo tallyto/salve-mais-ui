@@ -5,22 +5,18 @@ import {GastoCartaoService} from "../../services/gasto-cartao.service";
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { MONTHS, generateYears } from '../../shared/utils';
+import { LazyTableBase } from '../../shared/lazy-table.base';
 
 @Component({
   standalone: false,
   selector: 'app-list-despesas-recorrentes',
   templateUrl: './list-despesas-recorrentes.component.html'
 })
-export class ListDespesasRecorrentesComponent implements OnInit {
+export class ListDespesasRecorrentesComponent extends LazyTableBase implements OnInit {
 
   displayedColumnsGastoRecorrente: string[] = ['descricao', 'categoria', 'cartaoCredito', 'data', 'valor', 'acoes'];
   listGastosRecorrentes: GastoCartao[] = [];
-  resultsLength = 0;
-  isLoadingResults = true;
-  pageSize = 10;
-  pageIndex = 0;
-  sortField = 'data';
-  sortOrder = 'desc';
+  override sortField = 'data';
 
   // Filtros de mês e ano
   selectedMonth: number;
@@ -33,9 +29,10 @@ export class ListDespesasRecorrentesComponent implements OnInit {
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
   ) {
+    super();
     this.despesaRecorrenteService.gastaoCartaoSaved.subscribe({
       next: () => {
-        this.refreshGastosRecorrentesList()
+        this.carregarDados()
       }
     });
 
@@ -49,10 +46,14 @@ export class ListDespesasRecorrentesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.refreshGastosRecorrentesList()
+    this.carregarDados()
   }
 
-  refreshGastosRecorrentesList() {
+  protected carregarDados(): void {
+    this.refreshGastosRecorrentesList();
+  }
+
+  private refreshGastosRecorrentesList() {
     this.isLoadingResults = true;
     const sort = `${this.sortField},${this.sortOrder}`;
 
@@ -97,13 +98,9 @@ export class ListDespesasRecorrentesComponent implements OnInit {
     this.onFilterChange();
   }
 
-  onLazyLoad(event: TableLazyLoadEvent): void {
-    const rows = event.rows ?? this.pageSize;
-    this.pageSize = rows;
-    this.pageIndex = Math.floor((event.first ?? 0) / rows);
-    this.sortField = this.resolveSortField(event.sortField);
-    this.sortOrder = event.sortOrder === 1 ? 'asc' : 'desc';
-    this.refreshGastosRecorrentesList();
+  override onLazyLoad(event: TableLazyLoadEvent): void {
+    super.onLazyLoad(event);
+    this.carregarDados();
   }
 
   resetFilters(): void {
@@ -225,11 +222,4 @@ export class ListDespesasRecorrentesComponent implements OnInit {
     });
   }
 
-  private resolveSortField(sortField: string | string[] | null | undefined): string {
-    if (Array.isArray(sortField)) {
-      return sortField[0] ?? 'data';
-    }
-
-    return sortField || 'data';
-  }
 }
