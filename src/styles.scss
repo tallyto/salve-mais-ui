@@ -1,51 +1,54 @@
 // ─── Design tokens do produto ──────────────────────────────
 :root {
-  --salve-bg:            #f0f7f9;
+  --salve-bg:            #f8fafc;
   --salve-sidebar-bg:    #ffffff;
-  --salve-card-border:   rgba(0, 0, 0, 0.07);
-  --salve-card-shadow:   0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  --salve-card-border:   rgba(0, 0, 0, 0.06);
+  --salve-card-shadow:   0 1px 3px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.04);
   --salve-toolbar-bg:    #00796b;
   --salve-toolbar-fg:    rgba(255, 255, 255, 0.95);
-  --salve-toolbar-elev:  0 2px 8px rgba(0, 121, 107, 0.35);
-  --salve-nav-active-bg: rgba(0, 150, 136, 0.1);
+  --salve-toolbar-elev:  0 1px 0 rgba(0, 0, 0, 0.08);
+  --salve-nav-active-bg: rgba(0, 150, 136, 0.08);
   --salve-nav-active-fg: #00796b;
-  --salve-kpi-neutral:   rgba(0, 121, 107, 0.07);
-  --salve-kpi-positive:  rgba(46, 125, 50, 0.07);
-  --salve-kpi-negative:  rgba(198, 40, 40, 0.07);
-  --salve-kpi-icon-op:   0.18;
+  --salve-kpi-neutral:   rgba(0, 121, 107, 0.06);
+  --salve-kpi-positive:  rgba(21, 128, 61, 0.07);
+  --salve-kpi-negative:  rgba(185, 28, 28, 0.07);
+  --salve-kpi-icon-op:   0.15;
+  --salve-radius:        10px;
+  --salve-radius-sm:     6px;
+  --salve-radius-lg:     14px;
 }
 
 html.dark-mode {
-  --salve-bg:            #0d1b2a;
-  --salve-sidebar-bg:    #0a1628;
-  --salve-card-border:   rgba(255, 255, 255, 0.07);
-  --salve-card-shadow:   0 1px 4px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.04);
-  --salve-toolbar-bg:    #004d40;
+  --salve-bg:            #0d1520;
+  --salve-sidebar-bg:    #0a1018;
+  --salve-card-border:   rgba(255, 255, 255, 0.06);
+  --salve-card-shadow:   0 1px 4px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  --salve-toolbar-bg:    #00695c;
   --salve-toolbar-fg:    rgba(255, 255, 255, 0.95);
-  --salve-toolbar-elev:  0 2px 8px rgba(0, 0, 0, 0.5);
-  --salve-nav-active-bg: rgba(0, 188, 212, 0.12);
+  --salve-toolbar-elev:  0 1px 0 rgba(0, 0, 0, 0.4);
+  --salve-nav-active-bg: rgba(77, 208, 225, 0.1);
   --salve-nav-active-fg: #4dd0e1;
   --salve-kpi-neutral:   rgba(255, 255, 255, 0.04);
-  --salve-kpi-positive:  rgba(76, 175, 80, 0.1);
-  --salve-kpi-negative:  rgba(239, 83, 80, 0.1);
-  --salve-kpi-icon-op:   0.25;
+  --salve-kpi-positive:  rgba(74, 222, 128, 0.08);
+  --salve-kpi-negative:  rgba(248, 113, 113, 0.1);
+  --salve-kpi-icon-op:   0.22;
 }
 
 @media (prefers-color-scheme: dark) {
   html:not(.light-mode) {
-    --salve-bg:            #0d1b2a;
-    --salve-sidebar-bg:    #0a1628;
-    --salve-card-border:   rgba(255, 255, 255, 0.07);
-    --salve-card-shadow:   0 1px 4px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.04);
-    --salve-toolbar-bg:    #004d40;
+    --salve-bg:            #0d1520;
+    --salve-sidebar-bg:    #0a1018;
+    --salve-card-border:   rgba(255, 255, 255, 0.06);
+    --salve-card-shadow:   0 1px 4px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04);
+    --salve-toolbar-bg:    #00695c;
     --salve-toolbar-fg:    rgba(255, 255, 255, 0.95);
-    --salve-toolbar-elev:  0 2px 8px rgba(0, 0, 0, 0.5);
-    --salve-nav-active-bg: rgba(0, 188, 212, 0.12);
+    --salve-toolbar-elev:  0 1px 0 rgba(0, 0, 0, 0.4);
+    --salve-nav-active-bg: rgba(77, 208, 225, 0.1);
     --salve-nav-active-fg: #4dd0e1;
     --salve-kpi-neutral:   rgba(255, 255, 255, 0.04);
-    --salve-kpi-positive:  rgba(76, 175, 80, 0.1);
-    --salve-kpi-negative:  rgba(239, 83, 80, 0.1);
-    --salve-kpi-icon-op:   0.25;
+    --salve-kpi-positive:  rgba(74, 222, 128, 0.08);
+    --salve-kpi-negative:  rgba(248, 113, 113, 0.1);
+    --salve-kpi-icon-op:   0.22;
   }
 }
 
@@ -53,82 +56,96 @@ html.dark-mode {
 html, body {
   height: 100%;
   margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   background-color: var(--salve-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// ─── Tipografia ────────────────────────────────────────────
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', system-ui, sans-serif;
+  letter-spacing: -0.02em;
 }
 
 // ─── Brand no topo do sidenav ──────────────────────────────
 .sidenav-brand-name {
   font-size: 15px;
   font-weight: 600;
+  letter-spacing: -0.01em;
   line-height: 1.2;
 }
 
 .sidenav-brand-version {
   font-size: 11px;
-  opacity: 0.45;
-}
-
-// Accordion flat dentro do sidenav
-.sidenav-accordion {
-  .p-accordionpanel {
-    border: none !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-  }
-
-  .p-accordion-header-action {
-    padding: 0 16px;
-    height: 40px;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    opacity: 0.45;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-
-    &:hover {
-      background: transparent !important;
-      opacity: 0.6;
-    }
-  }
-
-  .p-accordion-content {
-    padding: 0 !important;
-    background: transparent !important;
-    border: none !important;
-  }
+  opacity: 0.4;
+  letter-spacing: 0.02em;
 }
 
 .sidenav-section-title {
-  font-size: 11px;
-  font-weight: 700;
+  font-size: 10.5px;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--text-color-secondary);
-  opacity: 0.72;
+  opacity: 0.6;
 }
 
 .sidenav-section + .sidenav-section {
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
 .sidenav-link {
-  min-height: 38px;
-  border-radius: 8px;
+  min-height: 36px;
+  border-radius: var(--salve-radius-sm);
   text-decoration: none;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  font-size: 14px;
+  font-weight: 450;
+  transition: background-color 0.15s ease, color 0.15s ease;
 
   &:hover {
-    background-color: rgba(0, 150, 136, 0.06);
+    background-color: rgba(0, 150, 136, 0.05);
   }
 
   i {
-    width: 1.25rem;
+    width: 1.125rem;
     text-align: center;
+    font-size: 0.875rem;
+    opacity: 0.7;
   }
+}
+
+// Active link no sidenav
+a.nav-active {
+  background-color: var(--salve-nav-active-bg) !important;
+  color: var(--salve-nav-active-fg) !important;
+  font-weight: 600 !important;
+
+  i, span {
+    color: var(--salve-nav-active-fg) !important;
+    opacity: 1 !important;
+  }
+}
+
+// ─── Cards PrimeNG ─────────────────────────────────────────
+.p-card {
+  box-shadow: var(--salve-card-shadow) !important;
+  border: 1px solid var(--salve-card-border) !important;
+  border-radius: 12px !important;
+}
+
+.p-card .p-card-body {
+  padding: 1.25rem;
+}
+
+// ─── Surface utilitário ────────────────────────────────────
+.salve-surface-card {
+  background: var(--surface-card, #fff);
+  border: 1px solid var(--salve-card-border);
+  border-radius: 12px;
+  box-shadow: var(--salve-card-shadow);
+  padding: 1.25rem;
 }
 
 .salve-skeleton-card {
@@ -139,14 +156,34 @@ html, body {
   padding: 1.25rem;
 }
 
-.salve-surface-card {
-  background: var(--surface-card, #fff);
-  border: 1px solid var(--salve-card-border);
-  border-radius: 12px;
-  box-shadow: var(--salve-card-shadow);
-  padding: 1.25rem;
+// ─── Skeleton ──────────────────────────────────────────────
+.salve-skeleton-card-inner {
+  min-height: 8rem;
+  box-shadow: none;
 }
 
+.salve-skeleton-line,
+.salve-skeleton-field,
+.salve-skeleton-button,
+.salve-skeleton-pill,
+.salve-skeleton-circle {
+  background: linear-gradient(90deg, rgba(148, 163, 184, 0.14), rgba(148, 163, 184, 0.28), rgba(148, 163, 184, 0.14));
+  background-size: 200% 100%;
+  animation: salve-skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+.salve-skeleton-line    { height: 1rem;   border-radius: 999px; }
+.salve-skeleton-field   { height: 2.5rem; border-radius: 8px;   }
+.salve-skeleton-button  { width: 7rem; height: 2.5rem; border-radius: 8px; }
+.salve-skeleton-pill    { width: 5rem; height: 1.75rem; border-radius: 999px; }
+.salve-skeleton-circle  { width: 2.25rem; height: 2.25rem; border-radius: 50%; flex: 0 0 auto; }
+
+@keyframes salve-skeleton-shimmer {
+  0%   { background-position:  200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+// ─── Misc helpers ──────────────────────────────────────────
 .salve-radio {
   width: 1.125rem;
   height: 1.125rem;
@@ -161,121 +198,37 @@ html, body {
   border-radius: 999px;
   color: #0369a1;
   background-color: #e0f2fe;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 0.875rem;
-}
-
-.salve-skeleton-card-inner {
-  min-height: 8rem;
-  box-shadow: none;
-}
-
-.salve-skeleton-line,
-.salve-skeleton-field,
-.salve-skeleton-button,
-.salve-skeleton-pill,
-.salve-skeleton-circle {
-  background: linear-gradient(90deg, rgba(148, 163, 184, 0.16), rgba(148, 163, 184, 0.32), rgba(148, 163, 184, 0.16));
-  background-size: 200% 100%;
-  animation: salve-skeleton-shimmer 1.2s ease-in-out infinite;
-}
-
-.salve-skeleton-line {
-  height: 1rem;
-  border-radius: 999px;
-}
-
-.salve-skeleton-field {
-  height: 2.5rem;
-  border-radius: 8px;
-}
-
-.salve-skeleton-button {
-  width: 7rem;
-  height: 2.5rem;
-  border-radius: 8px;
-}
-
-.salve-skeleton-pill {
-  width: 5rem;
-  height: 1.75rem;
-  border-radius: 999px;
-}
-
-.salve-skeleton-circle {
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: 50%;
-  flex: 0 0 auto;
+  letter-spacing: -0.01em;
 }
 
 .salve-chart-container {
   position: relative;
   width: 100%;
   min-height: 320px;
+
+  canvas { max-height: 360px; }
 }
 
-.salve-chart-container canvas {
-  max-height: 360px;
-}
+.salve-sticky-panel  { position: sticky; top: 20px; }
+.salve-period-filter { width: 100%; }
+.salve-period-month  { width: 10rem !important; }
+.salve-period-year   { width: 7rem !important; }
 
-.salve-sticky-panel {
-  position: sticky;
-  top: 20px;
-}
-
-.salve-period-filter {
-  width: 100%;
-}
-
-.salve-period-month {
-  width: 10rem !important;
-}
-
-.salve-period-year {
-  width: 7rem !important;
-}
-
-@keyframes salve-skeleton-shimmer {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-}
-
-// Active link no sidenav
-a.nav-active {
-  background-color: var(--salve-nav-active-bg) !important;
-  border-radius: 8px !important;
-  color: var(--salve-nav-active-fg) !important;
-
-  i, span {
-    color: var(--salve-nav-active-fg) !important;
-  }
-}
-
-// ─── Cards PrimeNG ─────────────────────────────────────────
-.p-card {
-  box-shadow: var(--salve-card-shadow) !important;
-  border: 1px solid var(--salve-card-border) !important;
-  border-radius: 12px !important;
-}
-
-// ─── KPI stats inline (sem card) ───────────────────────────
-.kpi-stat-negative .kpi-value { color: #c62828; }
-.kpi-stat-warning  .kpi-value { color: #e65100; }
+// ─── KPI inline ────────────────────────────────────────────
+.kpi-stat-negative .kpi-value { color: #dc2626; }
+.kpi-stat-warning  .kpi-value { color: #d97706; }
 
 html.dark-mode {
-  .kpi-stat-negative .kpi-value { color: #ef9a9a; }
-  .kpi-stat-warning  .kpi-value { color: #ffcc80; }
+  .kpi-stat-negative .kpi-value { color: #f87171; }
+  .kpi-stat-warning  .kpi-value { color: #fbbf24; }
 }
 
 @media (prefers-color-scheme: dark) {
   html:not(.light-mode) {
-    .kpi-stat-negative .kpi-value { color: #ef9a9a; }
-    .kpi-stat-warning  .kpi-value { color: #ffcc80; }
+    .kpi-stat-negative .kpi-value { color: #f87171; }
+    .kpi-stat-warning  .kpi-value { color: #fbbf24; }
   }
 }
 
@@ -283,24 +236,16 @@ html.dark-mode {
 .kpi-card {
   background-color: var(--salve-kpi-neutral) !important;
 
-  &.kpi-positive {
-    background-color: var(--salve-kpi-positive) !important;
-  }
-
-  &.kpi-negative {
-    background-color: var(--salve-kpi-negative) !important;
-  }
-
-  &.kpi-warning {
-    background-color: rgba(245, 124, 0, 0.08) !important;
-  }
+  &.kpi-positive { background-color: var(--salve-kpi-positive) !important; }
+  &.kpi-negative { background-color: var(--salve-kpi-negative) !important; }
+  &.kpi-warning  { background-color: rgba(217, 119, 6, 0.07) !important;   }
 
   .kpi-label {
-    font-size: 11px;
+    font-size: 10.5px;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    opacity: 0.55;
+    letter-spacing: 0.07em;
+    opacity: 0.5;
     margin-bottom: 6px;
   }
 
@@ -308,34 +253,34 @@ html.dark-mode {
     font-size: 26px;
     font-weight: 700;
     line-height: 1.1;
-    letter-spacing: -0.5px;
+    letter-spacing: -0.03em;
   }
 
   .kpi-trend {
     font-size: 12px;
+    font-weight: 500;
     opacity: 0.55;
     margin-top: 6px;
     display: flex;
     align-items: center;
-    gap: 2px;
+    gap: 3px;
   }
 
   .kpi-icon {
-    font-size: 36px !important;
-    width: 36px !important;
-    height: 36px !important;
+    font-size: 32px !important;
+    width: 32px !important;
+    height: 32px !important;
     opacity: var(--salve-kpi-icon-op);
-    color: var(--mat-sys-primary);
+    color: var(--p-primary-color);
   }
 }
 
+// ─── Dashboard card helpers ─────────────────────────────────
 .dashboard-kpi-card {
-  min-height: 124px;
+  min-height: 120px;
 
   .p-card-body,
-  .p-card-content {
-    height: 100%;
-  }
+  .p-card-content { height: 100%; }
 }
 
 .dashboard-summary-card {
@@ -347,9 +292,7 @@ html.dark-mode {
     flex-direction: column;
   }
 
-  .p-card-content {
-    flex: 1;
-  }
+  .p-card-content { flex: 1; }
 }
 
 app-financial-health-card,
@@ -359,9 +302,7 @@ app-notificacoes-widget {
   display: block;
   height: 100%;
 
-  .p-card {
-    height: 100%;
-  }
+  .p-card { height: 100%; }
 }
 
 .dashboard-widget-card {
@@ -380,6 +321,34 @@ app-notificacoes-widget {
   }
 }
 
-.dashboard-widget-content {
-  flex: 1;
+.dashboard-widget-content { flex: 1; }
+
+// ─── Sidenav accordion ─────────────────────────────────────
+.sidenav-accordion {
+  .p-accordionpanel {
+    border: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+  }
+
+  .p-accordion-header-action {
+    padding: 0 16px;
+    height: 40px;
+    font-size: 10.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.45;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+
+    &:hover { background: transparent !important; opacity: 0.6; }
+  }
+
+  .p-accordion-content {
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+  }
 }
