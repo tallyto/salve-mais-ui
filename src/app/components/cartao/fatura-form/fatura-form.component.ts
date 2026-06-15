@@ -14,7 +14,7 @@ import { MonthYearFilterComponent } from '../../dashboard/month-year-filter/mont
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '../../../shared/primeng-shared';
 import { MONTHS, generateYears as utilGenerateYears, formatarMoeda } from '../../../shared/utils';
 import { LazyTableBase } from '../../../shared/lazy-table.base';
-import { StatCardComponent } from '../../stat-card/stat-card.component';
+import { StatCardComponent } from '../../shared';
 
 @Component({
     selector: 'app-fatura-form',

@@ -107,13 +107,7 @@ import { CompraParceladaFormComponent } from './components/compra-parcelada-form
 import { ComprovantesListComponent } from './components/cartao/comprovantes-list/comprovantes-list.component';
 import { FinancialHealthCardComponent } from './components/dashboard/financial-health-card/financial-health-card.component';
 import { LimiteAlertasWidgetComponent } from './components/shared/limite-alertas-widget.component';
-import { ActionButtonsComponent, PageHeaderComponent, EmptyStateComponent } from './components/shared';
-import { StatCardComponent } from './components/stat-card/stat-card.component';
-import { InfoBlockComponent } from './components/info-block/info-block.component';
-import { SkeletonKpiComponent } from './components/skeleton-loaders/skeleton-kpi.component';
-import { SkeletonChartComponent } from './components/skeleton-loaders/skeleton-chart.component';
-import { SkeletonTableComponent } from './components/skeleton-loaders/skeleton-table.component';
-import { SkeletonReservaComponent } from './components/skeleton-loaders/skeleton-reserva.component';
+import { ActionButtonsComponent, PageHeaderComponent, EmptyStateComponent, StatCardComponent, InfoBlockComponent, SkeletonKpiComponent, SkeletonChartComponent, SkeletonTableComponent, SkeletonReservaComponent } from './components/shared';
 import { ListComprasParceladasComponent } from './components/list-compras-parceladas/list-compras-parceladas.component';
 import { ListTransacoesComponent } from './components/list-transacoes/list-transacoes.component';
 import { LoginComponent } from './components/login/login.component';

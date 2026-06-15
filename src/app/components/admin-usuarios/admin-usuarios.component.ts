@@ -6,9 +6,7 @@ import { NovoUsuarioDialogComponent } from './novo-usuario-dialog/novo-usuario-d
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { SALVE_COMMON, SALVE_DATA } from '../../shared/primeng-shared';
-import { PageHeaderComponent } from '../shared/page-header.component';
-import { EmptyStateComponent } from '../shared/empty-state.component';
-import { SkeletonTableComponent } from '../skeleton-loaders/skeleton-table.component';
+import { PageHeaderComponent, EmptyStateComponent, SkeletonTableComponent } from '../shared';
 
 @Component({
   selector: 'app-admin-usuarios',

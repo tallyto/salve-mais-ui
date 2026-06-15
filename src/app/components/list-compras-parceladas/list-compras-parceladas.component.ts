@@ -8,7 +8,7 @@ import { CompraParcelada, Parcela } from '../../models/compra-parcelada.model';
 import { Categoria } from '../../models/categoria.model';
 import { Cartao } from '../../models/cartao.model';
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '../../shared/primeng-shared';
-import { StatCardComponent } from '../stat-card/stat-card.component';
+import { StatCardComponent } from '../shared';
 
 @Component({
   selector: 'app-list-compras-parceladas',

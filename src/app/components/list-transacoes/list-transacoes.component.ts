@@ -7,8 +7,7 @@ import { ContaService } from '../../services/conta.service';
 import { CategoriaService } from '../../services/categoria.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '../../shared/primeng-shared';
-import { EmptyStateComponent } from '../shared/empty-state.component';
-import { StatCardComponent } from '../stat-card/stat-card.component';
+import { EmptyStateComponent, StatCardComponent } from '../shared';
 
 @Component({
   selector: 'app-list-transacoes',
