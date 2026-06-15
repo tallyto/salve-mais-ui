@@ -135,23 +135,19 @@
       <ng-template pTemplate="content">
         <div class="grid">
           <div class="col-12 md:col-6">
-            <div class="surface-ground border-round p-3 h-full flex align-items-center justify-content-between gap-3">
-              <div>
-                <div class="text-sm text-color-secondary">Itens encontrados</div>
-                <div class="text-2xl font-bold">{{ totalElements }}</div>
-              </div>
-              <i class="pi pi-list text-3xl text-primary"></i>
-            </div>
+            <app-stat-card
+              label="Itens encontrados"
+              [value]="totalElements"
+              icon="pi-list">
+            </app-stat-card>
           </div>
 
           <div class="col-12 md:col-6">
-            <div class="surface-ground border-round p-3 h-full flex align-items-center justify-content-between gap-3">
-              <div>
-                <div class="text-sm text-color-secondary">Valor total</div>
-                <div class="text-2xl font-bold">{{ calcularTotalCompras() | currency:'BRL':'symbol':'1.2-2' }}</div>
-              </div>
-              <i class="pi pi-money-bill text-3xl text-primary"></i>
-            </div>
+            <app-stat-card
+              label="Valor total"
+              [value]="calcularTotalCompras() | currency:'BRL':'symbol':'1.2-2'"
+              icon="pi-money-bill">
+            </app-stat-card>
           </div>
         </div>
       </ng-template>

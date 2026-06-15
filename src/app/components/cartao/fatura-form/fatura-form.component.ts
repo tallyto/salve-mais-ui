@@ -14,6 +14,7 @@ import { MonthYearFilterComponent } from '../../dashboard/month-year-filter/mont
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '../../../shared/primeng-shared';
 import { MONTHS, generateYears as utilGenerateYears, formatarMoeda } from '../../../shared/utils';
 import { LazyTableBase } from '../../../shared/lazy-table.base';
+import { StatCardComponent } from '../../stat-card/stat-card.component';
 
 @Component({
     selector: 'app-fatura-form',
@@ -24,7 +25,8 @@ import { LazyTableBase } from '../../../shared/lazy-table.base';
         ...SALVE_FORMS,
         ...SALVE_DATA,
         CurrencyInputDirective,
-        MonthYearFilterComponent
+        MonthYearFilterComponent,
+        StatCardComponent
     ]
 })
 export class FaturaFormComponent extends LazyTableBase implements OnInit, AfterViewInit {

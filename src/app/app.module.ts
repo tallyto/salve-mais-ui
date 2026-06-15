@@ -108,6 +108,7 @@ import { ComprovantesListComponent } from './components/cartao/comprovantes-list
 import { FinancialHealthCardComponent } from './components/dashboard/financial-health-card/financial-health-card.component';
 import { LimiteAlertasWidgetComponent } from './components/shared/limite-alertas-widget.component';
 import { ActionButtonsComponent, PageHeaderComponent, EmptyStateComponent } from './components/shared';
+import { StatCardComponent } from './components/stat-card/stat-card.component';
 import { ListComprasParceladasComponent } from './components/list-compras-parceladas/list-compras-parceladas.component';
 import { ListTransacoesComponent } from './components/list-transacoes/list-transacoes.component';
 import { LoginComponent } from './components/login/login.component';
@@ -231,6 +232,7 @@ registerLocaleData(localePt, 'pt-BR');
     ActionButtonsComponent,
     PageHeaderComponent,
     EmptyStateComponent,
+    StatCardComponent,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },

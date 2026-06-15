@@ -8,6 +8,7 @@ import { CategoriaService } from '../../services/categoria.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '../../shared/primeng-shared';
 import { EmptyStateComponent } from '../shared/empty-state.component';
+import { StatCardComponent } from '../stat-card/stat-card.component';
 
 @Component({
   selector: 'app-list-transacoes',
@@ -19,7 +20,8 @@ import { EmptyStateComponent } from '../shared/empty-state.component';
     ...SALVE_FORMS,
     ...SALVE_DATA,
     ...SALVE_OVERLAY,
-    EmptyStateComponent
+    EmptyStateComponent,
+    StatCardComponent
   ]
 })
 export class ListTransacoesComponent implements OnInit {

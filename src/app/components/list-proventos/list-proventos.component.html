@@ -3,23 +3,19 @@
 
   <div *ngIf="!isLoadingResults" class="grid">
     <div class="col-12 md:col-6">
-      <div class="surface-ground border-round p-3 h-full flex align-items-center justify-content-between gap-3">
-        <div>
-          <div class="text-sm text-color-secondary">Itens encontrados</div>
-          <div class="text-2xl font-bold">{{ resultsLength }}</div>
-        </div>
-        <i class="pi pi-list text-3xl text-primary"></i>
-      </div>
+      <app-stat-card
+        label="Itens encontrados"
+        [value]="resultsLength"
+        icon="pi-list">
+      </app-stat-card>
     </div>
 
     <div class="col-12 md:col-6">
-      <div class="surface-ground border-round p-3 h-full flex align-items-center justify-content-between gap-3">
-        <div>
-          <div class="text-sm text-color-secondary">Valor total</div>
-          <div class="text-2xl font-bold">{{ calcularTotal() | currency:'BRL':'symbol':'1.2-2' }}</div>
-        </div>
-        <i class="pi pi-dollar text-3xl text-primary"></i>
-      </div>
+      <app-stat-card
+        label="Valor total"
+        [value]="calcularTotal() | currency:'BRL':'symbol':'1.2-2'"
+        icon="pi-dollar">
+      </app-stat-card>
     </div>
   </div>
 
