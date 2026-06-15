@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MessageService } from 'primeng/api';
 
 import { CompraDebitoService } from '../../services/compra-debito.service';
 import { CategoriaService } from '../../services/categoria.service';
 import { AccountService } from '../../services/account.service';
+import { FormBaseService } from '../../services/form-base.service';
 import { CompraDebitoInput } from '../../models/compra-debito.model';
 import { Categoria } from '../../models/categoria.model';
 import { Conta, TipoConta } from '../../models/conta.model';
@@ -29,7 +29,7 @@ export class CompraDebitoFormComponent implements OnInit {
     private compraDebitoService: CompraDebitoService,
     private categoriaService: CategoriaService,
     private accountService: AccountService,
-    private messageService: MessageService,
+    private formBaseService: FormBaseService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -69,7 +69,7 @@ export class CompraDebitoFormComponent implements OnInit {
         this.categorias = categorias;
       },
       error: (error) => {
-        this.mostrarMensagem('Erro ao carregar categorias', 'error');
+        this.formBaseService.showError('Erro ao carregar categorias');
       }
     });
   }
@@ -80,7 +80,7 @@ export class CompraDebitoFormComponent implements OnInit {
         this.contas = response.content;
       },
       error: (error) => {
-        this.mostrarMensagem('Erro ao carregar contas', 'error');
+        this.formBaseService.showError('Erro ao carregar contas');
       }
     });
   }
@@ -102,7 +102,7 @@ export class CompraDebitoFormComponent implements OnInit {
         this.compraDebitoForm.get('dataCompra')?.disable();
       },
       error: (error) => {
-        this.mostrarMensagem('Erro ao carregar compra', 'error');
+        this.formBaseService.showError('Erro ao carregar compra');
         this.router.navigate(['/compras-debito']);
       }
     });
@@ -110,10 +110,11 @@ export class CompraDebitoFormComponent implements OnInit {
 
   salvarCompraDebito(): void {
     if (this.compraDebitoForm.invalid) {
-      this.marcarCamposComoTocados();
+      this.formBaseService.markFormAsTouched(this.compraDebitoForm);
       return;
     }
 
+    this.formBaseService.setLoading(true);
     this.loading = true;
     const dadosForm = this.compraDebitoForm.value;
     
@@ -131,14 +132,17 @@ export class CompraDebitoFormComponent implements OnInit {
       this.compraDebitoService.atualizarCompraDebito(this.compraDebitoId, compraDebito).subscribe({
         next: () => {
           this.loading = false;
-          this.mostrarMensagem('Compra atualizada com sucesso!', 'success');
+          this.formBaseService.setLoading(false);
+          this.formBaseService.showSuccess('Compra atualizada com sucesso!');
           setTimeout(() => {
             this.router.navigate(['/compras-debito']);
           }, 1500);
         },
         error: (error) => {
           this.loading = false;
-          this.tratarErro(error);
+          this.formBaseService.setLoading(false);
+          const mensagem = this.formBaseService.handleError(error, 'Erro ao atualizar compra');
+          this.formBaseService.showError(mensagem);
         }
       });
     } else {
@@ -146,52 +150,24 @@ export class CompraDebitoFormComponent implements OnInit {
       this.compraDebitoService.criarCompraDebito(compraDebito).subscribe({
         next: () => {
           this.loading = false;
-          this.mostrarMensagem('Compra registrada com sucesso!', 'success');
+          this.formBaseService.setLoading(false);
+          this.formBaseService.showSuccess('Compra registrada com sucesso!');
           this.compraDebitoForm.reset();
-          
-          // Redirecionar para a listagem
+
           setTimeout(() => {
             this.router.navigate(['/compras-debito']);
           }, 1500);
         },
         error: (error) => {
           this.loading = false;
-          this.tratarErro(error);
+          this.formBaseService.setLoading(false);
+          const mensagem = this.formBaseService.handleError(error, 'Erro ao registrar compra');
+          this.formBaseService.showError(mensagem);
         }
       });
     }
   }
 
-  private tratarErro(error: any): void {
-    let mensagemErro = this.isEditing ? 'Erro ao atualizar compra' : 'Erro ao registrar compra';
-    
-    if (error.error?.message) {
-      mensagemErro = error.error.message;
-    } else if (error.status === 400) {
-      if (error.error && typeof error.error === 'string' && error.error.includes('Saldo insuficiente')) {
-        mensagemErro = 'Saldo insuficiente na conta para realizar esta compra';
-      } else {
-        mensagemErro = 'Dados inválidos. Verifique os campos preenchidos.';
-      }
-    }
-    
-    this.mostrarMensagem(mensagemErro, 'error');
-  }
-
-  private marcarCamposComoTocados(): void {
-    Object.keys(this.compraDebitoForm.controls).forEach(key => {
-      this.compraDebitoForm.get(key)?.markAsTouched();
-    });
-  }
-
-  private mostrarMensagem(mensagem: string, tipo: 'success' | 'error'): void {
-    this.messageService.add({
-      severity: tipo,
-      summary: tipo === 'success' ? 'Sucesso' : 'Erro',
-      detail: mensagem,
-      life: tipo === 'success' ? 3000 : 5000
-    });
-  }
 
   voltarParaListagem(): void {
     this.router.navigate(['/compras-debito']);
