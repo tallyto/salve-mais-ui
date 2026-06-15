@@ -1,4 +1,8 @@
-<div class="flex flex-column h-screen">
+<ng-container *ngIf="!isAuthenticated">
+  <router-outlet></router-outlet>
+</ng-container>
+
+<div *ngIf="isAuthenticated" class="flex flex-column h-screen">
   <!-- Toolbar -->
   <div class="app-toolbar flex-none flex align-items-center gap-2 px-4"
        style="background-color: var(--salve-toolbar-bg, #00796b); color: white; height: 56px;">
