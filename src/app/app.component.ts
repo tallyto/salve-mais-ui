@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { ThemeService } from '@services/theme.service';
 import { filter } from 'rxjs/operators';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MenuLateralComponent } from '@components/shell/menu-lateral/menu-lateral.component';
-import { AppRoutingModule } from './app-routing.module';
 
 @Component({
     selector: 'app-root',
-    template: `<p-toast></p-toast><p-confirmdialog></p-confirmdialog><app-menu-lateral></app-menu-lateral>`,
+    template: `<p-toast></p-toast><p-confirmdialog></p-confirmdialog><app-menu-lateral></app-menu-lateral><router-outlet></router-outlet>`,
     standalone: true,
-    imports: [ToastModule, ConfirmDialogModule, MenuLateralComponent, AppRoutingModule]
+    imports: [ToastModule, ConfirmDialogModule, MenuLateralComponent, RouterOutlet]
 })
 export class AppComponent implements OnInit {
   title = 'gestor-financeiro-ui';

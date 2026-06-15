@@ -1,5 +1,6 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
@@ -10,6 +11,7 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 
 import { AppComponent } from './app/app.component';
+import { APP_ROUTES } from './app/app.routes';
 import { AuthInterceptor } from './app/services/auth.interceptor';
 import { BillingInterceptor } from './app/services/billing.interceptor';
 import { SalveMaisTheme } from './app/primeng-theme';
@@ -19,6 +21,7 @@ Chart.register(...registerables);
 
 bootstrapApplication(AppComponent, {
   providers: [
+    provideRouter(APP_ROUTES),
     provideAnimations(),
     provideHttpClient(withInterceptorsFromDi()),
     { provide: LOCALE_ID, useValue: 'pt-BR' },
