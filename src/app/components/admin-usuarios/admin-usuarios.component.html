@@ -1,14 +1,10 @@
 <section class="p-4 flex flex-column gap-4">
-  <div class="flex align-items-center justify-content-between">
-    <div class="flex align-items-center gap-3">
-      <i class="pi pi-users text-3xl text-primary"></i>
-      <div>
-        <h2 class="m-0 font-bold">Gerenciamento de Usuários</h2>
-        <span class="text-sm text-color-secondary">Gerencie os usuários do seu tenant</span>
-      </div>
-    </div>
+  <app-page-header
+    icon="pi-users"
+    title="Gerenciamento de Usuários"
+    subtitle="Gerencie os usuários do seu tenant">
     <p-button label="Novo Usuário" icon="pi pi-user-plus" (onClick)="abrirDialogNovoUsuario()"></p-button>
-  </div>
+  </app-page-header>
 
   <p-card>
     <div *ngIf="loading" class="flex flex-column gap-3">

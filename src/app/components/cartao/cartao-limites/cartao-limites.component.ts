@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { MessageService } from 'primeng/api';
 import { CartaoService } from '@services/cartao.service';
 import { Cartao, CartaoLimiteDTO, CartaoLimiteStatusDTO } from '@models/cartao.model';
+import { PageHeaderComponent } from '../../shared/page-header.component';
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '../../../shared/primeng-shared';
 
 @Component({
@@ -12,7 +13,8 @@ import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '../../../shared/primeng-s
   imports: [
     ...SALVE_COMMON,
     ...SALVE_FORMS,
-    ...SALVE_DATA
+    ...SALVE_DATA,
+    PageHeaderComponent
   ],
   templateUrl: './cartao-limites.component.html'
 })

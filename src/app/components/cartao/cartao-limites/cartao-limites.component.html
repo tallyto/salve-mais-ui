@@ -1,11 +1,9 @@
 <section class="p-4 flex flex-column gap-4">
-  <div class="flex align-items-center gap-3">
-    <i class="pi pi-shield text-3xl text-primary"></i>
-    <div>
-      <h2 class="m-0 font-bold">Gestão de Limites dos Cartões</h2>
-      <span class="text-sm text-color-secondary">Monitore e configure os limites dos seus cartões de crédito</span>
-    </div>
-  </div>
+  <app-page-header
+    icon="pi-shield"
+    title="Gestão de Limites dos Cartões"
+    subtitle="Monitore e configure os limites dos seus cartões de crédito">
+  </app-page-header>
 
   <p-card *ngIf="alertas.length > 0">
     <ng-template pTemplate="header">

@@ -6,13 +6,15 @@ import { NovoUsuarioDialogComponent } from './novo-usuario-dialog/novo-usuario-d
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { SALVE_COMMON, SALVE_DATA } from '../../shared/primeng-shared';
+import { PageHeaderComponent } from '../shared/page-header.component';
 
 @Component({
   selector: 'app-admin-usuarios',
   standalone: true,
   imports: [
     ...SALVE_COMMON,
-    ...SALVE_DATA
+    ...SALVE_DATA,
+    PageHeaderComponent
   ],
   templateUrl: './admin-usuarios.component.html'
 })
