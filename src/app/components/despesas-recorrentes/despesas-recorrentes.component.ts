@@ -1,3 +1,4 @@
+import { formatarMoeda } from '../../shared/utils';
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Categoria} from "../../models/categoria.model";
@@ -19,6 +20,7 @@ export class DespesasRecorrentesComponent implements OnInit {
   public categorias: Categoria[] = [];
   public cartoes: Cartao[] = [];
   public editingGasto: GastoCartao | null = null;
+  formatarMoeda = formatarMoeda;
 
   constructor(
     private despesaRecorrenteService: GastoCartaoService,
@@ -141,10 +143,4 @@ export class DespesasRecorrentesComponent implements OnInit {
     this.editingGasto = null;
   }
 
-  private formatarMoeda(valor: number): string {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    }).format(valor);
-  }
 }

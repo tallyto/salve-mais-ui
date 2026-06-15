@@ -12,7 +12,7 @@ import { Cartao } from '@models/cartao.model';
 import { PagamentoFaturaModalComponent } from '../pagamento-fatura-modal/pagamento-fatura-modal.component';
 import { MonthYearFilterComponent } from '../../dashboard/month-year-filter/month-year-filter.component';
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '../../../shared/primeng-shared';
-import { MONTHS, generateYears as utilGenerateYears } from '../../../shared/utils';
+import { MONTHS, generateYears as utilGenerateYears, formatarMoeda } from '../../../shared/utils';
 import { LazyTableBase } from '../../../shared/lazy-table.base';
 
 @Component({
@@ -37,6 +37,7 @@ export class FaturaFormComponent extends LazyTableBase implements OnInit, AfterV
   mostrarPreview = false;
   loadingPreview = false;
   preview: FaturaPreviewDTO | null = null;
+  formatarMoeda = formatarMoeda;
 
   // Filtros de mês e ano
   selectedMonth: number;
@@ -375,12 +376,6 @@ export class FaturaFormComponent extends LazyTableBase implements OnInit, AfterV
     });
   }
 
-  formatarMoeda(valor: number): string {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    }).format(valor);
-  }
 
   formatarData(data: string): string {
     return new Date(data).toLocaleDateString('pt-BR');

@@ -7,6 +7,7 @@ import { AccountService } from '@services/account.service';
 import { Conta, TipoConta } from '../../../models/conta.model';
 import { FaturaResponseDTO } from '@models/fatura.model';
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '../../../shared/primeng-shared';
+import { formatarMoeda } from '../../../shared/utils';
 
 @Component({
     selector: 'app-pagamento-fatura-modal',
@@ -22,6 +23,7 @@ export class PagamentoFaturaModalComponent implements OnInit {
   pagamentoForm: FormGroup;
   contas: Conta[] = [];
   loading = false;
+  formatarMoeda = formatarMoeda;
 
   constructor(
     private fb: FormBuilder,
@@ -88,12 +90,6 @@ export class PagamentoFaturaModalComponent implements OnInit {
     this.dialogRef.close(false);
   }
 
-  formatarMoeda(valor: number): string {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    }).format(valor);
-  }
 
   temSaldoSuficiente(conta: Conta): boolean {
     return conta.saldo >= this.data.fatura.valorTotal;

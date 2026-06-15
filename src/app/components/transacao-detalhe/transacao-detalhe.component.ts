@@ -1,3 +1,4 @@
+import { formatarMoeda } from '../../shared/utils';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -16,6 +17,7 @@ export class TransacaoDetalheComponent implements OnInit {
   loading = false;
   error = false;
   tipoTransacao = TipoTransacao;
+  formatarMoeda = formatarMoeda;
 
   constructor(
     private route: ActivatedRoute,
@@ -62,12 +64,6 @@ export class TransacaoDetalheComponent implements OnInit {
     this.location.back();
   }
 
-  formatarMoeda(valor: number): string {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    }).format(valor);
-  }
 
   formatarData(data: Date): string {
     if (!data) return '';

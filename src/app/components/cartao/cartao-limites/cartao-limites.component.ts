@@ -1,3 +1,4 @@
+import { formatarMoeda } from '../../../shared/utils';
 import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
@@ -21,6 +22,7 @@ export class CartaoLimitesComponent implements OnInit {
   statusLimites: CartaoLimiteStatusDTO[] = [];
   alertas: CartaoLimiteStatusDTO[] = [];
   loading = false;
+  formatarMoeda = formatarMoeda;
 
   constructor(
     private fb: FormBuilder,
@@ -110,12 +112,6 @@ export class CartaoLimitesComponent implements OnInit {
     this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Funcionalidade de remoção será implementada', life: 3000 });
   }
 
-  formatarMoeda(valor: number): string {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    }).format(valor);
-  }
 
   formatarPercentual(valor: number): string {
     return valor.toFixed(1) + '%';

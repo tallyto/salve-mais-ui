@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { RelatorioMensalService } from '../../services/relatorio-mensal.service';
 import { RelatorioMensalDTO, ItemGastoFixoDTO } from '../../models/relatorio-mensal.model';
+import { MONTHS, generateYears, formatarMoeda } from '../../shared/utils';
 
 @Component({
     selector: 'app-relatorio-mensal',
@@ -15,6 +16,7 @@ export class RelatorioMensalComponent implements OnInit {
   contasVencidas: ItemGastoFixoDTO[] = [];
   isLoading = false;
   isLoadingContas = false;
+  formatarMoeda = formatarMoeda;
 
   expandedCartoes = new Set<number>();
 
@@ -23,49 +25,32 @@ export class RelatorioMensalComponent implements OnInit {
     this.expandedCartoes.has(id) ? this.expandedCartoes.delete(id) : this.expandedCartoes.add(id);
   }
 
-  // Configuração dos meses
-  meses = [
-    { value: 1, name: 'Janeiro' },
-    { value: 2, name: 'Fevereiro' },
-    { value: 3, name: 'Março' },
-    { value: 4, name: 'Abril' },
-    { value: 5, name: 'Maio' },
-    { value: 6, name: 'Junho' },
-    { value: 7, name: 'Julho' },
-    { value: 8, name: 'Agosto' },
-    { value: 9, name: 'Setembro' },
-    { value: 10, name: 'Outubro' },
-    { value: 11, name: 'Novembro' },
-    { value: 12, name: 'Dezembro' }
-  ];
-
-  // Configuração dos anos (últimos 5 anos + próximos 2 anos)
-  anos: number[] = [];
-
   // Filtros de mês e ano
   selectedMonth: number;
   selectedYear: number;
-  months: { value: number, name: string }[] = [];
+  years = generateYears(5, 2);
+
+  get meses() {
+    return MONTHS.map(m => ({ value: m.value, name: m.label }));
+  }
+
+  get months() {
+    return MONTHS.map(m => ({ value: m.value, name: m.label }));
+  }
 
   constructor(
     private formBuilder: FormBuilder,
     private relatorioService: RelatorioMensalService,
     private messageService: MessageService
   ) {
-    // Gerar lista de anos
-    const anoAtual = new Date().getFullYear();
-    for (let i = anoAtual - 5; i <= anoAtual + 2; i++) {
-      this.anos.push(i);
-    }
-
     // Inicializar formulário
+    const anoAtual = new Date().getFullYear();
     this.relatorioForm = this.formBuilder.group({
       ano: [anoAtual, [Validators.required]],
       mes: [new Date().getMonth() + 1, [Validators.required]]
     });
 
     // Inicializar filtros
-    this.months = this.meses;
     this.selectedMonth = new Date().getMonth() + 1;
     this.selectedYear = anoAtual;
   }
@@ -130,12 +115,6 @@ export class RelatorioMensalComponent implements OnInit {
   /**
    * Formata valor para moeda brasileira
    */
-  formatarMoeda(valor: number): string {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    }).format(valor);
-  }
 
   /**
    * Formata data para padrão brasileiro
