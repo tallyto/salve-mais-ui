@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Financa } from "@models/financa.model";
-import { ContasFixasService } from "@services/financa.service";
+import { ContasFixasService } from "@services/contas-fixas.service";
 import { catchError, map, of as observableOf } from "rxjs";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';

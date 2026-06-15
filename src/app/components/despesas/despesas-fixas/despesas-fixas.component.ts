@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {ContasFixasService} from "@services/financa.service";
+import {ContasFixasService} from "@services/contas-fixas.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Categoria} from "@models/categoria.model";
 import {CategoriaService} from "@services/categoria.service";
@@ -138,7 +138,7 @@ export class DespesasFixasComponent implements OnInit {
   }
 
   carregarContas(): void {
-    this.accountService.listarAccounts(0, 50, '').subscribe({
+    this.accountService.listar(0, 50, '').subscribe({
       next: accountPage => {
         this.accounts = accountPage.content;
       }

@@ -82,7 +82,7 @@ export class CompraDebitoFormComponent implements OnInit {
   }
 
   carregarContas(): void {
-    this.accountService.listarAccounts(0, 50, '').subscribe({
+    this.accountService.listar(0, 50, '').subscribe({
       next: (response) => {
         this.contas = response.content;
       },

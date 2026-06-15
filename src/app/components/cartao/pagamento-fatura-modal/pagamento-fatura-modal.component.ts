@@ -55,7 +55,7 @@ export class PagamentoFaturaModalComponent implements OnInit {
 
   carregarContas(): void {
     this.loading = true;
-    this.accountService.listarTodasContas().subscribe({
+    this.accountService.listarTodas().subscribe({
       next: (contas) => {
         this.contas = contas;
         this.loading = false;

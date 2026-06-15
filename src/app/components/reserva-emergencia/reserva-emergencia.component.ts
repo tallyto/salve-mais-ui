@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ReservaEmergenciaService } from '@services/reserva-emergencia.service';
 import { HistoricoContribuicao, ReservaEmergencia, ReservaEmergenciaDetalhe } from '@models/reserva-emergencia.model';
-import { ContaService } from '@services/conta.service';
+import { AccountService } from '@services/account.service';
 import { Conta, TipoConta } from '@models/conta.model';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -28,7 +28,7 @@ export class ReservaEmergenciaComponent implements OnInit {
 
   constructor(
     private reservaService: ReservaEmergenciaService,
-    private contaService: ContaService,
+    private accountService: AccountService,
     private router: Router,
     private confirmationService: ConfirmationService,
     private messageService: MessageService
@@ -40,7 +40,7 @@ export class ReservaEmergenciaComponent implements OnInit {
 
   ngOnInit(): void {
     this.carregarReservas();
-    this.contaService.getContas().subscribe({
+    this.accountService.listarTodas().subscribe({
       next: (contas) => { this.contas = contas; }
     });
   }

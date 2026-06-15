@@ -7,8 +7,8 @@ import {DespesasRecorrentesComponent} from "./components/despesas/despesas-recor
 import { AccountComponent } from './components/contas/account/account.component';
 import { RegisterComponent } from './components/auth/register/register.component';
 import { LoginComponent } from './components/auth/login/login.component';
-import { AuthGuard } from './services/auth.guard';
-import { NoAuthGuard } from './services/no-auth.guard';
+import { AuthGuard } from './guards/auth.guard';
+import { NoAuthGuard } from './guards/no-auth.guard';
 import { RecuperarSenhaComponent } from './components/auth/recuperar-senha/recuperar-senha.component';
 import { RedefinirSenhaComponent } from './components/auth/redefinir-senha/redefinir-senha.component';
 import { CriarUsuarioComponent } from './components/criar-usuario/criar-usuario.component';

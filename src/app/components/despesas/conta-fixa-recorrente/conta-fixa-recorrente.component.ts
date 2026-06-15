@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 
-import { ContasFixasService } from '@services/financa.service';
+import { ContasFixasService } from '@services/contas-fixas.service';
 import { CategoriaService } from '@services/categoria.service';
 import { AccountService } from '@services/account.service';
 import { ContaFixaRecorrente, TipoRecorrencia, TipoRecorrenciaInfo } from '@models/conta-fixa.model';
@@ -81,7 +81,7 @@ export class ContaFixaRecorrenteComponent implements OnInit {
   }
 
   carregarContas(): void {
-    this.accountService.listarAccounts(0, 50, '').subscribe({
+    this.accountService.listar(0, 50, '').subscribe({
       next: (response) => {
         this.contas = response.content;
       },

@@ -3,7 +3,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { ChartData, ChartOptions } from 'chart.js';
 import { Subscription } from 'rxjs';
 import { Financa } from '@models/financa.model';
-import { ContasFixasService } from '@services/financa.service';
+import { ContasFixasService } from '@services/contas-fixas.service';
 
 @Component({
   selector: 'app-expense-pie-chart',

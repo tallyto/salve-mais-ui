@@ -278,7 +278,7 @@ export class DashboardComponent implements OnInit {
         this.totalDespesas = this.summaryData.despesasMes;
 
         // Também carrega dados de contas para exibição no dashboard
-        this.accountService.listarAccounts(0, 100, '').pipe(
+        this.accountService.listar(0, 100, '').pipe(
           catchError(() => of({ content: [] } as unknown as Page<Conta>))
         ).subscribe({
           next: (accountPage) => {
@@ -315,7 +315,7 @@ export class DashboardComponent implements OnInit {
   // Método de fallback para quando a API do dashboard falha
   loadBasicData(): void {
     forkJoin({
-      accounts: this.accountService.listarAccounts(0, 100, ''),
+      accounts: this.accountService.listar(0, 100, ''),
       proventos: this.proventoService.listarProventos(0, 100, '')
     }).subscribe({
       next: (results) => {

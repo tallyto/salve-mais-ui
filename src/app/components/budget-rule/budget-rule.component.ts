@@ -88,7 +88,7 @@ export class BudgetRuleComponent implements OnInit {
 
             // Extrai a porcentagem se ela estiver incluída no label (formato: "Label (XX%)")
             let percentage = '';
-            const matches = label.match(/\((\d+)%\)/);
+            const matches = label.match(/.(.+)%./);
             if (matches && matches.length > 1) {
               percentage = matches[1];
             } else {

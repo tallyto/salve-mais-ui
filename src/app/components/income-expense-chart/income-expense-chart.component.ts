@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 
 import { Financa } from '@models/financa.model';
 import { Provento } from '@models/provento.model';
-import { ContasFixasService } from '@services/financa.service';
+import { ContasFixasService } from '@services/contas-fixas.service';
 import { ProventoService } from '@services/provento.service';
 
 interface ProventoResponse {

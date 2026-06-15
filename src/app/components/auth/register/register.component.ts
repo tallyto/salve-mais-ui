@@ -43,7 +43,7 @@ export class RegisterComponent implements OnInit {
       domain: ['', [
         Validators.required,
         // Padrão para domínio válido: letra/número + podem conter hífen + pelo menos um ponto + TLD válido
-        Validators.pattern(/^[a-z0-9]([a-z0-9-]+)?(\.[a-z0-9]([a-z0-9-]+)?)+\.[a-z]{2,}$/),
+        Validators.pattern(/^[a-z0-9]([a-z0-9-]+)?(.[a-z0-9]([a-z0-9-]+)?)+.[a-z]{2,}$/),
         Validators.minLength(4),
         Validators.maxLength(50),
         this.dominioPublicoValidator()

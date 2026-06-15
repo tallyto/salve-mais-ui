@@ -53,7 +53,7 @@ export class TransferenciaModalComponent implements OnInit {
 
   carregarContas(): void {
     this.isLoading = true;
-    this.accountService.listarTodasContas().subscribe({
+    this.accountService.listarTodas().subscribe({
       next: (contas: Conta[]) => {
         if (this.contaOrigem) {
           this.contas = contas.filter(conta => conta.id !== this.contaOrigem?.id);

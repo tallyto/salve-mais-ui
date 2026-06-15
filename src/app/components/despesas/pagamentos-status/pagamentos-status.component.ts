@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FaturaService } from '@services/fatura.service';
-import { ContasFixasService } from '@services/financa.service';
+import { ContasFixasService } from '@services/contas-fixas.service';
 import { CompraParceladaService } from '@services/compra-parcelada.service';
 import { FaturaResponseDTO } from '@models/fatura.model';
 import { Financa } from '@models/financa.model';

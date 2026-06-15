@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TransacaoService } from '@services/transacao.service';
 import { Transacao, TransacaoFiltro } from '@models/transacao.model';
 import { TipoTransacao } from '@models/tipo-transacao.enum';
-import { ContaService } from '@services/conta.service';
+import { AccountService } from '@services/account.service';
 import { CategoriaService } from '@services/categoria.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '@shared/primeng-shared';
@@ -47,7 +47,7 @@ export class ListTransacoesComponent implements OnInit {
 
   constructor(
     private transacaoService: TransacaoService,
-    private contaService: ContaService,
+    private accountService: AccountService,
     private categoriaService: CategoriaService,
     private formBuilder: FormBuilder,
     private confirmationService: ConfirmationService,
@@ -98,7 +98,7 @@ export class ListTransacoesComponent implements OnInit {
   }
 
   carregarContas(): void {
-    this.contaService.getContas().subscribe(
+    this.accountService.listarTodas().subscribe(
       (contas: any[]) => {
         this.contas = contas;
       },

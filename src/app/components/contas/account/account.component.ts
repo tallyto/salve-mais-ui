@@ -79,7 +79,7 @@ export class AccountComponent implements AfterViewInit {
 
   createAccount() {
     if (this.accountForm.valid) {
-      this.accountService.salvarAccount(this.accountForm.value).subscribe({
+      this.accountService.salvar(this.accountForm.value).subscribe({
         next: value => {
           const message = 'Conta cadastrada com sucesso!';
 

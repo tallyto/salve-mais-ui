@@ -37,7 +37,7 @@ export class ListAccountsComponent implements OnInit {
 
   loadAccounts(): void {
     this.isLoadingResults = true;
-    this.accountService.listarTodasContas().subscribe({
+    this.accountService.listarTodas().subscribe({
       next: (accounts) => {
         this.accounts = accounts;
         this.isLoadingResults = false;
@@ -85,7 +85,7 @@ export class ListAccountsComponent implements OnInit {
   saveEdit(): void {
     if (!this.editingAccount) return;
     const updated = { ...this.editingAccount, titular: this.tempTitular };
-    this.accountService.atualizarAccount(updated).subscribe({
+    this.accountService.atualizar(updated).subscribe({
       next: () => {
         this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Conta atualizada!' });
         this.editingAccount = null;
@@ -104,7 +104,7 @@ export class ListAccountsComponent implements OnInit {
 
   excluirConta(account: Conta): void {
     if (!confirm(`Excluir a conta "${account.titular}"?`)) return;
-    this.accountService.excluirAccount(account.id).subscribe({
+    this.accountService.excluir(account.id).subscribe({
       next: () => {
         this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Conta excluída!' });
         this.loadAccounts();

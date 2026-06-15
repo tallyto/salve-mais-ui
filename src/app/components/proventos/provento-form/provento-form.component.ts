@@ -38,7 +38,7 @@ export class ProventoFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.accountService.listarAccounts(0, 50, '').subscribe({
+    this.accountService.listar(0, 50, '').subscribe({
       next: accountPage => {
         this.accounts = accountPage.content;
       }

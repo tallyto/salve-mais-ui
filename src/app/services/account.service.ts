@@ -18,20 +18,19 @@ export class AccountService {
 
   }
 
-  salvarAccount(account: Conta): Observable<Conta> {
-    // Define o saldo inicial como 0
-    const newAccount = {
-      ...account,
+  salvar(conta: Conta): Observable<Conta> {
+    const newConta = {
+      ...conta,
       saldo: 0
     };
-    return this.http.post<Conta>(this.apiUrl, newAccount);
+    return this.http.post<Conta>(this.apiUrl, newConta);
   }
 
-  atualizarAccount(account: Conta): Observable<Conta> {
-    return this.http.put<Conta>(`${this.apiUrl}/${account.id}`, account)
+  atualizar(conta: Conta): Observable<Conta> {
+    return this.http.put<Conta>(`${this.apiUrl}/${conta.id}`, conta)
   }
 
-  listarAccounts(page: number, size: number, sort: string): Observable<Page<Conta>> {
+  listar(page: number, size: number, sort: string): Observable<Page<Conta>> {
     return this.http.get<Page<Conta>>(this.apiUrl,  {
       params: {
         page,
@@ -41,15 +40,14 @@ export class AccountService {
     })
   }
 
-  listarTodasContas(): Observable<Conta[]> {
-    // Usa a mesma endpoint paginada mas com um tamanho grande para pegar todas
+  listarTodas(): Observable<Conta[]> {
     return this.http.get<Page<Conta>>(`${this.apiUrl}?page=0&size=1000&sort=titular`)
       .pipe(
         map((response: Page<Conta>) => response.content || [])
       );
   }
 
-  excluirAccount(id: number): Observable<void> {
+  excluir(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 

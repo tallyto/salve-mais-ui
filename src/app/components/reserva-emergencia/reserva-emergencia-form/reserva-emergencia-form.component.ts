@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Conta, TipoConta } from 'src/app/models/conta.model';
-import { ContaService } from 'src/app/services/conta.service';
+import { Conta, TipoConta } from '@models/conta.model';
+import { AccountService } from '@services/account.service';
 import { ReservaEmergenciaService } from '@services/reserva-emergencia.service';
 import { FormBaseService } from '@services/form-base.service';
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '@shared/primeng-shared';
@@ -34,7 +34,7 @@ export class ReservaEmergenciaFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private reservaService: ReservaEmergenciaService,
-    private contaService: ContaService,
+    private accountService: AccountService,
     private route: ActivatedRoute,
     private router: Router,
     private formBaseService: FormBaseService
@@ -53,7 +53,7 @@ export class ReservaEmergenciaFormComponent implements OnInit {
 
 
     // Carrega as contas disponíveis
-    this.contaService.getContas().subscribe({
+    this.accountService.listarTodas().subscribe({
       next: (contas) => {
         this.contas = contas;
 
