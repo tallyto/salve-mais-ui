@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, Router, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { inject } from '@angular/core';
+import { Router, UrlTree } from '@angular/router';
 
 function isTokenExpired(token: string): boolean {
   try {
@@ -11,16 +10,14 @@ function isTokenExpired(token: string): boolean {
   }
 }
 
-@Injectable({ providedIn: 'root' })
-export class AuthGuard implements CanActivate {
-  constructor(private router: Router) {}
-
-  canActivate(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    const token = localStorage.getItem('token');
-    if (token && !isTokenExpired(token)) {
-      return true;
-    }
-    localStorage.removeItem('token');
-    return this.router.createUrlTree(['/login']);
+export const authGuard = (): boolean | UrlTree => {
+  const router = inject(Router);
+  const token = localStorage.getItem('token');
+  if (token && !isTokenExpired(token)) {
+    return true;
   }
-}
+  localStorage.removeItem('token');
+  return router.createUrlTree(['/login']);
+};
+
+export const AuthGuard = authGuard;

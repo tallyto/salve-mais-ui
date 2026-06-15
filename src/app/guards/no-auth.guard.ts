@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, Router, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { inject } from '@angular/core';
+import { Router, UrlTree } from '@angular/router';
 
 function isTokenExpired(token: string): boolean {
   try {
@@ -11,17 +10,13 @@ function isTokenExpired(token: string): boolean {
   }
 }
 
-@Injectable({ providedIn: 'root' })
-export class NoAuthGuard implements CanActivate {
-  constructor(private router: Router) {}
-
-  canActivate(): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    const token = localStorage.getItem('token');
-    if (token && !isTokenExpired(token)) {
-      // Se estiver logado, redireciona para o dashboard
-      return this.router.createUrlTree(['/dashboard']);
-    }
-    // Se não estiver logado, permite acesso
-    return true;
+export const noAuthGuard = (): boolean | UrlTree => {
+  const router = inject(Router);
+  const token = localStorage.getItem('token');
+  if (token && !isTokenExpired(token)) {
+    return router.createUrlTree(['/dashboard']);
   }
-}
+  return true;
+};
+
+export const NoAuthGuard = noAuthGuard;
