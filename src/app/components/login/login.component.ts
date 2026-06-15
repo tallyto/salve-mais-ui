@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   errorMessage: string = '';
   loading = false;
+  currentYear = new Date().getFullYear();
 
   constructor(
     private fb: FormBuilder,
