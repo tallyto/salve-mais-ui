@@ -1,0 +1,45 @@
+repos:
+  # ESLint - Linting
+  - repo: local
+    hooks:
+      - id: eslint
+        name: ESLint
+        entry: npx eslint --fix --max-warnings 0
+        language: system
+        types: [javascript, typescript]
+        stages: [commit]
+        pass_filenames: true
+
+  # Format com Prettier
+  - repo: local
+    hooks:
+      - id: prettier
+        name: Prettier
+        entry: npx prettier --write
+        language: system
+        types: [javascript, typescript, json, markdown]
+        stages: [commit]
+        pass_filenames: true
+
+  # ng lint (Angular)
+  - repo: local
+    hooks:
+      - id: ng-lint
+        name: Angular Lint
+        entry: npx ng lint --fix
+        language: system
+        stages: [commit]
+        pass_filenames: false
+        always_run: true
+
+  # Validar build
+  - repo: local
+    hooks:
+      - id: ng-build
+        name: Angular Build Check
+        entry: npx ng build --configuration development --aot --stats-json
+        language: system
+        stages: [push]
+        pass_filenames: false
+        always_run: true
+        verbose: true

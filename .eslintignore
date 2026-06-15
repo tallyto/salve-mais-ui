@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+dist/
+.angular/
+
+# Generated files
+src/environments/environment.*.ts
+*.spec.ts
+karma.conf.js
+test.ts
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation
+docs/
