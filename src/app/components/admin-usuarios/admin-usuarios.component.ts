@@ -7,6 +7,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { SALVE_COMMON, SALVE_DATA } from '../../shared/primeng-shared';
 import { PageHeaderComponent } from '../shared/page-header.component';
+import { EmptyStateComponent } from '../shared/empty-state.component';
 
 @Component({
   selector: 'app-admin-usuarios',
@@ -14,7 +15,8 @@ import { PageHeaderComponent } from '../shared/page-header.component';
   imports: [
     ...SALVE_COMMON,
     ...SALVE_DATA,
-    PageHeaderComponent
+    PageHeaderComponent,
+    EmptyStateComponent
   ],
   templateUrl: './admin-usuarios.component.html'
 })

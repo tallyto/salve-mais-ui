@@ -51,12 +51,7 @@
       </ng-template>
 
       <ng-template pTemplate="emptymessage">
-        <tr><td colspan="5">
-          <div class="flex flex-column align-items-center gap-2 p-5">
-            <i class="pi pi-users text-4xl text-color-secondary"></i>
-            <span>Nenhum usuário encontrado.</span>
-          </div>
-        </td></tr>
+        <tr><td colspan="5"><app-empty-state message="Nenhum usuário encontrado." icon="pi-users"></app-empty-state></td></tr>
       </ng-template>
     </p-table>
   </p-card>
