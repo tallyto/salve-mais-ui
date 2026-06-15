@@ -41,7 +41,7 @@ export class CriarUsuarioComponent implements OnInit {
 
   ngOnInit() {
     // Verificar se há um tenant atual na sessão
-    this.tenantDominio = this.tenantService.getTenant();
+    this.tenantDominio = this.tenantService.obter();
     if (!this.tenantDominio) {
       this.router.navigate(['/register']);
     }

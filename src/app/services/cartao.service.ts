@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import {Cartao, CartaoLimiteDTO, CartaoLimiteStatusDTO} from "../models/cartao.model";
+import {Cartao, CartaoLimiteDTO, CartaoLimiteStatusDTO} from '@models/cartao.model';
 import {Observable, tap} from "rxjs";
-import { environment } from '../../environments/environment';
+import { environment } from '@environments/environment';
 import { NotificationEventService } from './notification-event.service';
 import { ErrorHandlerService } from './error-handler.service';
 

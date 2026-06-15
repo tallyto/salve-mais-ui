@@ -85,7 +85,7 @@ export class ReservaEmergenciaFormComponent implements OnInit {
   }
 
   carregarReserva(id: number): void {
-    this.reservaService.getReservaById(id).subscribe({
+    this.reservaService.obter(id).subscribe({
       next: (reserva) => {
         this.reservaForm.patchValue({
           objetivo: reserva.objetivo,
@@ -114,7 +114,7 @@ export class ReservaEmergenciaFormComponent implements OnInit {
 
     if (this.isEditMode && this.reservaId) {
       // Modo de edição
-      this.reservaService.updateReserva(this.reservaId, formData).subscribe({
+      this.reservaService.atualizar(this.reservaId, formData).subscribe({
         next: () => {
           this.formBaseService.showSuccess('Reserva atualizada com sucesso!');
           this.router.navigate(['/reserva-emergencia']);
@@ -125,7 +125,7 @@ export class ReservaEmergenciaFormComponent implements OnInit {
         }
       });
     } else {
-      this.reservaService.createReserva(formData).subscribe({
+      this.reservaService.salvar(formData).subscribe({
         next: () => {
           this.formBaseService.showSuccess('Reserva criada com sucesso!');
           this.router.navigate(['/reserva-emergencia']);

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { environment } from '@environments/environment';
 import { ErrorHandlerService } from './error-handler.service';
-import { PlanoCompra } from '../models/plano-compra.model';
+import { PlanoCompra } from '@models/plano-compra.model';
 
 @Injectable({
   providedIn: 'root'

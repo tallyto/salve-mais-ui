@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Transacao, TransacaoFiltro } from '../models/transacao.model';
-import { environment } from '../../environments/environment';
-import { Page } from '../models/page.model';
+import { Transacao, TransacaoFiltro } from '@models/transacao.model';
+import { environment } from '@environments/environment';
+import { Page } from '@models/page.model';
 
 @Injectable({
   providedIn: 'root'

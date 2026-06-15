@@ -54,7 +54,7 @@ export class NotificacoesEmailConfigComponent implements OnInit {
   }
 
   carregarTenantDomain(): void {
-    const domain = this.tenantService.getTenant();
+    const domain = this.tenantService.obter();
     if (domain) {
       this.tenantDomain = domain;
     } else {

@@ -9,7 +9,7 @@ import { Provento } from "@models/provento.model";
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs';
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '@shared/primeng-shared';
-import { ListProventosComponent } from '../list-proventos/list-proventos.component';
+import { ListProventosComponent } from '@components/proventos/list-proventos/list-proventos.component';
 
 @Component({
     selector: 'app-provento-form',

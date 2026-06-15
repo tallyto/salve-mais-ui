@@ -74,11 +74,11 @@ export class NotificacoesComponent implements OnInit {
   }
 
   getCorPrioridade(prioridade: string): string {
-    return this.notificacaoService.getCorPrioridade(prioridade);
+    return this.notificacaoService.obterCorPrioridade(prioridade);
   }
 
   getIconeTipo(tipo: string): string {
-    switch (this.notificacaoService.getIconeTipo(tipo)) {
+    switch (this.notificacaoService.obterIconeTipo(tipo)) {
       case 'warning': return 'pi-exclamation-triangle';
       case 'schedule': return 'pi-clock';
       case 'credit_card_off': return 'pi-credit-card';

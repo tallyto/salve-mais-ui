@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import {Observable, tap} from "rxjs";
-import {Fatura, FaturaManualDTO, FaturaResponseDTO, FaturaPreviewDTO} from "../models/fatura.model";
-import { environment } from '../../environments/environment';
+import {Fatura, FaturaManualDTO, FaturaResponseDTO, FaturaPreviewDTO} from '@models/fatura.model';
+import { environment } from '@environments/environment';
 import { NotificationEventService } from './notification-event.service';
 
 @Injectable({

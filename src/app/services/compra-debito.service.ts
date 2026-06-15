@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { CompraDebito, CompraDebitoInput } from '../models/compra-debito.model';
+import { environment } from '@environments/environment';
+import { CompraDebito, CompraDebitoInput } from '@models/compra-debito.model';
 
 @Injectable({
   providedIn: 'root'

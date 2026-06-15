@@ -9,7 +9,7 @@ import { FaturaService } from '@services/fatura.service';
 import { CartaoService } from '@services/cartao.service';
 import { FaturaManualDTO, FaturaResponseDTO, FaturaPreviewDTO } from '@models/fatura.model';
 import { Cartao } from '@models/cartao.model';
-import { PagamentoFaturaModalComponent } from '../pagamento-fatura-modal/pagamento-fatura-modal.component';
+import { PagamentoFaturaModalComponent } from '@components/cartao/pagamento-fatura-modal/pagamento-fatura-modal.component';
 import { MonthYearFilterComponent } from '@app/components/dashboard/month-year-filter/month-year-filter.component';
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '@shared/primeng-shared';
 import { MONTHS, generateYears as utilGenerateYears, formatarMoeda } from '@shared/utils';

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { RelatorioMensalDTO, ItemGastoFixoDTO } from '../models/relatorio-mensal.model';
-import { ComparativoMensalDTO } from '../models/comparativo-mensal.model';
+import { environment } from '@environments/environment';
+import { RelatorioMensalDTO, ItemGastoFixoDTO } from '@models/relatorio-mensal.model';
+import { ComparativoMensalDTO } from '@models/comparativo-mensal.model';
 
 @Injectable({
   providedIn: 'root'

@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import {Categoria} from "../models/categoria.model";
+import {Categoria} from '@models/categoria.model';
 import {Observable} from "rxjs";
-import { environment } from '../../environments/environment';
+import { environment } from '@environments/environment';
 import { ErrorHandlerService } from './error-handler.service';
 
 @Injectable({

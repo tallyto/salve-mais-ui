@@ -3,7 +3,7 @@ import { AccountService } from 'src/app/services/account.service';
 import { Conta, TipoConta } from '@models/conta.model';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { TransferenciaModalComponent } from '../transferencia-modal/transferencia-modal.component';
+import { TransferenciaModalComponent } from '@components/contas/transferencia-modal/transferencia-modal.component';
 import { SALVE_COMMON, SALVE_DATA, SALVE_FORMS } from '@shared/primeng-shared';
 
 @Component({

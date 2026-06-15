@@ -47,7 +47,7 @@ export class ReservaEmergenciaComponent implements OnInit {
 
   carregarReservas(): void {
     this.loading = true;
-    this.reservaService.getReservas().subscribe({
+    this.reservaService.listar().subscribe({
       next: (reservas) => {
         this.reservas = reservas;
         this.loading = false;
@@ -66,7 +66,7 @@ export class ReservaEmergenciaComponent implements OnInit {
 
   carregarDetalhesReserva(id: number): void {
     this.loading = true;
-    this.reservaService.getReservaById(id).subscribe({
+    this.reservaService.obter(id).subscribe({
       next: (reserva) => {
         this.reservaAtual = reserva;
         this.loading = false;
@@ -81,7 +81,7 @@ export class ReservaEmergenciaComponent implements OnInit {
   }
 
   carregarHistorico(id: number): void {
-    this.reservaService.getHistorico(id).subscribe({
+    this.reservaService.obterHistorico(id).subscribe({
       next: (h) => { this.historico = h; },
       error: () => { this.historico = []; }
     });
@@ -104,7 +104,7 @@ export class ReservaEmergenciaComponent implements OnInit {
       rejectLabel: 'Cancelar',
       acceptButtonStyleClass: 'p-button-danger',
       accept: () => {
-        this.reservaService.deleteReserva(id).subscribe({
+        this.reservaService.excluir(id).subscribe({
           next: () => {
             this.reservaAtual = null;
             this.reservas = [];
