@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { CategoriaService } from '@services/categoria.service';
 import { Categoria } from '@models/categoria.model';
+import { CategoriaFormComponent } from '../categoria-form/categoria-form.component';
+import { ListCategoriasComponent } from '../list-categorias/list-categorias.component';
 
 @Component({
   selector: 'app-categoria-container',
   templateUrl: './categoria-container.component.html',
-  standalone: false
+  standalone: true,
+  imports: [CommonModule, CategoriaFormComponent, ListCategoriasComponent]
 })
 export class CategoriaContainerComponent implements OnInit {
   public categorias: Categoria[] = [];

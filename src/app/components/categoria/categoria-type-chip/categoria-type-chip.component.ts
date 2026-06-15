@@ -1,10 +1,13 @@
 import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { TipoCategoria } from '@models/categoria.model';
+import { ChipModule } from 'primeng/chip';
 
 @Component({
   selector: 'app-categoria-type-chip',
   templateUrl: './categoria-type-chip.component.html',
-  standalone: false
+  standalone: true,
+  imports: [CommonModule, ChipModule]
 })
 export class CategoriaTypeChipComponent {
   @Input() tipo!: TipoCategoria;

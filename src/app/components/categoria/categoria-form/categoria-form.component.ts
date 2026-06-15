@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Optional, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { CategoriaService } from '@services/categoria.service';
 import { Categoria, TipoCategoria } from '@models/categoria.model';
+import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '@shared/primeng-shared';
 
 interface TipoOption {
   label: string;
@@ -12,7 +13,15 @@ interface TipoOption {
 @Component({
   selector: 'app-categoria-form',
   templateUrl: './categoria-form.component.html',
-  standalone: false
+  standalone: true,
+  imports: [
+    ReactiveFormsModule,
+    FormsModule,
+    ...SALVE_COMMON,
+    ...SALVE_FORMS,
+    ...SALVE_DATA,
+    ...SALVE_OVERLAY
+  ]
 })
 export class CategoriaFormComponent implements OnInit {
   @Input() editingCategoria: Categoria | null = null;
