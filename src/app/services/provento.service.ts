@@ -1,13 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Provento} from '../models/provento.model';
+import { Provento } from '../models/provento.model';
+import { Page } from '../models/page.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-
-export interface ProventoPage {
-  content: Provento[];
-  totalElements: number;
-}
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +18,8 @@ export class ProventoService {
   proventosChanged$ = new BehaviorSubject<void>(undefined);
   editingProvento$ = new BehaviorSubject<Provento | null>(null);
 
-  public listarProventos(page: number, size: number, sort: string): Observable<ProventoPage | Provento[]> {
-    return this.http.get<ProventoPage | Provento[]>(this.apiUrl, {
+  public listarProventos(page: number, size: number, sort: string): Observable<Page<Provento>> {
+    return this.http.get<Page<Provento>>(this.apiUrl, {
       params: {
         page,
         size,
