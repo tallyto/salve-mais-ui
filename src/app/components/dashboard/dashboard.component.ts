@@ -20,7 +20,7 @@ import { ReservaEmergenciaCardComponent } from './reserva-emergencia-card/reserv
 import { VariationTableComponent } from './variation-table/variation-table.component';
 import { LimiteAlertasWidgetComponent } from '@components/shared/limite-alertas-widget.component';
 import { NotificacoesWidgetComponent } from '@components/notificacoes/notificacoes-widget/notificacoes-widget.component';
-import { SkeletonKpiComponent, SkeletonChartComponent } from '../shared';
+import { SkeletonKpiComponent, SkeletonChartComponent } from '@components/shared';
 
 interface Transaction {
   descricao: string;
@@ -257,13 +257,13 @@ export class DashboardComponent implements OnInit {
 
     // Usando forkJoin para fazer todas as chamadas em paralelo
     forkJoin({
-      summary: this.dashboardService.getSummary(this.selectedMonth, this.selectedYear),
-      categories: this.dashboardService.getExpensesByCategory(this.selectedMonth, this.selectedYear),
-      monthlyTrend: this.dashboardService.getMonthlyTrendByYear(this.selectedYear),
-      comprasCartao: this.gastoCartaoService.listCompras(0, 5, 'data,desc').pipe(
+      summary: this.dashboardService.obterResumo(this.selectedMonth, this.selectedYear),
+      categories: this.dashboardService.obterDespesasPorCategoria(this.selectedMonth, this.selectedYear),
+      monthlyTrend: this.dashboardService.obterTrendMensalPorAno(this.selectedYear),
+      comprasCartao: this.gastoCartaoService.listar(0, 5, 'data,desc').pipe(
         catchError(() => of({ content: [] } as unknown as Page<GastoCartao>))
       ),
-      variations: this.dashboardService.getVariationData(this.selectedMonth, this.selectedYear).pipe(catchError(() => of([])))
+      variations: this.dashboardService.obterDadosVariacao(this.selectedMonth, this.selectedYear).pipe(catchError(() => of([])))
     }).subscribe({
       next: (results) => {
         this.summaryData = results.summary;

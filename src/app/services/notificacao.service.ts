@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { environment } from '@environments/environment';
 
 export interface NotificacaoDTO {
   tipo: string;
@@ -77,7 +77,7 @@ export class NotificacaoService {
   /**
    * Retorna a cor correspondente à prioridade
    */
-  getCorPrioridade(prioridade: string): string {
+  obterCorPrioridade(prioridade: string): string {
     switch (prioridade) {
       case 'CRITICA':
         return '#d32f2f'; // Vermelho escuro
@@ -95,7 +95,7 @@ export class NotificacaoService {
   /**
    * Retorna o ícone correspondente ao tipo de notificação
    */
-  getIconeTipo(tipo: string): string {
+  obterIconeTipo(tipo: string): string {
     switch (tipo) {
       case 'CONTA_ATRASADA':
         return 'warning';

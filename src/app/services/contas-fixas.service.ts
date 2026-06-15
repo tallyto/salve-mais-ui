@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import {Financa} from '../models/financa.model';
-import {ContaFixa, ContaFixaRecorrente} from '../models/conta-fixa.model';
-import { environment } from '../../environments/environment';
+import {Financa} from '@models/financa.model';
+import {ContaFixa, ContaFixaRecorrente} from '@models/conta-fixa.model';
+import { environment } from '@environments/environment';
 import { NotificationEventService } from './notification-event.service';
 
 @Injectable({
@@ -68,7 +68,7 @@ export class ContasFixasService {
     );
   }
 
-  getFinancaById(id: number): Observable<Financa> {
+  obter(id: number): Observable<Financa> {
     return this.http.get<Financa>(`${this.apiUrl}/${id}`);
   }
 

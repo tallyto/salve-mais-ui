@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import {GastoCartaoInput} from "../models/input/gasto-cartao.input";
+import {GastoCartaoInput} from '@models/input/gasto-cartao.input';
 import { BehaviorSubject, Observable } from "rxjs";
-import {GastoCartao} from "../models/gasto-cartao.model";
-import { environment } from '../../environments/environment';
-import { Page } from '../models/page.model';
+import {GastoCartao} from '@models/gasto-cartao.model';
+import { environment } from '@environments/environment';
+import { Page } from '@models/page.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class GastoCartaoService {
   constructor(private http: HttpClient) {
   }
 
-  public listCompras(page: number, size: number, sort: string, mes?: number, ano?: number): Observable<Page<GastoCartao>> {
+  public listar(page: number, size: number, sort: string, mes?: number, ano?: number): Observable<Page<GastoCartao>> {
     let params: any = {
       page,
       size,
@@ -37,7 +37,7 @@ export class GastoCartaoService {
     return this.http.get<Page<GastoCartao>>(this.apiUrl, { params });
   }
 
-  public listComprasRecorrentes(page: number, size: number, sort: string): Observable<Page<GastoCartao>> {
+  public listarRecorrentes(page: number, size: number, sort: string): Observable<Page<GastoCartao>> {
     return this.http.get<Page<GastoCartao>>(`${this.apiUrl}/recorrentes`, {
       params: {
         page,
@@ -60,7 +60,7 @@ export class GastoCartaoService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  public getCompraById(id: number): Observable<GastoCartao> {
+  public obter(id: number): Observable<GastoCartao> {
     return this.http.get<GastoCartao>(`${this.apiUrl}/${id}`);
   }
 }

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { HistoricoContribuicao, ReservaEmergencia, ReservaEmergenciaDetalhe, ReservaEmergenciaInput } from '../models/reserva-emergencia.model';
+import { environment } from '@environments/environment';
+import { HistoricoContribuicao, ReservaEmergencia, ReservaEmergenciaDetalhe, ReservaEmergenciaInput } from '@models/reserva-emergencia.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,23 +12,23 @@ export class ReservaEmergenciaService {
 
   constructor(private http: HttpClient) { }
 
-  getReservas(): Observable<ReservaEmergencia[]> {
+  listar(): Observable<ReservaEmergencia[]> {
     return this.http.get<ReservaEmergencia[]>(this.apiUrl);
   }
 
-  getReservaById(id: number): Observable<ReservaEmergenciaDetalhe> {
+  obter(id: number): Observable<ReservaEmergenciaDetalhe> {
     return this.http.get<ReservaEmergenciaDetalhe>(`${this.apiUrl}/${id}`);
   }
 
-  createReserva(reserva: ReservaEmergenciaInput): Observable<ReservaEmergencia> {
+  salvar(reserva: ReservaEmergenciaInput): Observable<ReservaEmergencia> {
     return this.http.post<ReservaEmergencia>(this.apiUrl, reserva);
   }
 
-  updateReserva(id: number, reserva: ReservaEmergenciaInput): Observable<ReservaEmergencia> {
+  atualizar(id: number, reserva: ReservaEmergenciaInput): Observable<ReservaEmergencia> {
     return this.http.put<ReservaEmergencia>(`${this.apiUrl}/${id}`, reserva);
   }
 
-  deleteReserva(id: number): Observable<void> {
+  excluir(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
@@ -53,7 +53,7 @@ export class ReservaEmergenciaService {
     });
   }
 
-  getHistorico(reservaId: number): Observable<HistoricoContribuicao[]> {
+  obterHistorico(reservaId: number): Observable<HistoricoContribuicao[]> {
     return this.http.get<HistoricoContribuicao[]>(`${this.apiUrl}/${reservaId}/historico`);
   }
 }

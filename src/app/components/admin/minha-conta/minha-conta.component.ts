@@ -26,7 +26,7 @@ export class MinhaContaComponent implements OnInit {
     ultimoAcesso: undefined
   };
   ngOnInit(): void {
-    this.usuarioService.getUsuarioLogado().subscribe({
+    this.usuarioService.obterLogado().subscribe({
       next: (user) => {
         this.usuario = user;
         this.nomeForm.patchValue({ nome: user.nome });

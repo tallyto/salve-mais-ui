@@ -11,7 +11,7 @@ import {Financa} from "@models/financa.model";
 import {MessageService} from "primeng/api";
 import { filter } from 'rxjs';
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '@shared/primeng-shared';
-import { ListContasFixasComponent } from '../list-contas-fixas/list-contas-fixas.component';
+import { ListContasFixasComponent } from '@components/despesas/list-contas-fixas/list-contas-fixas.component';
 
 @Component({
     selector: 'app-despesas-fixas',

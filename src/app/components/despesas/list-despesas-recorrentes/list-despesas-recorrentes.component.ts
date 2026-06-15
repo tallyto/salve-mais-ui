@@ -62,7 +62,7 @@ export class ListDespesasRecorrentesComponent extends LazyTableBase implements O
     this.isLoadingResults = true;
     const sort = `${this.sortField},${this.sortOrder}`;
 
-    this.despesaRecorrenteService.listCompras(
+    this.despesaRecorrenteService.listar(
       this.pageIndex,
       this.pageSize,
       sort,

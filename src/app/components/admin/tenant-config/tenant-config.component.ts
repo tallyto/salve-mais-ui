@@ -119,7 +119,7 @@ export class TenantConfigComponent implements OnInit {
     }
 
     this.isLoading = true;
-    this.tenantService.getTenantById(tenantId).subscribe({
+    this.tenantService.obterPorId(tenantId).subscribe({
       next: (tenant) => {
         this.currentTenant = tenant;
         this.populateForms(tenant);
@@ -167,7 +167,7 @@ export class TenantConfigComponent implements OnInit {
     this.isLoading = true;
     const subscriptionData: TenantSubscriptionDTO = this.subscriptionForm.value;
 
-    this.tenantService.updateSubscription(this.currentTenant.id, subscriptionData).subscribe({
+    this.tenantService.atualizarAssinatura(this.currentTenant.id, subscriptionData).subscribe({
       next: (tenant) => {
         this.currentTenant = tenant;
         this.showSuccess('Configurações de assinatura atualizadas com sucesso!');
@@ -188,7 +188,7 @@ export class TenantConfigComponent implements OnInit {
     this.isLoading = true;
     const smtpData: TenantSmtpConfigDTO = this.smtpForm.value;
 
-    this.tenantService.updateSmtpConfig(this.currentTenant.id, smtpData).subscribe({
+    this.tenantService.atualizarConfigSmtp(this.currentTenant.id, smtpData).subscribe({
       next: (tenant) => {
         this.currentTenant = tenant;
         this.showSuccess('Configurações de e-mail atualizadas com sucesso!');
@@ -209,7 +209,7 @@ export class TenantConfigComponent implements OnInit {
     this.isLoading = true;
     const basicInfoData = this.brandingForm.value;
 
-    this.tenantService.updateBasicInfo(this.currentTenant.id, basicInfoData).subscribe({
+    this.tenantService.atualizarInformacoesBasicas(this.currentTenant.id, basicInfoData).subscribe({
       next: (tenant) => {
         this.currentTenant = tenant;
         this.showSuccess('Informações básicas atualizadas com sucesso!');
@@ -230,7 +230,7 @@ export class TenantConfigComponent implements OnInit {
     this.isLoading = true;
     const regionalData: TenantRegionalSettingsDTO = this.regionalForm.value;
 
-    this.tenantService.updateRegionalSettings(this.currentTenant.id, regionalData).subscribe({
+    this.tenantService.atualizarConfiguraceRegionais(this.currentTenant.id, regionalData).subscribe({
       next: (tenant) => {
         this.currentTenant = tenant;
         this.showSuccess('Configurações regionais atualizadas com sucesso!');

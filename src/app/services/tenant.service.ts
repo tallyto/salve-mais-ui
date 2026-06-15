@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { environment } from '@environments/environment';
 import {
   Tenant,
   TenantCadastroDTO,
@@ -9,7 +9,7 @@ import {
   TenantSubscriptionDTO,
   TenantSmtpConfigDTO,
   TenantRegionalSettingsDTO
-} from '../models/tenant.model';@Injectable({ providedIn: 'root' })
+} from '@models/tenant.model';@Injectable({ providedIn: 'root' })
 export class TenantService {
   private readonly tenantKey = 'current_tenant';
   private readonly rememberedTenantKey = 'remembered_tenant';
@@ -27,7 +27,7 @@ export class TenantService {
   /**
    * Obtém o tenant atual da sessão
    */
-  getTenant(): string | null {
+  obter(): string | null {
     return sessionStorage.getItem(this.tenantKey);
   }
 
@@ -41,7 +41,7 @@ export class TenantService {
   /**
    * Obtém o tenant lembrado (persistente)
    */
-  getRememberedTenant(): string | null {
+  obterLembrado(): string | null {
     return localStorage.getItem(this.rememberedTenantKey);
   }
 
@@ -71,7 +71,7 @@ export class TenantService {
    * Verifica se existe um tenant ativo (atual ou lembrado)
    */
   hasTenant(): boolean {
-    return !!(this.getTenant() || this.getRememberedTenant());
+    return !!(this.obter() || this.obterLembrado());
   }
 
   cadastrarTenant(data: TenantCadastroDTO): Observable<Tenant> {
@@ -96,27 +96,27 @@ export class TenantService {
 
   // Métodos de customização do tenant
 
-  getTenantById(id: string): Observable<Tenant> {
+  obterPorId(id: string): Observable<Tenant> {
     return this.http.get<Tenant>(`${this.apiUrl}/${id}`);
   }
 
-  getTenantByDomain(domain: string): Observable<Tenant> {
+  obterPorDominio(domain: string): Observable<Tenant> {
     return this.http.get<Tenant>(`${this.apiUrl}/domain/${domain}`);
   }
 
-  updateBasicInfo(id: string, basicInfo: TenantBasicInfoDTO): Observable<Tenant> {
+  atualizarInformacoesBasicas(id: string, basicInfo: TenantBasicInfoDTO): Observable<Tenant> {
     return this.http.put<Tenant>(`${this.apiUrl}/${id}/basic-info`, basicInfo);
   }
 
-  updateSubscription(id: string, subscription: TenantSubscriptionDTO): Observable<Tenant> {
+  atualizarAssinatura(id: string, subscription: TenantSubscriptionDTO): Observable<Tenant> {
     return this.http.put<Tenant>(`${this.apiUrl}/${id}/subscription`, subscription);
   }
 
-  updateSmtpConfig(id: string, smtpConfig: TenantSmtpConfigDTO): Observable<Tenant> {
+  atualizarConfigSmtp(id: string, smtpConfig: TenantSmtpConfigDTO): Observable<Tenant> {
     return this.http.put<Tenant>(`${this.apiUrl}/${id}/smtp`, smtpConfig);
   }
 
-  updateRegionalSettings(id: string, regionalSettings: TenantRegionalSettingsDTO): Observable<Tenant> {
+  atualizarConfiguraceRegionais(id: string, regionalSettings: TenantRegionalSettingsDTO): Observable<Tenant> {
     return this.http.put<Tenant>(`${this.apiUrl}/${id}/regional-settings`, regionalSettings);
   }
 }

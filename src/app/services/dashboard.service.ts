@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { environment } from '@environments/environment';
 
 export interface DashboardSummary {
   saldoTotal: number;
@@ -62,25 +62,25 @@ export class DashboardService {
 
   constructor(private http: HttpClient) { }
 
-  getSummary(mes?: number, ano?: number): Observable<DashboardSummary> {
+  obterResumo(mes?: number, ano?: number): Observable<DashboardSummary> {
     const params: any = {};
     if (mes) params.mes = mes.toString();
     if (ano) params.ano = ano.toString();
     return this.http.get<DashboardSummary>(`${this.apiUrl}/summary`, { params });
   }
 
-  getExpensesByCategory(mes?: number, ano?: number): Observable<CategoryExpense[]> {
+  obterDespesasPorCategoria(mes?: number, ano?: number): Observable<CategoryExpense[]> {
     const params: any = {};
     if (mes) params.mes = mes.toString();
     if (ano) params.ano = ano.toString();
     return this.http.get<CategoryExpense[]>(`${this.apiUrl}/expenses-by-category`, { params });
   }
 
-  getMonthlyTrendByYear(year: number): Observable<MonthlyExpense[]> {
+  obterTrendMensalPorAno(year: number): Observable<MonthlyExpense[]> {
     return this.http.get<MonthlyExpense[]>(`${this.apiUrl}/monthly-trend/year/${year}`);
   }
 
-  getVariationData(mes?: number, ano?: number): Observable<VariationData[]> {
+  obterDadosVariacao(mes?: number, ano?: number): Observable<VariationData[]> {
     // Este endpoint deve retornar dados de variação comparando o mês atual com o anterior
     // Exemplo de resposta esperada:
     // [

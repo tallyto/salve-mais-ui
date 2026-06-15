@@ -12,7 +12,7 @@ import {MessageService} from "primeng/api";
 import {GastoCartao} from "@models/gasto-cartao.model";
 import { filter } from 'rxjs';
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '@shared/primeng-shared';
-import { ListDespesasRecorrentesComponent } from '../list-despesas-recorrentes/list-despesas-recorrentes.component';
+import { ListDespesasRecorrentesComponent } from '@components/despesas/list-despesas-recorrentes/list-despesas-recorrentes.component';
 
 @Component({
     selector: 'app-despesas-recorrentes',

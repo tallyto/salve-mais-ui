@@ -4,7 +4,7 @@ import { catchError, map } from 'rxjs/operators';
 import { NotificacaoService, ResumoNotificacoes } from './notificacao.service';
 import { TenantService } from './tenant.service';
 import { UsuarioService } from './usuario.service';
-import { getTenantIdFromToken } from '../utils/jwt.util';
+import { getTenantIdFromToken } from '@utils/jwt.util';
 
 export interface UsuarioInfo {
   nome: string;
@@ -29,7 +29,7 @@ export class MenuInfoService {
   ) { }
 
   carregarInfoUsuario(): Observable<UsuarioInfo | null> {
-    return this.usuarioService.getUsuarioLogado().pipe(
+    return this.usuarioService.obterLogado().pipe(
       map(user => ({ nome: user.nome, email: user.email })),
       catchError(() => of(this.obterInfoUsuarioDoCache()))
     );
@@ -64,7 +64,7 @@ export class MenuInfoService {
       return of(TITULO_PADRAO);
     }
 
-    return this.tenantService.getTenantById(tenantId).pipe(
+    return this.tenantService.obterPorId(tenantId).pipe(
       map(tenant => tenant.displayName || tenant.nome || TITULO_PADRAO),
       catchError(() => of(TITULO_PADRAO))
     );
