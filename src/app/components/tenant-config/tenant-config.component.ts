@@ -10,11 +10,19 @@ import {
 } from '../../models/tenant.model';
 import { getTenantIdFromToken } from '../../utils/jwt.util';
 import { MessageService } from 'primeng/api';
+import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '../../shared/primeng-shared';
+import { TabsModule } from 'primeng/tabs';
 
 @Component({
   selector: 'app-tenant-config',
   templateUrl: './tenant-config.component.html',
-  standalone: false
+  standalone: true,
+  imports: [
+    ...SALVE_COMMON,
+    ...SALVE_FORMS,
+    ...SALVE_DATA,
+    TabsModule
+  ]
 })
 export class TenantConfigComponent implements OnInit {
 

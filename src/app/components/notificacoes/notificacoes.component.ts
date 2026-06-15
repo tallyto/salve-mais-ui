@@ -2,11 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { NotificacaoService, NotificacaoDTO } from '../../services/notificacao.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { SALVE_COMMON, SALVE_DATA } from '../../shared/primeng-shared';
 
 @Component({
     selector: 'app-notificacoes',
     templateUrl: './notificacoes.component.html',
-    standalone: false
+    standalone: true,
+  imports: [
+    ...SALVE_COMMON,
+    ...SALVE_DATA
+  ]
 })
 export class NotificacoesComponent implements OnInit {
   notificacoes: NotificacaoDTO[] = [];

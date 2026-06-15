@@ -137,7 +137,6 @@ registerLocaleData(localePt, 'pt-BR');
     IncomeExpenseChartComponent,
     ExpensePieChartComponent,
     RelatorioMensalComponent,
-    NotificacoesComponent,
     NotificacoesEmailConfigComponent,
     ContaFixaRecorrenteComponent,
     ReservaEmergenciaComponent,
@@ -145,7 +144,6 @@ registerLocaleData(localePt, 'pt-BR');
     TransferenciaModalComponent,
     TransacaoDetalheComponent,
     PagamentosStatusComponent,
-    TenantConfigComponent,
     HomeComponent,
     CompraDebitoFormComponent,
     ListComprasDebitoComponent,
@@ -206,7 +204,10 @@ registerLocaleData(localePt, 'pt-BR');
     ToggleSwitchModule,
     ToolbarModule,
     TooltipModule,
-    // Standalone components
+    // Newly standalone components (Phase 5)
+    TenantConfigComponent,
+    NotificacoesComponent,
+    // Other standalone components
     RegisterComponent,
     LoginComponent,
     RedefinirSenhaComponent,
