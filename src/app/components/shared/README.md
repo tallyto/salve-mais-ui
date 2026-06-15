@@ -1,6 +1,14 @@
-# Componentes Shared UI
+# Shared Components Library
 
-Componentes reutilizáveis para padronizar a interface.
+Componentes reutilizáveis em toda a aplicação. Todos são **standalone** e usam **PrimeNG 19**.
+
+## Quick Import
+
+```typescript
+import { StatCardComponent, ActionButtonsComponent, EmptyStateComponent } from '@components/shared';
+```
+
+## Estrutura
 
 ## PageHeaderComponent
 

@@ -1,15 +1,25 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NgChartsModule } from 'ng2-charts';
 import { ChartData, ChartOptions } from 'chart.js';
 import { Subscription } from 'rxjs';
 
-import { Financa } from '../../models/financa.model';
-import { Provento } from '../../models/provento.model';
-import { ContasFixasService } from '../../services/financa.service';
-import { ProventoService } from '../../services/provento.service';
+import { Financa } from '@models/financa.model';
+import { Provento } from '@models/provento.model';
+import { ContasFixasService } from '@services/financa.service';
+import { ProventoService } from '@services/provento.service';
+
+interface ProventoResponse {
+  content?: Provento[];
+}
+
+interface FinancaResponse {
+  content?: Financa[];
+}
 
 @Component({
   selector: 'app-income-expense-chart',
-  standalone: false,
+  standalone: true,
+  imports: [NgChartsModule],
   template: `
     <canvas baseChart
       [data]="barChartData"
@@ -53,19 +63,18 @@ export class IncomeExpenseChartComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // Busca receitas e despesas e atualiza o gráfico
     this.subscription.add(
-      this.proventoService.listarProventos(0, 100, 'data').subscribe((proventosResponse: any) => {
-        const proventos: Provento[] = proventosResponse.content || proventosResponse || [];
+      this.proventoService.listarProventos(0, 100, 'data').subscribe((proventosResponse: ProventoResponse) => {
+        const proventos: Provento[] = proventosResponse.content || [];
         this.subscription.add(
-          this.financaService.listarFinancas(0, 100, 'vencimento').subscribe((financasResponse: any) => {
-            const financas: Financa[] = financasResponse.content || financasResponse || [];
+          this.financaService.listarFinancas(0, 100, 'vencimento').subscribe((financasResponse: FinancaResponse) => {
+            const financas: Financa[] = financasResponse.content || [];
             const meses = [
               'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
               'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
             ];
-            const receitasPorMes = Array(12).fill(0);
-            const despesasPorMes = Array(12).fill(0);
+            const receitasPorMes: number[] = Array(12).fill(0);
+            const despesasPorMes: number[] = Array(12).fill(0);
             proventos.forEach(provento => {
               const data = new Date(provento.data);
               receitasPorMes[data.getMonth()] += provento.valor;

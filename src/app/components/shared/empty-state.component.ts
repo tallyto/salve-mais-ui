@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SALVE_COMMON } from '../../shared/primeng-shared';
+import { SALVE_COMMON } from '@shared/primeng-shared';
 
 @Component({
   selector: 'app-empty-state',

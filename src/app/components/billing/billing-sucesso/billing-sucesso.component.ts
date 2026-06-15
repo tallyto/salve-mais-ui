@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { SALVE_COMMON } from '../../../shared/primeng-shared';
+import { SALVE_COMMON } from '@shared/primeng-shared';
 
 @Component({
   selector: 'app-billing-sucesso',

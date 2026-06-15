@@ -3,7 +3,7 @@ import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Anexo, UrlDownload } from '@models/anexo.model';
 import { AnexoService } from '@services/anexo.service';
-import { SALVE_COMMON, SALVE_DATA, SALVE_OVERLAY } from '../../../shared/primeng-shared';
+import { SALVE_COMMON, SALVE_DATA, SALVE_OVERLAY } from '@shared/primeng-shared';
 
 @Component({
     selector: 'app-comprovantes-dialog',

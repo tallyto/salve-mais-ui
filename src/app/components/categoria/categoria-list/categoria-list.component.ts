@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { CategoriaService } from '../../../services/categoria.service';
-import { Categoria, TipoCategoria } from '../../../models/categoria.model';
+import { CategoriaService } from '@services/categoria.service';
+import { Categoria, TipoCategoria } from '@models/categoria.model';
 
 interface TipoOption {
   label: string;

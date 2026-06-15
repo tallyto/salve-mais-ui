@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { SALVE_COMMON } from '../../shared/primeng-shared';
+import { SALVE_COMMON } from '@shared/primeng-shared';
 
 @Component({
   selector: 'app-action-buttons',

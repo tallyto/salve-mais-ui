@@ -30,6 +30,7 @@
       "@services/*": ["src/app/services/*"],
       "@models/*": ["src/app/models/*"],
       "@directives/*": ["src/app/directives/*"],
+      "@shared/*": ["src/app/shared/*"],
       "@utils/*": ["src/app/utils/*"],
       "@environments/*": ["src/environments/*"]
     }

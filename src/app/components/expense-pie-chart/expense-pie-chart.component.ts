@@ -1,12 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NgChartsModule } from 'ng2-charts';
 import { ChartData, ChartOptions } from 'chart.js';
 import { Subscription } from 'rxjs';
-import { Financa } from '../../models/financa.model';
-import { ContasFixasService } from '../../services/financa.service';
+import { Financa } from '@models/financa.model';
+import { ContasFixasService } from '@services/financa.service';
 
 @Component({
   selector: 'app-expense-pie-chart',
-  standalone: false,
+  standalone: true,
+  imports: [NgChartsModule],
   template: `
     <canvas baseChart
       [data]="pieChartData"
@@ -45,11 +47,10 @@ export class ExpensePieChartComponent implements OnInit, OnDestroy {
   constructor(private financaService: ContasFixasService) {}
 
   ngOnInit(): void {
-    // Busca as financas e atualiza o gráfico
     this.subscription.add(
-      this.financaService.listarFinancas(0, 100, 'categoria').subscribe((response: any) => {
+      this.financaService.listarFinancas(0, 100, 'categoria').subscribe((response: { content?: Financa[] }) => {
         const financas: Financa[] = response.content || [];
-        const categoriaMap: { [key: string]: number } = {};
+        const categoriaMap: Record<string, number> = {};
         financas.forEach(financa => {
           const categoria = financa.categoria?.nome || 'Outros';
           categoriaMap[categoria] = (categoriaMap[categoria] || 0) + financa.valor;

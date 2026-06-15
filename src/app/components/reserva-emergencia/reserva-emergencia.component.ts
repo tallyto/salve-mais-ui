@@ -1,18 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReservaEmergenciaService } from '../../services/reserva-emergencia.service';
-import { HistoricoContribuicao, ReservaEmergencia, ReservaEmergenciaDetalhe } from '../../models/reserva-emergencia.model';
-import { ContaService } from '../../services/conta.service';
-import { Conta, TipoConta } from '../../models/conta.model';
+import { FormsModule } from '@angular/forms';
+import { ReservaEmergenciaService } from '@services/reserva-emergencia.service';
+import { HistoricoContribuicao, ReservaEmergencia, ReservaEmergenciaDetalhe } from '@models/reserva-emergencia.model';
+import { ContaService } from '@services/conta.service';
+import { Conta, TipoConta } from '@models/conta.model';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { SALVE_COMMON, SALVE_DATA, SALVE_OVERLAY } from '../../shared/primeng-shared';
+import { SALVE_COMMON, SALVE_DATA, SALVE_OVERLAY, SALVE_FORMS } from '@shared/primeng-shared';
+import { InfoBlockComponent, SkeletonReservaComponent, ActionButtonsComponent } from '@components/shared';
 
 @Component({
   selector: 'app-reserva-emergencia',
   templateUrl: './reserva-emergencia.component.html',
   standalone: true,
-  imports: [CommonModule, ...SALVE_COMMON, ...SALVE_DATA, ...SALVE_OVERLAY]
+  imports: [CommonModule, FormsModule, ...SALVE_COMMON, ...SALVE_DATA, ...SALVE_OVERLAY, ...SALVE_FORMS, InfoBlockComponent, SkeletonReservaComponent, ActionButtonsComponent]
 })
 export class ReservaEmergenciaComponent implements OnInit {
   reservas: ReservaEmergencia[] = [];

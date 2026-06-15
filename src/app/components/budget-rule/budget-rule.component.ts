@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import { environment } from '@environments/environment';
 import { NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
-import { SALVE_COMMON, SALVE_DATA } from '../../shared/primeng-shared';
+import { SALVE_COMMON, SALVE_DATA } from '@shared/primeng-shared';
 
 interface BudgetRuleData {
   // Valores ideais

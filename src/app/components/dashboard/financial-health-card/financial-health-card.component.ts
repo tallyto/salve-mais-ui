@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { SALVE_COMMON, SALVE_DATA } from '../../../shared/primeng-shared';
-import { DashboardSummary } from '../../../services/dashboard.service';
+import { SALVE_COMMON, SALVE_DATA } from '@shared/primeng-shared';
+import { DashboardSummary } from '@services/dashboard.service';
 
 @Component({
   selector: 'app-financial-health-card',

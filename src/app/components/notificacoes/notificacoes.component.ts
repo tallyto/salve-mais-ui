@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificacaoService, NotificacaoDTO } from '../../services/notificacao.service';
+import { NotificacaoService, NotificacaoDTO } from '@services/notificacao.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { SALVE_COMMON, SALVE_DATA } from '../../shared/primeng-shared';
+import { SALVE_COMMON, SALVE_DATA } from '@shared/primeng-shared';
 
 @Component({
     selector: 'app-notificacoes',

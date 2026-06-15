@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { TipoCategoria } from '../../../models/categoria.model';
+import { TipoCategoria } from '@models/categoria.model';
 
 @Component({
   selector: 'app-categoria-type-chip',

@@ -1,16 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from '../../services/account.service';
-import { ProventoService } from '../../services/provento.service';
-import { DashboardService, DashboardSummary, CategoryExpense, MonthlyExpense, VariationData } from '../../services/dashboard.service';
-import { Conta, TipoConta } from '../../models/conta.model';
-import { Provento } from '../../models/provento.model';
+import { CommonModule } from '@angular/common';
+import { AccountService } from '@services/account.service';
+import { ProventoService } from '@services/provento.service';
+import { DashboardService, DashboardSummary, CategoryExpense, MonthlyExpense, VariationData } from '@services/dashboard.service';
+import { Conta, TipoConta } from '@models/conta.model';
+import { Provento } from '@models/provento.model';
 import { forkJoin, of } from 'rxjs';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
-import { GastoCartaoService } from '../../services/gasto-cartao.service';
-import { GastoCartao } from '../../models/gasto-cartao.model';
+import { GastoCartaoService } from '@services/gasto-cartao.service';
+import { GastoCartao } from '@models/gasto-cartao.model';
 import { catchError } from 'rxjs/operators';
-import { Page } from '../../models/page.model';
+import { Page } from '@models/page.model';
 import { Period } from './month-year-filter/month-year-filter.component';
+import { NgChartsModule } from 'ng2-charts';
+import { SALVE_COMMON, SALVE_DATA, SALVE_OVERLAY } from '@shared/primeng-shared';
+import { MonthYearFilterComponent } from './month-year-filter/month-year-filter.component';
+import { FinancialHealthCardComponent } from './financial-health-card/financial-health-card.component';
+import { ReservaEmergenciaCardComponent } from './reserva-emergencia-card/reserva-emergencia-card.component';
+import { VariationTableComponent } from './variation-table/variation-table.component';
+import { LimiteAlertasWidgetComponent } from '@components/shared/limite-alertas-widget.component';
+import { NotificacoesWidgetComponent } from '@components/notificacoes/notificacoes-widget/notificacoes-widget.component';
+import { SkeletonKpiComponent, SkeletonChartComponent } from '../shared';
 
 interface Transaction {
   descricao: string;
@@ -37,7 +47,22 @@ interface QuickAction {
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  standalone: false
+  standalone: true,
+  imports: [
+    CommonModule,
+    NgChartsModule,
+    ...SALVE_COMMON,
+    ...SALVE_DATA,
+    ...SALVE_OVERLAY,
+    MonthYearFilterComponent,
+    FinancialHealthCardComponent,
+    ReservaEmergenciaCardComponent,
+    VariationTableComponent,
+    LimiteAlertasWidgetComponent,
+    NotificacoesWidgetComponent,
+    SkeletonKpiComponent,
+    SkeletonChartComponent
+  ]
 })
 export class DashboardComponent implements OnInit {
   accounts: Conta[] = [];

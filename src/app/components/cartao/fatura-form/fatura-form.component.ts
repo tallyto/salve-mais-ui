@@ -4,17 +4,17 @@ import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { of as observableOf, catchError, map } from 'rxjs';
 import { TableLazyLoadEvent } from 'primeng/table';
-import { CurrencyInputDirective } from '../../../directives/currency-input.directive';
+import { CurrencyInputDirective } from '@directives/currency-input.directive';
 import { FaturaService } from '@services/fatura.service';
 import { CartaoService } from '@services/cartao.service';
 import { FaturaManualDTO, FaturaResponseDTO, FaturaPreviewDTO } from '@models/fatura.model';
 import { Cartao } from '@models/cartao.model';
 import { PagamentoFaturaModalComponent } from '../pagamento-fatura-modal/pagamento-fatura-modal.component';
-import { MonthYearFilterComponent } from '../../dashboard/month-year-filter/month-year-filter.component';
-import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '../../../shared/primeng-shared';
-import { MONTHS, generateYears as utilGenerateYears, formatarMoeda } from '../../../shared/utils';
-import { LazyTableBase } from '../../../shared/lazy-table.base';
-import { StatCardComponent } from '../../shared';
+import { MonthYearFilterComponent } from '@app/components/dashboard/month-year-filter/month-year-filter.component';
+import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '@shared/primeng-shared';
+import { MONTHS, generateYears as utilGenerateYears, formatarMoeda } from '@shared/utils';
+import { LazyTableBase } from '@shared/lazy-table.base';
+import { StatCardComponent } from '@app/components/shared';
 
 @Component({
     selector: 'app-fatura-form',

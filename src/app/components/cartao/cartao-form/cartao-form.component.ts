@@ -4,7 +4,7 @@ import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CartaoService } from "@services/cartao.service";
 import { Cartao } from "@models/cartao.model";
-import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '../../../shared/primeng-shared';
+import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '@shared/primeng-shared';
 
 @Component({
   selector: 'app-cartao-form',

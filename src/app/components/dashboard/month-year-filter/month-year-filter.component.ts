@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { SALVE_COMMON, SALVE_FORMS } from '../../../shared/primeng-shared';
+import { SALVE_COMMON, SALVE_FORMS } from '@shared/primeng-shared';
 
 export interface Period {
   month: number;

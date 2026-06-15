@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Optional, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-import { CategoriaService } from '../../../services/categoria.service';
-import { Categoria, TipoCategoria } from '../../../models/categoria.model';
+import { CategoriaService } from '@services/categoria.service';
+import { Categoria, TipoCategoria } from '@models/categoria.model';
 
 interface TipoOption {
   label: string;

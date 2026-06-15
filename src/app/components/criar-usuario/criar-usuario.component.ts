@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { TenantService } from '../../services/tenant.service';
-import { SALVE_COMMON, SALVE_FORMS, SALVE_OVERLAY } from '../../shared/primeng-shared';
-import { senhasIguaisValidator, markFormGroupTouched } from '../../shared/utils';
+import { AuthService } from '@services/auth.service';
+import { TenantService } from '@services/tenant.service';
+import { SALVE_COMMON, SALVE_FORMS, SALVE_OVERLAY } from '@shared/primeng-shared';
+import { senhasIguaisValidator, markFormGroupTouched } from '@shared/utils';
 
 @Component({
   selector: 'app-criar-usuario',

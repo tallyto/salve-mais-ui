@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { Anexo, UrlDownload } from '../../../models/anexo.model';
+import { Anexo, UrlDownload } from '@models/anexo.model';
 import { AnexoService } from '@services/anexo.service';
-import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '../../../shared/primeng-shared';
+import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '@shared/primeng-shared';
 
 @Component({
   selector: 'app-comprovantes-list',

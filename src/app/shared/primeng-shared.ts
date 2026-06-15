@@ -25,6 +25,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { SelectModule } from 'primeng/select';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TableModule } from 'primeng/table';
+import { TabsModule } from 'primeng/tabs';
 import { TagModule } from 'primeng/tag';
 import { TextareaModule } from 'primeng/textarea';
 import { ToastModule } from 'primeng/toast';
@@ -62,6 +63,7 @@ export const SALVE_FORMS = [
 /** Imports para componentes com tabelas e dados */
 export const SALVE_DATA = [
   TableModule,
+  TabsModule,
   ProgressBarModule,
   SkeletonModule,
   ProgressSpinnerModule,

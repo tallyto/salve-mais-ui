@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { BillingService } from '../../services/billing.service';
-import { BillingStatus } from '../../models/billing-status.model';
-import { Plano } from '../../models/plano.model';
+import { BillingService } from '@services/billing.service';
+import { BillingStatus } from '@models/billing-status.model';
+import { Plano } from '@models/plano.model';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { SALVE_COMMON, SALVE_DATA } from '../../shared/primeng-shared';
+import { SALVE_COMMON, SALVE_DATA } from '@shared/primeng-shared';
 
 @Component({
   selector: 'app-billing',

@@ -1,11 +1,11 @@
-import { formatarMoeda } from '../../../shared/utils';
+import { formatarMoeda } from '@shared/utils';
 import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { CartaoService } from '@services/cartao.service';
 import { Cartao, CartaoLimiteDTO, CartaoLimiteStatusDTO } from '@models/cartao.model';
-import { PageHeaderComponent } from '../../shared/page-header.component';
-import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '../../../shared/primeng-shared';
+import { PageHeaderComponent } from '@components/shared/page-header.component';
+import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '@shared/primeng-shared';
 
 @Component({
   selector: 'app-cartao-limites',

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CartaoService } from '../../services/cartao.service';
-import { CartaoLimiteStatusDTO } from '../../models/cartao.model';
-import { SALVE_COMMON, SALVE_DATA } from '../../shared/primeng-shared';
-import { formatarMoeda } from '../../shared/utils';
+import { CartaoService } from '@services/cartao.service';
+import { CartaoLimiteStatusDTO } from '@models/cartao.model';
+import { SALVE_COMMON, SALVE_DATA } from '@shared/primeng-shared';
+import { formatarMoeda } from '@shared/utils';
 
 @Component({
   selector: 'app-limite-alertas-widget',

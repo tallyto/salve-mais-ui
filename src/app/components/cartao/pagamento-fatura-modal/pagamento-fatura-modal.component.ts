@@ -4,10 +4,10 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
 import { FaturaService } from '@services/fatura.service';
 import { AccountService } from '@services/account.service';
-import { Conta, TipoConta } from '../../../models/conta.model';
+import { Conta, TipoConta } from '@models/conta.model';
 import { FaturaResponseDTO } from '@models/fatura.model';
-import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '../../../shared/primeng-shared';
-import { formatarMoeda } from '../../../shared/utils';
+import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '@shared/primeng-shared';
+import { formatarMoeda } from '@shared/utils';
 
 @Component({
     selector: 'app-pagamento-fatura-modal',

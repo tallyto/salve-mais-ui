@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { NgChartsModule } from 'ng2-charts';
 import { ChartData, ChartOptions } from 'chart.js';
 
 @Component({
   selector: 'app-spending-trend-chart',
-  standalone: false,
+  standalone: true,
+  imports: [NgChartsModule],
   template: `
     <canvas baseChart
       [data]="lineChartData"
@@ -42,8 +44,6 @@ export class SpendingTrendChartComponent implements OnInit {
       }
     ]
   };
-
-  constructor() {}
 
   ngOnInit(): void {}
 }
