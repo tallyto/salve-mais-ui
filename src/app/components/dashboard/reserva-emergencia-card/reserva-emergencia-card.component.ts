@@ -1,9 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { ProgressBarModule } from 'primeng/progressbar';
-import { RouterModule } from '@angular/router';
+import { SALVE_COMMON, SALVE_DATA } from '../../../shared/primeng-shared';
 import { DashboardSummary } from '../../../services/dashboard.service';
 
 type ReservaEmergencia = NonNullable<DashboardSummary['reservaEmergencia']>;
@@ -11,7 +7,7 @@ type ReservaEmergencia = NonNullable<DashboardSummary['reservaEmergencia']>;
 @Component({
   selector: 'app-reserva-emergencia-card',
   standalone: true,
-  imports: [CommonModule, ButtonModule, CardModule, ProgressBarModule, RouterModule],
+  imports: [...SALVE_COMMON, ...SALVE_DATA],
   templateUrl: './reserva-emergencia-card.component.html'
 })
 export class ReservaEmergenciaCardComponent {

@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { CardModule } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
-import { SkeletonModule } from 'primeng/skeleton';
-import { RouterModule } from '@angular/router';
+import { SALVE_COMMON, SALVE_DATA } from '../../shared/primeng-shared';
 
 import { NotificacaoService, ResumoNotificacoes } from '../../services/notificacao.service';
 
@@ -11,11 +7,8 @@ import { NotificacaoService, ResumoNotificacoes } from '../../services/notificac
   selector: 'app-notificacoes-widget',
   standalone: true,
   imports: [
-    CommonModule,
-    CardModule,
-    ButtonModule,
-    SkeletonModule,
-    RouterModule
+    ...SALVE_COMMON,
+    ...SALVE_DATA
   ],
   template: `
     <p-card styleClass="dashboard-widget-card h-full">

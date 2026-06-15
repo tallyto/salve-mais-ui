@@ -1,34 +1,21 @@
 import { Component, OnInit, Optional } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { InputTextModule } from 'primeng/inputtext';
-import { FloatLabelModule } from 'primeng/floatlabel';
-import { TableModule } from 'primeng/table';
-import { TooltipModule } from 'primeng/tooltip';
-import { DialogModule } from 'primeng/dialog';
 import { CalendarModule } from 'primeng/calendar';
 import { CartaoService } from "@services/cartao.service";
 import { Cartao } from "@models/cartao.model";
+import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '../../../shared/primeng-shared';
 
 @Component({
   selector: 'app-cartao-form',
   templateUrl: './cartao-form.component.html',
   standalone: true,
   imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule,
-    CardModule,
-    InputTextModule,
-    FloatLabelModule,
-    ButtonModule,
-    TableModule,
-    TooltipModule,
-    DialogModule,
+    ...SALVE_COMMON,
+    ...SALVE_FORMS,
+    ...SALVE_DATA,
+    ...SALVE_OVERLAY,
     CalendarModule
   ],
   providers: [MessageService, DialogService]

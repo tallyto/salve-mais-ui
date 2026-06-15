@@ -1,31 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-import { CardModule } from 'primeng/card';
-import { InputTextModule } from 'primeng/inputtext';
-import { ButtonModule } from 'primeng/button';
-import { SkeletonModule } from 'primeng/skeleton';
-import { TooltipModule } from 'primeng/tooltip';
-import { FloatLabelModule } from 'primeng/floatlabel';
-import { DividerModule } from 'primeng/divider';
 import { Anexo, UrlDownload } from '../../../models/anexo.model';
 import { AnexoService } from '@services/anexo.service';
+import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '../../../shared/primeng-shared';
 
 @Component({
   selector: 'app-comprovantes-list',
   templateUrl: './comprovantes-list.component.html',
   standalone: true,
   imports: [
-    CommonModule,
-    FormsModule,
-    CardModule,
-    InputTextModule,
-    ButtonModule,
-    SkeletonModule,
-    FloatLabelModule,
-    DividerModule,
-    TooltipModule
+    ...SALVE_COMMON,
+    ...SALVE_FORMS,
+    ...SALVE_DATA
   ],
   providers: [MessageService]
 })

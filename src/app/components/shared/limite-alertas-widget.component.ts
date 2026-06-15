@@ -1,22 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { CardModule } from 'primeng/card';
-import { ButtonModule } from 'primeng/button';
-import { ProgressBarModule } from 'primeng/progressbar';
-import { RouterModule } from '@angular/router';
-
 import { CartaoService } from '../../services/cartao.service';
 import { CartaoLimiteStatusDTO } from '../../models/cartao.model';
+import { SALVE_COMMON, SALVE_DATA } from '../../shared/primeng-shared';
 
 @Component({
   selector: 'app-limite-alertas-widget',
   standalone: true,
   imports: [
-    CommonModule,
-    CardModule,
-    ButtonModule,
-    ProgressBarModule,
-    RouterModule
+    ...SALVE_COMMON,
+    ...SALVE_DATA
   ],
   template: `
     <p-card styleClass="dashboard-widget-card h-full">

@@ -1,13 +1,10 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
-import { DividerModule } from 'primeng/divider';
+import { SALVE_COMMON } from '../../shared/primeng-shared';
 
 @Component({
   selector: 'app-termos-uso',
   standalone: true,
-  imports: [CommonModule, RouterModule, ButtonModule, DividerModule],
+  imports: [...SALVE_COMMON],
   template: `
     <div style="min-height:100vh;background:#f8fafc;">
       <nav style="background:#00796b;padding:1rem 2rem;" class="flex align-items-center justify-content-between">

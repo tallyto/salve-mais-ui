@@ -1,14 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { CommonModule } from '@angular/common';
 import { NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { ProgressBarModule } from 'primeng/progressbar';
-import { SkeletonModule } from 'primeng/skeleton';
-import { TagModule } from 'primeng/tag';
+import { SALVE_COMMON, SALVE_DATA } from '../../shared/primeng-shared';
 
 interface BudgetRuleData {
   // Valores ideais
@@ -41,7 +36,7 @@ interface BudgetRuleData {
   selector: 'app-budget-rule',
   templateUrl: './budget-rule.component.html',
   standalone: true,
-  imports: [CommonModule, NgChartsModule, ButtonModule, CardModule, ProgressBarModule, SkeletonModule, TagModule]
+  imports: [...SALVE_COMMON, ...SALVE_DATA, NgChartsModule]
 })
 export class BudgetRuleComponent implements OnInit {
   budgetData: BudgetRuleData | null = null;

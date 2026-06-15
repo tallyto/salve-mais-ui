@@ -1,17 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { DialogModule } from 'primeng/dialog';
-import { FloatLabelModule } from 'primeng/floatlabel';
-import { InputTextModule } from 'primeng/inputtext';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { SelectModule } from 'primeng/select';
-import { TooltipModule } from 'primeng/tooltip';
 import { CompraParceladaService } from '../../services/compra-parcelada.service';
 import { CategoriaService } from '../../services/categoria.service';
 import { CartaoService } from '../../services/cartao.service';
@@ -20,22 +11,17 @@ import { Cartao } from '../../models/cartao.model';
 import { CompraParceladaRequest } from '../../models/compra-parcelada.model';
 import { CategoriaFormComponent, CategoriaModule } from '../categoria';
 import { CartaoFormComponent } from '../cartao/cartao-form/cartao-form.component';
+import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '../../shared/primeng-shared';
 
 @Component({
   selector: 'app-compra-parcelada-form',
   standalone: true,
   imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ButtonModule,
-    CardModule,
-    CategoriaModule,
-    DialogModule,
-    FloatLabelModule,
-    InputTextModule,
-    ProgressSpinnerModule,
-    SelectModule,
-    TooltipModule
+    ...SALVE_COMMON,
+    ...SALVE_FORMS,
+    ...SALVE_DATA,
+    ...SALVE_OVERLAY,
+    CategoriaModule
   ],
   templateUrl: './compra-parcelada-form.component.html'
 })

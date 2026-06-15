@@ -1,25 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl, AsyncValidatorFn, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { Router, ActivatedRoute, RouterModule } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { TenantService } from '../../services/tenant.service';
 import { Observable, map, of, debounceTime, switchMap } from 'rxjs';
-import { ButtonModule } from 'primeng/button';
-import { FloatLabelModule } from 'primeng/floatlabel';
-import { InputTextModule } from 'primeng/inputtext';
-import { DividerModule } from 'primeng/divider';
+import { SALVE_COMMON, SALVE_FORMS } from '../../shared/primeng-shared';
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule,
-    ButtonModule,
-    FloatLabelModule,
-    InputTextModule,
-    DividerModule
+    ...SALVE_COMMON,
+    ...SALVE_FORMS
   ],
   templateUrl: './register.component.html'
 })

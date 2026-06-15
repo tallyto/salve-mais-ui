@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
+import { SALVE_COMMON } from '../../shared/primeng-shared';
 
 @Component({
   selector: 'app-not-found',
   standalone: true,
-  imports: [CommonModule, RouterModule, ButtonModule],
+  imports: [...SALVE_COMMON],
   template: `
     <div class="flex flex-column align-items-center justify-content-center text-center px-4"
          style="min-height: 100vh; background: var(--surface-ground);">

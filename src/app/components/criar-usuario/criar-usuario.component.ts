@@ -1,28 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { TenantService } from '../../services/tenant.service';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { FloatLabelModule } from 'primeng/floatlabel';
-import { InputTextModule } from 'primeng/inputtext';
-import { MessageModule } from 'primeng/message';
-import { PasswordModule } from 'primeng/password';
+import { SALVE_COMMON, SALVE_FORMS, SALVE_OVERLAY } from '../../shared/primeng-shared';
 
 @Component({
   selector: 'app-criar-usuario',
   standalone: true,
   imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ButtonModule,
-    CardModule,
-    FloatLabelModule,
-    InputTextModule,
-    MessageModule,
-    PasswordModule
+    ...SALVE_COMMON,
+    ...SALVE_FORMS,
+    ...SALVE_OVERLAY
   ],
   templateUrl: './criar-usuario.component.html'
 })

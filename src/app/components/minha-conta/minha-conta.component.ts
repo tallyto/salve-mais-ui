@@ -1,26 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { UsuarioService } from '../../services/usuario.service';
 import { MessageService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { FloatLabelModule } from 'primeng/floatlabel';
-import { InputTextModule } from 'primeng/inputtext';
-import { PasswordModule } from 'primeng/password';
+import { SALVE_COMMON, SALVE_FORMS } from '../../shared/primeng-shared';
 
 @Component({
     selector: 'app-minha-conta',
     templateUrl: './minha-conta.component.html',
     standalone: true,
     imports: [
-      CommonModule,
-      ReactiveFormsModule,
-      ButtonModule,
-      CardModule,
-      FloatLabelModule,
-      InputTextModule,
-      PasswordModule
+      ...SALVE_COMMON,
+      ...SALVE_FORMS
     ]
 })
 export class MinhaContaComponent implements OnInit {

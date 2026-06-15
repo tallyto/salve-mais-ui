@@ -1,16 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
+import { SALVE_COMMON } from '../../../shared/primeng-shared';
 
 @Component({
   selector: 'app-billing-cancelado',
   standalone: true,
   imports: [
-    CommonModule,
-    ButtonModule,
-    CardModule
+    ...SALVE_COMMON
   ],
   templateUrl: './billing-cancelado.component.html'
 })

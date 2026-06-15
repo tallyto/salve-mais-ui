@@ -1,12 +1,11 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { TableModule } from 'primeng/table';
+import { SALVE_COMMON, SALVE_DATA } from '../../../shared/primeng-shared';
 import { VariationData } from '../../../services/dashboard.service';
 
 @Component({
   selector: 'app-variation-table',
   standalone: true,
-  imports: [CommonModule, TableModule],
+  imports: [...SALVE_COMMON, ...SALVE_DATA],
   templateUrl: './variation-table.component.html'
 })
 export class VariationTableComponent {

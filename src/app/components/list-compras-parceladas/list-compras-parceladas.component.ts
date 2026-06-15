@@ -1,47 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { CheckboxModule } from 'primeng/checkbox';
-import { FloatLabelModule } from 'primeng/floatlabel';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { InputTextModule } from 'primeng/inputtext';
-import { PaginatorModule } from 'primeng/paginator';
-import { ProgressBarModule } from 'primeng/progressbar';
-import { SkeletonModule } from 'primeng/skeleton';
-import { SelectModule } from 'primeng/select';
-import { TagModule } from 'primeng/tag';
-import { TooltipModule } from 'primeng/tooltip';
 import { CompraParceladaService } from '../../services/compra-parcelada.service';
 import { CategoriaService } from '../../services/categoria.service';
 import { CartaoService } from '../../services/cartao.service';
 import { CompraParcelada, Parcela } from '../../models/compra-parcelada.model';
 import { Categoria } from '../../models/categoria.model';
 import { Cartao } from '../../models/cartao.model';
+import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '../../shared/primeng-shared';
 
 @Component({
   selector: 'app-list-compras-parceladas',
   standalone: true,
   imports: [
-    CommonModule,
-    FormsModule,
-    ButtonModule,
-    CardModule,
-    CheckboxModule,
-    FloatLabelModule,
-    IconFieldModule,
-    InputIconModule,
-    InputTextModule,
-    PaginatorModule,
-    ProgressBarModule,
-    SkeletonModule,
-    SelectModule,
-    TagModule,
-    TooltipModule
+    ...SALVE_COMMON,
+    ...SALVE_FORMS,
+    ...SALVE_DATA
   ],
   templateUrl: './list-compras-parceladas.component.html'
 })

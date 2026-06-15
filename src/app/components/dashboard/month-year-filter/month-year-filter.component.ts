@@ -1,11 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { FloatLabelModule } from 'primeng/floatlabel';
-import { SelectModule } from 'primeng/select';
-import { TooltipModule } from 'primeng/tooltip';
+import { SALVE_COMMON, SALVE_FORMS } from '../../../shared/primeng-shared';
 
 export interface Period {
   month: number;
@@ -16,13 +10,8 @@ export interface Period {
   selector: 'app-month-year-filter',
   standalone: true,
   imports: [
-    CommonModule,
-    FormsModule,
-    ButtonModule,
-    CardModule,
-    FloatLabelModule,
-    SelectModule,
-    TooltipModule
+    ...SALVE_COMMON,
+    ...SALVE_FORMS
   ],
   templateUrl: './month-year-filter.component.html'
 })

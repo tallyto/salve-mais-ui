@@ -1,26 +1,16 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { finalize } from 'rxjs/operators';
 import { MessageService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { FloatLabelModule } from 'primeng/floatlabel';
-import { InputTextModule } from 'primeng/inputtext';
+import { SALVE_COMMON, SALVE_FORMS } from '../../shared/primeng-shared';
 
 @Component({
   selector: 'app-recuperar-senha',
   standalone: true,
   imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ButtonModule,
-    CardModule,
-    FloatLabelModule,
-    InputTextModule,
-    RouterModule
+    ...SALVE_COMMON,
+    ...SALVE_FORMS
   ],
   templateUrl: './recuperar-senha.component.html'
 })

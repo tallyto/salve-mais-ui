@@ -1,27 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
 import { Usuario } from '../../models/usuario.model';
 import { NovoUsuarioDialogComponent } from './novo-usuario-dialog/novo-usuario-dialog.component';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { SkeletonModule } from 'primeng/skeleton';
-import { TableModule } from 'primeng/table';
-import { TooltipModule } from 'primeng/tooltip';
 import { DialogService } from 'primeng/dynamicdialog';
+import { SALVE_COMMON, SALVE_DATA } from '../../shared/primeng-shared';
 
 @Component({
   selector: 'app-admin-usuarios',
   standalone: true,
   imports: [
-    CommonModule,
-    ButtonModule,
-    CardModule,
-    SkeletonModule,
-    TableModule,
-    TooltipModule
+    ...SALVE_COMMON,
+    ...SALVE_DATA
   ],
   templateUrl: './admin-usuarios.component.html'
 })

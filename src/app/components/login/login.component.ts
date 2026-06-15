@@ -1,34 +1,19 @@
 import { isTokenExpired } from '../../utils/jwt.util';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { finalize } from 'rxjs/operators';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { CheckboxModule } from 'primeng/checkbox';
-import { InputTextModule } from 'primeng/inputtext';
-import { FloatLabelModule } from 'primeng/floatlabel';
-import { DividerModule } from 'primeng/divider';
-import { PasswordModule } from 'primeng/password';
+import { SALVE_COMMON, SALVE_FORMS } from '../../shared/primeng-shared';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ButtonModule,
-    CardModule,
-    CheckboxModule,
-    InputTextModule,
-    FloatLabelModule,
-    DividerModule,
-    PasswordModule,
-    RouterModule
+    ...SALVE_COMMON,
+    ...SALVE_FORMS
   ],
   templateUrl: './login.component.html'
 })

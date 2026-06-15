@@ -1,13 +1,11 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { CardModule } from 'primeng/card';
-import { ProgressBarModule } from 'primeng/progressbar';
+import { SALVE_COMMON, SALVE_DATA } from '../../../shared/primeng-shared';
 import { DashboardSummary } from '../../../services/dashboard.service';
 
 @Component({
   selector: 'app-financial-health-card',
   standalone: true,
-  imports: [CommonModule, CardModule, ProgressBarModule],
+  imports: [...SALVE_COMMON, ...SALVE_DATA],
   templateUrl: './financial-health-card.component.html'
 })
 export class FinancialHealthCardComponent {

@@ -2,24 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { BillingService } from '../../services/billing.service';
 import { BillingStatus } from '../../models/billing-status.model';
 import { Plano } from '../../models/plano.model';
-import { CommonModule } from '@angular/common';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { ProgressBarModule } from 'primeng/progressbar';
-import { SkeletonModule } from 'primeng/skeleton';
-import { TagModule } from 'primeng/tag';
+import { SALVE_COMMON, SALVE_DATA } from '../../shared/primeng-shared';
 
 @Component({
   selector: 'app-billing',
   standalone: true,
   imports: [
-    CommonModule,
-    ButtonModule,
-    CardModule,
-    ProgressBarModule,
-    SkeletonModule,
-    TagModule
+    ...SALVE_COMMON,
+    ...SALVE_DATA
   ],
   templateUrl: './billing.component.html'
 })

@@ -1,25 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { FloatLabelModule } from 'primeng/floatlabel';
-import { PasswordModule } from 'primeng/password';
+import { SALVE_COMMON, SALVE_FORMS } from '../../shared/primeng-shared';
 
 @Component({
     selector: 'app-redefinir-senha',
     standalone: true,
     imports: [
-      CommonModule,
-      ReactiveFormsModule,
-      ButtonModule,
-      CardModule,
-      FloatLabelModule,
-      PasswordModule,
-      RouterModule
+      ...SALVE_COMMON,
+      ...SALVE_FORMS
     ],
     templateUrl: './redefinir-senha.component.html'
 })

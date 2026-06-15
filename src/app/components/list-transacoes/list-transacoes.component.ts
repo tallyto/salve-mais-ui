@@ -6,39 +6,17 @@ import { TipoTransacao } from '../../models/tipo-transacao.enum';
 import { ContaService } from '../../services/conta.service';
 import { CategoriaService } from '../../services/categoria.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { CommonModule } from '@angular/common';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { TableModule } from 'primeng/table';
-import { SelectModule } from 'primeng/select';
-import { DatePickerModule } from 'primeng/datepicker';
-import { FloatLabelModule } from 'primeng/floatlabel';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { TagModule } from 'primeng/tag';
-import { MenuModule } from 'primeng/menu';
-import { TooltipModule } from 'primeng/tooltip';
-import { RouterModule } from '@angular/router';
-import { MessageModule } from 'primeng/message';
+import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '../../shared/primeng-shared';
 
 @Component({
   selector: 'app-list-transacoes',
   templateUrl: './list-transacoes.component.html',
   standalone: true,
   imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ButtonModule,
-    CardModule,
-    TableModule,
-    SelectModule,
-    DatePickerModule,
-    FloatLabelModule,
-    ProgressSpinnerModule,
-    TagModule,
-    MenuModule,
-    TooltipModule,
-    RouterModule,
-    MessageModule
+    ...SALVE_COMMON,
+    ...SALVE_FORMS,
+    ...SALVE_DATA,
+    ...SALVE_OVERLAY
   ]
 })
 export class ListTransacoesComponent implements OnInit {

@@ -1,19 +1,8 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { of as observableOf, catchError, map } from 'rxjs';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { InputTextModule } from 'primeng/inputtext';
-import { FloatLabelModule } from 'primeng/floatlabel';
-import { SelectModule } from 'primeng/select';
-import { TableModule } from 'primeng/table';
-import { ProgressBarModule } from 'primeng/progressbar';
-import { TagModule } from 'primeng/tag';
-import { TooltipModule } from 'primeng/tooltip';
-import { DatePickerModule } from 'primeng/datepicker';
 import { CurrencyInputDirective } from '../../../directives/currency-input.directive';
 import { FaturaService } from '@services/fatura.service';
 import { CartaoService } from '@services/cartao.service';
@@ -21,6 +10,7 @@ import { FaturaManualDTO, FaturaResponseDTO, FaturaPreviewDTO } from '@models/fa
 import { Cartao } from '@models/cartao.model';
 import { PagamentoFaturaModalComponent } from '../pagamento-fatura-modal/pagamento-fatura-modal.component';
 import { MonthYearFilterComponent } from '../../dashboard/month-year-filter/month-year-filter.component';
+import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '../../../shared/primeng-shared';
 
 interface MonthOption {
   value: number;
@@ -32,19 +22,9 @@ interface MonthOption {
     templateUrl: './fatura-form.component.html',
     standalone: true,
     imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        FormsModule,
-        ButtonModule,
-        CardModule,
-        InputTextModule,
-        FloatLabelModule,
-        SelectModule,
-        TableModule,
-        ProgressBarModule,
-        TagModule,
-        TooltipModule,
-        DatePickerModule,
+        ...SALVE_COMMON,
+        ...SALVE_FORMS,
+        ...SALVE_DATA,
         CurrencyInputDirective,
         MonthYearFilterComponent
     ],
