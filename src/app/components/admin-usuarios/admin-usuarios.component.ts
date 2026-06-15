@@ -8,6 +8,7 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { SALVE_COMMON, SALVE_DATA } from '../../shared/primeng-shared';
 import { PageHeaderComponent } from '../shared/page-header.component';
 import { EmptyStateComponent } from '../shared/empty-state.component';
+import { SkeletonTableComponent } from '../skeleton-loaders/skeleton-table.component';
 
 @Component({
   selector: 'app-admin-usuarios',
@@ -16,7 +17,8 @@ import { EmptyStateComponent } from '../shared/empty-state.component';
     ...SALVE_COMMON,
     ...SALVE_DATA,
     PageHeaderComponent,
-    EmptyStateComponent
+    EmptyStateComponent,
+    SkeletonTableComponent
   ],
   templateUrl: './admin-usuarios.component.html'
 })

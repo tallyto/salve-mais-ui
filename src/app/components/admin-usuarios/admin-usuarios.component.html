@@ -7,11 +7,7 @@
   </app-page-header>
 
   <p-card>
-    <div *ngIf="loading" class="flex flex-column gap-3">
-      <p-skeleton height="2.5rem"></p-skeleton>
-      <p-skeleton height="2.5rem"></p-skeleton>
-      <p-skeleton height="2.5rem"></p-skeleton>
-    </div>
+    <app-skeleton-table *ngIf="loading" [rows]="[1,2,3]"></app-skeleton-table>
 
     <div *ngIf="!loading && usuarios.length === 0" class="flex flex-column align-items-center justify-content-center p-5 gap-2">
       <i class="pi pi-users text-4xl text-color-secondary"></i>

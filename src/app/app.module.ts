@@ -110,6 +110,10 @@ import { LimiteAlertasWidgetComponent } from './components/shared/limite-alertas
 import { ActionButtonsComponent, PageHeaderComponent, EmptyStateComponent } from './components/shared';
 import { StatCardComponent } from './components/stat-card/stat-card.component';
 import { InfoBlockComponent } from './components/info-block/info-block.component';
+import { SkeletonKpiComponent } from './components/skeleton-loaders/skeleton-kpi.component';
+import { SkeletonChartComponent } from './components/skeleton-loaders/skeleton-chart.component';
+import { SkeletonTableComponent } from './components/skeleton-loaders/skeleton-table.component';
+import { SkeletonReservaComponent } from './components/skeleton-loaders/skeleton-reserva.component';
 import { ListComprasParceladasComponent } from './components/list-compras-parceladas/list-compras-parceladas.component';
 import { ListTransacoesComponent } from './components/list-transacoes/list-transacoes.component';
 import { LoginComponent } from './components/login/login.component';
@@ -235,6 +239,10 @@ registerLocaleData(localePt, 'pt-BR');
     EmptyStateComponent,
     StatCardComponent,
     InfoBlockComponent,
+    SkeletonKpiComponent,
+    SkeletonChartComponent,
+    SkeletonTableComponent,
+    SkeletonReservaComponent,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },
