@@ -16,6 +16,7 @@
   --salve-radius:        10px;
   --salve-radius-sm:     6px;
   --salve-radius-lg:     14px;
+  --surface-card:        #ffffff;
 }
 
 html.dark-mode {
@@ -32,6 +33,7 @@ html.dark-mode {
   --salve-kpi-positive:  rgba(74, 222, 128, 0.08);
   --salve-kpi-negative:  rgba(248, 113, 113, 0.1);
   --salve-kpi-icon-op:   0.22;
+  --surface-card:        #132030;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -49,6 +51,7 @@ html.dark-mode {
     --salve-kpi-positive:  rgba(74, 222, 128, 0.08);
     --salve-kpi-negative:  rgba(248, 113, 113, 0.1);
     --salve-kpi-icon-op:   0.22;
+    --surface-card:        #132030;
   }
 }
 
@@ -141,7 +144,7 @@ a.nav-active {
 
 // ─── Surface utilitário ────────────────────────────────────
 .salve-surface-card {
-  background: var(--p-surface-card, var(--surface-card, #fff));
+  background: var(--surface-card);
   border: 1px solid var(--salve-card-border);
   border-radius: 12px;
   box-shadow: var(--salve-card-shadow);
@@ -149,7 +152,7 @@ a.nav-active {
 }
 
 .salve-skeleton-card {
-  background: var(--p-surface-card, var(--surface-card, #fff));
+  background: var(--surface-card);
   border: 1px solid var(--salve-card-border);
   border-radius: 12px;
   box-shadow: var(--salve-card-shadow);
