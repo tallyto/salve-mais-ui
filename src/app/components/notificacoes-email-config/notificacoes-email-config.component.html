@@ -24,16 +24,12 @@
   </div>
 
   <div *ngIf="!loading" class="flex flex-column gap-4">
-    <div class="surface-ground border-round p-3 flex gap-3 align-items-start">
-        <i class="pi pi-info-circle text-xl text-primary"></i>
-        <div>
-          <h3 class="m-0 mb-1 font-semibold text-base">Como funciona?</h3>
-          <p class="m-0 text-sm text-color-secondary">
-            Quando ativado, você receberá um email diário no horário escolhido contendo um resumo de todas as suas
-            notificações pendentes, incluindo contas e faturas atrasadas ou próximas ao vencimento.
-          </p>
-        </div>
-    </div>
+    <app-info-block
+      label="Como funciona?"
+      value="Quando ativado, você receberá um email diário no horário escolhido contendo um resumo de todas as suas notificações pendentes, incluindo contas e faturas atrasadas ou próximas ao vencimento."
+      icon="pi-info-circle"
+      [expanded]="true">
+    </app-info-block>
 
     <p-card>
       <ng-template pTemplate="header">

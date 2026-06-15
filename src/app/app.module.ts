@@ -109,6 +109,7 @@ import { FinancialHealthCardComponent } from './components/dashboard/financial-h
 import { LimiteAlertasWidgetComponent } from './components/shared/limite-alertas-widget.component';
 import { ActionButtonsComponent, PageHeaderComponent, EmptyStateComponent } from './components/shared';
 import { StatCardComponent } from './components/stat-card/stat-card.component';
+import { InfoBlockComponent } from './components/info-block/info-block.component';
 import { ListComprasParceladasComponent } from './components/list-compras-parceladas/list-compras-parceladas.component';
 import { ListTransacoesComponent } from './components/list-transacoes/list-transacoes.component';
 import { LoginComponent } from './components/login/login.component';
@@ -233,6 +234,7 @@ registerLocaleData(localePt, 'pt-BR');
     PageHeaderComponent,
     EmptyStateComponent,
     StatCardComponent,
+    InfoBlockComponent,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt-BR' },

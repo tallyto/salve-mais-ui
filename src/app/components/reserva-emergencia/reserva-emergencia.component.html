@@ -96,13 +96,11 @@
 
             <div class="grid">
               <div class="col-12 md:col-6">
-                <div class="surface-ground border-round p-3 flex flex-column gap-2">
-                  <div class="flex align-items-center gap-2">
-                    <i class="pi pi-money-bill text-primary"></i>
-                    <span class="font-semibold">Aporte mensal</span>
-                  </div>
-                  <span class="text-color-secondary">{{ reservaAtual.valorContribuicaoMensal | currency:'BRL' }}</span>
-                </div>
+                <app-info-block
+                  label="Aporte mensal"
+                  [value]="reservaAtual.valorContribuicaoMensal | currency:'BRL'"
+                  icon="pi-money-bill">
+                </app-info-block>
               </div>
 
               <div class="col-12 md:col-6">
@@ -117,23 +115,19 @@
               </div>
 
               <div class="col-12 md:col-6">
-                <div class="surface-ground border-round p-3 flex flex-column gap-2">
-                  <div class="flex align-items-center gap-2">
-                    <i class="pi pi-receipt text-primary"></i>
-                    <span class="font-semibold">Despesa média</span>
-                  </div>
-                  <span class="text-color-secondary">{{ reservaAtual.despesasMensaisMedia | currency:'BRL' }}</span>
-                </div>
+                <app-info-block
+                  label="Despesa média"
+                  [value]="reservaAtual.despesasMensaisMedia | currency:'BRL'"
+                  icon="pi-receipt">
+                </app-info-block>
               </div>
 
               <div class="col-12 md:col-6">
-                <div class="surface-ground border-round p-3 flex flex-column gap-2">
-                  <div class="flex align-items-center gap-2">
-                    <i class="pi pi-heart text-primary"></i>
-                    <span class="font-semibold">Cobertura alvo</span>
-                  </div>
-                  <span class="text-color-secondary">{{ reservaAtual.multiplicadorDespesas }} meses</span>
-                </div>
+                <app-info-block
+                  label="Cobertura alvo"
+                  [value]="reservaAtual.multiplicadorDespesas + ' meses'"
+                  icon="pi-heart">
+                </app-info-block>
               </div>
             </div>
 
