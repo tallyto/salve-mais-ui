@@ -110,7 +110,7 @@ export class CompraDebitoFormComponent implements OnInit {
       },
       error: (error) => {
         this.formBaseService.showError('Erro ao carregar compra');
-        this.router.navigate(['/compras-debito']);
+        this.router.navigate(['/compras/debito']);
       }
     });
   }
@@ -142,7 +142,7 @@ export class CompraDebitoFormComponent implements OnInit {
           this.formBaseService.setLoading(false);
           this.formBaseService.showSuccess('Compra atualizada com sucesso!');
           setTimeout(() => {
-            this.router.navigate(['/compras-debito']);
+            this.router.navigate(['/compras/debito']);
           }, 1500);
         },
         error: (error) => {
@@ -162,7 +162,7 @@ export class CompraDebitoFormComponent implements OnInit {
           this.compraDebitoForm.reset();
 
           setTimeout(() => {
-            this.router.navigate(['/compras-debito']);
+            this.router.navigate(['/compras/debito']);
           }, 1500);
         },
         error: (error) => {
@@ -177,7 +177,7 @@ export class CompraDebitoFormComponent implements OnInit {
 
 
   voltarParaListagem(): void {
-    this.router.navigate(['/compras-debito']);
+    this.router.navigate(['/compras/debito']);
   }
 
   // Getters para facilitar validação no template

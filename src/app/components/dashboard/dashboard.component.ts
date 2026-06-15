@@ -75,12 +75,12 @@ export class DashboardComponent implements OnInit {
 
   quickActions: QuickAction[] = [
     { route: '/provento-form', icon: 'arrow-up', label: 'Nova Receita', colorClass: 'income-color' },
-    { route: '/despesas-fixas', icon: 'refresh', label: 'Despesa Fixa', colorClass: 'expense-color' },
-    { route: '/compras-debito', icon: 'shopping-bag', label: 'Compra Débito', colorClass: 'expense-color' },
-    { route: '/compras-parceladas', icon: 'shopping-cart', label: 'Compra Parcelada', colorClass: 'expense-color' },
+    { route: '/despesas/fixas', icon: 'refresh', label: 'Despesa Fixa', colorClass: 'expense-color' },
+    { route: '/compras/debito', icon: 'shopping-bag', label: 'Compra Débito', colorClass: 'expense-color' },
+    { route: '/compras/parceladas', icon: 'shopping-cart', label: 'Compra Parcelada', colorClass: 'expense-color' },
     { route: '/cartao/faturas', icon: 'receipt', label: 'Pagar Fatura', colorClass: 'card-color' },
     { route: '/transacoes', icon: 'arrows-h', label: 'Transações', colorClass: 'neutral-color' },
-    { route: '/relatorio-mensal', icon: 'chart-bar', label: 'Relatório', colorClass: 'neutral-color' },
+    { route: '/relatorios/mensal', icon: 'chart-bar', label: 'Relatório', colorClass: 'neutral-color' },
     { route: '/budget-rule', icon: 'chart-pie', label: 'Regra 50/30/20', colorClass: 'neutral-color' }
   ];
 

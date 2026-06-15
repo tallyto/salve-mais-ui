@@ -67,7 +67,7 @@ export class NotificacoesComponent implements OnInit {
 
   navegarParaEntidade(notificacao: NotificacaoDTO): void {
     if (notificacao.tipoEntidade === 'CONTA_FIXA') {
-      this.router.navigate(['/despesas-fixas']);
+      this.router.navigate(['/despesas/fixas']);
     } else if (notificacao.tipoEntidade === 'FATURA') {
       this.router.navigate(['/cartao/faturas']);
     }

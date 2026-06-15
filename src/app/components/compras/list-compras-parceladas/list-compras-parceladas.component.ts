@@ -237,11 +237,11 @@ export class ListComprasParceladasComponent implements OnInit {
   }
 
   novaCompra(): void {
-    this.router.navigate(['/compras-parceladas/nova']);
+    this.router.navigate(['/compras/parceladas/nova']);
   }
 
   editar(id: number): void {
-    this.router.navigate(['/compras-parceladas/editar', id]);
+    this.router.navigate(['/compras/parceladas/editar', id]);
   }
 
   calcularParcelasPagas(parcelas?: Parcela[]): number {

@@ -98,11 +98,11 @@ export class ListComprasDebitoComponent extends LazyTableBase implements OnInit 
   }
 
   novaCompra(): void {
-    this.router.navigate(['/compras-debito/nova']);
+    this.router.navigate(['/compras/debito/nova']);
   }
 
   editarCompra(compra: CompraDebito): void {
-    this.router.navigate(['/compras-debito/editar', compra.id]);
+    this.router.navigate(['/compras/debito/editar', compra.id]);
   }
 
   excluirCompra(compra: CompraDebito): void {

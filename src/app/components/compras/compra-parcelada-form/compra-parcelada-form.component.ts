@@ -87,7 +87,7 @@ export class CompraParceladaFormComponent implements OnInit {
       error: (error) => {
         this.formBaseService.showError('Erro ao carregar compra parcelada.');
         this.loading = false;
-        this.router.navigate(['/compras-parceladas']);
+        this.router.navigate(['/compras/parceladas']);
       }
     });
   }
@@ -210,7 +210,7 @@ export class CompraParceladaFormComponent implements OnInit {
       this.compraParceladaService.atualizar(this.compraId, request).subscribe({
         next: (response) => {
           this.formBaseService.showSuccess('Compra parcelada atualizada com sucesso.');
-          this.router.navigate(['/compras-parceladas']);
+          this.router.navigate(['/compras/parceladas']);
         },
         error: (error) => {
           this.errorMessage = error.error?.message || 'Erro ao atualizar compra parcelada';
@@ -222,7 +222,7 @@ export class CompraParceladaFormComponent implements OnInit {
       this.compraParceladaService.criar(request).subscribe({
         next: (response) => {
           this.formBaseService.showSuccess(`Compra parcelada criada com sucesso. ${this.parcelasRestantes} parcelas de R$ ${this.valorParcela.toFixed(2)}`);
-          this.router.navigate(['/compras-parceladas']);
+          this.router.navigate(['/compras/parceladas']);
         },
         error: (error) => {
           this.errorMessage = error.error?.message || 'Erro ao criar compra parcelada';
@@ -233,7 +233,7 @@ export class CompraParceladaFormComponent implements OnInit {
   }
 
   cancel(): void {
-    this.router.navigate(['/compras-parceladas']);
+    this.router.navigate(['/compras/parceladas']);
   }
 
   get descricaoInvalid(): boolean {

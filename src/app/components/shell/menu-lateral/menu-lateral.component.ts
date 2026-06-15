@@ -57,10 +57,10 @@ export class MenuLateralComponent implements OnInit, OnDestroy {
       title: 'Despesas e Compras',
       icon: 'receipt',
       items: [
-        { route: '/despesas-fixas', icon: 'refresh', label: 'Débitos em Conta' },
-        { route: '/despesas-recorrentes', icon: 'sync', label: 'Assinaturas e Serviços' },
-        { route: '/compras-debito', icon: 'shopping-bag', label: 'Compras em Débito' },
-        { route: '/list-pagamentos-status', icon: 'clock', label: 'Status de Pagamentos' }
+        { route: '/despesas/fixas', icon: 'refresh', label: 'Débitos em Conta' },
+        { route: '/despesas/recorrentes', icon: 'sync', label: 'Assinaturas e Serviços' },
+        { route: '/compras/debito', icon: 'shopping-bag', label: 'Compras em Débito' },
+        { route: '/despesas/pagamentos-status', icon: 'clock', label: 'Status de Pagamentos' }
       ]
     },
     {
@@ -71,7 +71,7 @@ export class MenuLateralComponent implements OnInit, OnDestroy {
         { route: '/cartao/form', icon: 'credit-card', label: 'Meus Cartões' },
         { route: '/cartao/faturas', icon: 'receipt', label: 'Faturas' },
         { route: '/cartao/limites', icon: 'shield', label: 'Limites e Alertas' },
-        { route: '/compras-parceladas', icon: 'shopping-cart', label: 'Compras Parceladas' }
+        { route: '/compras/parceladas', icon: 'shopping-cart', label: 'Compras Parceladas' }
       ]
     },
     {
@@ -88,8 +88,8 @@ export class MenuLateralComponent implements OnInit, OnDestroy {
       title: 'Relatórios',
       icon: 'chart-bar',
       items: [
-        { route: '/relatorio-mensal', icon: 'chart-bar', label: 'Relatório Mensal' },
-        { route: '/comparativo-mensal', icon: 'arrows-h', label: 'Comparativo Mensal' }
+        { route: '/relatorios/mensal', icon: 'chart-bar', label: 'Relatório Mensal' },
+        { route: '/relatorios/comparativo', icon: 'arrows-h', label: 'Comparativo Mensal' }
       ]
     },
     {
@@ -99,9 +99,9 @@ export class MenuLateralComponent implements OnInit, OnDestroy {
       items: [
         { route: '/categoria-form', icon: 'tag', label: 'Categorias' },
         { route: '/comprovantes', icon: 'file-check', label: 'Comprovantes' },
-        { route: '/list-usuarios', icon: 'users', label: 'Gerenciar Usuários' },
-        { route: '/notificacoes-email-config', icon: 'bell', label: 'Notificações por Email' },
-        { route: '/tenant-config', icon: 'cog', label: 'Sistema' },
+        { route: '/admin/usuarios', icon: 'users', label: 'Gerenciar Usuários' },
+        { route: '/admin/notificacoes-email', icon: 'bell', label: 'Notificações por Email' },
+        { route: '/admin/tenant-config', icon: 'cog', label: 'Sistema' },
         { route: '/billing', icon: 'credit-card', label: 'Plano & Cobrança' }
       ]
     }
@@ -236,7 +236,7 @@ export class MenuLateralComponent implements OnInit, OnDestroy {
       {
         label: 'Minha Conta',
         icon: 'pi pi-user',
-        routerLink: '/minha-conta'
+        routerLink: '/admin/minha-conta'
       },
       {
         label: 'Configurações',

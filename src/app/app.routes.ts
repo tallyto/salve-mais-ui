@@ -84,28 +84,6 @@ export const APP_ROUTES: Routes = [
     loadChildren: () => import('./features/legal/legal.routes').then(m => m.LEGAL_ROUTES)
   },
 
-  // Redirects dos paths antigos para novos (backward compatibility)
-  { path: 'compras-parceladas', redirectTo: '/compras/parceladas', pathMatch: 'full' },
-  { path: 'compras-parceladas/nova', redirectTo: '/compras/parceladas/nova', pathMatch: 'full' },
-  { path: 'compras-parceladas/editar/:id', redirectTo: '/compras/parceladas/editar/:id', pathMatch: 'full' },
-  { path: 'compras-debito', redirectTo: '/compras/debito', pathMatch: 'full' },
-  { path: 'compras-debito/nova', redirectTo: '/compras/debito/nova', pathMatch: 'full' },
-  { path: 'compras-debito/editar/:id', redirectTo: '/compras/debito/editar/:id', pathMatch: 'full' },
-  { path: 'comprovantes', redirectTo: '/compras/comprovantes', pathMatch: 'full' },
-  { path: 'transacao/:id', redirectTo: '/transacoes/:id', pathMatch: 'full' },
-  { path: 'despesas-fixas', redirectTo: '/despesas/fixas', pathMatch: 'full' },
-  { path: 'despesas-recorrentes', redirectTo: '/despesas/recorrentes', pathMatch: 'full' },
-  { path: 'conta-fixa-recorrente', redirectTo: '/despesas/conta-fixa-recorrente', pathMatch: 'full' },
-  { path: 'list-pagamentos-status', redirectTo: '/despesas/pagamentos-status', pathMatch: 'full' },
-  { path: 'relatorio-mensal', redirectTo: '/relatorios/mensal', pathMatch: 'full' },
-  { path: 'comparativo-mensal', redirectTo: '/relatorios/comparativo', pathMatch: 'full' },
-  { path: 'minha-conta', redirectTo: '/admin/minha-conta', pathMatch: 'full' },
-  { path: 'tenant-config', redirectTo: '/admin/tenant-config', pathMatch: 'full' },
-  { path: 'list-usuarios', redirectTo: '/admin/usuarios', pathMatch: 'full' },
-  { path: 'notificacoes-email-config', redirectTo: '/admin/notificacoes-email', pathMatch: 'full' },
-  { path: 'politica-privacidade', redirectTo: '/legal/privacidade', pathMatch: 'full' },
-  { path: 'termos-uso', redirectTo: '/legal/termos', pathMatch: 'full' },
-
   // Fallback
   { path: '**', component: NotFoundComponent }
 ];

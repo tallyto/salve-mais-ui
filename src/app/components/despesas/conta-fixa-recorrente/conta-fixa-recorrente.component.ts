@@ -122,7 +122,7 @@ export class ContaFixaRecorrenteComponent implements OnInit {
         
         // Redirecionar para a listagem de contas fixas
         setTimeout(() => {
-          this.router.navigate(['/despesas-fixas']);
+          this.router.navigate(['/despesas/fixas']);
         }, 2000);
       },
       error: (error) => {
@@ -179,7 +179,7 @@ export class ContaFixaRecorrenteComponent implements OnInit {
   }
 
   voltarParaListagem(): void {
-    this.router.navigate(['/despesas-fixas']);
+    this.router.navigate(['/despesas/fixas']);
   }
 
   // Getters para facilitar validação no template
