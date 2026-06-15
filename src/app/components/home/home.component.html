@@ -115,6 +115,98 @@
     </div>
   </section>
 
+  <!-- Preços -->
+  <section class="px-4 py-7">
+    <div style="max-width: 1100px; margin: 0 auto;">
+      <div class="text-center mb-6">
+        <h2 class="text-3xl font-bold m-0">Planos simples e transparentes</h2>
+        <p class="text-color-secondary mt-2 mb-0 text-lg">Comece grátis. Escale quando precisar.</p>
+      </div>
+
+      <div class="grid">
+
+        <!-- Trial -->
+        <div class="col-12 md:col-4 p-3">
+          <div class="flex flex-column h-full p-5 border-round-xl"
+               style="background: var(--surface-card); border: 1px solid var(--surface-border);">
+            <div class="mb-4">
+              <span class="text-xs font-bold uppercase" style="letter-spacing:.08em;color:#00796b;">Grátis</span>
+              <div class="flex align-items-end gap-1 mt-2">
+                <span class="text-4xl font-bold">R$&nbsp;0</span>
+                <span class="text-color-secondary mb-1">/14 dias</span>
+              </div>
+              <p class="text-color-secondary mt-2 mb-0 text-sm">Experimente sem compromisso. Sem cartão de crédito.</p>
+            </div>
+            <p-divider></p-divider>
+            <ul class="list-none p-0 m-0 flex flex-column gap-3 flex-1">
+              <li class="flex align-items-center gap-2 text-sm"><i class="pi pi-check-circle text-primary"></i>Dashboard financeiro</li>
+              <li class="flex align-items-center gap-2 text-sm"><i class="pi pi-check-circle text-primary"></i>Contas bancárias</li>
+              <li class="flex align-items-center gap-2 text-sm"><i class="pi pi-check-circle text-primary"></i>Até 50 transações</li>
+              <li class="flex align-items-center gap-2 text-sm"><i class="pi pi-check-circle text-primary"></i>1 usuário</li>
+            </ul>
+            <p-button label="Começar grátis" variant="outlined" styleClass="w-full mt-5"
+                      (onClick)="navigateToRegister()"></p-button>
+          </div>
+        </div>
+
+        <!-- Pro — destaque -->
+        <div class="col-12 md:col-4 p-3">
+          <div class="flex flex-column h-full p-5 border-round-xl"
+               style="background: linear-gradient(160deg,#00796b,#004d40); color:white; border: 2px solid #00796b; position:relative;">
+            <span class="absolute top-0 right-0 mt-3 mr-3 text-xs font-bold px-2 py-1 border-round"
+                  style="background:rgba(255,255,255,0.2);letter-spacing:.06em;">MAIS POPULAR</span>
+            <div class="mb-4">
+              <span class="text-xs font-bold uppercase" style="letter-spacing:.08em;opacity:.8;">Individual</span>
+              <div class="flex align-items-end gap-1 mt-2">
+                <span class="text-4xl font-bold">R$&nbsp;19</span>
+                <span style="opacity:.8;" class="mb-1">,90/mês</span>
+              </div>
+              <p class="mt-2 mb-0 text-sm" style="opacity:.85;">Tudo que você precisa para dominar suas finanças.</p>
+            </div>
+            <div style="border-top:1px solid rgba(255,255,255,0.2);margin:0.75rem 0;"></div>
+            <ul class="list-none p-0 m-0 flex flex-column gap-3 flex-1">
+              <li class="flex align-items-center gap-2 text-sm"><i class="pi pi-check-circle"></i>Tudo do plano grátis</li>
+              <li class="flex align-items-center gap-2 text-sm"><i class="pi pi-check-circle"></i>Transações ilimitadas</li>
+              <li class="flex align-items-center gap-2 text-sm"><i class="pi pi-check-circle"></i>Cartões de crédito</li>
+              <li class="flex align-items-center gap-2 text-sm"><i class="pi pi-check-circle"></i>Relatórios mensais</li>
+              <li class="flex align-items-center gap-2 text-sm"><i class="pi pi-check-circle"></i>Reserva de emergência</li>
+              <li class="flex align-items-center gap-2 text-sm"><i class="pi pi-check-circle"></i>Regra 50/30/20</li>
+            </ul>
+            <p-button label="Assinar agora" styleClass="w-full mt-5"
+                      [style]="{'background':'white','color':'#00796b','border-color':'white','font-weight':'700'}"
+                      (onClick)="navigateToRegister()"></p-button>
+          </div>
+        </div>
+
+        <!-- Business -->
+        <div class="col-12 md:col-4 p-3">
+          <div class="flex flex-column h-full p-5 border-round-xl"
+               style="background: var(--surface-card); border: 1px solid var(--surface-border);">
+            <div class="mb-4">
+              <span class="text-xs font-bold uppercase" style="letter-spacing:.08em;color:#00796b;">Equipe</span>
+              <div class="flex align-items-end gap-1 mt-2">
+                <span class="text-4xl font-bold">R$&nbsp;49</span>
+                <span class="text-color-secondary mb-1">,90/mês</span>
+              </div>
+              <p class="text-color-secondary mt-2 mb-0 text-sm">Para famílias ou pequenos times financeiros.</p>
+            </div>
+            <p-divider></p-divider>
+            <ul class="list-none p-0 m-0 flex flex-column gap-3 flex-1">
+              <li class="flex align-items-center gap-2 text-sm"><i class="pi pi-check-circle text-primary"></i>Tudo do plano Individual</li>
+              <li class="flex align-items-center gap-2 text-sm"><i class="pi pi-check-circle text-primary"></i>Até 5 usuários</li>
+              <li class="flex align-items-center gap-2 text-sm"><i class="pi pi-check-circle text-primary"></i>Gerenciar usuários</li>
+              <li class="flex align-items-center gap-2 text-sm"><i class="pi pi-check-circle text-primary"></i>Notificações por email</li>
+              <li class="flex align-items-center gap-2 text-sm"><i class="pi pi-check-circle text-primary"></i>Suporte prioritário</li>
+            </ul>
+            <p-button label="Começar grátis" variant="outlined" styleClass="w-full mt-5"
+                      (onClick)="navigateToRegister()"></p-button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- CTA final -->
   <section class="flex flex-column align-items-center text-center px-4 py-8 gap-4"
            style="background: linear-gradient(160deg, #00796b 0%, #004d40 100%); color: white;">

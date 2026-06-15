@@ -72,10 +72,17 @@
     <ng-template pTemplate="emptymessage">
       <tr>
         <td [attr.colspan]="5">
-          <div class="flex flex-column align-items-center gap-3 text-center p-5">
-            <i class="pi pi-inbox text-4xl text-color-secondary"></i>
-            <h3 class="m-0">Nenhuma receita cadastrada</h3>
-            <p class="text-color-secondary m-0">Use o formulário para registrar sua primeira entrada.</p>
+          <div class="flex flex-column align-items-center text-center gap-3 py-7 px-4">
+            <div class="flex align-items-center justify-content-center border-round-full"
+                 style="width:72px;height:72px;background:var(--primary-50);">
+              <i class="pi pi-arrow-up text-primary" style="font-size:2rem;"></i>
+            </div>
+            <div>
+              <h3 class="m-0 font-bold">Nenhuma receita cadastrada</h3>
+              <p class="text-color-secondary mt-2 mb-0">
+                Use o formulário acima para registrar sua primeira fonte de renda.
+              </p>
+            </div>
           </div>
         </td>
       </tr>

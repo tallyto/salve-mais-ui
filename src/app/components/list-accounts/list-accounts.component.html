@@ -101,9 +101,18 @@
     </div>
   </div>
 
-  <div *ngIf="!isLoadingResults && accounts.length === 0" class="flex flex-column align-items-center gap-2 text-center p-5">
-    <i class="pi pi-building text-4xl text-color-secondary"></i>
-    <h3 class="m-0">Nenhuma conta cadastrada</h3>
-    <p class="text-color-secondary m-0">Adicione uma conta bancária usando o formulário.</p>
+  <div *ngIf="!isLoadingResults && accounts.length === 0"
+       class="flex flex-column align-items-center text-center gap-3 py-7 px-4 border-round-xl"
+       style="background: var(--surface-card); border: 1px dashed var(--surface-border);">
+    <div class="flex align-items-center justify-content-center border-round-full"
+         style="width:72px;height:72px;background:var(--primary-50);">
+      <i class="pi pi-building text-primary" style="font-size:2rem;"></i>
+    </div>
+    <div>
+      <h3 class="m-0 font-bold">Nenhuma conta cadastrada</h3>
+      <p class="text-color-secondary mt-2 mb-0" style="max-width:320px;">
+        Cadastre sua primeira conta bancária no formulário ao lado para começar a acompanhar seus saldos.
+      </p>
+    </div>
   </div>
 </div>

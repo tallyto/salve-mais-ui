@@ -141,7 +141,7 @@ a.nav-active {
 
 // ─── Surface utilitário ────────────────────────────────────
 .salve-surface-card {
-  background: var(--surface-card, #fff);
+  background: var(--p-surface-card, var(--surface-card, #fff));
   border: 1px solid var(--salve-card-border);
   border-radius: 12px;
   box-shadow: var(--salve-card-shadow);
@@ -149,7 +149,7 @@ a.nav-active {
 }
 
 .salve-skeleton-card {
-  background: var(--surface-card, #fff);
+  background: var(--p-surface-card, var(--surface-card, #fff));
   border: 1px solid var(--salve-card-border);
   border-radius: 12px;
   box-shadow: var(--salve-card-shadow);
@@ -196,11 +196,23 @@ a.nav-active {
   min-height: 1.75rem;
   padding: 0 0.5rem;
   border-radius: 999px;
-  color: #0369a1;
-  background-color: #e0f2fe;
+  color: var(--p-primary-700, #00796b);
+  background-color: var(--p-primary-50, #e0f2f1);
   font-weight: 600;
   font-size: 0.875rem;
   letter-spacing: -0.01em;
+}
+
+html.dark-mode .salve-amount-pill {
+  color: var(--p-primary-200, #80cbc4);
+  background-color: rgba(0, 150, 136, 0.15);
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not(.light-mode) .salve-amount-pill {
+    color: var(--p-primary-200, #80cbc4);
+    background-color: rgba(0, 150, 136, 0.15);
+  }
 }
 
 .salve-chart-container {
