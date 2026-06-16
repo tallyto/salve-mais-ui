@@ -84,22 +84,22 @@
 
       <div class="grid">
         <div class="col-12 md:col-4">
-          <p-card>
-            <div class="text-sm text-color-secondary mb-1">Compras à vista</div>
+          <div class="surface-ground border-round p-3 flex flex-column gap-2">
+            <div class="text-sm text-color-secondary">Compras à vista</div>
             <div class="text-lg font-bold">{{ formatarMoeda(preview.valorCompras) }}</div>
-          </p-card>
+          </div>
         </div>
         <div class="col-12 md:col-4">
-          <p-card>
-            <div class="text-sm text-color-secondary mb-1">Parcelas</div>
+          <div class="surface-ground border-round p-3 flex flex-column gap-2">
+            <div class="text-sm text-color-secondary">Parcelas</div>
             <div class="text-lg font-bold">{{ formatarMoeda(preview.valorParcelas) }}</div>
-          </p-card>
+          </div>
         </div>
         <div class="col-12 md:col-4">
-          <p-card class="kpi-card kpi-positive">
-            <div class="text-sm text-color-secondary mb-1">Valor Total</div>
+          <div class="surface-ground border-round p-3 kpi-card kpi-positive flex flex-column gap-2">
+            <div class="text-sm text-color-secondary">Valor Total</div>
             <div class="text-lg font-bold text-primary">{{ formatarMoeda(preview.valorTotal) }}</div>
-          </p-card>
+          </div>
         </div>
       </div>
 

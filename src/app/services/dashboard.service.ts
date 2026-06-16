@@ -81,17 +81,15 @@ export class DashboardService {
   constructor(private http: HttpClient) { }
 
   obterResumo(mes?: number, ano?: number): Observable<DashboardSummary> {
-    const params: any = {};
-    if (mes) params.mes = mes.toString();
-    if (ano) params.ano = ano.toString();
-    return this.http.get<DashboardSummary>(`${this.apiUrl}/summary`, { params });
+    return this.http.get<DashboardSummary>(`${this.apiUrl}/summary`, {
+      params: this.buildMesAnoParams(mes, ano)
+    });
   }
 
   obterDespesasPorCategoria(mes?: number, ano?: number): Observable<CategoryExpense[]> {
-    const params: any = {};
-    if (mes) params.mes = mes.toString();
-    if (ano) params.ano = ano.toString();
-    return this.http.get<CategoryExpense[]>(`${this.apiUrl}/expenses-by-category`, { params });
+    return this.http.get<CategoryExpense[]>(`${this.apiUrl}/expenses-by-category`, {
+      params: this.buildMesAnoParams(mes, ano)
+    });
   }
 
   obterTrendMensalPorAno(year: number): Observable<MonthlyExpense[]> {
@@ -99,34 +97,23 @@ export class DashboardService {
   }
 
   obterDadosVariacao(mes?: number, ano?: number): Observable<VariationData[]> {
-    // Este endpoint deve retornar dados de variação comparando o mês atual com o anterior
-    // Exemplo de resposta esperada:
-    // [
-    //   {
-    //     "metric": "Saldo Total",
-    //     "currentValue": 15000.00,
-    //     "previousValue": 14000.00,
-    //     "variation": 1000.00,
-    //     "variationPercent": 7.14,
-    //     "trend": "up",
-    //     "icon": "account_balance_wallet"
-    //   }
-    // ]
-    const params: any = {};
-    if (mes) params.mes = mes.toString();
-    if (ano) params.ano = ano.toString();
-    return this.http.get<VariationData[]>(`${this.apiUrl}/variations`, { params });
+    return this.http.get<VariationData[]>(`${this.apiUrl}/variations`, {
+      params: this.buildMesAnoParams(mes, ano)
+    });
   }
 
   exportDashboardToExcel(mes?: number, ano?: number): Observable<Blob> {
-    const params: any = {};
-    if (mes) params.mes = mes.toString();
-    if (ano) params.ano = ano.toString();
-
     return this.http.get(`${this.apiUrl}/export/excel`, {
-      params,
+      params: this.buildMesAnoParams(mes, ano),
       responseType: 'blob'
     });
+  }
+
+  private buildMesAnoParams(mes?: number, ano?: number): Record<string, string> {
+    const params: Record<string, string> = {};
+    if (mes) params['mes'] = mes.toString();
+    if (ano) params['ano'] = ano.toString();
+    return params;
   }
 
   obterBudgetRule(): Observable<BudgetRuleData> {

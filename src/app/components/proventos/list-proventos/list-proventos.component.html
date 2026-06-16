@@ -35,7 +35,7 @@
         <th pSortableColumn="descricao">Descrição <p-sortIcon field="descricao"></p-sortIcon></th>
         <th pSortableColumn="conta">Conta <p-sortIcon field="conta"></p-sortIcon></th>
         <th pSortableColumn="data">Data <p-sortIcon field="data"></p-sortIcon></th>
-        <th pSortableColumn="valor" style="text-align: right">Valor <p-sortIcon field="valor"></p-sortIcon></th>
+        <th pSortableColumn="valor" class="text-right">Valor <p-sortIcon field="valor"></p-sortIcon></th>
         <th style="text-align: center">Ações</th>
       </tr>
     </ng-template>
@@ -53,7 +53,7 @@
         </td>
         <td>{{ provento.conta?.titular || 'Sem conta' }}</td>
         <td>{{ provento.data | date:'dd/MM/yyyy' }}</td>
-        <td style="text-align: right">
+        <td class="text-right">
           <strong>{{ provento.valor | currency:'BRL':'symbol':'1.2-2' }}</strong>
         </td>
         <td style="text-align: center">
