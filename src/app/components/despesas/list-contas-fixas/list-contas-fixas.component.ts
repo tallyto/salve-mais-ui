@@ -19,7 +19,7 @@ import { MonthYearFilterComponent } from '@components/dashboard/month-year-filte
     selector: 'app-list-contas-fixas',
     templateUrl: './list-contas-fixas.component.html',
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, ...SALVE_COMMON, ...SALVE_FORMS, ...SALVE_DATA, ...SALVE_OVERLAY, StatCardComponent, MonthYearFilterComponent]
+    imports: [...SALVE_COMMON, ...SALVE_FORMS, ...SALVE_DATA, ...SALVE_OVERLAY, StatCardComponent, MonthYearFilterComponent]
 })
 export class ListContasFixasComponent extends LazyTableBase implements OnInit {
   displayedColumnsContasFixas: string[] = ['nome', 'categoria', 'conta', 'vencimento', 'valor', 'pago', 'acoes'];

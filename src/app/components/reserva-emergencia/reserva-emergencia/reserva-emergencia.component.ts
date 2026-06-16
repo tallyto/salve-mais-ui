@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { ReservaEmergenciaService } from '@services/reserva-emergencia.service';
 import { HistoricoContribuicao, ReservaEmergencia, ReservaEmergenciaDetalhe } from '@models/reserva-emergencia.model';
 import { AccountService } from '@services/account.service';
@@ -14,7 +12,7 @@ import { InfoBlockComponent, SkeletonReservaComponent, ActionButtonsComponent } 
   selector: 'app-reserva-emergencia',
   templateUrl: './reserva-emergencia.component.html',
   standalone: true,
-  imports: [CommonModule, FormsModule, ...SALVE_COMMON, ...SALVE_DATA, ...SALVE_OVERLAY, ...SALVE_FORMS, InfoBlockComponent, SkeletonReservaComponent, ActionButtonsComponent]
+  imports: [...SALVE_COMMON, ...SALVE_DATA, ...SALVE_OVERLAY, ...SALVE_FORMS, InfoBlockComponent, SkeletonReservaComponent, ActionButtonsComponent]
 })
 export class ReservaEmergenciaComponent implements OnInit {
   reservas: ReservaEmergencia[] = [];

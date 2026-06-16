@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NotificacaoEmailService, NotificacaoEmailConfig } from 'src/app/services/notificacao-email.service';
-import { TenantService } from 'src/app/services/tenant.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NotificacaoEmailService, NotificacaoEmailConfig } from '@services/notificacao-email.service';
+import { TenantService } from '@services/tenant.service';
 import { MessageService } from 'primeng/api';
-import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from 'src/app/shared/primeng-shared';
+import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '@shared/primeng-shared';
 import { InfoBlockComponent } from '@components/shared';
 
 @Component({
     selector: 'app-notificacoes-email-config',
     templateUrl: './notificacoes-email-config.component.html',
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, ...SALVE_COMMON, ...SALVE_FORMS, ...SALVE_DATA, ...SALVE_OVERLAY, InfoBlockComponent]
+    imports: [...SALVE_COMMON, ...SALVE_FORMS, ...SALVE_DATA, ...SALVE_OVERLAY, InfoBlockComponent]
 })
 export class NotificacoesEmailConfigComponent implements OnInit {
   configForm!: FormGroup;

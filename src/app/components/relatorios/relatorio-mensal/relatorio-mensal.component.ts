@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { RelatorioMensalService } from '@services/relatorio-mensal.service';
 import { RelatorioMensalDTO, ItemGastoFixoDTO } from '@models/relatorio-mensal.model';
@@ -12,7 +11,7 @@ import { MonthYearFilterComponent } from '@components/dashboard/month-year-filte
     selector: 'app-relatorio-mensal',
     templateUrl: './relatorio-mensal.component.html',
     standalone: true,
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, ...SALVE_COMMON, ...SALVE_FORMS, ...SALVE_DATA, ...SALVE_OVERLAY, MonthYearFilterComponent]
+    imports: [...SALVE_COMMON, ...SALVE_FORMS, ...SALVE_DATA, ...SALVE_OVERLAY, MonthYearFilterComponent]
 })
 export class RelatorioMensalComponent implements OnInit {
   relatorioForm: FormGroup;

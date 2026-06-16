@@ -1,5 +1,4 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { Subscription, filter } from 'rxjs';
 import { MenuItem } from 'primeng/api';
@@ -27,7 +26,7 @@ export interface MenuSection {
     selector: 'app-menu-lateral',
     templateUrl: './menu-lateral.component.html',
     standalone: true,
-    imports: [CommonModule, RouterModule, ...SALVE_COMMON, ...SALVE_OVERLAY, ...SALVE_DATA]
+    imports: [...SALVE_COMMON, ...SALVE_OVERLAY, ...SALVE_DATA]
 })
 export class MenuLateralComponent implements OnInit, OnDestroy {
   public sidenavOpen: boolean = false;

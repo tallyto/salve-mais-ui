@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { AccountService } from '@services/account.service';
 import { ProventoService } from '@services/provento.service';
 import { DashboardService, DashboardSummary, CategoryExpense, MonthlyExpense, VariationData } from '@services/dashboard.service';

@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ProventoService } from "@services/provento.service";
 import { Conta, TipoConta } from '@models/conta.model';
 import { AccountService } from "@services/account.service";
@@ -15,7 +14,7 @@ import { ListProventosComponent } from '@components/proventos/list-proventos/lis
     selector: 'app-provento-form',
     templateUrl: './provento-form.component.html',
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, ...SALVE_COMMON, ...SALVE_FORMS, ...SALVE_DATA, ListProventosComponent]
+    imports: [...SALVE_COMMON, ...SALVE_FORMS, ...SALVE_DATA, ListProventosComponent]
 })
 export class ProventoFormComponent implements OnInit, OnDestroy {
   public proventoForm: FormGroup;

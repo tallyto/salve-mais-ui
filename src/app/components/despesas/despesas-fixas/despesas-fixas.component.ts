@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ContasFixasService} from "@services/contas-fixas.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Categoria} from "@models/categoria.model";
@@ -17,7 +15,7 @@ import { ListContasFixasComponent } from '@components/despesas/list-contas-fixas
     selector: 'app-despesas-fixas',
     templateUrl: './despesas-fixas.component.html',
     standalone: true,
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, ...SALVE_COMMON, ...SALVE_FORMS, ...SALVE_DATA, ...SALVE_OVERLAY, ListContasFixasComponent]
+    imports: [...SALVE_COMMON, ...SALVE_FORMS, ...SALVE_DATA, ...SALVE_OVERLAY, ListContasFixasComponent]
 })
 export class DespesasFixasComponent implements OnInit {
   despesaFixaForm: FormGroup;

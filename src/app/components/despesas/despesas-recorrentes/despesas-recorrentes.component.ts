@@ -1,7 +1,5 @@
 import { formatarMoeda } from '@shared/utils';
 import {Component, OnInit} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Categoria} from "@models/categoria.model";
 import {CategoriaService} from "@services/categoria.service";
@@ -18,7 +16,7 @@ import { ListDespesasRecorrentesComponent } from '@components/despesas/list-desp
     selector: 'app-despesas-recorrentes',
     templateUrl: './despesas-recorrentes.component.html',
     standalone: true,
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, ...SALVE_COMMON, ...SALVE_FORMS, ...SALVE_DATA, ...SALVE_OVERLAY, ListDespesasRecorrentesComponent]
+    imports: [...SALVE_COMMON, ...SALVE_FORMS, ...SALVE_DATA, ...SALVE_OVERLAY, ListDespesasRecorrentesComponent]
 })
 export class DespesasRecorrentesComponent implements OnInit {
   gastosRecorrentes: FormGroup;
