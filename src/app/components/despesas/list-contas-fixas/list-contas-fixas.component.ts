@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Financa } from "@models/financa.model";
 import { ContasFixasService } from "@services/contas-fixas.service";
 import { catchError, map, of as observableOf } from "rxjs";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
@@ -32,6 +33,8 @@ export class ListContasFixasComponent extends LazyTableBase implements OnInit {
   months = MONTHS;
   years: number[] = [];
 
+  private destroyRef = inject(DestroyRef);
+
   constructor(
     private financaService: ContasFixasService,
     private messageService: MessageService,
@@ -50,13 +53,13 @@ export class ListContasFixasComponent extends LazyTableBase implements OnInit {
       pago: [false]
     });
 
-    this.financaService.financasChanged$.subscribe(
-      {
+    this.financaService.financasChanged$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
         next: () => {
           this.carregarDados()
         }
-      }
-    );
+      });
 
     // Inicializar filtros com mês e ano atuais
     const currentDate = new Date();

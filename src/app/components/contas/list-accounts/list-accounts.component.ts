@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { AccountService } from 'src/app/services/account.service';
+import { Component, OnInit, DestroyRef, inject } from '@angular/core';
+import { AccountService } from '@services/account.service';
 import { Conta, TipoConta } from '@models/conta.model';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TransferenciaModalComponent } from '@components/contas/transferencia-modal/transferencia-modal.component';
 import { SALVE_COMMON, SALVE_DATA, SALVE_FORMS } from '@shared/primeng-shared';
 
@@ -23,12 +24,16 @@ export class ListAccountsComponent implements OnInit {
   tempTitular: string = '';
   transferenciaRef?: DynamicDialogRef;
 
+  private destroyRef = inject(DestroyRef);
+
   constructor(
     private accountService: AccountService,
     private messageService: MessageService,
     private dialogService: DialogService
   ) {
-    this.accountService.accountsChanged$.subscribe(() => this.loadAccounts());
+    this.accountService.accountsChanged$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.loadAccounts());
   }
 
   ngOnInit(): void {

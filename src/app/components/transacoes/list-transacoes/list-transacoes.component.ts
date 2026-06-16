@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, DestroyRef, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TransacaoService } from '@services/transacao.service';
 import { Transacao, TransacaoFiltro } from '@models/transacao.model';
@@ -6,6 +6,7 @@ import { TipoTransacao } from '@models/tipo-transacao.enum';
 import { AccountService } from '@services/account.service';
 import { CategoriaService } from '@services/categoria.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '@shared/primeng-shared';
 import { EmptyStateComponent, StatCardComponent } from '@components/shared';
 
@@ -44,6 +45,7 @@ export class ListTransacoesComponent implements OnInit {
     'acoes'
   ];
   private menuCache = new Map<number, any[]>();
+  private destroyRef = inject(DestroyRef);
 
   constructor(
     private transacaoService: TransacaoService,
@@ -83,6 +85,7 @@ export class ListTransacoesComponent implements OnInit {
     this.loading = true;
     this.menuCache.clear();
     this.transacaoService.listarTransacoes(filtro, this.pageIndex, this.pageSize)
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(
         response => {
           this.transacoes = response.content;
@@ -98,9 +101,11 @@ export class ListTransacoesComponent implements OnInit {
   }
 
   carregarContas(): void {
-    this.accountService.listarTodas().subscribe(
-      (contas: any[]) => {
-        this.contas = contas;
+    this.accountService.listarTodas()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(
+        (contas: any[]) => {
+          this.contas = contas;
       },
       (error: any) => {
       }
@@ -108,13 +113,15 @@ export class ListTransacoesComponent implements OnInit {
   }
 
   carregarCategorias(): void {
-    this.categoriaService.listarCategorias().subscribe(
-      categorias => {
-        this.categorias = categorias;
-      },
-      error => {
-      }
-    );
+    this.categoriaService.listarCategorias()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(
+        categorias => {
+          this.categorias = categorias;
+        },
+        error => {
+        }
+      );
   }
 
   aplicarFiltro(): void {
