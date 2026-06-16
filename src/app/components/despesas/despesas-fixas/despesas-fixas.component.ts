@@ -136,9 +136,9 @@ export class DespesasFixasComponent implements OnInit {
   }
 
   carregarContas(): void {
-    this.accountService.listar(0, 50, '').subscribe({
-      next: accountPage => {
-        this.accounts = accountPage.content;
+    this.accountService.listarTodas().subscribe({
+      next: contas => {
+        this.accounts = contas;
       }
     });
   }

@@ -81,9 +81,9 @@ export class CompraDebitoFormComponent implements OnInit {
   }
 
   carregarContas(): void {
-    this.accountService.listar(0, 50, '').subscribe({
-      next: (response) => {
-        this.contas = response.content;
+    this.accountService.listarTodas().subscribe({
+      next: (contas) => {
+        this.contas = contas;
       },
       error: (error) => {
         this.formBaseService.showError('Erro ao carregar contas');

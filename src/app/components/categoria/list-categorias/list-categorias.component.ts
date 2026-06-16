@@ -2,14 +2,9 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, Output, OnChanges, S
 import { FormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { CategoriaService } from '@services/categoria.service';
-import { Categoria } from '@models/categoria.model';
+import { Categoria, TipoOption } from '@models/categoria.model';
 import { CategoriaTypeChipComponent } from '../categoria-type-chip/categoria-type-chip.component';
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '@shared/primeng-shared';
-
-interface TipoOption {
-  label: string;
-  value: string;
-}
 
 @Component({
   selector: 'app-list-categorias',

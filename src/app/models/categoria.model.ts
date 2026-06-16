@@ -9,3 +9,8 @@ export interface Categoria {
   nome: string;
   tipo: TipoCategoria;
 }
+
+export interface TipoOption {
+  label: string;
+  value: TipoCategoria;
+}
