@@ -7,6 +7,7 @@ import { TableLazyLoadEvent } from 'primeng/table';
 import { catchError, map, of as observableOf } from "rxjs";
 import { LazyTableBase } from '@shared/lazy-table.base';
 import { SALVE_COMMON, SALVE_DATA, SALVE_OVERLAY } from '@shared/primeng-shared';
+import { formatarMoeda } from '@shared/utils';
 import { StatCardComponent, ActionButtonsComponent } from '@components/shared';
 
 @Component({
@@ -22,6 +23,7 @@ export class ListProventosComponent extends LazyTableBase implements OnInit {
 
   proventos: Provento[] = [];
   selectedProvento: Provento | null = null;
+  formatarMoeda = formatarMoeda;
 
   constructor(
     private proventoService: ProventoService,

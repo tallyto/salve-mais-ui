@@ -127,14 +127,14 @@ export class ComprovantesDialogComponent {
 
   getFileIcon(tipo: string): string {
     if (tipo.includes('pdf')) {
-      return 'picture_as_pdf';
+      return 'pi-file-pdf';
     } else if (tipo.includes('image')) {
-      return 'image';
+      return 'pi-image';
     } else if (tipo.includes('excel') || tipo.includes('spreadsheet')) {
-      return 'table_chart';
+      return 'pi-table';
     } else if (tipo.includes('word') || tipo.includes('document')) {
-      return 'description';
+      return 'pi-file-word';
     }
-    return 'insert_drive_file';
+    return 'pi-file';
   }
 }

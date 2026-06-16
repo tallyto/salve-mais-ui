@@ -32,11 +32,11 @@ export class FaturaService {
     };
 
     if (mes !== undefined) {
-      params.mes = mes;
+      params['mes'] = mes;
     }
 
     if (ano !== undefined) {
-      params.ano = ano;
+      params['ano'] = ano;
     }
 
     return this.http.get<Page<FaturaResponseDTO>>(this.apiUrl, { params });

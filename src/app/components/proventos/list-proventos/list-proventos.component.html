@@ -13,7 +13,7 @@
     <div class="col-12 md:col-6">
       <app-stat-card
         label="Valor total"
-        [value]="calcularTotal() | currency:'BRL':'symbol':'1.2-2'"
+        [value]="formatarMoeda(calcularTotal() || 0)"
         icon="pi-dollar">
       </app-stat-card>
     </div>

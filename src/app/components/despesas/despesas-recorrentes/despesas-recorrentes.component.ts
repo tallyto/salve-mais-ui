@@ -8,6 +8,7 @@ import {CartaoService} from "@services/cartao.service";
 import {Cartao} from "@models/cartao.model";
 import {MessageService} from "primeng/api";
 import {GastoCartao} from "@models/gasto-cartao.model";
+import {GastoCartaoInput} from "@models/input/gasto-cartao.input";
 import { filter } from 'rxjs';
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '@shared/primeng-shared';
 import { ListDespesasRecorrentesComponent } from '@components/despesas/list-despesas-recorrentes/list-despesas-recorrentes.component';
@@ -107,11 +108,7 @@ export class DespesasRecorrentesComponent implements OnInit {
     }
   }
 
-  private salvarCompraConfirmado(gasto: Partial<GastoCartao>, isEditing: boolean) {
-    if (gasto.data instanceof Date) {
-      const d = gasto.data;
-      gasto.data = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-    }
+  private salvarCompraConfirmado(gasto: GastoCartaoInput, isEditing: boolean) {
     this.despesaRecorrenteService.salvarCompra(gasto).subscribe({
       next: () => {
         this.limparFormulario();

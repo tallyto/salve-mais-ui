@@ -6,7 +6,7 @@ import { catchError, map, of as observableOf } from "rxjs";
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { TableLazyLoadEvent } from 'primeng/table';
-import { MONTHS, generateYears } from '@shared/utils';
+import { MONTHS, generateYears, formatarMoeda } from '@shared/utils';
 import { LazyTableBase } from '@shared/lazy-table.base';
 import { SALVE_COMMON, SALVE_DATA, SALVE_OVERLAY } from '@shared/primeng-shared';
 import { MonthYearFilterComponent } from '@components/dashboard/month-year-filter/month-year-filter.component';
@@ -27,6 +27,8 @@ export class ListComprasDebitoComponent extends LazyTableBase implements OnInit 
   selectedYear: number;
   months = MONTHS;
   years: number[] = [];
+
+  formatarMoeda = formatarMoeda;
 
   constructor(
     private compraDebitoService: CompraDebitoService,

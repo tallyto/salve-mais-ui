@@ -13,6 +13,7 @@ import { NotificacoesComponent } from '@components/notificacoes/notificacoes/not
 import { BudgetRuleComponent } from '@components/dashboard/budget-rule/budget-rule.component';
 import { HomeComponent } from '@components/shell/home/home.component';
 import { NotFoundComponent } from '@components/shell/not-found/not-found.component';
+import { ComprovantesListComponent } from '@components/cartao/comprovantes-list/comprovantes-list.component';
 
 export const APP_ROUTES: Routes = [
   // Rotas públicas
@@ -32,6 +33,7 @@ export const APP_ROUTES: Routes = [
   { path: 'notificacoes', component: NotificacoesComponent, canActivate: [AuthGuard] },
   { path: 'budget-rule', component: BudgetRuleComponent, canActivate: [AuthGuard] },
   { path: 'provento-form', component: ProventoFormComponent, canActivate: [AuthGuard] },
+  { path: 'comprovantes', component: ComprovantesListComponent, canActivate: [AuthGuard] },
 
   // Rotas lazy-loaded por feature
   {

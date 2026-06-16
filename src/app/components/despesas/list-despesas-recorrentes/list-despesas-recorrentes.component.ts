@@ -5,7 +5,7 @@ import {GastoCartao} from "@models/gasto-cartao.model";
 import {GastoCartaoService} from "@services/gasto-cartao.service";
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { TableLazyLoadEvent } from 'primeng/table';
-import { MONTHS, generateYears } from '@shared/utils';
+import { MONTHS, generateYears, formatarMoeda } from '@shared/utils';
 import { LazyTableBase } from '@shared/lazy-table.base';
 import { SALVE_COMMON, SALVE_DATA, SALVE_OVERLAY } from '@shared/primeng-shared';
 import { StatCardComponent } from '@components/shared';
@@ -28,6 +28,7 @@ export class ListDespesasRecorrentesComponent extends LazyTableBase implements O
   selectedYear: number;
   months = MONTHS;
   years: number[] = [];
+  formatarMoeda = formatarMoeda;
 
   constructor(
     private despesaRecorrenteService: GastoCartaoService,

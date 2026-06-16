@@ -145,7 +145,7 @@
           <div class="col-12 md:col-6">
             <app-stat-card
               label="Valor total"
-              [value]="calcularTotalCompras() | currency:'BRL':'symbol':'1.2-2'"
+              [value]="formatarMoeda(calcularTotalCompras() || 0)"
               icon="pi-money-bill">
             </app-stat-card>
           </div>

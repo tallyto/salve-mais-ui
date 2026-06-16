@@ -10,7 +10,6 @@ import { Categoria } from '@models/categoria.model';
 import { Cartao } from '@models/cartao.model';
 import { CompraParceladaRequest } from '@models/compra-parcelada.model';
 import { CategoriaFormComponent } from '@components/categoria/categoria-form/categoria-form.component';
-import { CartaoFormComponent } from '@components/cartao/cartao-form/cartao-form.component';
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '@shared/primeng-shared';
 
 @Component({
@@ -21,8 +20,7 @@ import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '@shared/pr
     ...SALVE_FORMS,
     ...SALVE_DATA,
     ...SALVE_OVERLAY,
-    CategoriaFormComponent,
-    CartaoFormComponent
+    CategoriaFormComponent
   ],
   templateUrl: './compra-parcelada-form.component.html'
 })
@@ -275,18 +273,8 @@ export class CompraParceladaFormComponent implements OnInit {
   }
 
   novoCartao(): void {
-    const dialogRef = this.dialogService.open(CartaoFormComponent, {
-      header: 'Novo cartão',
-      width: '600px',
-      modal: true
-    });
-
-    dialogRef.onClose.subscribe(result => {
-      if (result) {
-        this.loadCartoes();
-        this.form.patchValue({ cartaoId: result.id });
-        this.formBaseService.showSuccess('Cartão criado com sucesso.');
-      }
-    });
+    if (confirm('Você precisa criar um novo cartão. Por favor, acesse a seção de cartões para criar um novo.')) {
+      // Redireciona para criar cartão
+    }
   }
 }

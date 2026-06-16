@@ -227,7 +227,7 @@
         <div class="col-12 md:col-6">
           <app-stat-card
             label="Valor total"
-            [value]="calcularTotalFaturas() | currency:'BRL':'symbol':'1.2-2'"
+            [value]="formatarMoeda(calcularTotalFaturas() || 0)"
             icon="pi-receipt">
           </app-stat-card>
         </div>

@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, EventEmitter, Input, Output, OnChanges, S
 import { FormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { CategoriaService } from '@services/categoria.service';
-import { Categoria, TipoOption } from '@models/categoria.model';
+import { Categoria, TipoCategoria, TipoOption } from '@models/categoria.model';
 import { CategoriaTypeChipComponent } from '../categoria-type-chip/categoria-type-chip.component';
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '@shared/primeng-shared';
 
@@ -28,9 +28,9 @@ export class ListCategoriasComponent implements OnChanges {
   public editingCategoria: Categoria | null = null;
   public originalCategoria: Categoria | null = null;
   public tipoOptions: TipoOption[] = [
-    { label: 'Necessidade (50%)', value: 'NECESSIDADE' },
-    { label: 'Desejo (30%)', value: 'DESEJO' },
-    { label: 'Economia (20%)', value: 'ECONOMIA' }
+    { label: 'Necessidade (50%)', value: TipoCategoria.NECESSIDADE },
+    { label: 'Desejo (30%)', value: TipoCategoria.DESEJO },
+    { label: 'Economia (20%)', value: TipoCategoria.ECONOMIA }
   ];
 
   constructor(

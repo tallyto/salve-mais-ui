@@ -11,6 +11,7 @@ import { ConfirmationService, MessageService, MenuItem } from 'primeng/api';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '@shared/primeng-shared';
+import { formatarMoeda } from '@shared/utils';
 import { EmptyStateComponent, StatCardComponent } from '@components/shared';
 
 @Component({
@@ -33,6 +34,7 @@ export class ListTransacoesComponent implements OnInit {
   tiposTransacao = Object.values(TipoTransacao);
   tipoOptions: MenuItem[] = [];
   contas: Conta[] = [];
+  formatarMoeda = formatarMoeda;
   categorias: Categoria[] = [];
   loading = false;
   totalElements = 0;

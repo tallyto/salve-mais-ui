@@ -8,7 +8,6 @@ import { FaturaService } from '@services/fatura.service';
 import { CartaoService } from '@services/cartao.service';
 import { FaturaManualDTO, FaturaResponseDTO, FaturaPreviewDTO } from '@models/fatura.model';
 import { Cartao } from '@models/cartao.model';
-import { PagamentoFaturaModalComponent } from '@components/cartao/pagamento-fatura-modal/pagamento-fatura-modal.component';
 import { MonthYearFilterComponent } from '@components/dashboard/month-year-filter/month-year-filter.component';
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '@shared/primeng-shared';
 import { MONTHS, generateYears as utilGenerateYears, formatarMoeda } from '@shared/utils';
@@ -24,7 +23,6 @@ import { StatCardComponent } from '@components/shared';
         FormsModule,
         CurrencyInputDirective,
         MonthYearFilterComponent,
-        PagamentoFaturaModalComponent,
         StatCardComponent,
         ...SALVE_COMMON,
         ...SALVE_FORMS,
@@ -249,18 +247,7 @@ export class FaturaFormComponent extends LazyTableBase implements OnInit, AfterV
   }
 
   marcarComoPaga(fatura: FaturaResponseDTO): void {
-    const ref = this.dialogService.open(PagamentoFaturaModalComponent, {
-      width: '800px',
-      height: 'auto',
-      data: { fatura: fatura },
-      modal: true
-    });
-
-    ref.onClose.subscribe(result => {
-      if (result === true) {
-        this.carregarFaturas();
-      }
-    });
+    this.marcarComoPageSimples(fatura.id);
   }
 
   marcarComoPageSimples(id: number): void {

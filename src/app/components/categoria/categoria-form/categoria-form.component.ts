@@ -27,9 +27,9 @@ export class CategoriaFormComponent implements OnInit {
 
   public categoriaForm: FormGroup;
   public tipoOptions: TipoOption[] = [
-    { label: 'Necessidade (50%)', value: 'NECESSIDADE' },
-    { label: 'Desejo (30%)', value: 'DESEJO' },
-    { label: 'Economia (20%)', value: 'ECONOMIA' }
+    { label: 'Necessidade (50%)', value: TipoCategoria.NECESSIDADE },
+    { label: 'Desejo (30%)', value: TipoCategoria.DESEJO },
+    { label: 'Economia (20%)', value: TipoCategoria.ECONOMIA }
   ];
 
   constructor(

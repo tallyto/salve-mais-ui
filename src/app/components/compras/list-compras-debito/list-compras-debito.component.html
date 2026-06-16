@@ -25,7 +25,7 @@
         <div class="col-12 md:col-6">
           <app-stat-card
             label="Total do período"
-            [value]="calcularTotal() | currency:'BRL':'symbol':'1.2-2'"
+            [value]="formatarMoeda(calcularTotal() || 0)"
             icon="pi-shopping-cart">
           </app-stat-card>
         </div>

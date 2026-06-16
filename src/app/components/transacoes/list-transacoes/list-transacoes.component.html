@@ -84,7 +84,7 @@
       <div class="col-12 md:col-6">
         <app-stat-card
           label="Valor líquido"
-          [value]="calcularTotalTransacoes() | currency:'BRL':'symbol':'1.2-2'"
+          [value]="formatarMoeda(calcularTotalTransacoes() || 0)"
           icon="pi-sort-alt">
         </app-stat-card>
       </div>

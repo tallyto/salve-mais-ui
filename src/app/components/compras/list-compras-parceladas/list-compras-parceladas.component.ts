@@ -8,6 +8,7 @@ import { CompraParcelada, Parcela } from '@models/compra-parcelada.model';
 import { Categoria } from '@models/categoria.model';
 import { Cartao } from '@models/cartao.model';
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA } from '@shared/primeng-shared';
+import { formatarMoeda } from '@shared/utils';
 import { StatCardComponent } from '@components/shared';
 
 @Component({
@@ -28,6 +29,7 @@ export class ListComprasParceladasComponent implements OnInit {
   cartoes: Cartao[] = [];
   loading: boolean = false;
   page: number = 0;
+  formatarMoeda = formatarMoeda;
   size: number = 10;
   totalElements: number = 0;
   totalPages: number = 0;

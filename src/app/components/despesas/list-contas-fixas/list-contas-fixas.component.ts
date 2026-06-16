@@ -9,7 +9,7 @@ import { ConfirmationService, MessageService, MenuItem } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ComprovantesDialogComponent } from '@components/cartao/comprovantes-dialog/comprovantes-dialog.component';
-import { MONTHS, generateYears } from '@shared/utils';
+import { MONTHS, generateYears, formatarMoeda } from '@shared/utils';
 import { LazyTableBase } from '@shared/lazy-table.base';
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '@shared/primeng-shared';
 import { StatCardComponent } from '@components/shared';
@@ -32,6 +32,7 @@ export class ListContasFixasComponent extends LazyTableBase implements OnInit {
   selectedYear: number;
   months = MONTHS;
   years: number[] = [];
+  formatarMoeda = formatarMoeda;
 
   private destroyRef = inject(DestroyRef);
 
