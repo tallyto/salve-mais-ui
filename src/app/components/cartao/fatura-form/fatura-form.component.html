@@ -41,7 +41,7 @@
                      optionLabel="nome"
                      optionValue="id"
                      (onChange)="onCartaoPreviewChange($event.value)"
-                     class="w-full">
+                     styleClass="w-full">
               <ng-template let-option pTemplate="item">
                 {{ option.nome }} - Vence dia {{ formatarDiaVencimento(option.vencimento) }}
               </ng-template>
