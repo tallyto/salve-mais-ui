@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Conta, TipoConta } from 'src/app/models/conta.model';
-import { ContaService } from 'src/app/services/conta.service';
-import { ReservaEmergenciaService } from '../../services/reserva-emergencia.service';
+import { Conta, TipoConta } from '@models/conta.model';
+import { ContaService } from '@services/conta.service';
+import { ReservaEmergenciaService } from '@services/reserva-emergencia.service';
 import { MessageService } from 'primeng/api';
 
 @Component({

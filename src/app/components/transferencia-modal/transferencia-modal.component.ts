@@ -2,8 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { AccountService } from 'src/app/services/account.service';
-import { Account } from '../../models/account.model';
+import { AccountService } from '@services/account.service';
+import { Account } from '@models/account.model';
 
 @Component({
   selector: 'app-transferencia-modal',

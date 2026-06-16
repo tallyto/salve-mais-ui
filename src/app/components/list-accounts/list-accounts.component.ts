@@ -1,6 +1,6 @@
 import { Component, OnInit, DestroyRef, inject } from '@angular/core';
-import { AccountService } from 'src/app/services/account.service';
-import { Account } from '../../models/account.model';
+import { AccountService } from '@services/account.service';
+import { Account } from '@models/account.model';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TransferenciaModalComponent } from '../transferencia-modal/transferencia-modal.component';

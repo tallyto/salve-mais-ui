@@ -2,7 +2,7 @@ import { AfterViewInit, Component, Inject, Optional } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { AccountService } from 'src/app/services/account.service';
+import { AccountService } from '@services/account.service';
 
 @Component({
     selector: 'app-account',
