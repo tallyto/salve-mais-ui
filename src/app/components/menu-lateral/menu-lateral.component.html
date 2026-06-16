@@ -1,0 +1,126 @@
+<ng-container *ngIf="!isAuthenticated">
+  <router-outlet></router-outlet>
+</ng-container>
+
+<div *ngIf="isAuthenticated" class="flex flex-column h-screen">
+  <!-- Toolbar -->
+  <div class="app-toolbar flex-none flex align-items-center gap-2 px-4"
+       style="background-color: var(--salve-toolbar-bg, #00796b); color: white; height: 56px;">
+    <p-button *ngIf="isAuthenticated"
+            icon="pi pi-bars"
+            [rounded]="true"
+            [text]="true"
+            (onClick)="toggleSidenav()"
+            pTooltip="Menu"
+            tooltipPosition="bottom"
+            styleClass="text-white"></p-button>
+
+    <span class="flex align-items-center gap-2">
+      <img src="assets/images/logo.svg" alt="Salve Mais" class="w-2rem h-2rem">
+      <span>{{ appTitle }}</span>
+    </span>
+
+    <span class="flex-1"></span>
+
+    <ng-container *ngIf="isAuthenticated">
+      <p-button
+        icon="pi pi-bell"
+        [rounded]="true"
+        [text]="true"
+        routerLink="/notificacoes"
+        pTooltip="Notificações"
+        tooltipPosition="bottom"
+        styleClass="text-white"
+        [badge]="shouldShowNotificationBadge() ? getNotificationBadgeText() : ''"
+        badgeSeverity="danger"></p-button>
+
+      <p-button
+        icon="pi pi-moon"
+        *ngIf="(themeService.isDark$ | async)"
+        [rounded]="true"
+        [text]="true"
+        (onClick)="themeService.toggle()"
+        pTooltip="Modo claro"
+        tooltipPosition="bottom"
+        styleClass="text-white"></p-button>
+
+      <p-button
+        icon="pi pi-sun"
+        *ngIf="!(themeService.isDark$ | async)"
+        [rounded]="true"
+        [text]="true"
+        (onClick)="themeService.toggle()"
+        pTooltip="Modo escuro"
+        tooltipPosition="bottom"
+        styleClass="text-white"></p-button>
+
+      <p-menu #userMenu [model]="userMenuItems" [popup]="true"></p-menu>
+      <p-button
+        [icon]="'pi pi-user'"
+        [rounded]="true"
+        [text]="true"
+        (onClick)="userMenu.toggle($event)"
+        pTooltip="Conta"
+        tooltipPosition="bottom"
+        styleClass="text-white"></p-button>
+    </ng-container>
+  </div>
+
+  <!-- Main container with sidebar -->
+  <div class="flex flex-1" [style.overflow]="'hidden'">
+    <!-- Sidebar -->
+    <div *ngIf="isAuthenticated"
+         class="app-sidebar"
+         [style.width.px]="sidenavOpen ? 320 : 0"
+         [style.transition]="'width 0.3s ease'"
+         [style.overflow-y]="'auto'"
+         [style.background-color]="'var(--salve-sidebar-bg, #f8f9fa)'"
+         [style.border-right]="'1px solid var(--salve-card-border, #ddd)'"
+         [style.position]="'relative'">
+
+      <!-- Brand -->
+      <div class="sidenav-brand flex align-items-center gap-3 px-4 py-3">
+        <img src="assets/images/logo.svg" alt="Salve Mais" style="width:32px;height:32px">
+        <div>
+          <div class="sidenav-brand-name">Salve Mais</div>
+          <div class="sidenav-brand-version">v{{ appVersion }}</div>
+        </div>
+      </div>
+
+      <p-divider></p-divider>
+
+      <div class="pt-2 pb-1">
+        <a [routerLink]="'/dashboard'"
+           routerLinkActive="nav-active"
+           [routerLinkActiveOptions]="{ exact: true }"
+           class="sidenav-link flex align-items-center gap-3 mx-3 px-3 py-3 text-color cursor-pointer">
+          <i class="pi pi-th-large"></i>
+          <span>Dashboard</span>
+        </a>
+      </div>
+
+      <nav class="pb-4">
+        <section *ngFor="let section of menuSections" class="sidenav-section">
+          <div class="sidenav-section-title flex align-items-center gap-2 px-4 pt-3 pb-2">
+            <i class="pi" [ngClass]="'pi-' + section.icon"></i>
+            <span>{{ section.title }}</span>
+          </div>
+
+          <a *ngFor="let item of section.items"
+             [routerLink]="item['route']"
+             routerLinkActive="nav-active"
+             (click)="!isLargeScreen && toggleSidenav()"
+             class="sidenav-link flex align-items-center gap-3 mx-3 px-3 py-2 text-color cursor-pointer">
+            <i class="pi" [ngClass]="'pi-' + item['icon']"></i>
+            <span>{{ item['label'] }}</span>
+          </a>
+        </section>
+      </nav>
+    </div>
+
+    <!-- Main content -->
+    <div class="flex-1 overflow-auto">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

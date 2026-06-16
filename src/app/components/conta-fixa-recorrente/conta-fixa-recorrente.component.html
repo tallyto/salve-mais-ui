@@ -1,0 +1,226 @@
+<section class="p-4 flex flex-column gap-4 min-h-screen">
+  <div class="flex align-items-center gap-3">
+    <p-button
+      icon="pi pi-arrow-left"
+      [rounded]="true"
+      [text]="true"
+      (onClick)="voltarParaListagem()">
+    </p-button>
+    <h2 class="m-0">Criar Contas Fixas Recorrentes</h2>
+  </div>
+
+  <p-card>
+    <ng-template pTemplate="header">
+      <div class="p-4 pb-0 flex align-items-center gap-2">
+        <i class="pi pi-refresh text-xl text-primary"></i>
+        <div>
+          <h3 class="m-0">Nova Conta Fixa Recorrente</h3>
+          <span class="text-sm text-color-secondary">
+            Crie múltiplas contas fixas automaticamente com base em um padrão de recorrência
+          </span>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="content">
+      <form [formGroup]="contaRecorrenteForm" (ngSubmit)="criarContasRecorrentes()" class="flex flex-column gap-4">
+        <section class="flex flex-column gap-3">
+          <div class="flex align-items-center gap-2">
+            <i class="pi pi-info-circle text-color-secondary"></i>
+            <h3 class="m-0">Informações Básicas</h3>
+          </div>
+
+          <div>
+            <p-floatlabel class="w-full">
+              <input pInputText id="nome" formControlName="nome" class="w-full">
+              <label for="nome">Nome da Conta</label>
+            </p-floatlabel>
+            <small class="p-error" *ngIf="nome?.hasError('required') && nome?.touched">Nome é obrigatório</small>
+            <small class="p-error" *ngIf="nome?.hasError('minlength') && nome?.touched">Nome deve ter pelo menos 3 caracteres</small>
+          </div>
+
+          <div class="grid">
+            <div class="col-12 md:col-6">
+              <p-floatlabel class="w-full">
+                <p-select
+                  inputId="categoriaId"
+                  formControlName="categoriaId"
+                  [options]="categorias"
+                  optionLabel="nome"
+                  optionValue="id"
+                  class="w-full">
+                </p-select>
+                <label for="categoriaId">Categoria</label>
+              </p-floatlabel>
+              <small class="p-error" *ngIf="categoriaId?.hasError('required') && categoriaId?.touched">Categoria é obrigatória</small>
+            </div>
+
+            <div class="col-12 md:col-6">
+              <p-floatlabel class="w-full">
+                <p-select
+                  inputId="contaId"
+                  formControlName="contaId"
+                  [options]="contas"
+                  optionLabel="titular"
+                  optionValue="id"
+                  class="w-full">
+                </p-select>
+                <label for="contaId">Conta</label>
+              </p-floatlabel>
+              <small class="p-error" *ngIf="contaId?.hasError('required') && contaId?.touched">Conta é obrigatória</small>
+            </div>
+          </div>
+        </section>
+
+        <section class="flex flex-column gap-3">
+          <div class="flex align-items-center gap-2">
+            <i class="pi pi-clock text-color-secondary"></i>
+            <h3 class="m-0">Configurações de Recorrência</h3>
+          </div>
+
+          <div class="grid">
+            <div class="col-12 md:col-6">
+              <p-floatlabel class="w-full">
+                <input pInputText id="dataInicio" type="date" formControlName="dataInicio" class="w-full">
+                <label for="dataInicio">Data de Início</label>
+              </p-floatlabel>
+              <small class="text-color-secondary">Data da primeira parcela</small>
+              <small class="p-error block" *ngIf="dataInicio?.hasError('required') && dataInicio?.touched">Data de início é obrigatória</small>
+            </div>
+
+            <div class="col-12 md:col-6">
+              <p-floatlabel class="w-full">
+                <p-select
+                  inputId="tipoRecorrencia"
+                  formControlName="tipoRecorrencia"
+                  [options]="tiposRecorrencia"
+                  optionLabel="descricao"
+                  optionValue="valor"
+                  class="w-full">
+                </p-select>
+                <label for="tipoRecorrencia">Tipo de Recorrência</label>
+              </p-floatlabel>
+              <small class="p-error" *ngIf="tipoRecorrencia?.hasError('required') && tipoRecorrencia?.touched">Tipo de recorrência é obrigatório</small>
+            </div>
+          </div>
+
+          <div class="grid">
+            <div class="col-12 md:col-6">
+              <p-floatlabel class="w-full">
+                <input pInputText id="valor" type="text" formControlName="valor" appCurrencyInput class="w-full">
+                <label for="valor">Valor por Parcela</label>
+              </p-floatlabel>
+              <small class="p-error" *ngIf="valor?.hasError('required') && valor?.touched">Valor é obrigatório</small>
+              <small class="p-error" *ngIf="valor?.hasError('min') && valor?.touched">Valor deve ser maior que zero</small>
+            </div>
+
+            <div class="col-12 md:col-6">
+              <p-floatlabel class="w-full">
+                <input pInputText id="numeroParcelas" type="number" min="1" max="120" formControlName="numeroParcelas" class="w-full">
+                <label for="numeroParcelas">Número de Parcelas</label>
+              </p-floatlabel>
+              <small class="text-color-secondary">Máximo 120 parcelas</small>
+              <small class="p-error block" *ngIf="numeroParcelas?.hasError('required') && numeroParcelas?.touched">Número de parcelas é obrigatório</small>
+              <small class="p-error block" *ngIf="numeroParcelas?.hasError('min') && numeroParcelas?.touched">Deve ter pelo menos 1 parcela</small>
+              <small class="p-error block" *ngIf="numeroParcelas?.hasError('max') && numeroParcelas?.touched">Máximo 120 parcelas</small>
+            </div>
+          </div>
+
+          <p-floatlabel class="w-full">
+            <textarea
+              pTextarea
+              id="observacoes"
+              formControlName="observacoes"
+              rows="3"
+              class="w-full">
+            </textarea>
+            <label for="observacoes">Observações (Opcional)</label>
+          </p-floatlabel>
+        </section>
+
+        <div
+          *ngIf="contaRecorrenteForm.get('dataInicio')?.value && contaRecorrenteForm.get('numeroParcelas')?.value && contaRecorrenteForm.get('valor')?.value"
+          class="p-3 border-round bg-blue-50">
+          <div class="flex align-items-center gap-2 mb-3">
+            <i class="pi pi-file-check text-primary"></i>
+            <h3 class="m-0">Resumo da Configuração</h3>
+          </div>
+          <div class="grid">
+            <div class="col-12 md:col-6">
+              <strong>Valor Total:</strong> {{ calcularValorTotal() | currency:'BRL':'symbol':'1.2-2' }}
+            </div>
+            <div class="col-12 md:col-6">
+              <strong>Primeira Parcela:</strong> {{ contaRecorrenteForm.get('dataInicio')?.value | date:'dd/MM/yyyy' }}
+            </div>
+            <div class="col-12 md:col-6" *ngIf="calcularDataFinal()">
+              <strong>Última Parcela:</strong> {{ calcularDataFinal() }}
+            </div>
+            <div class="col-12 md:col-6">
+              <strong>Total de Parcelas:</strong> {{ contaRecorrenteForm.get('numeroParcelas')?.value }}
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-content-end gap-2">
+          <p-button
+            label="Cancelar"
+            variant="outlined"
+            type="button"
+            [disabled]="loading"
+            (onClick)="voltarParaListagem()">
+          </p-button>
+          <p-button
+            [label]="loading ? 'Criando...' : 'Criar Contas Recorrentes'"
+            [icon]="loading ? undefined : 'pi pi-save'"
+            type="submit"
+            [disabled]="contaRecorrenteForm.invalid || loading">
+            <p-progressspinner *ngIf="loading" [style]="{width: '18px', height: '18px'}" strokeWidth="6"></p-progressspinner>
+          </p-button>
+        </div>
+      </form>
+    </ng-template>
+  </p-card>
+
+  <p-card>
+    <ng-template pTemplate="header">
+      <div class="p-4 pb-0 flex align-items-center gap-2">
+        <i class="pi pi-question-circle text-xl text-primary"></i>
+        <h3 class="m-0">Como funciona?</h3>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="content">
+      <div class="flex flex-column gap-3">
+        <div class="flex gap-3">
+          <i class="pi pi-circle-fill text-primary mt-1"></i>
+          <div>
+            <strong>Configure os dados básicos</strong>
+            <p class="m-0 text-color-secondary">Nome, categoria e conta para as despesas</p>
+          </div>
+        </div>
+        <div class="flex gap-3">
+          <i class="pi pi-circle-fill text-primary mt-1"></i>
+          <div>
+            <strong>Defina a recorrência</strong>
+            <p class="m-0 text-color-secondary">Data de início, valor e frequência dos pagamentos</p>
+          </div>
+        </div>
+        <div class="flex gap-3">
+          <i class="pi pi-circle-fill text-primary mt-1"></i>
+          <div>
+            <strong>Parcelas criadas automaticamente</strong>
+            <p class="m-0 text-color-secondary">Sistema cria todas as parcelas com numeração sequencial</p>
+          </div>
+        </div>
+
+        <div class="border-top-1 surface-border pt-3">
+          <h4 class="mt-0">Exemplos de uso:</h4>
+          <ul class="pl-3 m-0">
+            <li><strong>Aluguel:</strong> R$ 1.200 mensais por 12 meses</li>
+            <li><strong>Financiamento:</strong> R$ 890 mensais por 48 meses</li>
+            <li><strong>Seguro:</strong> R$ 1.500 anuais por 5 anos</li>
+          </ul>
+        </div>
+      </div>
+    </ng-template>
+  </p-card>
+</section>

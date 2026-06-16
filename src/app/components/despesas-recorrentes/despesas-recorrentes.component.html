@@ -1,0 +1,116 @@
+<section class="p-4 flex flex-column gap-4">
+  <div class="flex align-items-center gap-3">
+    <i class="pi pi-refresh text-3xl text-primary"></i>
+    <div>
+      <h2 class="m-0 font-bold">Gastos Recorrentes no Cartão</h2>
+      <span class="text-sm text-color-secondary">Lançamentos mensais recorrentes no cartão de crédito sem parcelas</span>
+    </div>
+  </div>
+
+  <div>
+    <p-card>
+      <ng-template pTemplate="header">
+        <div class="flex align-items-center gap-2 p-3">
+          <i class="pi pi-plus-circle text-primary"></i>
+          <div>
+            <h3 class="m-0 font-semibold">{{ editingGasto ? 'Editar Gasto Recorrente' : 'Cadastrar Gasto Recorrente' }}</h3>
+            <span class="text-sm text-color-secondary">
+              {{ editingGasto ? 'Atualize os dados do gasto selecionado' : 'Registre gastos mensais recorrentes no cartão' }}
+            </span>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="content">
+        <form (ngSubmit)="salvarGastoRecorrente()" [formGroup]="gastosRecorrentes" class="flex flex-column gap-3">
+          <div class="grid">
+            <div class="col-12 md:col-6 pt-4">
+              <p-floatlabel class="w-full">
+                <input pInputText id="descricao" formControlName="descricao" class="w-full">
+                <label for="descricao">Descrição</label>
+              </p-floatlabel>
+            </div>
+
+            <div class="col-12 md:col-6 pt-4">
+              <p-floatlabel class="w-full">
+                <input pInputText id="valor" formControlName="valor" type="text" appCurrencyInput class="w-full">
+                <label for="valor">Valor</label>
+              </p-floatlabel>
+            </div>
+
+            <div class="col-12 md:col-6 pt-4">
+              <p-floatlabel class="w-full">
+                <p-select
+                  inputId="categoriaId"
+                  formControlName="categoriaId"
+                  [options]="categorias"
+                  optionLabel="nome"
+                  optionValue="id"
+                  styleClass="w-full">
+                </p-select>
+                <label for="categoriaId">Categoria</label>
+              </p-floatlabel>
+            </div>
+
+            <div class="col-12 md:col-6 pt-4">
+              <p-floatlabel class="w-full">
+                <p-select
+                  inputId="cartaoId"
+                  formControlName="cartaoId"
+                  [options]="cartoes"
+                  optionLabel="nome"
+                  optionValue="id"
+                  styleClass="w-full">
+                </p-select>
+                <label for="cartaoId">Cartão</label>
+              </p-floatlabel>
+            </div>
+
+            <div class="col-12 md:col-6 pt-4">
+              <p-floatlabel class="w-full">
+                <p-datepicker
+                  inputId="data"
+                  formControlName="data"
+                  dateFormat="dd/mm/yy"
+                  [showIcon]="true"
+                  styleClass="w-full">
+                </p-datepicker>
+                <label for="data">Data da compra</label>
+              </p-floatlabel>
+            </div>
+          </div>
+
+          <div class="flex justify-content-end gap-2 mt-2">
+            <p-button
+              [label]="editingGasto ? 'Cancelar edição' : 'Limpar'"
+              [icon]="editingGasto ? 'pi pi-times' : 'pi pi-eraser'"
+              variant="outlined"
+              type="button"
+              (onClick)="limparFormulario()">
+            </p-button>
+            <p-button
+              [label]="editingGasto ? 'Atualizar' : 'Salvar'"
+              [icon]="editingGasto ? 'pi pi-refresh' : 'pi pi-save'"
+              [disabled]="gastosRecorrentes.invalid"
+              type="submit">
+            </p-button>
+          </div>
+        </form>
+      </ng-template>
+    </p-card>
+  </div>
+
+  <div>
+    <p-card>
+      <ng-template pTemplate="header">
+        <div class="p-3 flex align-items-center gap-2">
+          <i class="pi pi-list text-primary"></i>
+          <h3 class="m-0 font-semibold">Meus Gastos Recorrentes</h3>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="content">
+        <app-list-despesas-recorrentes></app-list-despesas-recorrentes>
+      </ng-template>
+    </p-card>
+  </div>
+</section>

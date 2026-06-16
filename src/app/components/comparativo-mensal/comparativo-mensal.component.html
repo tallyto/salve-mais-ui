@@ -1,0 +1,297 @@
+<section class="p-4 flex flex-column gap-4">
+  <div class="flex flex-column md:flex-row md:align-items-center justify-content-between gap-3">
+    <div class="flex align-items-center gap-3">
+      <i class="pi pi-chart-bar text-3xl text-primary"></i>
+      <div>
+        <h2 class="m-0 font-bold">Comparativo Mensal</h2>
+        <span class="text-sm text-color-secondary">Compare receitas, despesas e saldo entre períodos</span>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap gap-2">
+      <p-button label="Comparar" icon="pi pi-search" (onClick)="carregarComparativo()" [disabled]="isLoading"></p-button>
+      <p-button label="Atual vs Anterior" icon="pi pi-calendar" severity="secondary" (onClick)="carregarComparativoAtual()" [disabled]="isLoading"></p-button>
+    </div>
+  </div>
+
+  <p-card>
+    <div class="flex align-items-center gap-2 mb-3">
+      <i class="pi pi-calendar text-xl text-color-secondary"></i>
+      <div>
+        <h3 class="m-0">Períodos de comparação</h3>
+        <span class="text-sm text-color-secondary">Selecione os dois meses que deseja comparar</span>
+      </div>
+    </div>
+
+    <div class="grid align-items-end">
+      <div class="col-12 md:col-6 lg:col-3 pt-4">
+        <p-floatlabel class="w-full">
+          <p-select
+            inputId="mesAnterior"
+            [(ngModel)]="selectedMesAnterior"
+            [options]="months"
+            optionLabel="label"
+            optionValue="value"
+            styleClass="w-full">
+          </p-select>
+          <label for="mesAnterior">Mês anterior</label>
+        </p-floatlabel>
+      </div>
+
+      <div class="col-12 md:col-6 lg:col-3 pt-4">
+        <p-floatlabel class="w-full">
+          <p-select
+            inputId="anoAnterior"
+            [(ngModel)]="selectedAnoAnterior"
+            [options]="years"
+            styleClass="w-full">
+          </p-select>
+          <label for="anoAnterior">Ano anterior</label>
+        </p-floatlabel>
+      </div>
+
+      <div class="col-12 md:col-6 lg:col-3 pt-4">
+        <p-floatlabel class="w-full">
+          <p-select
+            inputId="mesAtual"
+            [(ngModel)]="selectedMesAtual"
+            [options]="months"
+            optionLabel="label"
+            optionValue="value"
+            styleClass="w-full">
+          </p-select>
+          <label for="mesAtual">Mês atual</label>
+        </p-floatlabel>
+      </div>
+
+      <div class="col-12 md:col-6 lg:col-3 pt-4">
+        <p-floatlabel class="w-full">
+          <p-select
+            inputId="anoAtual"
+            [(ngModel)]="selectedAnoAtual"
+            [options]="years"
+            styleClass="w-full">
+          </p-select>
+          <label for="anoAtual">Ano atual</label>
+        </p-floatlabel>
+      </div>
+    </div>
+  </p-card>
+
+  <div *ngIf="isLoading" class="grid">
+    <div class="col-12 lg:col-7">
+      <p-card>
+        <p-skeleton height="1rem" width="45%" styleClass="mb-3"></p-skeleton>
+        <p-skeleton height="20rem"></p-skeleton>
+      </p-card>
+    </div>
+    <div class="col-12 lg:col-5">
+      <p-card>
+        <p-skeleton height="1rem" width="50%" styleClass="mb-3"></p-skeleton>
+        <p-skeleton height="14rem"></p-skeleton>
+      </p-card>
+    </div>
+  </div>
+
+  <p-card *ngIf="errorMessage" styleClass="border-left-3 border-red-500">
+    <div class="flex align-items-center gap-2 text-red-700">
+      <i class="pi pi-exclamation-circle"></i>
+      <span>{{ errorMessage }}</span>
+    </div>
+  </p-card>
+
+  <ng-container *ngIf="!isLoading && comparativo">
+    <p-card>
+      <ng-template pTemplate="header">
+        <div class="flex flex-column md:flex-row md:align-items-center justify-content-between gap-2 p-3">
+          <div class="flex align-items-center gap-2">
+            <i [class]="getStatusIconClass() + ' pi pi-' + getStatusIcon()"></i>
+            <span class="font-semibold">Status Geral</span>
+          </div>
+          <p-tag
+            [value]="comparativo.resumoComparativo.statusGeral"
+            [severity]="comparativo.resumoComparativo.statusGeral === 'MELHOROU' ? 'success' : comparativo.resumoComparativo.statusGeral === 'PIOROU' ? 'danger' : 'warning'">
+          </p-tag>
+        </div>
+      </ng-template>
+
+      <div class="text-sm text-color-secondary mb-3">{{ getPeriodoAnteriorText() }} comparado com {{ getPeriodoAtualText() }}</div>
+
+      <div class="grid">
+        <div class="col-12 md:col-4">
+          <div class="surface-ground border-round p-3 h-full flex flex-column gap-2">
+            <div class="flex align-items-center gap-2">
+              <i class="pi pi-money-bill text-green-600"></i>
+              <span class="font-semibold">Proventos</span>
+            </div>
+            <div class="flex align-items-center justify-content-between gap-2">
+              <span class="text-sm">{{ formatCurrency(comparativo.resumoComparativo.totalProventosAnterior) }}</span>
+              <i class="pi pi-arrow-right text-xs"></i>
+              <span class="text-sm font-bold text-green-600">{{ formatCurrency(comparativo.resumoComparativo.totalProventosAtual) }}</span>
+            </div>
+            <div [class]="comparativo.resumoComparativo.variacaoProventos > 0 ? 'text-green-600' : 'text-red-600'">
+              <span class="text-sm font-bold">{{ formatCurrency(comparativo.resumoComparativo.variacaoProventos) }}</span>
+              <span class="text-xs">({{ formatPercentual(comparativo.resumoComparativo.percentualProventos) }})</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 md:col-4">
+          <div class="surface-ground border-round p-3 h-full flex flex-column gap-2">
+            <div class="flex align-items-center gap-2">
+              <i class="pi pi-receipt text-red-600"></i>
+              <span class="font-semibold">Despesas</span>
+            </div>
+            <div class="flex align-items-center justify-content-between gap-2">
+              <span class="text-sm">{{ formatCurrency(comparativo.resumoComparativo.totalDespesasAnterior) }}</span>
+              <i class="pi pi-arrow-right text-xs"></i>
+              <span class="text-sm font-bold">{{ formatCurrency(comparativo.resumoComparativo.totalDespesasAtual) }}</span>
+            </div>
+            <div [class]="comparativo.resumoComparativo.variacaoDespesas < 0 ? 'text-green-600' : 'text-red-600'">
+              <span class="text-sm font-bold">{{ formatCurrency(comparativo.resumoComparativo.variacaoDespesas) }}</span>
+              <span class="text-xs">({{ formatPercentual(comparativo.resumoComparativo.percentualDespesas) }})</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 md:col-4">
+          <div class="surface-ground border-round p-3 h-full flex flex-column gap-2">
+            <div class="flex align-items-center gap-2">
+              <i class="pi pi-building text-blue-600"></i>
+              <span class="font-semibold">Saldo Final</span>
+            </div>
+            <div class="flex align-items-center justify-content-between gap-2">
+              <span class="text-sm">{{ formatCurrency(comparativo.resumoComparativo.saldoAnterior) }}</span>
+              <i class="pi pi-arrow-right text-xs"></i>
+              <span class="text-sm font-bold text-blue-600">{{ formatCurrency(comparativo.resumoComparativo.saldoAtual) }}</span>
+            </div>
+            <div [class]="comparativo.resumoComparativo.variacaoSaldo > 0 ? 'text-green-600' : 'text-red-600'">
+              <span class="text-sm font-bold">{{ formatCurrency(comparativo.resumoComparativo.variacaoSaldo) }}</span>
+              <span class="text-xs">({{ formatPercentual(comparativo.resumoComparativo.percentualSaldo) }})</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </p-card>
+
+    <div class="grid">
+      <div class="col-12 lg:col-7 flex flex-column gap-3">
+        <p-card>
+          <ng-template pTemplate="header">
+            <div class="p-3">
+              <div class="flex align-items-center gap-2">
+                <i class="pi pi-chart-bar text-blue-600"></i>
+                <span class="font-semibold">Comparação por Categoria</span>
+              </div>
+              <div class="text-sm text-color-secondary mt-1">Top 10 categorias por maior variação</div>
+            </div>
+          </ng-template>
+          <div class="salve-chart-container">
+            <canvas
+              baseChart
+              [data]="barChartData"
+              [options]="barChartOptions"
+              [type]="'bar'">
+            </canvas>
+          </div>
+        </p-card>
+
+        <p-card>
+          <ng-template pTemplate="header">
+            <div class="p-3 flex align-items-center gap-2">
+              <i class="pi pi-table text-purple-600"></i>
+              <span class="font-semibold">Detalhamento por Categoria</span>
+            </div>
+          </ng-template>
+          <p-table [value]="comparativo.categorias" styleClass="p-datatable-sm" [tableStyle]="{ 'min-width': '46rem' }">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Tendência</th>
+                <th>Categoria</th>
+                <th>{{ getPeriodoAnteriorText() }}</th>
+                <th>{{ getPeriodoAtualText() }}</th>
+                <th>Variação</th>
+                <th>%</th>
+                <th>Status</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-categoria>
+              <tr>
+                <td>
+                  <i [class]="getTendenciaClass(categoria.tendencia) + ' pi pi-' + getTendenciaIcon(categoria.tendencia)"></i>
+                </td>
+                <td class="font-bold">{{ categoria.categoria }}</td>
+                <td>{{ formatCurrency(categoria.valorAnterior) }}</td>
+                <td>{{ formatCurrency(categoria.valorAtual) }}</td>
+                <td [class]="categoria.variacao < 0 ? 'text-green-600 font-bold' : 'text-red-600 font-bold'">
+                  {{ formatCurrency(categoria.variacao) }}
+                </td>
+                <td [class]="categoria.percentual < 0 ? 'text-green-600 font-bold' : 'text-red-600 font-bold'">
+                  {{ formatPercentual(categoria.percentual) }}
+                </td>
+                <td>
+                  <p-tag
+                    [value]="categoria.tendencia"
+                    [severity]="categoria.tendencia === 'AUMENTO' ? 'danger' : categoria.tendencia === 'REDUCAO' ? 'success' : 'warning'">
+                  </p-tag>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr><td colspan="7">
+                <div class="flex flex-column align-items-center gap-2 p-5">
+                  <i class="pi pi-inbox text-4xl text-color-secondary"></i>
+                  <span>Nenhuma categoria encontrada para o período selecionado.</span>
+                </div>
+              </td></tr>
+            </ng-template>
+          </p-table>
+        </p-card>
+      </div>
+
+      <div class="col-12 lg:col-5">
+        <p-card styleClass="salve-sticky-panel">
+          <ng-template pTemplate="header">
+            <div class="p-3">
+              <div class="flex align-items-center gap-2">
+                <i class="pi pi-compass text-orange-600"></i>
+                <span class="font-semibold">Maiores Variações</span>
+              </div>
+              <div class="text-sm text-color-secondary mt-1">Mudanças mais relevantes entre os períodos</div>
+            </div>
+          </ng-template>
+
+          <div *ngIf="comparativo.maioresVariacoes.length > 0" class="flex flex-column gap-2">
+            <div
+              *ngFor="let variacao of comparativo.maioresVariacoes"
+              class="surface-ground border-round flex flex-column gap-2 p-3 border-left-3"
+              [ngClass]="variacao.impacto === 'POSITIVO' ? 'border-green-500' : variacao.impacto === 'NEGATIVO' ? 'border-red-500' : 'border-orange-500'">
+              <div class="flex justify-content-between align-items-start gap-2">
+                <div class="flex flex-column gap-1 flex-1">
+                  <span class="font-bold text-sm">{{ variacao.categoria }}</span>
+                  <span class="text-xs text-color-secondary">{{ variacao.tipo }}</span>
+                </div>
+                <i [class]="getImpactoClass(variacao.impacto) + ' pi pi-' + getStatusIcon()"></i>
+              </div>
+              <div class="flex justify-content-between align-items-center gap-2">
+                <span [class]="variacao.impacto === 'POSITIVO' ? 'text-green-600 font-bold' : variacao.impacto === 'NEGATIVO' ? 'text-red-600 font-bold' : 'text-orange-600 font-bold'">
+                  {{ formatCurrency(variacao.variacaoAbsoluta) }}
+                </span>
+                <p-tag
+                  [value]="formatPercentual(variacao.percentual)"
+                  [severity]="variacao.impacto === 'POSITIVO' ? 'success' : variacao.impacto === 'NEGATIVO' ? 'danger' : 'warning'">
+                </p-tag>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="comparativo.maioresVariacoes.length === 0" class="flex flex-column align-items-center gap-2 py-4 text-center">
+            <i class="pi pi-check-circle text-green-600 text-4xl"></i>
+            <h3 class="m-0 text-sm">Sem variações relevantes</h3>
+            <p class="text-xs text-color-secondary m-0">Nenhuma variação significativa detectada.</p>
+          </div>
+        </p-card>
+      </div>
+    </div>
+  </ng-container>
+</section>

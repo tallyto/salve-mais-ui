@@ -1,0 +1,112 @@
+<div class="flex w-full" style="min-height: 100vh;">
+
+  <!-- Painel esquerdo — branding -->
+  <section class="hidden md:flex flex-column justify-content-between p-6"
+           style="flex: 1; background: linear-gradient(160deg, #00796b 0%, #004d40 100%); color: white;">
+    <div class="flex align-items-center gap-3">
+      <img src="assets/images/logo.svg" alt="Salve Mais" style="width: 40px; height: 40px;">
+      <span class="text-xl font-bold">Salve Mais</span>
+    </div>
+
+    <div class="flex flex-column gap-4">
+      <h1 class="text-4xl font-bold m-0 line-height-3">
+        Organize suas finanças.<br>Tome decisões melhores.
+      </h1>
+      <p class="text-lg m-0" style="opacity: 0.85; max-width: 380px;">
+        Controle contas, cartões, receitas e relatórios em um único lugar, acessível de qualquer dispositivo.
+      </p>
+
+      <div class="flex gap-5 mt-2">
+        <div>
+          <div class="text-3xl font-bold">360°</div>
+          <div class="text-sm" style="opacity: 0.8;">visão completa</div>
+        </div>
+        <div>
+          <div class="text-3xl font-bold">24h</div>
+          <div class="text-sm" style="opacity: 0.8;">sempre disponível</div>
+        </div>
+        <div>
+          <div class="text-3xl font-bold">100%</div>
+          <div class="text-sm" style="opacity: 0.8;">seguro</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="text-sm m-0" style="opacity: 0.6;">&copy; {{ currentYear }} Salve Mais</p>
+  </section>
+
+  <!-- Painel direito — formulário -->
+  <div class="flex-1 flex align-items-center justify-content-center p-4 md:p-6"
+       style="background: var(--surface-ground);">
+    <div class="w-full" style="max-width: 420px;">
+
+      <!-- Logo mobile -->
+      <div class="flex align-items-center gap-2 mb-5 md:hidden">
+        <img src="assets/images/logo.svg" alt="Salve Mais" style="width: 36px; height: 36px;">
+        <span class="text-xl font-bold">Salve Mais</span>
+      </div>
+
+      <div class="mb-5">
+        <h2 class="text-3xl font-bold m-0">Bem-vindo de volta</h2>
+        <p class="text-color-secondary mt-2 mb-0">Entre com sua conta para continuar</p>
+      </div>
+
+      <form (ngSubmit)="onSubmit()" [formGroup]="loginForm" class="flex flex-column gap-4">
+
+        <div class="flex flex-column gap-1">
+          <p-floatlabel class="w-full">
+            <input pInputText id="email" formControlName="email" class="w-full" type="email" autocomplete="email">
+            <label for="email">Email</label>
+          </p-floatlabel>
+          <small class="p-error" *ngIf="loginForm.get('email')?.hasError('required') && loginForm.get('email')?.touched">
+            Email é obrigatório
+          </small>
+          <small class="p-error" *ngIf="loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched">
+            Formato inválido
+          </small>
+        </div>
+
+        <div class="flex flex-column gap-1">
+          <p-floatlabel class="w-full">
+            <p-password id="senha" formControlName="senha" styleClass="w-full" inputStyleClass="w-full"
+                        [toggleMask]="true" [feedback]="false" autocomplete="current-password"></p-password>
+            <label for="senha">Senha</label>
+          </p-floatlabel>
+          <small class="p-error" *ngIf="loginForm.get('senha')?.hasError('required') && loginForm.get('senha')?.touched">
+            Senha é obrigatória
+          </small>
+        </div>
+
+        <div class="flex justify-content-between align-items-center">
+          <div class="flex align-items-center gap-2">
+            <p-checkbox inputId="lembrarMe" formControlName="lembrarMe" [binary]="true"></p-checkbox>
+            <label for="lembrarMe" class="cursor-pointer text-sm">Lembrar-me</label>
+          </div>
+          <a routerLink="/recuperar-senha" class="text-primary text-sm no-underline hover:underline">
+            Esqueceu a senha?
+          </a>
+        </div>
+
+        <p-button
+          [label]="loading ? 'Entrando...' : 'Entrar'"
+          [disabled]="loginForm.invalid || loading"
+          [loading]="loading"
+          type="submit"
+          styleClass="w-full"
+          size="large">
+        </p-button>
+
+        <p-divider align="center">
+          <span class="text-color-secondary text-sm">ou</span>
+        </p-divider>
+
+        <div class="text-center text-sm">
+          Não tem uma conta?
+          <a routerLink="/register" class="text-primary no-underline font-bold hover:underline">Criar conta grátis</a>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,83 @@
+<section class="p-4 flex flex-column gap-4">
+  <div class="flex align-items-center gap-3">
+    <i class="pi pi-arrow-up text-3xl text-primary"></i>
+    <div>
+      <h2 class="m-0 font-bold">Entradas de dinheiro</h2>
+      <span class="text-sm text-color-secondary">Registre salários, freelas, reembolsos e outras entradas vinculadas às suas contas</span>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="col-12 lg:col-4">
+      <p-card>
+        <div class="flex align-items-center gap-2 mb-3 p-1">
+          <i [class]="'pi ' + (isEditing ? 'pi-pencil' : 'pi-plus-circle') + ' text-primary'"></i>
+          <div>
+            <h3 class="m-0 font-semibold">{{ isEditing ? 'Editar receita' : 'Cadastrar receita' }}</h3>
+            <span class="text-sm text-color-secondary">{{ isEditing ? 'Edição' : 'Novo lançamento' }}</span>
+          </div>
+        </div>
+
+        <form (ngSubmit)="salvarProvento()" [formGroup]="proventoForm" class="flex flex-column gap-3">
+          <div class="pt-4">
+            <p-floatlabel class="w-full">
+              <input pInputText id="descricao" formControlName="descricao" class="w-full">
+              <label for="descricao">Descrição</label>
+            </p-floatlabel>
+            <small class="p-error" *ngIf="proventoForm.get('descricao')?.hasError('required') && proventoForm.get('descricao')?.touched">
+              Informe uma descrição
+            </small>
+          </div>
+
+          <div class="pt-4">
+            <p-floatlabel class="w-full">
+              <input pInputText id="valor" formControlName="valor" appCurrencyInput class="w-full">
+              <label for="valor">Valor recebido</label>
+            </p-floatlabel>
+            <small class="p-error" *ngIf="proventoForm.get('valor')?.hasError('required') && proventoForm.get('valor')?.touched">
+              Informe o valor recebido
+            </small>
+          </div>
+
+          <div class="pt-4">
+            <p-floatlabel class="w-full">
+              <p-select id="contaId" formControlName="contaId" [options]="accounts" optionLabel="titular" optionValue="id" styleClass="w-full"></p-select>
+              <label for="contaId">Conta de destino</label>
+            </p-floatlabel>
+            <small class="p-error" *ngIf="proventoForm.get('contaId')?.hasError('required') && proventoForm.get('contaId')?.touched">
+              Selecione a conta de destino
+            </small>
+          </div>
+
+          <div class="pt-4">
+            <p-floatlabel class="w-full">
+              <p-datepicker id="data" formControlName="data" dateFormat="dd/mm/yy" [showIcon]="true" styleClass="w-full"></p-datepicker>
+              <label for="data">Data do recebimento</label>
+            </p-floatlabel>
+            <small class="p-error" *ngIf="proventoForm.get('data')?.hasError('required') && proventoForm.get('data')?.touched">
+              Informe a data
+            </small>
+          </div>
+
+          <div class="flex flex-column md:flex-row gap-2 mt-2">
+            <p-button [label]="isEditing ? 'Atualizar receita' : 'Salvar receita'" [icon]="isEditing ? 'pi pi-refresh' : 'pi pi-save'" [disabled]="proventoForm.invalid" type="submit" styleClass="w-full"></p-button>
+            <p-button label="Cancelar" icon="pi pi-times" variant="outlined" type="button" (onClick)="cancelar()" styleClass="w-full"></p-button>
+          </div>
+        </form>
+      </p-card>
+    </div>
+
+    <div class="col-12 lg:col-8">
+      <p-card>
+        <div class="flex align-items-center gap-2 mb-3 p-1">
+          <i class="pi pi-dollar text-primary"></i>
+          <div>
+            <h3 class="m-0 font-semibold">Receitas registradas</h3>
+            <span class="text-sm text-color-secondary">Histórico de entradas</span>
+          </div>
+        </div>
+        <app-list-proventos></app-list-proventos>
+      </p-card>
+    </div>
+  </div>
+</section>

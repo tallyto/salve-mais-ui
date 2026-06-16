@@ -1,0 +1,320 @@
+<section class="flex flex-column gap-3 p-4">
+  <div class="flex flex-column md:flex-row md:align-items-center justify-content-between gap-3">
+    <div class="flex align-items-center gap-3">
+      <i class="pi pi-chart-line text-4xl text-primary"></i>
+      <div>
+        <p class="text-sm text-color-secondary m-0">Finanças</p>
+        <h2 class="m-0">Relatório Mensal</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid" *ngIf="relatorioData && !isLoading">
+    <div class="col-12 sm:col-6 md:col-2">
+      <p-card>
+        <div class="flex flex-column gap-2">
+          <div class="flex align-items-center gap-2">
+            <i class="pi pi-arrow-up text-green-500"></i>
+            <span class="text-xs text-color-secondary">Receitas</span>
+          </div>
+          <span class="font-bold text-green-600">{{ formatarMoeda(relatorioData.resumoFinanceiro.totalProventos) }}</span>
+        </div>
+      </p-card>
+    </div>
+
+    <div class="col-12 sm:col-6 md:col-2">
+      <p-card>
+        <div class="flex flex-column gap-2">
+          <div class="flex align-items-center gap-2">
+            <i class="pi pi-arrow-down text-red-500"></i>
+            <span class="text-xs text-color-secondary">Gastos Fixos</span>
+          </div>
+          <span class="font-bold text-red-600">{{ formatarMoeda(relatorioData.resumoFinanceiro.totalGastosFixos) }}</span>
+        </div>
+      </p-card>
+    </div>
+
+    <div class="col-12 sm:col-6 md:col-2">
+      <p-card>
+        <div class="flex flex-column gap-2">
+          <div class="flex align-items-center gap-2">
+            <i class="pi pi-wallet text-orange-500"></i>
+            <span class="text-xs text-color-secondary">Compras Débito</span>
+          </div>
+          <span class="font-bold text-orange-600">{{ formatarMoeda(relatorioData.resumoFinanceiro.totalComprasDebito) }}</span>
+        </div>
+      </p-card>
+    </div>
+
+    <div class="col-12 sm:col-6 md:col-2">
+      <p-card>
+        <div class="flex flex-column gap-2">
+          <div class="flex align-items-center gap-2">
+            <i class="pi pi-credit-card text-purple-500"></i>
+            <span class="text-xs text-color-secondary">Cartões</span>
+          </div>
+          <span class="font-bold text-purple-600">{{ formatarMoeda(relatorioData.resumoFinanceiro.totalCartoes) }}</span>
+        </div>
+      </p-card>
+    </div>
+
+    <div class="col-12 sm:col-6 md:col-2">
+      <p-card>
+        <div class="flex flex-column gap-2">
+          <div class="flex align-items-center gap-2">
+            <i [class]="relatorioData.saldoFinal >= 0 ? 'pi pi-building text-blue-500' : 'pi pi-building text-red-500'"></i>
+            <span class="text-xs text-color-secondary">Saldo Final</span>
+          </div>
+          <span [class]="relatorioData.saldoFinal >= 0 ? 'font-bold text-blue-600' : 'font-bold text-red-600'">
+            {{ formatarMoeda(relatorioData.saldoFinal) }}
+          </span>
+        </div>
+      </p-card>
+    </div>
+  </div>
+
+  <p-card>
+    <ng-template pTemplate="content">
+      <app-month-year-filter
+        [month]="selectedMonth"
+        [year]="selectedYear"
+        (periodChange)="onPeriodChange($event)">
+      </app-month-year-filter>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+      <div class="flex justify-content-end">
+        <p-button
+          label="Exportar"
+          icon="pi pi-download"
+          severity="secondary"
+          (onClick)="exportarRelatorioParaExcel()"
+          [disabled]="isLoading || !relatorioData">
+        </p-button>
+      </div>
+    </ng-template>
+  </p-card>
+
+  <!-- Skeleton de carregamento -->
+  <div *ngIf="isLoading" class="grid">
+    <div class="col-12">
+      <p-card>
+        <div class="grid">
+          <div class="col-12 sm:col-6 md:col-2" *ngFor="let i of [1,2,3,4,5]">
+            <p-skeleton height="0.75rem" styleClass="mb-2"></p-skeleton>
+            <p-skeleton height="1.5rem" styleClass="mb-1"></p-skeleton>
+            <p-skeleton height="0.75rem" width="70%"></p-skeleton>
+          </div>
+        </div>
+      </p-card>
+    </div>
+    <div class="col-12 lg:col-8 flex flex-column gap-3">
+      <p-card *ngFor="let i of [1,2,3]">
+        <p-skeleton height="1rem" width="40%" styleClass="mb-3"></p-skeleton>
+        <p-skeleton height="8rem"></p-skeleton>
+      </p-card>
+    </div>
+    <div class="col-12 lg:col-4">
+      <p-card>
+        <p-skeleton height="1rem" width="50%" styleClass="mb-3"></p-skeleton>
+        <p-skeleton height="14rem"></p-skeleton>
+      </p-card>
+    </div>
+  </div>
+
+  <div class="grid" *ngIf="!isLoading">
+    <div class="col-12 lg:col-8 flex flex-column gap-3">
+      <ng-container *ngIf="relatorioData">
+        <p-card *ngIf="relatorioData.proventos.length > 0">
+          <ng-template pTemplate="header">
+            <div class="flex align-items-center justify-content-between gap-2 p-3">
+              <div class="flex align-items-center gap-2">
+                <i class="pi pi-money-bill text-green-600"></i>
+                <span class="font-semibold">Proventos</span>
+              </div>
+              <p-tag [value]="relatorioData.proventos.length.toString()" severity="success"></p-tag>
+            </div>
+          </ng-template>
+          <p-table [value]="relatorioData.proventos" styleClass="p-datatable-sm" [tableStyle]="{ 'min-width': '42rem' }">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Data</th>
+                <th>Conta</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+              <tr>
+                <td>{{ item.descricao }}</td>
+                <td class="font-bold text-green-600">{{ formatarMoeda(item.valor) }}</td>
+                <td>{{ formatarData(item.data) }}</td>
+                <td>{{ item.contaTitular }}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-card>
+
+        <p-card *ngIf="relatorioData.comprasDebito && relatorioData.comprasDebito.length > 0">
+          <ng-template pTemplate="header">
+            <div class="flex align-items-center justify-content-between gap-2 p-3">
+              <div class="flex align-items-center gap-2">
+                <i class="pi pi-wallet text-orange-600"></i>
+                <span class="font-semibold">Compras em Débito</span>
+              </div>
+              <p-tag [value]="relatorioData.comprasDebito.length.toString()" severity="warning"></p-tag>
+            </div>
+          </ng-template>
+          <p-table [value]="relatorioData.comprasDebito" styleClass="p-datatable-sm" [tableStyle]="{ 'min-width': '42rem' }">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Data</th>
+                <th>Categoria</th>
+                <th>Conta</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+              <tr>
+                <td>{{ item.descricao }}</td>
+                <td class="font-bold">{{ formatarMoeda(item.valor) }}</td>
+                <td>{{ formatarData(item.dataCompra) }}</td>
+                <td><p-tag [value]="item.categoria" severity="info"></p-tag></td>
+                <td>{{ item.conta }}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-card>
+
+        <p-card *ngIf="relatorioData.gastosFixos.length > 0">
+          <ng-template pTemplate="header">
+            <div class="flex align-items-center justify-content-between gap-2 p-3">
+              <div class="flex align-items-center gap-2">
+                <i class="pi pi-receipt text-red-600"></i>
+                <span class="font-semibold">Gastos Fixos</span>
+              </div>
+              <p-tag [value]="relatorioData.gastosFixos.length.toString()" severity="danger"></p-tag>
+            </div>
+          </ng-template>
+          <p-table [value]="relatorioData.gastosFixos" styleClass="p-datatable-sm" [tableStyle]="{ 'min-width': '42rem' }">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Nome</th>
+                <th>Valor</th>
+                <th>Vencimento</th>
+                <th>Categoria</th>
+                <th>Status</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+              <tr>
+                <td>{{ item.nome }}</td>
+                <td class="font-bold">{{ formatarMoeda(item.valor) }}</td>
+                <td>{{ formatarData(item.vencimento) }}</td>
+                <td>{{ item.categoria }}</td>
+                <td>
+                  <p-tag
+                    [value]="getStatusText(item.pago)"
+                    [severity]="item.pago ? 'success' : 'warning'">
+                  </p-tag>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-card>
+
+        <p-card *ngFor="let cartao of relatorioData.cartoes" [hidden]="cartao.compras.length === 0">
+          <ng-template pTemplate="header">
+            <div class="flex align-items-center justify-content-between gap-2 p-3">
+              <div class="flex align-items-center gap-2">
+                <i class="pi pi-credit-card text-purple-600"></i>
+                <span class="font-semibold">{{ cartao.nomeCartao }}</span>
+                <p-tag [value]="cartao.compras.length.toString()" severity="info"></p-tag>
+              </div>
+              <span class="text-sm text-color-secondary">
+                {{ formatarMoeda(cartao.valorTotal) }} · {{ formatarData(cartao.dataVencimento) }}
+              </span>
+            </div>
+          </ng-template>
+
+          <div *ngIf="!isCartaoExpanded(cartao.cartaoId)" class="flex align-items-center justify-content-between gap-3 p-3">
+            <span class="text-sm text-color-secondary">{{ cartao.compras.length }} compra(s) registrada(s)</span>
+            <p-button
+              label="Ver compras"
+              icon="pi pi-chevron-down"
+              severity="secondary"
+              [outlined]="true"
+              (onClick)="toggleCartao(cartao.cartaoId)">
+            </p-button>
+          </div>
+
+          <div *ngIf="isCartaoExpanded(cartao.cartaoId)" class="flex justify-content-end p-3 border-bottom-1 surface-border">
+            <p-button
+              label="Recolher"
+              icon="pi pi-chevron-up"
+              severity="secondary"
+              [text]="true"
+              (onClick)="toggleCartao(cartao.cartaoId)">
+            </p-button>
+          </div>
+
+          <p-table *ngIf="isCartaoExpanded(cartao.cartaoId)" [value]="cartao.compras" styleClass="p-datatable-sm" [tableStyle]="{ 'min-width': '40rem' }">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Data</th>
+                <th>Categoria</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-compra>
+              <tr>
+                <td>{{ compra.descricao }}</td>
+                <td class="font-bold">{{ formatarMoeda(compra.valor) }}</td>
+                <td>{{ formatarData(compra.data) }}</td>
+                <td>{{ compra.categoria }}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-card>
+      </ng-container>
+    </div>
+
+    <div class="col-12 lg:col-4">
+      <p-card class="sticky" [style]="{ top: '20px' }">
+        <ng-template pTemplate="header">
+          <div class="p-3">
+            <div class="flex align-items-center gap-2">
+              <i class="pi pi-exclamation-triangle text-red-600"></i>
+              <span class="font-semibold">Contas Vencidas</span>
+            </div>
+            <div class="text-sm text-color-secondary mt-1">Não pagas até hoje</div>
+          </div>
+        </ng-template>
+
+        <div *ngIf="isLoadingContas" class="flex flex-column gap-2 p-2">
+          <div *ngFor="let i of [1,2,3]" class="flex flex-column gap-2 p-2 border-bottom-1 surface-border">
+            <p-skeleton width="70%" height="1rem"></p-skeleton>
+            <p-skeleton width="50%" height=".75rem"></p-skeleton>
+            <p-skeleton width="40%" height="1rem"></p-skeleton>
+          </div>
+        </div>
+
+        <div *ngIf="!isLoadingContas && contasVencidas.length === 0" class="flex flex-column align-items-center gap-2 py-4 text-center">
+          <i class="pi pi-check-circle text-green-600 text-4xl"></i>
+          <p class="font-bold m-0 text-sm">Tudo em dia!</p>
+          <p class="text-xs text-color-secondary m-0">Nenhuma conta vencida.</p>
+        </div>
+
+        <div *ngIf="!isLoadingContas && contasVencidas.length > 0" class="flex flex-column gap-2">
+          <div *ngFor="let conta of contasVencidas" class="flex flex-column gap-1 p-2 border-bottom-1 surface-border">
+            <span class="text-sm font-bold text-overflow-ellipsis overflow-hidden white-space-nowrap">{{ conta.nome }}</span>
+            <span class="text-xs text-color-secondary">{{ formatarData(conta.vencimento) }} · {{ conta.categoria }}</span>
+            <span class="font-bold text-red-600 text-sm">{{ formatarMoeda(conta.valor) }}</span>
+          </div>
+        </div>
+      </p-card>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,229 @@
+<section class="p-4 flex flex-column gap-3">
+  <!-- Skeleton de carregamento -->
+  <div *ngIf="loading" class="grid">
+    <div class="col-12">
+      <p-card>
+        <div class="flex align-items-center gap-3 mb-4">
+          <p-skeleton shape="circle" size="3rem"></p-skeleton>
+          <div class="flex flex-column gap-2 flex-1">
+            <p-skeleton height="1.25rem" width="30%"></p-skeleton>
+            <p-skeleton height="0.75rem" width="50%"></p-skeleton>
+          </div>
+        </div>
+        <p-skeleton height="1rem" styleClass="mb-2"></p-skeleton>
+        <p-skeleton height="0.5rem" styleClass="mb-4"></p-skeleton>
+        <div class="flex gap-2">
+          <p-skeleton height="2.25rem" width="8rem"></p-skeleton>
+          <p-skeleton height="2.25rem" width="8rem"></p-skeleton>
+        </div>
+      </p-card>
+    </div>
+    <div class="col-12 lg:col-8">
+      <p-card>
+        <p-skeleton height="10rem"></p-skeleton>
+      </p-card>
+    </div>
+    <div class="col-12 lg:col-4">
+      <p-card>
+        <p-skeleton height="10rem"></p-skeleton>
+      </p-card>
+    </div>
+  </div>
+
+  <p-card *ngIf="!loading && reservas.length === 0">
+    <div class="flex flex-column align-items-center gap-3 text-center p-5">
+      <i class="pi pi-shield text-primary text-4xl"></i>
+      <div>
+        <p class="m-0 text-sm text-color-secondary">Reserva de emergência</p>
+        <h1 class="m-0">Crie uma camada de proteção para o seu dinheiro.</h1>
+      </div>
+      <p class="m-0 text-color-secondary">
+        O backend calcula objetivo, meses de cobertura, previsão de conclusão e acompanha cada contribuição
+        feita para a reserva.
+      </p>
+      <p-button label="Criar reserva" icon="pi pi-plus" (onClick)="criarReserva()"></p-button>
+    </div>
+  </p-card>
+
+  <ng-container *ngIf="!loading && reservaAtual">
+    <p-card>
+      <div class="flex flex-column md:flex-row md:align-items-center justify-content-between gap-3">
+        <div class="flex align-items-start gap-3">
+          <i class="pi pi-shield text-primary text-3xl"></i>
+          <div>
+            <h2 class="m-0">{{ getStatusReserva() }}</h2>
+            <p class="m-0 text-color-secondary">{{ getStatusDescricao() }}</p>
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <p-button icon="pi pi-pencil" severity="secondary" [text]="true" (onClick)="editarReserva(reservaAtual.id!)" pTooltip="Editar reserva"></p-button>
+          <p-button icon="pi pi-trash" severity="danger" [text]="true" (onClick)="excluirReserva(reservaAtual.id!)" pTooltip="Excluir reserva"></p-button>
+        </div>
+      </div>
+    </p-card>
+
+    <div class="grid">
+      <div class="col-12 lg:col-8">
+        <p-card>
+          <ng-template pTemplate="header">
+            <div class="p-3">
+              <div class="flex align-items-center gap-2">
+                <i class="pi pi-wallet text-primary"></i>
+                <span class="font-semibold">Saldo protegido</span>
+              </div>
+              <div class="text-sm text-color-secondary mt-1">Meta de {{ reservaAtual.objetivo | currency:'BRL' }}</div>
+            </div>
+          </ng-template>
+
+          <div class="flex flex-column gap-4">
+            <div>
+              <h2 class="m-0">{{ reservaAtual.saldoAtual | currency:'BRL' }}</h2>
+              <p class="m-0 text-color-secondary">
+                {{ reservaAtual.percentualConcluido | number:'1.0-1' }}% concluído
+              </p>
+            </div>
+
+            <div class="flex flex-column gap-2">
+              <div class="flex flex-wrap justify-content-between gap-3">
+                <span>{{ getValorRestante() | currency:'BRL' }} restantes</span>
+                <span *ngIf="reservaAtual.mesesRestantes > 0">
+                  Previsão: {{ reservaAtual.dataPrevisaoCompletar | date:'MMM/yyyy' }}
+                </span>
+                <span *ngIf="reservaAtual.mesesRestantes === 0">Objetivo alcançado</span>
+              </div>
+              <p-progressbar [value]="getPercentualConcluido()"></p-progressbar>
+              <span class="text-sm text-color-secondary">
+                Início em {{ reservaAtual.dataCriacao | date:'dd/MM/yyyy' }}
+              </span>
+            </div>
+
+            <div class="grid">
+              <div class="col-12 md:col-6">
+                <div class="surface-ground border-round p-3 flex flex-column gap-2">
+                  <div class="flex align-items-center gap-2">
+                    <i class="pi pi-money-bill text-primary"></i>
+                    <span class="font-semibold">Aporte mensal</span>
+                  </div>
+                  <span class="text-color-secondary">{{ reservaAtual.valorContribuicaoMensal | currency:'BRL' }}</span>
+                </div>
+              </div>
+
+              <div class="col-12 md:col-6">
+                <div class="surface-ground border-round p-3 flex flex-column gap-2">
+                  <div class="flex align-items-center gap-2">
+                    <i class="pi pi-calendar text-primary"></i>
+                    <span class="font-semibold">Tempo restante</span>
+                  </div>
+                  <span class="text-color-secondary" *ngIf="reservaAtual.mesesRestantes > 0">{{ reservaAtual.mesesRestantes }} meses</span>
+                  <span class="text-color-secondary" *ngIf="reservaAtual.mesesRestantes === 0">Completa</span>
+                </div>
+              </div>
+
+              <div class="col-12 md:col-6">
+                <div class="surface-ground border-round p-3 flex flex-column gap-2">
+                  <div class="flex align-items-center gap-2">
+                    <i class="pi pi-receipt text-primary"></i>
+                    <span class="font-semibold">Despesa média</span>
+                  </div>
+                  <span class="text-color-secondary">{{ reservaAtual.despesasMensaisMedia | currency:'BRL' }}</span>
+                </div>
+              </div>
+
+              <div class="col-12 md:col-6">
+                <div class="surface-ground border-round p-3 flex flex-column gap-2">
+                  <div class="flex align-items-center gap-2">
+                    <i class="pi pi-heart text-primary"></i>
+                    <span class="font-semibold">Cobertura alvo</span>
+                  </div>
+                  <span class="text-color-secondary">{{ reservaAtual.multiplicadorDespesas }} meses</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="surface-ground border-round p-3 flex flex-column gap-2">
+              <div class="flex align-items-center gap-2">
+                <i class="pi pi-building text-primary"></i>
+                <span class="font-semibold">{{ reservaAtual.conta.titular }}</span>
+              </div>
+              <span class="text-sm text-color-secondary">Conta vinculada · {{ reservaAtual.conta.saldo | currency:'BRL' }}</span>
+            </div>
+          </div>
+        </p-card>
+      </div>
+
+      <div class="col-12 lg:col-4">
+        <p-card>
+          <ng-template pTemplate="header">
+            <div class="p-3">
+              <div class="flex align-items-center gap-2">
+                <i class="pi pi-plus-circle text-primary"></i>
+                <span class="font-semibold">Aportar na reserva</span>
+              </div>
+              <div class="text-sm text-color-secondary mt-1">Contribuição</div>
+            </div>
+          </ng-template>
+
+          <div class="flex flex-column gap-3">
+            <p-floatlabel class="w-full">
+              <p-select
+                inputId="contaOrigem"
+                [(ngModel)]="contaOrigemId"
+                [options]="contasParaDeposito"
+                optionLabel="titular"
+                optionValue="id"
+                class="w-full">
+              </p-select>
+              <label for="contaOrigem">Conta de origem</label>
+            </p-floatlabel>
+
+            <p-floatlabel class="w-full">
+              <p-inputnumber
+                inputId="valorDeposito"
+                [(ngModel)]="valorDeposito"
+                mode="currency"
+                currency="BRL"
+                locale="pt-BR"
+                [min]="0"
+                class="w-full">
+              </p-inputnumber>
+              <label for="valorDeposito">Valor do aporte</label>
+            </p-floatlabel>
+
+            <div class="flex flex-wrap gap-2">
+              <p-button *ngFor="let valor of [100, 500, 1000]" [label]="formatarValor(valor)" severity="secondary" [outlined]="true" (onClick)="valorDeposito = valor"></p-button>
+            </div>
+
+            <p-button label="Depositar agora" icon="pi pi-arrow-up" (onClick)="depositar()"></p-button>
+          </div>
+        </p-card>
+      </div>
+    </div>
+
+    <p-card>
+      <ng-template pTemplate="header">
+        <div class="p-3">
+          <div class="flex align-items-center gap-2">
+            <i class="pi pi-history text-primary"></i>
+            <span class="font-semibold">Contribuições registradas</span>
+          </div>
+          <div class="text-sm text-color-secondary mt-1">{{ historico.length }} depósito{{ historico.length !== 1 ? 's' : '' }}</div>
+        </div>
+      </ng-template>
+
+      <div class="flex flex-column align-items-center gap-2 text-center p-4" *ngIf="historico.length === 0">
+        <i class="pi pi-history text-3xl text-color-secondary"></i>
+        <span>Nenhum depósito registrado para esta reserva.</span>
+      </div>
+
+      <div *ngIf="historico.length > 0" class="flex flex-column gap-2">
+        <div *ngFor="let item of historico" class="flex justify-content-between align-items-start gap-3 p-3 border-bottom-1 surface-border">
+          <div class="flex flex-column gap-1">
+            <span class="font-semibold">{{ item.contaOrigem }}</span>
+            <span class="text-sm text-color-secondary">{{ item.data | date:'dd/MM/yyyy HH:mm' }}</span>
+          </div>
+          <span class="font-bold text-green-600">+ {{ item.valor | currency:'BRL' }}</span>
+        </div>
+      </div>
+    </p-card>
+  </ng-container>
+</section>

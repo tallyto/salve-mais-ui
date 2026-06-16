@@ -1,0 +1,89 @@
+<div class="flex w-full" style="min-height: 100vh;">
+
+  <!-- Painel esquerdo — branding -->
+  <section class="hidden md:flex flex-column justify-content-between p-6"
+           style="flex: 1; background: linear-gradient(160deg, #00796b 0%, #004d40 100%); color: white;">
+    <div class="flex align-items-center gap-3">
+      <img src="assets/images/logo.svg" alt="Salve Mais" style="width: 40px; height: 40px;">
+      <span class="text-xl font-bold">Salve Mais</span>
+    </div>
+
+    <div class="flex flex-column gap-4">
+      <div class="flex align-items-center justify-content-center border-round-full"
+           style="width:72px;height:72px;background:rgba(255,255,255,0.15);">
+        <i class="pi pi-lock" style="font-size:2rem;"></i>
+      </div>
+      <h1 class="text-4xl font-bold m-0 line-height-3">
+        Recupere seu acesso com segurança
+      </h1>
+      <p class="text-lg m-0" style="opacity: 0.85; max-width: 380px;">
+        Enviaremos um link seguro para você redefinir a senha e voltar ao painel financeiro em instantes.
+      </p>
+    </div>
+
+    <p class="text-sm m-0" style="opacity: 0.6;">&copy; {{ currentYear }} Salve Mais</p>
+  </section>
+
+  <!-- Painel direito — formulário -->
+  <div class="flex-1 flex align-items-center justify-content-center p-4 md:p-6"
+       style="background: var(--surface-ground);">
+    <div class="w-full" style="max-width: 420px;">
+
+      <!-- Logo mobile -->
+      <div class="flex align-items-center gap-2 mb-5 md:hidden">
+        <img src="assets/images/logo.svg" alt="Salve Mais" style="width: 36px; height: 36px;">
+        <span class="text-xl font-bold">Salve Mais</span>
+      </div>
+
+      <div class="mb-5">
+        <h2 class="text-3xl font-bold m-0">Recuperar senha</h2>
+        <p class="text-color-secondary mt-2 mb-0">
+          Informe seu e-mail e enviaremos as instruções para redefinir a senha.
+        </p>
+      </div>
+
+      <form [formGroup]="recuperarForm" (ngSubmit)="onSubmit()" class="flex flex-column gap-4">
+
+        <div class="flex flex-column gap-1">
+          <p-floatlabel class="w-full">
+            <input pInputText id="email" formControlName="email" class="w-full" type="email" autocomplete="email" (blur)="onEmailBlur()">
+            <label for="email">Email</label>
+          </p-floatlabel>
+          <small class="p-error" *ngIf="recuperarForm.get('email')?.hasError('required') && recuperarForm.get('email')?.touched">
+            Email é obrigatório
+          </small>
+          <small class="p-error" *ngIf="recuperarForm.get('email')?.hasError('email') && recuperarForm.get('email')?.touched">
+            Formato de email inválido
+          </small>
+        </div>
+
+        <div class="flex flex-column gap-1" *ngIf="showDomainField">
+          <p-floatlabel class="w-full">
+            <input pInputText id="dominio" formControlName="dominio" class="w-full">
+            <label for="dominio">Domínio da empresa</label>
+          </p-floatlabel>
+          <small class="p-error" *ngIf="recuperarForm.get('dominio')?.hasError('required') && showDomainField">
+            Domínio é obrigatório
+          </small>
+        </div>
+
+        <p-button
+          [label]="isSubmitting ? 'Enviando...' : 'Enviar instruções'"
+          icon="pi pi-send"
+          [disabled]="recuperarForm.invalid || isSubmitting"
+          [loading]="isSubmitting"
+          type="submit"
+          styleClass="w-full"
+          size="large">
+        </p-button>
+
+        <a routerLink="/login" class="flex align-items-center justify-content-center gap-2 text-primary no-underline text-sm font-semibold hover:underline">
+          <i class="pi pi-arrow-left"></i>
+          Voltar para o login
+        </a>
+
+      </form>
+    </div>
+  </div>
+
+</div>

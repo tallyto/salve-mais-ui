@@ -1,0 +1,88 @@
+<section class="p-4 flex flex-column gap-4">
+  <div class="flex align-items-center gap-3">
+    <i class="pi pi-refresh text-3xl text-primary"></i>
+    <div>
+      <h2 class="m-0 font-bold">Débitos em Conta</h2>
+      <span class="text-sm text-color-secondary">Pagamentos recorrentes via PIX, boleto, TED ou débito em conta</span>
+    </div>
+  </div>
+
+  <p-card>
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center justify-content-between w-full p-3">
+        <div class="flex align-items-center gap-2">
+          <i class="pi pi-plus-circle text-primary"></i>
+          <h3 class="m-0 font-semibold">{{ editingDespesa ? 'Editar Débito' : 'Cadastrar Débito em Conta' }}</h3>
+        </div>
+        <p-button label="Criar Recorrente" icon="pi pi-refresh" routerLink="/conta-fixa-recorrente" severity="secondary" pTooltip="Criar múltiplos débitos com recorrência" tooltipPosition="left"></p-button>
+      </div>
+    </ng-template>
+
+    <p class="text-color-secondary text-sm m-0 mb-3">
+      {{ editingDespesa ? 'Atualize os dados do débito selecionado' : 'Registre pagamentos recorrentes debitados da sua conta' }}
+    </p>
+
+    <form (ngSubmit)="salvarDespesaFixa()" [formGroup]="despesaFixaForm" class="flex flex-column gap-3">
+      <div class="grid">
+        <div class="col-12 md:col-6 pt-4">
+          <p-floatlabel class="w-full">
+            <input pInputText id="nome" formControlName="nome" class="w-full">
+            <label for="nome">Nome</label>
+          </p-floatlabel>
+        </div>
+
+        <div class="col-12 md:col-6 pt-4">
+          <p-floatlabel class="w-full">
+            <p-select id="categoriaId" formControlName="categoriaId" [options]="categorias" optionLabel="nome" optionValue="id" styleClass="w-full">
+              <ng-template pTemplate="emptyfilter">
+                <p-button label="Criar categoria" (onClick)="novaCategoria()" [text]="true" icon="pi pi-plus"></p-button>
+              </ng-template>
+            </p-select>
+            <label for="categoriaId">Categoria</label>
+          </p-floatlabel>
+        </div>
+
+        <div class="col-12 md:col-6 pt-4">
+          <p-floatlabel class="w-full">
+            <p-select id="contaId" formControlName="contaId" [options]="accounts" optionLabel="titular" optionValue="id" styleClass="w-full"></p-select>
+            <label for="contaId">Conta</label>
+          </p-floatlabel>
+        </div>
+
+        <div class="col-12 md:col-6 pt-4">
+          <p-floatlabel class="w-full">
+            <p-datepicker id="vencimento" formControlName="vencimento" dateFormat="dd/mm/yy" styleClass="w-full"></p-datepicker>
+            <label for="vencimento">Data de vencimento</label>
+          </p-floatlabel>
+        </div>
+
+        <div class="col-12 md:col-6 pt-4">
+          <p-floatlabel class="w-full">
+            <input pInputText id="valor" formControlName="valor" appCurrencyInput class="w-full">
+            <label for="valor">Valor</label>
+          </p-floatlabel>
+        </div>
+
+        <div class="col-12 md:col-6 flex align-items-center">
+          <p-checkbox formControlName="pago" [binary]="true" inputId="pago"></p-checkbox>
+          <label for="pago" class="ml-2">Despesa já paga</label>
+        </div>
+      </div>
+
+      <div class="flex justify-content-end gap-2 mt-3">
+        <p-button label="{{ editingDespesa ? 'Cancelar edição' : 'Limpar' }}" variant="outlined" icon="{{ editingDespesa ? 'pi pi-times' : 'pi pi-refresh' }}" type="button" (onClick)="cancelarEdicao()"></p-button>
+        <p-button label="{{ editingDespesa ? 'Atualizar' : 'Salvar' }}" icon="{{ editingDespesa ? 'pi pi-check' : 'pi pi-save' }}" [disabled]="despesaFixaForm.invalid" type="submit"></p-button>
+      </div>
+    </form>
+  </p-card>
+
+  <p-card>
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center gap-2 p-3 w-full">
+        <i class="pi pi-list text-primary"></i>
+        <h3 class="m-0 font-semibold">Meus Débitos em Conta</h3>
+      </div>
+    </ng-template>
+    <app-list-contas-fixas></app-list-contas-fixas>
+  </p-card>
+</section>

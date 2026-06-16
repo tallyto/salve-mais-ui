@@ -1,0 +1,116 @@
+<section class="p-4 flex flex-column gap-3">
+  <p-card>
+    <div class="flex align-items-center gap-2 mb-2">
+      <i class="pi pi-file-check text-2xl"></i>
+      <div>
+        <h2 class="m-0 font-semibold">Detalhes da Transação</h2>
+        <span class="text-sm text-color-secondary">Dados completos da movimentação financeira</span>
+      </div>
+    </div>
+    <ng-template pTemplate="footer">
+      <p-button label="Voltar" icon="pi pi-arrow-left" (onClick)="voltar()"></p-button>
+    </ng-template>
+  </p-card>
+
+  <p-card *ngIf="loading">
+    <div class="flex flex-column gap-3 p-2">
+      <p-skeleton width="40%" height="1.5rem"></p-skeleton>
+      <p-skeleton width="20%" height="2rem"></p-skeleton>
+      <div class="grid">
+        <div class="col-12 md:col-6"><p-skeleton height="8rem"></p-skeleton></div>
+        <div class="col-12 md:col-6"><p-skeleton height="8rem"></p-skeleton></div>
+      </div>
+    </div>
+  </p-card>
+
+  <p-card *ngIf="error">
+    <div class="flex flex-column align-items-center gap-3 text-center p-5">
+      <i class="pi pi-exclamation-triangle text-3xl text-red-600"></i>
+      <p class="m-0">Não foi possível carregar os detalhes da transação.</p>
+      <p-button label="Tentar novamente" (onClick)="carregarTransacao()"></p-button>
+    </div>
+  </p-card>
+
+  <ng-container *ngIf="!loading && !error && transacao">
+    <p-card>
+      <div class="flex justify-content-between align-items-start gap-3">
+        <div>
+          <h3 class="m-0">{{ getDescricaoTipo(transacao.tipo) }}</h3>
+          <span class="text-sm text-color-secondary">{{ formatarData(transacao.data) }}</span>
+        </div>
+        <div class="text-right">
+          <div class="text-2xl font-bold" [ngClass]="{'text-green-600': getSinalValor(transacao.tipo) === '+', 'text-red-600': getSinalValor(transacao.tipo) === '-'}">
+            {{ getSinalValor(transacao.tipo) }}{{ formatarMoeda(transacao.valor) }}
+          </div>
+        </div>
+      </div>
+    </p-card>
+
+    <div class="grid">
+      <div class="col-12 lg:col-6">
+        <p-card>
+          <div class="flex align-items-center gap-2 mb-3">
+            <i class="pi pi-bars"></i>
+            <h4 class="m-0">Informações gerais</h4>
+          </div>
+          <div class="flex flex-column gap-3">
+            <div>
+              <span class="text-sm text-color-secondary">Descrição</span>
+              <div class="font-semibold">{{ transacao.descricao }}</div>
+            </div>
+            <div *ngIf="transacao.observacoes">
+              <span class="text-sm text-color-secondary">Observações</span>
+              <div class="font-semibold">{{ transacao.observacoes }}</div>
+            </div>
+          </div>
+        </p-card>
+      </div>
+
+      <div class="col-12 lg:col-6">
+        <p-card>
+          <div class="flex align-items-center gap-2 mb-3">
+            <i class="pi pi-building"></i>
+            <h4 class="m-0">Contas</h4>
+          </div>
+          <div class="flex flex-column gap-3">
+            <div *ngIf="transacao.conta">
+              <span class="text-sm text-color-secondary">Conta</span>
+              <div class="font-semibold">{{ transacao.conta.titular }}</div>
+            </div>
+            <div *ngIf="transacao.contaDestino">
+              <span class="text-sm text-color-secondary">Conta destino</span>
+              <div class="font-semibold">{{ transacao.contaDestino.titular }}</div>
+            </div>
+          </div>
+        </p-card>
+      </div>
+    </div>
+
+    <p-card *ngIf="transacao.categoria || transacao.provento || transacao.contaFixa || transacao.fatura">
+      <div class="flex align-items-center gap-2 mb-3">
+        <i class="pi pi-info-circle"></i>
+        <h4 class="m-0">Detalhes específicos</h4>
+      </div>
+      <div class="flex flex-column gap-3">
+        <div *ngIf="transacao.categoria">
+          <span class="text-sm text-color-secondary">Categoria</span>
+          <div class="font-semibold">{{ transacao.categoria.nome }}</div>
+        </div>
+        <div *ngIf="transacao.provento">
+          <span class="text-sm text-color-secondary">Provento</span>
+          <div class="font-semibold">{{ transacao.provento.descricao }}</div>
+        </div>
+        <div *ngIf="transacao.contaFixa">
+          <span class="text-sm text-color-secondary">Conta fixa</span>
+          <div class="font-semibold">{{ transacao.contaFixa.nome }}</div>
+        </div>
+        <div *ngIf="transacao.fatura">
+          <span class="text-sm text-color-secondary">Fatura</span>
+          <div class="font-semibold">
+            {{ transacao.fatura.cartao }} · vencimento {{ transacao.fatura.dataVencimento | date: 'dd/MM/yyyy' }}
+          </div>
+        </div>
+      </div>
+    </p-card>
+  </ng-container>
+</section>

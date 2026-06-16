@@ -1,0 +1,133 @@
+<section class="p-4 flex flex-column gap-4">
+  <div class="flex align-items-center gap-3">
+    <i class="pi pi-shield text-3xl text-primary"></i>
+    <div>
+      <h2 class="m-0 font-bold">Gestão de Limites dos Cartões</h2>
+      <span class="text-sm text-color-secondary">Monitore e configure os limites dos seus cartões de crédito</span>
+    </div>
+  </div>
+
+  <p-card *ngIf="alertas.length > 0">
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center gap-3 p-3">
+        <i class="pi pi-exclamation-triangle text-orange-500"></i>
+        <h3 class="m-0 font-bold">Cartões em Alerta</h3>
+      </div>
+    </ng-template>
+    <div class="flex flex-wrap gap-2">
+      <p-tag *ngFor="let alerta of alertas"
+             [icon]="alerta.limiteExcedido ? 'pi pi-exclamation-circle' : 'pi pi-exclamation-triangle'"
+             [value]="alerta.nomeCartao + ' - ' + formatarPercentual(alerta.percentualUtilizado)"
+             [severity]="alerta.limiteExcedido ? 'danger' : 'warn'">
+      </p-tag>
+    </div>
+  </p-card>
+
+  <p-card>
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center gap-3 p-3">
+        <i class="pi pi-sliders-h"></i>
+        <h3 class="m-0 font-bold">Configurar Limite do Cartão</h3>
+      </div>
+    </ng-template>
+
+    <form [formGroup]="limiteForm" (ngSubmit)="onSubmit()" class="flex flex-column gap-4">
+      <div class="pt-4">
+        <p-floatlabel class="w-full">
+          <p-select id="cartaoId" formControlName="cartaoId" [options]="cartoes"
+                    optionLabel="nome" optionValue="id" styleClass="w-full">
+          </p-select>
+          <label for="cartaoId">Cartão</label>
+        </p-floatlabel>
+      </div>
+
+      <div class="grid">
+        <div class="col-12 md:col-6 pt-4">
+          <p-floatlabel class="w-full">
+            <input pInputText id="limiteTotal" type="number" formControlName="limiteTotal" step="0.01" min="0" class="w-full">
+            <label for="limiteTotal">Limite Total</label>
+          </p-floatlabel>
+        </div>
+
+        <div class="col-12 md:col-6 pt-4">
+          <p-floatlabel class="w-full">
+            <input pInputText id="limiteAlerta" type="number" formControlName="limiteAlertaPercentual" min="1" max="100" class="w-full">
+            <label for="limiteAlerta">Alerta em (%)</label>
+          </p-floatlabel>
+        </div>
+      </div>
+
+      <div class="flex gap-2 justify-content-end">
+        <p-button label="Cancelar" variant="outlined" type="button"></p-button>
+        <p-button label="{{ loading ? 'Configurando...' : 'Configurar Limite' }}"
+                  [disabled]="!limiteForm.valid || loading"
+                  type="submit"
+                  [loading]="loading">
+        </p-button>
+      </div>
+    </form>
+  </p-card>
+
+  <p-card>
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center gap-3 p-3">
+        <i class="pi pi-chart-bar"></i>
+        <div>
+          <h3 class="m-0 font-bold">Status dos Limites</h3>
+          <p class="m-0 text-sm text-color-secondary">Acompanhe a utilização dos limites em tempo real</p>
+        </div>
+      </div>
+    </ng-template>
+
+    <p-table *ngIf="statusLimites.length > 0" [value]="statusLimites"
+             styleClass="p-datatable-sm" responsiveLayout="scroll">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Cartão</th>
+          <th>Limite Total</th>
+          <th>Utilizado</th>
+          <th>Disponível</th>
+          <th>% Utilizado</th>
+          <th>Status</th>
+          <th class="text-center">Ações</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-status>
+        <tr>
+          <td>{{ status.nomeCartao }}</td>
+          <td>{{ formatarMoeda(status.limiteTotal) }}</td>
+          <td>{{ formatarMoeda(status.valorUtilizado) }}</td>
+          <td>
+            <span [class]="status.limiteDisponivel < 0 ? 'font-bold text-red-600' : 'font-bold text-green-600'">
+              {{ formatarMoeda(status.limiteDisponivel) }}
+            </span>
+          </td>
+          <td>
+            <div class="flex align-items-center gap-2">
+              <div class="w-8rem">
+                <p-progressbar [value]="status.percentualUtilizado" [showValue]="false"></p-progressbar>
+              </div>
+              <span class="text-sm font-bold">{{ formatarPercentual(status.percentualUtilizado) }}</span>
+            </div>
+          </td>
+          <td>
+            <p-tag [value]="getStatusText(status)"
+                   [severity]="status.limiteExcedido ? 'danger' : (status.alertaAtivado ? 'warn' : 'success')">
+            </p-tag>
+          </td>
+          <td class="text-center">
+            <p-button [rounded]="true" [text]="true" icon="pi pi-trash" severity="danger"
+                     (onClick)="removerLimite(status.cartaoId)" pTooltip="Remover limite" tooltipPosition="top">
+            </p-button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <div *ngIf="statusLimites.length === 0" class="flex flex-column align-items-center justify-content-center gap-3 p-5 text-center">
+      <i class="pi pi-credit-card text-4xl text-color-secondary"></i>
+      <h3 class="m-0 font-semibold">Nenhum cartão com limite configurado</h3>
+      <p class="m-0 text-color-secondary">Configure os limites dos seus cartões utilizando o formulário acima.</p>
+    </div>
+  </p-card>
+</section>

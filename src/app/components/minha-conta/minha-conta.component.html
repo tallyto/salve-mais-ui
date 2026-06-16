@@ -1,0 +1,66 @@
+<div class="p-4">
+  <div class="mb-4">
+    <h2 class="m-0">Minha Conta</h2>
+  </div>
+  <p-card>
+    <ng-template pTemplate="header">
+      <div class="p-4 border-bottom-1 surface-border">
+        <h3 class="m-0">{{ usuario.nome }}</h3>
+        <p class="m-0 text-sm text-color-secondary">{{ usuario.email }}</p>
+      </div>
+    </ng-template>
+
+    <div class="p-4">
+      <div class="grid gap-3 mb-4">
+        <div>
+          <strong>Criado em:</strong> {{ usuario.criadoEm | date:'dd/MM/yyyy HH:mm' }}
+        </div>
+        <div>
+          <strong>Último acesso:</strong> {{ usuario.ultimoAcesso ? (usuario.ultimoAcesso | date:'dd/MM/yyyy HH:mm') : '-' }}
+        </div>
+      </div>
+
+      <!-- Formulário de edição de nome -->
+      <form *ngIf="editandoNome" [formGroup]="nomeForm" (ngSubmit)="salvarNome()" class="flex flex-column gap-3">
+        <p-floatlabel class="w-full">
+          <input pInputText id="nome" formControlName="nome" class="w-full" required>
+          <label for="nome">Nome</label>
+        </p-floatlabel>
+        <small class="p-error" *ngIf="nomeForm.get('nome')?.hasError('required')">Nome obrigatório</small>
+        <small class="p-error" *ngIf="nomeForm.get('nome')?.hasError('minlength')">Mínimo 3 caracteres</small>
+        <div class="flex gap-2">
+          <p-button label="Salvar" type="submit" [disabled]="nomeForm.invalid"></p-button>
+          <p-button label="Cancelar" variant="outlined" type="button" (onClick)="cancelarEdicaoNome()"></p-button>
+        </div>
+      </form>
+
+      <!-- Formulário de alteração de senha -->
+      <form *ngIf="editandoSenha" [formGroup]="senhaForm" (ngSubmit)="salvarSenha()" class="flex flex-column gap-3">
+        <p-floatlabel class="w-full">
+          <p-password id="senhaAtual" formControlName="senhaAtual" styleClass="w-full" inputStyleClass="w-full" [toggleMask]="true" [feedback]="false"></p-password>
+          <label for="senhaAtual">Senha atual</label>
+        </p-floatlabel>
+        <small class="p-error" *ngIf="senhaForm.get('senhaAtual')?.hasError('required')">Obrigatório</small>
+
+        <p-floatlabel class="w-full">
+          <p-password id="novaSenha" formControlName="novaSenha" styleClass="w-full" inputStyleClass="w-full" [toggleMask]="true" [feedback]="true"></p-password>
+          <label for="novaSenha">Nova senha</label>
+        </p-floatlabel>
+        <small class="p-error" *ngIf="senhaForm.get('novaSenha')?.hasError('required')">Obrigatório</small>
+        <small class="p-error" *ngIf="senhaForm.get('novaSenha')?.hasError('minlength')">Mínimo 6 caracteres</small>
+
+        <div class="flex gap-2">
+          <p-button label="Salvar" type="submit" [disabled]="senhaForm.invalid"></p-button>
+          <p-button label="Cancelar" variant="outlined" type="button" (onClick)="cancelarEdicaoSenha()"></p-button>
+        </div>
+      </form>
+    </div>
+
+    <ng-template pTemplate="footer" *ngIf="!editandoNome && !editandoSenha">
+      <div class="flex gap-2">
+        <p-button label="Editar Dados" icon="pi pi-pencil" (onClick)="editarDados()"></p-button>
+        <p-button label="Alterar Senha" icon="pi pi-lock" variant="outlined" (onClick)="alterarSenha()"></p-button>
+      </div>
+    </ng-template>
+  </p-card>
+</div>

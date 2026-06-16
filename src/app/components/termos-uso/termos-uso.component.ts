@@ -1,0 +1,136 @@
+import { Component } from '@angular/core';
+import { SALVE_COMMON } from '../../shared/primeng-shared';
+
+@Component({
+  selector: 'app-termos-uso',
+  standalone: true,
+  imports: [...SALVE_COMMON],
+  template: `
+    <div style="min-height:100vh;background:#f8fafc;">
+      <nav style="background:#00796b;padding:1rem 2rem;" class="flex align-items-center justify-content-between">
+        <div class="flex align-items-center gap-3">
+          <i class="pi pi-shield" style="color:#fff;font-size:1.5rem;"></i>
+          <span style="color:#fff;font-weight:700;font-size:1.1rem;">Salve Mais</span>
+        </div>
+        <a routerLink="/" style="color:rgba(255,255,255,0.85);font-size:0.875rem;text-decoration:none;" class="flex align-items-center gap-2">
+          <i class="pi pi-arrow-left"></i> Voltar ao início
+        </a>
+      </nav>
+
+      <div style="max-width:800px;margin:0 auto;padding:3rem 1.5rem;">
+        <div class="flex align-items-center gap-3 mb-4">
+          <div class="flex align-items-center justify-content-center border-round-full"
+               style="width:56px;height:56px;background:rgba(0,121,107,0.1);">
+            <i class="pi pi-file text-primary" style="font-size:1.5rem;"></i>
+          </div>
+          <div>
+            <h1 class="m-0 font-bold" style="font-size:1.75rem;letter-spacing:-0.02em;">Termos de Uso</h1>
+            <span class="text-color-secondary text-sm">Última atualização: junho de 2025</span>
+          </div>
+        </div>
+
+        <p class="text-color-secondary line-height-3 mb-5">
+          Ao criar uma conta e utilizar o Salve Mais, você concorda com os termos descritos neste documento.
+          Leia com atenção antes de usar a plataforma.
+        </p>
+
+        <p-divider></p-divider>
+
+        <section class="mb-5">
+          <h2 class="font-bold mb-3" style="font-size:1.1rem;">1. O serviço</h2>
+          <p class="text-color-secondary line-height-3">
+            O Salve Mais é uma plataforma de gestão financeira pessoal que permite registrar contas bancárias,
+            cartões de crédito, despesas, receitas e acompanhar sua saúde financeira. O serviço é fornecido
+            "como está" e pode ser alterado ou descontinuado com aviso prévio de 30 dias.
+          </p>
+        </section>
+
+        <section class="mb-5">
+          <h2 class="font-bold mb-3" style="font-size:1.1rem;">2. Cadastro e responsabilidades</h2>
+          <p class="text-color-secondary line-height-3 mb-3">Ao se cadastrar, você declara que:</p>
+          <ul class="text-color-secondary line-height-3 pl-4">
+            <li class="mb-2">Tem pelo menos 18 anos ou possui autorização de responsável legal.</li>
+            <li class="mb-2">As informações fornecidas são verdadeiras e atualizadas.</li>
+            <li class="mb-2">É responsável por manter a confidencialidade da sua senha.</li>
+            <li class="mb-2">Não utilizará a plataforma para fins ilícitos ou fraudulentos.</li>
+          </ul>
+        </section>
+
+        <section class="mb-5">
+          <h2 class="font-bold mb-3" style="font-size:1.1rem;">3. Planos e pagamentos</h2>
+          <p class="text-color-secondary line-height-3">
+            O Salve Mais oferece planos gratuitos com período de teste e planos pagos com cobrança recorrente.
+            Os valores são exibidos na página de planos e podem ser alterados com aviso prévio de 30 dias.
+            Pagamentos são processados por terceiros certificados (PCI-DSS) e não armazenamos dados de cartão de crédito.
+            Não há reembolso proporcional em caso de cancelamento antes do fim do período.
+          </p>
+        </section>
+
+        <section class="mb-5">
+          <h2 class="font-bold mb-3" style="font-size:1.1rem;">4. Uso aceitável</h2>
+          <p class="text-color-secondary line-height-3 mb-3">É proibido:</p>
+          <ul class="text-color-secondary line-height-3 pl-4">
+            <li class="mb-2">Tentar acessar dados de outros usuários.</li>
+            <li class="mb-2">Realizar engenharia reversa ou extrair código-fonte da plataforma.</li>
+            <li class="mb-2">Sobrecarregar intencionalmente a infraestrutura do serviço.</li>
+            <li class="mb-2">Usar a plataforma para armazenar dados de terceiros sem consentimento.</li>
+          </ul>
+        </section>
+
+        <section class="mb-5">
+          <h2 class="font-bold mb-3" style="font-size:1.1rem;">5. Limitação de responsabilidade</h2>
+          <p class="text-color-secondary line-height-3">
+            O Salve Mais é uma ferramenta de organização e não constitui aconselhamento financeiro profissional.
+            Não nos responsabilizamos por decisões financeiras tomadas com base nas informações registradas na
+            plataforma. Em caso de falhas técnicas, nossa responsabilidade limita-se ao valor pago pelo serviço
+            no período afetado.
+          </p>
+        </section>
+
+        <section class="mb-5">
+          <h2 class="font-bold mb-3" style="font-size:1.1rem;">6. Cancelamento e exclusão</h2>
+          <p class="text-color-secondary line-height-3">
+            Você pode cancelar sua conta a qualquer momento nas configurações da plataforma. Após o cancelamento,
+            seus dados são mantidos por 90 dias e depois excluídos permanentemente. Reservamos o direito de
+            encerrar contas que violem estes termos, com notificação prévia quando possível.
+          </p>
+        </section>
+
+        <section class="mb-5">
+          <h2 class="font-bold mb-3" style="font-size:1.1rem;">7. Alterações nestes termos</h2>
+          <p class="text-color-secondary line-height-3">
+            Podemos atualizar estes termos periodicamente. Alterações relevantes serão comunicadas por e-mail
+            com pelo menos 15 dias de antecedência. O uso continuado da plataforma após esse prazo constitui
+            aceite das novas condições.
+          </p>
+        </section>
+
+        <section class="mb-5">
+          <h2 class="font-bold mb-3" style="font-size:1.1rem;">8. Lei aplicável</h2>
+          <p class="text-color-secondary line-height-3">
+            Estes termos são regidos pelas leis da República Federativa do Brasil. Fica eleito o foro da
+            Comarca de Brasília/DF para dirimir eventuais conflitos.
+          </p>
+        </section>
+
+        <section class="mb-5">
+          <h2 class="font-bold mb-3" style="font-size:1.1rem;">9. Contato</h2>
+          <p class="text-color-secondary line-height-3">
+            Dúvidas sobre estes termos? Entre em contato pelo e-mail
+            <a href="mailto:contato@salvemais.com.br" class="text-primary">contato&#64;salvemais.com.br</a>.
+          </p>
+        </section>
+
+        <p-divider></p-divider>
+
+        <div class="flex justify-content-between align-items-center mt-4">
+          <span class="text-color-secondary text-sm">© {{ currentYear }} Salve Mais. Todos os direitos reservados.</span>
+          <a routerLink="/politica-privacidade" class="text-primary text-sm" style="text-decoration:none;">Política de Privacidade</a>
+        </div>
+      </div>
+    </div>
+  `
+})
+export class TermosUsoComponent {
+  currentYear = new Date().getFullYear();
+}

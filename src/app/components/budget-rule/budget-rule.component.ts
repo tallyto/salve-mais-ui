@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { DashboardService, BudgetRuleData } from '../../services/dashboard.service';
 import { NgChartsModule } from 'ng2-charts';
-import { ChartConfiguration } from 'chart.js';
-import { SALVE_COMMON, SALVE_DATA } from '@shared/primeng-shared';
-import { DashboardService, BudgetRuleData } from '@services/dashboard.service';
+import { ChartConfiguration, ChartOptions } from 'chart.js';
+import { SALVE_COMMON, SALVE_DATA } from '../../shared/primeng-shared';
 
 @Component({
   selector: 'app-budget-rule',
@@ -60,7 +60,7 @@ export class BudgetRuleComponent implements OnInit {
 
             // Extrai a porcentagem se ela estiver incluída no label (formato: "Label (XX%)")
             let percentage = '';
-            const matches = label.match(/.(.+)%./);
+            const matches = label.match(/\((\d+)%\)/);
             if (matches && matches.length > 1) {
               percentage = matches[1];
             } else {
@@ -128,17 +128,18 @@ export class BudgetRuleComponent implements OnInit {
 
   fetchBudgetRuleData(): void {
     this.loading = true;
-    this.dashboardService.obterBudgetRule().subscribe({
-      next: (data) => {
-        this.budgetData = data;
-        this.updateChartData();
-        this.loading = false;
-      },
-      error: (err) => {
-        this.error = true;
-        this.loading = false;
-      }
-    });
+    this.dashboardService.obterBudgetRule()
+      .subscribe({
+        next: (data) => {
+          this.budgetData = data;
+          this.updateChartData();
+          this.loading = false;
+        },
+        error: (err) => {
+          this.error = true;
+          this.loading = false;
+        }
+      });
   }
 
   updateChartData(): void {

@@ -1,0 +1,210 @@
+<section class="p-4 flex flex-column gap-3">
+  <div class="grid" *ngIf="loading">
+    <div class="col-12 lg:col-8">
+      <p-card>
+        <p-skeleton width="45%" height="1.25rem" styleClass="mb-3"></p-skeleton>
+        <p-skeleton height="3rem" styleClass="mb-3"></p-skeleton>
+        <p-skeleton height="3rem" styleClass="mb-3"></p-skeleton>
+        <p-skeleton height="3rem"></p-skeleton>
+      </p-card>
+    </div>
+    <div class="col-12 lg:col-4">
+      <p-card>
+        <p-skeleton width="50%" height="1.25rem" styleClass="mb-3"></p-skeleton>
+        <p-skeleton height="10rem"></p-skeleton>
+      </p-card>
+    </div>
+  </div>
+
+  <ng-container *ngIf="!loading">
+    <p-card>
+      <div class="flex align-items-start gap-3">
+        <i [class]="'pi ' + (isEditMode ? 'pi-pencil' : 'pi-plus-circle') + ' text-2xl text-primary'"></i>
+        <div>
+          <h2 class="m-0">{{ isEditMode ? 'Editar reserva' : 'Criar reserva' }}</h2>
+          <p class="m-0 text-color-secondary">
+            Ajuste objetivo, cobertura, conta vinculada e contribuicao mensal.
+          </p>
+        </div>
+      </div>
+    </p-card>
+
+    <form [formGroup]="reservaForm" (ngSubmit)="onSubmit()" id="reservaForm">
+      <div class="grid">
+        <div class="col-12 lg:col-8">
+          <p-card>
+            <ng-template pTemplate="header">
+              <div class="p-4 border-bottom-1 surface-border">
+                <h3 class="m-0">Parametros da reserva</h3>
+                <p class="m-0 text-sm text-color-secondary">Configuracao</p>
+              </div>
+            </ng-template>
+
+            <div class="flex flex-column gap-4">
+              <p-message
+                *ngIf="contasDisponiveis.length === 0"
+                severity="warn"
+                text="Nenhuma conta de reserva disponivel. Crie uma conta do tipo Reserva de Emergencia antes de continuar."></p-message>
+
+              <div class="flex flex-column gap-2">
+                <div>
+                  <h3 class="m-0">Conta vinculada</h3>
+                  <p class="m-0 text-color-secondary">Escolha a conta onde a reserva sera mantida.</p>
+                </div>
+
+                <p-floatlabel class="w-full pt-4">
+                  <p-select
+                    id="contaId"
+                    formControlName="contaId"
+                    [options]="contasDisponiveis"
+                    optionValue="id"
+                    styleClass="w-full">
+                    <ng-template pTemplate="selectedItem" let-conta>
+                      <span *ngIf="conta">
+                        {{ conta.titular }}{{ conta.descricao ? ' - ' + conta.descricao : '' }} · {{ conta.saldo | currency:'BRL':'symbol':'1.0-0' }}
+                      </span>
+                    </ng-template>
+                    <ng-template pTemplate="item" let-conta>
+                      <span>{{ conta.titular }}{{ conta.descricao ? ' - ' + conta.descricao : '' }} · {{ conta.saldo | currency:'BRL':'symbol':'1.0-0' }}</span>
+                    </ng-template>
+                  </p-select>
+                  <label for="contaId">Conta de reserva</label>
+                </p-floatlabel>
+                <small class="p-error" *ngIf="reservaForm.get('contaId')?.hasError('required')">
+                  Selecione uma conta de reserva
+                </small>
+              </div>
+
+              <div class="flex flex-column gap-2">
+                <div>
+                  <h3 class="m-0">Cobertura desejada</h3>
+                  <p class="m-0 text-color-secondary">
+                    Defina quantos meses de despesas o objetivo deve proteger.
+                  </p>
+                </div>
+
+                <div class="flex flex-wrap gap-2" aria-label="Cobertura desejada">
+                  <p-button
+                    *ngFor="let mult of multiplicadoresDisponiveis"
+                    [label]="mult.valor + ' meses · ' + mult.descricao"
+                    [severity]="reservaForm.get('multiplicadorDespesas')?.value === mult.valor ? 'primary' : 'secondary'"
+                    [outlined]="reservaForm.get('multiplicadorDespesas')?.value !== mult.valor"
+                    type="button"
+                    (onClick)="reservaForm.get('multiplicadorDespesas')?.setValue(mult.valor)"></p-button>
+                </div>
+              </div>
+
+              <div class="flex flex-column gap-2">
+                <div>
+                  <h3 class="m-0">Valores do plano</h3>
+                  <p class="m-0 text-color-secondary">
+                    Informe a meta e o aporte mensal usado para estimar a conclusao.
+                  </p>
+                </div>
+
+                <div class="grid">
+                  <div class="col-12 md:col-8 pt-4">
+                    <p-floatlabel class="w-full">
+                      <input pInputText id="objetivo" type="text" formControlName="objetivo" class="w-full" required appCurrencyInput>
+                      <label for="objetivo">Objetivo</label>
+                    </p-floatlabel>
+                    <small class="p-error" *ngIf="reservaForm.get('objetivo')?.hasError('required')">Informe o valor objetivo</small>
+                    <small class="p-error" *ngIf="reservaForm.get('objetivo')?.hasError('min')">Deve ser maior que zero</small>
+                  </div>
+
+                  <div class="col-12 md:col-4 pt-4">
+                    <p-button
+                      type="button"
+                      label="Calcular"
+                      icon="pi pi-calculator"
+                      variant="outlined"
+                      styleClass="w-full"
+                      (onClick)="calcularObjetivoAutomatico()"
+                      [loading]="calculandoObjetivo"
+                      [disabled]="calculandoObjetivo || !reservaForm.get('multiplicadorDespesas')?.value"></p-button>
+                  </div>
+
+                  <div class="col-12 md:col-6 pt-4">
+                    <p-floatlabel class="w-full">
+                      <input pInputText id="valorContribuicaoMensal" type="text" formControlName="valorContribuicaoMensal" class="w-full" required appCurrencyInput>
+                      <label for="valorContribuicaoMensal">Contribuicao mensal</label>
+                    </p-floatlabel>
+                    <small class="p-error" *ngIf="reservaForm.get('valorContribuicaoMensal')?.hasError('required')">Informe a contribuicao mensal</small>
+                    <small class="p-error" *ngIf="reservaForm.get('valorContribuicaoMensal')?.hasError('min')">Deve ser maior que zero</small>
+                  </div>
+
+                  <div class="col-12 md:col-6 pt-4">
+                    <p-floatlabel class="w-full">
+                      <input pInputText id="taxaRendimento" type="text" inputmode="decimal" formControlName="taxaRendimento" class="w-full">
+                      <label for="taxaRendimento">Taxa de rendimento (% a.a.)</label>
+                    </p-floatlabel>
+                    <small class="p-error" *ngIf="reservaForm.get('taxaRendimento')?.hasError('min')">Nao pode ser negativa</small>
+                    <small class="p-error" *ngIf="reservaForm.get('taxaRendimento')?.hasError('max')">Maximo 100%</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </p-card>
+        </div>
+
+        <div class="col-12 lg:col-4">
+          <div class="flex flex-column gap-3">
+            <p-card>
+              <ng-template pTemplate="header">
+                <div class="p-4 border-bottom-1 surface-border">
+                  <h3 class="m-0">Prazo estimado</h3>
+                  <p class="m-0 text-sm text-color-secondary">Simulacao</p>
+                </div>
+              </ng-template>
+
+              <div class="flex flex-column gap-3">
+                <p-button type="button" label="Simular tempo" icon="pi pi-chart-line" variant="outlined" styleClass="w-full" (onClick)="simularTempoParaCompletar()"></p-button>
+
+                <div class="flex flex-column align-items-center gap-2 text-center p-3" *ngIf="!simulacaoResultado">
+                  <i class="pi pi-chart-bar text-2xl text-color-secondary"></i>
+                  <span>Preencha objetivo e contribuicao mensal para comparar o prazo.</span>
+                </div>
+
+                <div class="grid" *ngIf="simulacaoResultado">
+                  <div class="col-12">
+                    <div class="border-1 surface-border border-round p-3">
+                      <h4 class="m-0">Sem rendimentos</h4>
+                      <p class="m-0 text-sm text-color-secondary">{{ simulacaoResultado.simples }}</p>
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <div class="border-1 surface-border border-round p-3">
+                      <h4 class="m-0">Com {{ simulacaoResultado.taxa }}% a.a.</h4>
+                      <p class="m-0 text-sm text-color-secondary">{{ simulacaoResultado.comRendimento }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </p-card>
+
+            <p-card>
+              <div class="flex flex-column gap-3">
+                <div>
+                  <h3 class="m-0">{{ isEditMode ? 'Salvar alteracoes' : 'Finalizar reserva' }}</h3>
+                  <p class="m-0 text-sm text-color-secondary">{{ isEditMode ? 'Atualizacao' : 'Criacao' }}</p>
+                </div>
+
+                <div class="flex justify-content-end gap-2 flex-wrap">
+                  <p-button label="Cancelar" icon="pi pi-times" variant="outlined" type="button" (onClick)="cancelar()"></p-button>
+
+                  <p-button
+                    [label]="isEditMode ? 'Atualizar reserva' : 'Criar reserva'"
+                    [icon]="isEditMode ? 'pi pi-refresh' : 'pi pi-save'"
+                    form="reservaForm"
+                    type="submit"
+                    [disabled]="reservaForm.invalid || loading"></p-button>
+                </div>
+              </div>
+            </p-card>
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+</section>

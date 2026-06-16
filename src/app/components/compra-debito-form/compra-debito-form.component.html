@@ -1,0 +1,165 @@
+<section class="p-4 flex flex-column gap-4 min-h-screen">
+  <div class="flex align-items-center gap-3">
+    <p-button
+      icon="pi pi-arrow-left"
+      [rounded]="true"
+      [text]="true"
+      (onClick)="voltarParaListagem()">
+    </p-button>
+    <div>
+      <div class="text-sm text-color-secondary">Débito</div>
+      <h2 class="m-0">{{ isEditing ? 'Editar' : 'Nova' }} Compra em Débito</h2>
+      <p class="m-0 text-sm text-color-secondary">
+        {{ isEditing ? 'Atualize as informações permitidas desta compra.' : 'Registre uma compra debitada imediatamente da conta.' }}
+      </p>
+    </div>
+  </div>
+
+  <p-card>
+    <ng-template pTemplate="header">
+      <div class="p-4 pb-0 flex align-items-center gap-2">
+        <i class="pi pi-shopping-cart text-xl text-primary"></i>
+        <div>
+          <h3 class="m-0">{{ isEditing ? 'Editar Compra' : 'Registrar Nova Compra' }}</h3>
+          <span class="text-sm text-color-secondary">
+            {{ isEditing ? 'Atualize as informações da compra' : 'Registre uma compra que será debitada imediatamente da conta' }}
+          </span>
+        </div>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="content">
+      <form [formGroup]="compraDebitoForm" (ngSubmit)="salvarCompraDebito()" class="flex flex-column gap-4">
+        <section class="flex flex-column gap-3">
+          <div class="flex align-items-center gap-2">
+            <i class="pi pi-info-circle text-color-secondary"></i>
+            <h3 class="m-0">Informações da Compra</h3>
+          </div>
+
+          <div>
+            <p-floatlabel class="w-full">
+              <input
+                pInputText
+                id="nome"
+                formControlName="nome"
+                class="w-full">
+              <label for="nome">Descrição da Compra</label>
+            </p-floatlabel>
+            <small class="p-error" *ngIf="nome?.hasError('required') && nome?.touched">Descrição é obrigatória</small>
+            <small class="p-error" *ngIf="nome?.hasError('minlength') && nome?.touched">Descrição deve ter pelo menos 3 caracteres</small>
+          </div>
+
+          <div class="grid">
+            <div class="col-12 md:col-6">
+              <p-floatlabel class="w-full">
+                <p-select
+                  inputId="categoriaId"
+                  formControlName="categoriaId"
+                  [options]="categorias"
+                  optionLabel="nome"
+                  optionValue="id"
+                  [showClear]="true"
+                  class="w-full">
+                </p-select>
+                <label for="categoriaId">Categoria</label>
+              </p-floatlabel>
+            </div>
+
+            <div class="col-12 md:col-6">
+              <p-floatlabel class="w-full">
+                <p-select
+                  inputId="contaId"
+                  formControlName="contaId"
+                  [options]="contas"
+                  optionLabel="titular"
+                  optionValue="id"
+                  class="w-full">
+                  <ng-template pTemplate="item" let-conta>
+                    <div class="flex justify-content-between align-items-center gap-3 w-full">
+                      <span>{{ conta.titular }}</span>
+                      <span class="text-sm text-color-secondary">{{ conta.saldo | currency:'BRL':'symbol':'1.2-2' }}</span>
+                    </div>
+                  </ng-template>
+                </p-select>
+                <label for="contaId">Conta</label>
+              </p-floatlabel>
+              <small class="p-error" *ngIf="contaId?.hasError('required') && contaId?.touched">Conta é obrigatória</small>
+              <small class="text-color-secondary" *ngIf="isEditing">Não é possível alterar a conta</small>
+            </div>
+          </div>
+
+          <div class="grid">
+            <div class="col-12 md:col-6">
+              <p-floatlabel class="w-full">
+                <input pInputText id="dataCompra" type="date" formControlName="dataCompra" class="w-full">
+                <label for="dataCompra">Data da Compra</label>
+              </p-floatlabel>
+              <small class="p-error" *ngIf="dataCompra?.hasError('required') && dataCompra?.touched">Data da compra é obrigatória</small>
+              <small class="text-color-secondary" *ngIf="isEditing">Não é possível alterar a data</small>
+            </div>
+
+            <div class="col-12 md:col-6">
+              <p-floatlabel class="w-full">
+                <input
+                  pInputText
+                  id="valor"
+                  type="text"
+                  formControlName="valor"
+                  appCurrencyInput
+                  class="w-full">
+                <label for="valor">Valor</label>
+              </p-floatlabel>
+              <small class="p-error" *ngIf="valor?.hasError('required') && valor?.touched">Valor é obrigatório</small>
+              <small class="p-error" *ngIf="valor?.hasError('min') && valor?.touched">Valor deve ser maior que zero</small>
+              <small class="text-color-secondary" *ngIf="isEditing">Não é possível alterar o valor</small>
+            </div>
+          </div>
+
+          <p-floatlabel class="w-full">
+            <textarea
+              pTextarea
+              id="observacoes"
+              formControlName="observacoes"
+              rows="3"
+              class="w-full">
+            </textarea>
+            <label for="observacoes">Observações (Opcional)</label>
+          </p-floatlabel>
+        </section>
+
+        <div *ngIf="!isEditing" class="flex align-items-start gap-3 p-3 border-round bg-blue-50">
+          <i class="pi pi-info-circle text-primary mt-1"></i>
+          <div>
+            <strong>Atenção:</strong> Ao registrar esta compra, o valor será <strong>debitado imediatamente</strong>
+            da conta selecionada e uma transação será criada automaticamente.
+          </div>
+        </div>
+
+        <div *ngIf="isEditing" class="flex align-items-start gap-3 p-3 border-round bg-orange-50">
+          <i class="pi pi-exclamation-triangle text-orange-600 mt-1"></i>
+          <div>
+            <strong>Limitação de Edição:</strong> Não é possível alterar o valor, conta ou data de uma compra já registrada,
+            pois o débito já foi realizado.
+          </div>
+        </div>
+
+        <div class="flex justify-content-end gap-2">
+          <p-button
+            label="Cancelar"
+            variant="outlined"
+            type="button"
+            [disabled]="loading"
+            (onClick)="voltarParaListagem()">
+          </p-button>
+          <p-button
+            [label]="loading ? 'Salvando...' : (isEditing ? 'Atualizar' : 'Registrar Compra')"
+            [icon]="loading ? undefined : (isEditing ? 'pi pi-save' : 'pi pi-shopping-cart')"
+            type="submit"
+            [disabled]="loading || compraDebitoForm.invalid">
+            <p-progressspinner *ngIf="loading" [style]="{width: '18px', height: '18px'}" strokeWidth="6"></p-progressspinner>
+          </p-button>
+        </div>
+      </form>
+    </ng-template>
+  </p-card>
+</section>

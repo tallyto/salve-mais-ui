@@ -54,6 +54,24 @@ export interface MonthlyExpense {
   valorReceitas: number;
 }
 
+export interface BudgetRuleData {
+  necessidadesIdeal: number;
+  desejosIdeal: number;
+  economiaIdeal: number;
+  necessidadesReal: number;
+  desejosReal: number;
+  economiaReal: number;
+  necessidadesPercentual: number;
+  desejosPercentual: number;
+  economiaPercentual: number;
+  necessidadesDiferenca: number;
+  desejosDiferenca: number;
+  economiaDiferenca: number;
+  necessidadesStatus: string;
+  desejosStatus: string;
+  economiaStatus: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -104,11 +122,15 @@ export class DashboardService {
     const params: any = {};
     if (mes) params.mes = mes.toString();
     if (ano) params.ano = ano.toString();
-    
-    return this.http.get(`${this.apiUrl}/export/excel`, { 
+
+    return this.http.get(`${this.apiUrl}/export/excel`, {
       params,
       responseType: 'blob'
     });
+  }
+
+  obterBudgetRule(): Observable<BudgetRuleData> {
+    return this.http.get<BudgetRuleData>(`${this.apiUrl}/budget-rule`);
   }
 }
 

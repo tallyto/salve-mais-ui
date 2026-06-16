@@ -1,0 +1,273 @@
+<section class="p-4 flex flex-column gap-4">
+
+  <!-- Page header -->
+  <div class="flex align-items-center justify-content-between">
+    <div>
+      <h2 class="m-0 font-semibold">Regra 50/30/20</h2>
+      <span class="text-sm text-color-secondary">Distribuição inteligente da sua renda mensal</span>
+    </div>
+  </div>
+
+  <!-- Explicação -->
+  <p-card>
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center gap-2 p-3">
+        <i class="pi pi-info-circle text-primary"></i>
+        <span class="font-semibold">O que é a regra 50/30/20?</span>
+      </div>
+    </ng-template>
+    <p class="text-sm m-0 mb-2">
+      É uma estratégia de orçamento pessoal que divide sua renda em três categorias:
+    </p>
+    <ul class="pl-3 mt-2 mb-0 text-sm">
+      <li><strong>50% para necessidades:</strong> Moradia, alimentação, contas básicas, transporte</li>
+      <li><strong>30% para desejos:</strong> Lazer, entretenimento, restaurantes, viagens</li>
+      <li><strong>20% para economia:</strong> Poupança, investimentos, aposentadoria</li>
+    </ul>
+  </p-card>
+
+  <!-- Skeleton de carregamento -->
+  <div *ngIf="loading" class="grid">
+    <div class="col-12 md:col-6">
+      <p-card>
+        <p-skeleton height="350px"></p-skeleton>
+      </p-card>
+    </div>
+    <div class="col-12 md:col-6">
+      <p-card>
+        <p-skeleton height="350px"></p-skeleton>
+      </p-card>
+    </div>
+    <div class="col-12">
+      <p-card>
+        <div class="grid">
+          <div class="col-12 md:col-4" *ngFor="let i of [1,2,3]">
+            <p-card>
+              <p-skeleton height="8rem"></p-skeleton>
+            </p-card>
+          </div>
+        </div>
+      </p-card>
+    </div>
+  </div>
+
+  <!-- Erro -->
+  <p-card *ngIf="error" [style]="{'border-left': '4px solid var(--red-500)'}">
+    <div class="flex align-items-center gap-2 text-red-700">
+      <i class="pi pi-exclamation-triangle text-xl"></i>
+      <span>Ocorreu um erro ao carregar os dados. Por favor, tente novamente mais tarde.</span>
+    </div>
+  </p-card>
+
+  <div *ngIf="!loading && !error && budgetData" class="flex flex-column gap-3">
+
+    <!-- Gráficos de distribuição -->
+    <div class="grid">
+      <div class="col-12 md:col-6">
+        <p-card class="h-full">
+          <ng-template pTemplate="header">
+            <div class="flex align-items-center gap-2 p-3">
+              <i class="pi pi-chart-pie text-primary"></i>
+              <span class="font-semibold">Distribuição Ideal</span>
+            </div>
+          </ng-template>
+          <div style="height: 350px;">
+            <canvas baseChart [data]="idealChartData" [options]="chartOptions" [type]="'pie'"></canvas>
+          </div>
+        </p-card>
+      </div>
+
+      <div class="col-12 md:col-6">
+        <p-card class="h-full">
+          <ng-template pTemplate="header">
+            <div class="flex align-items-center gap-2 p-3">
+              <i class="pi pi-chart-pie"></i>
+              <span class="font-semibold">Distribuição Real</span>
+            </div>
+          </ng-template>
+          <div style="height: 350px;">
+            <canvas baseChart [data]="realChartData" [options]="chartOptions" [type]="'pie'"></canvas>
+          </div>
+        </p-card>
+      </div>
+    </div>
+
+    <!-- Detalhamento por categoria -->
+    <p-card>
+      <ng-template pTemplate="header">
+        <div class="flex align-items-center gap-2 p-3">
+          <i class="pi pi-th-large text-primary"></i>
+          <span class="font-semibold">Detalhamento por Categoria</span>
+        </div>
+      </ng-template>
+
+      <div class="grid">
+        <!-- Necessidades -->
+        <div class="col-12 md:col-4">
+          <p-card class="h-full" [style]="{'border-left': '4px solid var(--green-500)'}">
+            <div class="flex justify-content-between align-items-center mb-3">
+              <div class="flex align-items-center gap-2">
+                <i class="pi pi-shopping-cart text-green-600"></i>
+                <span class="font-medium text-sm">Necessidades</span>
+              </div>
+              <p-tag value="Meta: 50%" severity="success"></p-tag>
+            </div>
+            <div class="flex flex-column gap-1">
+              <p-progressbar [value]="budgetData.necessidadesPercentual" [showValue]="false"></p-progressbar>
+              <div class="flex justify-content-between text-xs">
+                <span class="font-bold">{{ budgetData.necessidadesPercentual.toFixed(1) }}%</span>
+                <span [class]="getStatusClass(budgetData.necessidadesStatus)">{{ getStatusText(budgetData.necessidadesStatus) }}</span>
+              </div>
+            </div>
+            <div class="flex justify-content-between text-xs gap-2 mt-3">
+              <div class="flex flex-column">
+                <span class="text-color-secondary">Ideal</span>
+                <span class="font-bold">{{ budgetData.necessidadesIdeal | currency:'BRL':'symbol':'1.2-2' }}</span>
+              </div>
+              <div class="flex flex-column text-right">
+                <span class="text-color-secondary">Real</span>
+                <span class="font-bold">{{ budgetData.necessidadesReal | currency:'BRL':'symbol':'1.2-2' }}</span>
+              </div>
+            </div>
+            <div [class]="'text-center p-2 text-xs font-bold mt-2 ' + getDiferencaClass('necessidades', budgetData.necessidadesDiferenca)">
+              {{ getDiferencaText('necessidades', budgetData.necessidadesDiferenca) }}
+            </div>
+          </p-card>
+        </div>
+
+        <!-- Desejos -->
+        <div class="col-12 md:col-4">
+          <p-card class="h-full" [style]="{'border-left': '4px solid var(--orange-500)'}">
+            <div class="flex justify-content-between align-items-center mb-3">
+              <div class="flex align-items-center gap-2">
+                <i class="pi pi-gift text-orange-600"></i>
+                <span class="font-medium text-sm">Desejos</span>
+              </div>
+              <p-tag value="Meta: 30%" severity="warning"></p-tag>
+            </div>
+            <div class="flex flex-column gap-1">
+              <p-progressbar [value]="budgetData.desejosPercentual" [showValue]="false"></p-progressbar>
+              <div class="flex justify-content-between text-xs">
+                <span class="font-bold">{{ budgetData.desejosPercentual.toFixed(1) }}%</span>
+                <span [class]="getStatusClass(budgetData.desejosStatus)">{{ getStatusText(budgetData.desejosStatus) }}</span>
+              </div>
+            </div>
+            <div class="flex justify-content-between text-xs gap-2 mt-3">
+              <div class="flex flex-column">
+                <span class="text-color-secondary">Ideal</span>
+                <span class="font-bold">{{ budgetData.desejosIdeal | currency:'BRL':'symbol':'1.2-2' }}</span>
+              </div>
+              <div class="flex flex-column text-right">
+                <span class="text-color-secondary">Real</span>
+                <span class="font-bold">{{ budgetData.desejosReal | currency:'BRL':'symbol':'1.2-2' }}</span>
+              </div>
+            </div>
+            <div [class]="'text-center p-2 text-xs font-bold mt-2 ' + getDiferencaClass('desejos', budgetData.desejosDiferenca)">
+              {{ getDiferencaText('desejos', budgetData.desejosDiferenca) }}
+            </div>
+          </p-card>
+        </div>
+
+        <!-- Economia -->
+        <div class="col-12 md:col-4">
+          <p-card class="h-full" [style]="{'border-left': '4px solid var(--blue-500)'}">
+            <div class="flex justify-content-between align-items-center mb-3">
+              <div class="flex align-items-center gap-2">
+                <i class="pi pi-wallet text-blue-600"></i>
+                <span class="font-medium text-sm">Economia</span>
+              </div>
+              <p-tag value="Meta: 20%" severity="info"></p-tag>
+            </div>
+            <div class="flex flex-column gap-1">
+              <p-progressbar [value]="budgetData.economiaPercentual" [showValue]="false"></p-progressbar>
+              <div class="flex justify-content-between text-xs">
+                <span class="font-bold">{{ budgetData.economiaPercentual.toFixed(1) }}%</span>
+                <span [class]="getStatusClass(budgetData.economiaStatus)">{{ getStatusText(budgetData.economiaStatus) }}</span>
+              </div>
+            </div>
+            <div class="flex justify-content-between text-xs gap-2 mt-3">
+              <div class="flex flex-column">
+                <span class="text-color-secondary">Ideal</span>
+                <span class="font-bold">{{ budgetData.economiaIdeal | currency:'BRL':'symbol':'1.2-2' }}</span>
+              </div>
+              <div class="flex flex-column text-right">
+                <span class="text-color-secondary">Real</span>
+                <span class="font-bold">{{ budgetData.economiaReal | currency:'BRL':'symbol':'1.2-2' }}</span>
+              </div>
+            </div>
+            <div [class]="'text-center p-2 text-xs font-bold mt-2 ' + getDiferencaClass('economia', budgetData.economiaDiferenca)">
+              {{ getDiferencaText('economia', budgetData.economiaDiferenca) }}
+            </div>
+          </p-card>
+        </div>
+      </div>
+    </p-card>
+
+    <!-- Dicas -->
+    <p-card>
+      <ng-template pTemplate="header">
+        <div class="flex align-items-center gap-2 p-3">
+          <i class="pi pi-lightbulb text-yellow-500"></i>
+          <span class="font-semibold">Dicas para melhorar seu orçamento</span>
+        </div>
+      </ng-template>
+
+      <div class="flex flex-column gap-3">
+        <div *ngIf="budgetData.necessidadesStatus === 'ACIMA' || budgetData.necessidadesStatus === 'MUITO_ACIMA'"
+             class="bg-green-50 p-3" [style]="{'border-left': '4px solid var(--green-500)'}">
+          <div class="flex align-items-center mb-2 gap-2">
+            <i class="pi pi-exclamation-triangle text-green-600"></i>
+            <span class="font-medium text-sm text-green-800">Necessidades acima do limite</span>
+          </div>
+          <ul class="pl-3 mt-2 mb-0 text-sm">
+            <li>Revise gastos fixos como aluguel, contas e financiamentos</li>
+            <li>Busque alternativas mais econômicas para serviços essenciais</li>
+            <li>Renegocie dívidas para reduzir parcelas mensais</li>
+            <li>Considere compartilhar despesas de moradia ou transporte</li>
+          </ul>
+        </div>
+
+        <div *ngIf="budgetData.desejosStatus === 'ACIMA' || budgetData.desejosStatus === 'MUITO_ACIMA'"
+             class="bg-orange-50 p-3" [style]="{'border-left': '4px solid var(--orange-500)'}">
+          <div class="flex align-items-center mb-2 gap-2">
+            <i class="pi pi-exclamation-triangle text-orange-600"></i>
+            <span class="font-medium text-sm text-orange-800">Desejos acima do limite</span>
+          </div>
+          <ul class="pl-3 mt-2 mb-0 text-sm">
+            <li>Reduza gastos com entretenimento, restaurantes e compras não essenciais</li>
+            <li>Procure alternativas mais baratas para lazer</li>
+            <li>Estabeleça um limite semanal para gastos discricionários</li>
+            <li>Use o método de esperar 24h antes de fazer compras não planejadas</li>
+          </ul>
+        </div>
+
+        <div *ngIf="budgetData.economiaStatus === 'ABAIXO' || budgetData.economiaStatus === 'MUITO_ABAIXO'"
+             class="bg-blue-50 p-3" [style]="{'border-left': '4px solid var(--blue-500)'}">
+          <div class="flex align-items-center mb-2 gap-2">
+            <i class="pi pi-exclamation-triangle text-blue-600"></i>
+            <span class="font-medium text-sm text-blue-800">Economia abaixo do objetivo</span>
+          </div>
+          <ul class="pl-3 mt-2 mb-0 text-sm">
+            <li>Configure transferências automáticas para sua conta de poupança</li>
+            <li>Defina metas de economia de curto e médio prazo</li>
+            <li>Aplique o método "pague-se primeiro" — economize logo que receber</li>
+            <li>Reavalie seus investimentos para maximizar retornos</li>
+          </ul>
+        </div>
+
+        <div *ngIf="budgetData.necessidadesStatus === 'DENTRO_DO_LIMITE' && budgetData.desejosStatus === 'DENTRO_DO_LIMITE' && (budgetData.economiaStatus === 'ACIMA_DO_OBJETIVO' || budgetData.economiaStatus === 'QUASE_NO_OBJETIVO')"
+             class="p-3" [style]="{'border-left': '4px solid var(--teal-500)', 'background': 'var(--teal-50, #f0fdfa)'}">
+          <div class="flex align-items-center mb-2 gap-2">
+            <i class="pi pi-check-circle text-teal-600"></i>
+            <span class="font-medium text-sm text-teal-800">Seu orçamento está equilibrado!</span>
+          </div>
+          <p class="mt-2 mb-0 text-sm">
+            Continue acompanhando seus gastos e economias para manter o equilíbrio financeiro.
+            Considere aumentar sua meta de economia para acelerar seus objetivos financeiros.
+          </p>
+        </div>
+      </div>
+    </p-card>
+
+  </div>
+</section>

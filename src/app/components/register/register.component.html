@@ -1,0 +1,208 @@
+<div class="flex w-full" style="min-height: 100vh;">
+
+  <!-- Painel esquerdo — branding -->
+  <section class="hidden md:flex flex-column justify-content-between p-6"
+           style="flex: 1; background: linear-gradient(160deg, #00796b 0%, #004d40 100%); color: white;">
+    <div class="flex align-items-center gap-3">
+      <img src="assets/images/logo.svg" alt="Salve Mais" style="width: 40px; height: 40px;">
+      <span class="text-xl font-bold">Salve Mais</span>
+    </div>
+
+    <div class="flex flex-column gap-4">
+      <div class="flex align-items-center justify-content-center border-round-full"
+           style="width:72px;height:72px;background:rgba(255,255,255,0.15);">
+        <i class="pi pi-building" style="font-size:2rem;"></i>
+      </div>
+      <h1 class="text-4xl font-bold m-0 line-height-3">
+        Crie seu ambiente financeiro em minutos
+      </h1>
+      <p class="text-lg m-0" style="opacity: 0.85; max-width: 380px;">
+        Cadastre sua organização, confirme o e-mail e comece a controlar contas, cartões e despesas de forma centralizada.
+      </p>
+      <div class="flex flex-column gap-2 mt-2">
+        <div class="flex align-items-center gap-2" style="opacity:0.85">
+          <i class="pi pi-check-circle"></i>
+          <span class="text-sm">Período de teste gratuito</span>
+        </div>
+        <div class="flex align-items-center gap-2" style="opacity:0.85">
+          <i class="pi pi-check-circle"></i>
+          <span class="text-sm">Sem cartão de crédito</span>
+        </div>
+        <div class="flex align-items-center gap-2" style="opacity:0.85">
+          <i class="pi pi-check-circle"></i>
+          <span class="text-sm">Cancele quando quiser</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="text-sm m-0" style="opacity: 0.6;">&copy; {{ currentYear }} Salve Mais</p>
+  </section>
+
+  <!-- Painel direito — formulário -->
+  <div class="flex-1 flex align-items-center justify-content-center p-4 md:p-6"
+       style="background: var(--surface-ground);">
+    <div class="w-full" style="max-width: 460px;">
+
+      <!-- Logo mobile -->
+      <div class="flex align-items-center gap-2 mb-5 md:hidden">
+        <img src="assets/images/logo.svg" alt="Salve Mais" style="width: 36px; height: 36px;">
+        <span class="text-xl font-bold">Salve Mais</span>
+      </div>
+
+      <!-- ── Modo: CADASTRO ── -->
+      <ng-container *ngIf="mode === 'register'">
+        <div class="mb-5">
+          <h2 class="text-3xl font-bold m-0">Criar conta</h2>
+          <p class="text-color-secondary mt-2 mb-0">Preencha os dados abaixo para começar</p>
+        </div>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="flex flex-column gap-4">
+
+          <div class="flex flex-column gap-1">
+            <p-floatlabel class="w-full">
+              <input pInputText id="name" formControlName="name" class="w-full" autocomplete="organization">
+              <label for="name">Nome da organização</label>
+            </p-floatlabel>
+            <small class="p-error" *ngIf="registerForm.get('name')?.hasError('required') && registerForm.get('name')?.touched">
+              Nome é obrigatório
+            </small>
+          </div>
+
+          <div class="flex flex-column gap-1">
+            <p-floatlabel class="w-full">
+              <input pInputText id="domain" formControlName="domain" class="w-full" autocomplete="off"
+                     placeholder="" (blur)="registerForm.get('domain')?.markAsTouched()">
+              <label for="domain">Domínio (ex: minhaempresa.com.br)</label>
+            </p-floatlabel>
+            <small class="p-error" *ngIf="registerForm.get('domain')?.hasError('required') && registerForm.get('domain')?.touched">Domínio é obrigatório</small>
+            <small class="p-error" *ngIf="registerForm.get('domain')?.hasError('pattern') && registerForm.get('domain')?.touched">Formato inválido — use ex: empresa.com.br</small>
+            <small class="p-error" *ngIf="registerForm.get('domain')?.hasError('minlength') && registerForm.get('domain')?.touched">Mínimo de 4 caracteres</small>
+            <small class="p-error" *ngIf="registerForm.get('domain')?.hasError('dominioIndisponivel') && registerForm.get('domain')?.touched">Este domínio já está em uso</small>
+            <small class="p-error" *ngIf="registerForm.get('domain')?.hasError('dominioPublico') && registerForm.get('domain')?.touched">Use um domínio próprio, não de provedor de email</small>
+
+            <div *ngIf="registerForm.get('domain')?.touched && registerForm.get('domain')?.value"
+                 class="flex flex-column gap-1 p-3 border-round mt-1"
+                 style="background: var(--surface-section); border: 1px solid var(--surface-border); font-size: 12px;">
+              <div class="flex align-items-center gap-2"
+                   [style.color]="!registerForm.get('domain')?.hasError('minlength') ? 'var(--green-600)' : 'var(--text-color-secondary)'">
+                <i class="pi" [ngClass]="!registerForm.get('domain')?.hasError('minlength') ? 'pi-check-circle' : 'pi-circle'"></i>
+                Mínimo de 4 caracteres
+              </div>
+              <div class="flex align-items-center gap-2"
+                   [style.color]="!registerForm.get('domain')?.hasError('pattern') ? 'var(--green-600)' : 'var(--text-color-secondary)'">
+                <i class="pi" [ngClass]="!registerForm.get('domain')?.hasError('pattern') ? 'pi-check-circle' : 'pi-circle'"></i>
+                Formato válido (ex: empresa.com.br)
+              </div>
+              <div class="flex align-items-center gap-2"
+                   [style.color]="!registerForm.get('domain')?.hasError('dominioPublico') ? 'var(--green-600)' : 'var(--text-color-secondary)'">
+                <i class="pi" [ngClass]="!registerForm.get('domain')?.hasError('dominioPublico') ? 'pi-check-circle' : 'pi-circle'"></i>
+                Domínio próprio (não de provedor de email)
+              </div>
+              <div class="flex align-items-center gap-2"
+                   [style.color]="!registerForm.get('domain')?.hasError('dominioIndisponivel') ? 'var(--green-600)' : 'var(--text-color-secondary)'">
+                <i class="pi" [ngClass]="!registerForm.get('domain')?.hasError('dominioIndisponivel') ? 'pi-check-circle' : 'pi-circle'"></i>
+                Domínio disponível
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-column gap-1">
+            <p-floatlabel class="w-full">
+              <input pInputText id="email" formControlName="email" class="w-full" type="email" autocomplete="email">
+              <label for="email">Email do administrador</label>
+            </p-floatlabel>
+            <small class="p-error" *ngIf="registerForm.get('email')?.hasError('required') && registerForm.get('email')?.touched">Email é obrigatório</small>
+            <small class="p-error" *ngIf="registerForm.get('email')?.hasError('email') && registerForm.get('email')?.touched">Formato de email inválido</small>
+          </div>
+
+          <!-- Feedback de erro / sucesso -->
+          <div *ngIf="errorMessage" class="flex gap-2 align-items-start p-3 border-round"
+               style="background: var(--red-50); border: 1px solid var(--red-200);">
+            <i class="pi pi-exclamation-circle" style="color: var(--red-600); margin-top:2px;"></i>
+            <span class="text-sm" style="color: var(--red-800);">{{ errorMessage }}</span>
+          </div>
+
+          <div *ngIf="successMessage" class="flex gap-2 align-items-start p-3 border-round"
+               style="background: var(--green-50); border: 1px solid var(--green-200);">
+            <i class="pi pi-check-circle" style="color: var(--green-600); margin-top:2px;"></i>
+            <span class="text-sm" style="color: var(--green-800);">{{ successMessage }}</span>
+          </div>
+
+          <p-button
+            [label]="loading ? 'Cadastrando...' : 'Criar conta'"
+            icon="pi pi-user-plus"
+            [disabled]="registerForm.invalid || loading"
+            [loading]="loading"
+            type="submit"
+            styleClass="w-full"
+            size="large">
+          </p-button>
+
+          <p-divider align="center">
+            <span class="text-color-secondary text-sm">ou</span>
+          </p-divider>
+
+          <div class="text-center text-sm">
+            Já tem uma conta?
+            <a routerLink="/login" class="text-primary no-underline font-bold hover:underline">Entrar</a>
+          </div>
+
+        </form>
+      </ng-container>
+
+      <!-- ── Modo: CONFIRMAÇÃO ── -->
+      <ng-container *ngIf="mode === 'confirm'">
+        <div class="flex flex-column align-items-center text-center gap-4 py-4">
+
+          <ng-container *ngIf="!confirmacaoSucesso && !errorMessage">
+            <div class="flex align-items-center justify-content-center border-round-full"
+                 style="width:80px;height:80px;background:var(--primary-50);">
+              <i class="pi pi-envelope text-primary" style="font-size:2rem;"></i>
+            </div>
+            <div>
+              <h2 class="text-3xl font-bold m-0">Confirmar cadastro</h2>
+              <p class="text-color-secondary mt-2 mb-0">Clique no botão abaixo para finalizar o registro da sua organização.</p>
+            </div>
+            <p-button
+              [label]="loading ? 'Confirmando...' : 'Confirmar cadastro'"
+              icon="pi pi-check-circle"
+              [disabled]="loading"
+              [loading]="loading"
+              type="button"
+              (onClick)="confirmarTenant()"
+              styleClass="w-full"
+              size="large">
+            </p-button>
+          </ng-container>
+
+          <ng-container *ngIf="confirmacaoSucesso">
+            <div class="flex align-items-center justify-content-center border-round-full"
+                 style="width:80px;height:80px;background:var(--green-50);">
+              <i class="pi pi-check-circle" style="font-size:2.5rem; color: var(--green-600);"></i>
+            </div>
+            <div>
+              <h2 class="text-2xl font-bold m-0">Tudo certo!</h2>
+              <p class="text-color-secondary mt-2 mb-0">{{ successMessage }}</p>
+              <p class="text-color-secondary text-sm mt-1 mb-0">Redirecionando em alguns segundos...</p>
+            </div>
+          </ng-container>
+
+          <div *ngIf="errorMessage" class="flex gap-2 align-items-start p-3 border-round w-full"
+               style="background: var(--red-50); border: 1px solid var(--red-200);">
+            <i class="pi pi-exclamation-circle" style="color: var(--red-600); margin-top:2px;"></i>
+            <span class="text-sm" style="color: var(--red-800);">{{ errorMessage }}</span>
+          </div>
+
+          <a *ngIf="!confirmacaoSucesso" routerLink="/login"
+             class="flex align-items-center gap-2 text-primary no-underline text-sm font-semibold hover:underline">
+            <i class="pi pi-arrow-left"></i>
+            Voltar para o login
+          </a>
+
+        </div>
+      </ng-container>
+
+    </div>
+  </div>
+
+</div>

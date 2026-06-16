@@ -1,0 +1,116 @@
+<div class="flex flex-column gap-3">
+  <div class="px-1 pb-3">
+    <div class="flex flex-column md:flex-row md:align-items-center justify-content-between gap-3 mb-4">
+      <div>
+      </div>
+
+    </div>
+
+    <app-month-year-filter
+      [month]="selectedMonth"
+      [year]="selectedYear"
+      (periodChange)="onPeriodChange($event)">
+    </app-month-year-filter>
+  </div>
+
+  <p-progressbar *ngIf="isLoadingResults" mode="indeterminate" [style]="{'height': '4px'}"></p-progressbar>
+
+  <div *ngIf="!isLoadingResults" class="grid">
+    <div class="col-12 md:col-6">
+      <div class="surface-ground border-round p-3 h-full flex align-items-center justify-content-between gap-3">
+        <div>
+          <div class="text-sm text-color-secondary">Itens no período</div>
+          <div class="text-2xl font-bold">{{ resultsLength }}</div>
+        </div>
+        <i class="pi pi-list text-3xl text-primary"></i>
+      </div>
+    </div>
+
+    <div class="col-12 md:col-6">
+      <div class="surface-ground border-round p-3 h-full flex align-items-center justify-content-between gap-3">
+        <div>
+          <div class="text-sm text-color-secondary">Total do período</div>
+          <div class="text-2xl font-bold">{{ calcularTotal() | currency:'BRL':'symbol':'1.2-2' }}</div>
+        </div>
+        <i class="pi pi-credit-card text-3xl text-primary"></i>
+      </div>
+    </div>
+  </div>
+
+  <p-table
+    [value]="listGastosRecorrentes"
+    [paginator]="true"
+    [rows]="pageSize"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [totalRecords]="resultsLength"
+    [first]="pageIndex * pageSize"
+    [lazy]="true"
+    sortField="data"
+    [sortOrder]="-1"
+    (onLazyLoad)="onLazyLoad($event)"
+    styleClass="p-datatable-sm"
+    [tableStyle]="{ 'min-width': '58rem' }">
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="descricao">Descrição <p-sortIcon field="descricao"></p-sortIcon></th>
+        <th pSortableColumn="categoria">Categoria <p-sortIcon field="categoria"></p-sortIcon></th>
+        <th>Cartão</th>
+        <th pSortableColumn="data">Data da compra <p-sortIcon field="data"></p-sortIcon></th>
+        <th pSortableColumn="valor" class="text-right">Valor <p-sortIcon field="valor"></p-sortIcon></th>
+        <th class="text-right">Ações</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-gastoRecorrente>
+      <tr>
+        <td>
+          <div class="flex align-items-center gap-2">
+            <i class="pi pi-credit-card text-color-secondary"></i>
+            <span class="font-medium">{{ gastoRecorrente.descricao }}</span>
+          </div>
+        </td>
+        <td>{{ gastoRecorrente.categoria?.nome || 'N/A' }}</td>
+        <td>{{ gastoRecorrente.cartaoCredito?.nome || 'N/A' }}</td>
+        <td>{{ gastoRecorrente.data | date:'dd/MM/yyyy' }}</td>
+        <td class="text-right">
+          <strong>{{ gastoRecorrente.valor | currency:'BRL':'symbol':'1.2-2' }}</strong>
+        </td>
+        <td class="text-right">
+          <div class="flex justify-content-end gap-2">
+            <p-button
+              icon="pi pi-pencil"
+              [rounded]="true"
+              [text]="true"
+              (onClick)="editarGasto(gastoRecorrente)"
+              pTooltip="Editar gasto"
+              tooltipPosition="top">
+            </p-button>
+
+            <p-button
+              icon="pi pi-trash"
+              [rounded]="true"
+              [text]="true"
+              severity="danger"
+              (onClick)="excluirGasto(gastoRecorrente)"
+              pTooltip="Excluir gasto"
+              tooltipPosition="top">
+            </p-button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6">
+          <div class="flex flex-column align-items-center justify-content-center p-6 text-center">
+            <i class="pi pi-credit-card text-4xl text-color-secondary mb-3"></i>
+            <p class="m-0 font-semibold">Nenhum gasto recorrente encontrado para {{ getSelectedPeriodText() }}.</p>
+            <p class="m-0 text-color-secondary">Selecione outro período ou adicione um novo gasto.</p>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
