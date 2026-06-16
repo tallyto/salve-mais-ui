@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 import { CompraDebito, CompraDebitoInput } from '@models/compra-debito.model';
+import { Page } from '@models/page.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,16 +17,16 @@ export class CompraDebitoService {
     return this.http.post<CompraDebito>(this.apiUrl, compraDebito);
   }
 
-  listarCompras(page: number, size: number, mes?: number, ano?: number): Observable<any> {
+  listarCompras(page: number, size: number, mes?: number, ano?: number): Observable<Page<CompraDebito>> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());
-    
+
     if (mes !== undefined && ano !== undefined) {
       params = params.set('mes', mes.toString()).set('ano', ano.toString());
     }
 
-    return this.http.get<any>(this.apiUrl, { params });
+    return this.http.get<Page<CompraDebito>>(this.apiUrl, { params });
   }
 
   buscarCompraPorId(id: number): Observable<CompraDebito> {

@@ -15,18 +15,23 @@ export interface UsuarioSenhaDTO {
   novaSenha: string;
 }
 
+export interface UsuarioUpdateResponse {
+  email: string;
+  nome: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class UsuarioService {
   private apiUrl = environment.apiUrl + '/usuarios';
 
   constructor(private http: HttpClient) { }
 
-  atualizarNome(dto: UsuarioAtualizacaoDTO): Observable<any> {
-    return this.http.put(`${this.apiUrl}/atualizar-nome`, dto);
+  atualizarNome(dto: UsuarioAtualizacaoDTO): Observable<UsuarioUpdateResponse> {
+    return this.http.put<UsuarioUpdateResponse>(`${this.apiUrl}/atualizar-nome`, dto);
   }
 
-  atualizarSenha(dto: UsuarioSenhaDTO): Observable<any> {
-    return this.http.put(`${this.apiUrl}/atualizar-senha`, dto, { responseType: 'text' });
+  atualizarSenha(dto: UsuarioSenhaDTO): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/atualizar-senha`, dto);
   }
 
   obterLogado(): Observable<Usuario> {

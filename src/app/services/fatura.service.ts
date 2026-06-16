@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import {Observable, tap} from "rxjs";
 import {Fatura, FaturaManualDTO, FaturaResponseDTO, FaturaPreviewDTO} from '@models/fatura.model';
+import { Page } from '@models/page.model';
 import { environment } from '@environments/environment';
 import { NotificationEventService } from './notification-event.service';
 
@@ -23,8 +24,8 @@ export class FaturaService {
     return this.http.get<Fatura[]>(this.apiUrl)
   }
 
-  public listarFaturasNovas(page: number = 0, size: number = 10, sort: string = 'id,desc', mes?: number, ano?: number): Observable<any> {
-    let params: any = {
+  public listarFaturasNovas(page: number = 0, size: number = 10, sort: string = 'id,desc', mes?: number, ano?: number): Observable<Page<FaturaResponseDTO>> {
+    const params: Record<string, any> = {
       page,
       size,
       sort
@@ -38,7 +39,7 @@ export class FaturaService {
       params.ano = ano;
     }
 
-    return this.http.get<any>(this.apiUrl, { params });
+    return this.http.get<Page<FaturaResponseDTO>>(this.apiUrl, { params });
   }
 
   public buscarFatura(id: number): Observable<FaturaResponseDTO> {
@@ -103,11 +104,11 @@ export class FaturaService {
   }
 
   // Métodos legados mantidos para compatibilidade
-  public criarFatura(cardId: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/${cardId}`, {});
+  public criarFatura(cardId: number): Observable<FaturaResponseDTO> {
+    return this.http.post<FaturaResponseDTO>(`${this.apiUrl}/${cardId}`, {});
   }
 
-  public pagarFatura(faturaId: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/pagar/${faturaId}`, {});
+  public pagarFatura(faturaId: number): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/pagar/${faturaId}`, {});
   }
 }

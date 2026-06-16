@@ -14,30 +14,46 @@ export interface LoginDTO {
   senha: string;
 }
 
+export interface LoginResponse {
+  token: string;
+  usuario?: { id: number; email: string; nome: string };
+}
+
+export interface RegisterResponse {
+  id?: number;
+  email: string;
+  nome: string;
+}
+
+export interface TokenVerificationResponse {
+  valid: boolean;
+  email?: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private apiUrl = environment.apiUrl + '/usuarios';
 
   constructor(private http: HttpClient) {}
 
-  register(data: UsuarioCadastroDTO): Observable<any> {
-    return this.http.post(this.apiUrl, data);
+  register(data: UsuarioCadastroDTO): Observable<RegisterResponse> {
+    return this.http.post<RegisterResponse>(this.apiUrl, data);
   }
 
-  login(data: LoginDTO): Observable<any> {
-    return this.http.post(environment.apiUrl + '/auth/login', data);
+  login(data: LoginDTO): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(environment.apiUrl + '/auth/login', data);
   }
 
-  recuperarSenha(data: { email: string }): Observable<any> {
-    return this.http.post(environment.apiUrl + '/auth/recuperar-senha', data);
+  recuperarSenha(data: { email: string }): Observable<void> {
+    return this.http.post<void>(environment.apiUrl + '/auth/recuperar-senha', data);
   }
 
-  redefinirSenha(token: string, novaSenha: string) {
-    return this.http.post<any>(environment.apiUrl + '/auth/redefinir-senha', { token, novaSenha });
+  redefinirSenha(token: string, novaSenha: string): Observable<void> {
+    return this.http.post<void>(environment.apiUrl + '/auth/redefinir-senha', { token, novaSenha });
   }
 
-  verificarToken(token: string): Observable<any> {
-    return this.http.get<any>(environment.apiUrl + '/auth/verificar-token', {
+  verificarToken(token: string): Observable<TokenVerificationResponse> {
+    return this.http.get<TokenVerificationResponse>(environment.apiUrl + '/auth/verificar-token', {
       params: { token }
     });
   }
