@@ -36,7 +36,7 @@ import { CommonModule } from '@angular/common';
 })
 export class InfoBlockComponent {
   @Input() label: string = '';
-  @Input() value: any;
+  @Input() value: string | number | null = '';
   @Input() icon: string = '';
   @Input() expanded: boolean = false;
 }

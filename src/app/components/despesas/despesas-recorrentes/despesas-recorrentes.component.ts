@@ -107,7 +107,7 @@ export class DespesasRecorrentesComponent implements OnInit {
     }
   }
 
-  private salvarCompraConfirmado(gasto: any, isEditing: boolean) {
+  private salvarCompraConfirmado(gasto: Partial<GastoCartao>, isEditing: boolean) {
     if (gasto.data instanceof Date) {
       const d = gasto.data;
       gasto.data = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;

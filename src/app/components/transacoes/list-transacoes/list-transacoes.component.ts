@@ -5,7 +5,10 @@ import { Transacao, TransacaoFiltro } from '@models/transacao.model';
 import { TipoTransacao } from '@models/tipo-transacao.enum';
 import { AccountService } from '@services/account.service';
 import { CategoriaService } from '@services/categoria.service';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { Conta } from '@models/conta.model';
+import { Categoria } from '@models/categoria.model';
+import { ConfirmationService, MessageService, MenuItem } from 'primeng/api';
+import { TableLazyLoadEvent } from 'primeng/table';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SALVE_COMMON, SALVE_FORMS, SALVE_DATA, SALVE_OVERLAY } from '@shared/primeng-shared';
 import { EmptyStateComponent, StatCardComponent } from '@components/shared';
@@ -28,9 +31,9 @@ export class ListTransacoesComponent implements OnInit {
   transacoes: Transacao[] = [];
   filtroForm: FormGroup;
   tiposTransacao = Object.values(TipoTransacao);
-  tipoOptions: any[] = [];
-  contas: any[] = [];
-  categorias: any[] = [];
+  tipoOptions: MenuItem[] = [];
+  contas: Conta[] = [];
+  categorias: Categoria[] = [];
   loading = false;
   totalElements = 0;
   pageSize = 10;
@@ -44,7 +47,7 @@ export class ListTransacoesComponent implements OnInit {
     'categoria',
     'acoes'
   ];
-  private menuCache = new Map<number, any[]>();
+  private menuCache = new Map<number, MenuItem[]>();
   private destroyRef = inject(DestroyRef);
 
   constructor(
@@ -161,7 +164,7 @@ export class ListTransacoesComponent implements OnInit {
     this.carregarTransacoes();
   }
 
-  mudarPagina(event: any): void {
+  mudarPagina(event: TableLazyLoadEvent): void {
     if (event.first !== undefined) {
       this.pageIndex = Math.floor(event.first / (event.rows || this.pageSize));
     }
@@ -277,12 +280,12 @@ export class ListTransacoesComponent implements OnInit {
     }
   }
 
-  getMenuItems(transacao: Transacao): any[] {
+  getMenuItems(transacao: Transacao): MenuItem[] {
     if (this.menuCache.has(transacao.id)) {
       return this.menuCache.get(transacao.id)!;
     }
 
-    const items = [
+    const items: MenuItem[] = [
       {
         label: 'Detalhes',
         icon: 'pi pi-eye',

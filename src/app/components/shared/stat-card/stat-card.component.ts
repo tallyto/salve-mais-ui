@@ -18,6 +18,6 @@ import { CommonModule } from '@angular/common';
 })
 export class StatCardComponent {
   @Input() label: string = '';
-  @Input() value: any;
+  @Input() value: string | number = '';
   @Input() icon: string = '';
 }

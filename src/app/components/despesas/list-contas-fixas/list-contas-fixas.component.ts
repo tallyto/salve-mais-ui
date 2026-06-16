@@ -5,7 +5,7 @@ import { ContasFixasService } from "@services/contas-fixas.service";
 import { catchError, map, of as observableOf } from "rxjs";
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService, MenuItem } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ComprovantesDialogComponent } from '@components/cartao/comprovantes-dialog/comprovantes-dialog.component';
@@ -410,7 +410,7 @@ export class ListContasFixasComponent extends LazyTableBase implements OnInit {
     return contaFixa.pago ? 'success' : 'warn';
   }
 
-  getMenuItems(contaFixa: Financa): any[] {
+  getMenuItems(contaFixa: Financa): MenuItem[] {
     return [
       {
         label: 'Comprovantes',
